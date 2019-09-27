@@ -1,1 +1,7 @@
 ssh -T git@github.com
+git init
+git add .
+git commit -m "first commit"
+git remote set-url origin git@github.com:inecsoft/terraform-course.git
+git push
+#add the public key on the repo
