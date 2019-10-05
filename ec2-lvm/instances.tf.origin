@@ -1,0 +1,67 @@
+#-------------------------------------------------------------------------
+data "template_file" "userdata" {
+   template = "${file("scripts/userdata.tpl")}"
+   vars = {
+       DEVICE = "${var.INSTANCE_DEVICE_NAME}"
+  }
+}
+#-------------------------------------------------------------------------
+resource "aws_instance" "webserver" {
+   ami = "${lookup(var.AMIS, var.AWS_REGION)}"
+   instance_type = "t2.micro"
+   key_name = "${aws_key_pair.mykey.key_name}"
+  
+  # the VPC subnet
+   subnet_id = "${module.vpc.public_subnets[0]}"
+  
+  # the security group
+  vpc_security_group_ids = ["${aws_security_group.allow-ssh.id}"]
+
+  associate_public_ip_address = true
+
+   root_block_device {
+     volume_type = "gp2"
+     volume_size = "8"
+     delete_on_termination = true
+   }
+
+  # user data
+   user_data = "${data.template_file.userdata.rendered}"
+
+   tags = {
+     Name = "webserver"
+   }
+
+   connection {
+     host = "${self.public_ip}"
+     user = "${var.INSTANCE_USERNAME}"
+     timeout = "1m"
+     private_key = "${file("${var.PATH_TO_PRIVATE_KEY}")}"
+  }
+}
+#-------------------------------------------------------------------------
+resource "aws_ebs_volume" "ebs-volume-1" {
+    availability_zone = "eu-west-1a"
+    iops = 100
+    size = 8 
+    type = "gp2" 
+    encrypted = "true"
+
+    tags = {
+        Name = "extra volume data"
+    }
+}
+#-------------------------------------------------------------------------
+#this example has an issue when deleting 
+#the volume has to be detach manualy and the terraform destroy
+#a better option is add the ebs within the instance which provides
+#better management
+#-------------------------------------------------------------------------
+resource "aws_volume_attachment" "ebs-volume-1-attachment" {
+  device_name = "${var.INSTANCE_DEVICE_NAME}"
+  volume_id = "${aws_ebs_volume.ebs-volume-1.id}"
+  instance_id = "${aws_instance.webserver.id}"
+}
+#-------------------------------------------------------------------------
+
+
