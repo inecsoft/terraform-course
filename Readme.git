@@ -8,4 +8,12 @@ git push
 git remote remove origin
 git remote show origin
 git config -l
+git remote add origin git@github.com:inecsoft/terraform-course.git
 git push -u origin master
+
+
+#to remove file from remote repo
+git checkout master
+git rm -r folder-name
+git commit -m "folder-name deleted"
+git push origin master
