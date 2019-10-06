@@ -12,7 +12,8 @@ resource "aws_elastic_beanstalk_application" "app" {
 resource "aws_elastic_beanstalk_environment" "app-prod" {
   name                = "app-prod"
   application         = "${aws_elastic_beanstalk_application.app.name}"
-  solution_stack_name = "64bit Amazon Linux 2018.03 v2.8.15 running PHP 7.2"
+  solution_stack_name = "64bit Amazon Linux 2018.03 v2.8.15 running PHP 7.2"   
+
   setting {
     namespace = "aws:ec2:vpc"
     name      = "VPCId"
@@ -92,6 +93,12 @@ resource "aws_elastic_beanstalk_environment" "app-prod" {
     namespace = "aws:autoscaling:updatepolicy:rollingupdate"
     name      = "RollingUpdateType"
     value     = "Health"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:sns:topics"
+    name      = "Notification Endpoint"
+    value     = "ivanpedrouk@gmail.com"
+
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
