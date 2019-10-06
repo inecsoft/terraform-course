@@ -17,3 +17,12 @@ git checkout master
 git rm -r folder-name
 git commit -m "folder-name deleted"
 git push origin master
+
+#navigation branch
+git log --pretty=oneline --abbrev-commit
+git rebase -i HEAD~6
+#delete the line of the commit that you want to delete
+git push
+git pull
+git push
+
