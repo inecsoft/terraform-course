@@ -16,31 +16,31 @@ resource "aws_iam_role" "node-role" {
   ]
 }
 POLICY
+
 }
 
 #--------------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy_attachment" "node-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = "${aws_iam_role.node-role.name}"
+  role       = aws_iam_role.node-role.name
 }
 
 #--------------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy_attachment" "node-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = "${aws_iam_role.node-role.name}"
+  role       = aws_iam_role.node-role.name
 }
 
 #--------------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy_attachment" "node-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = "${aws_iam_role.node-role.name}"
+  role       = aws_iam_role.node-role.name
 }
 
 #--------------------------------------------------------------------------------------------------
 resource "aws_iam_instance_profile" "node-profile" {
   name = "terraform-eks-node-profile"
-  role = "${aws_iam_role.node-role.name}"
+  role = aws_iam_role.node-role.name
 }
+
 #--------------------------------------------------------------------------------------------------
-
-
