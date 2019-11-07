@@ -1,0 +1,10 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+     "Name": "inecsoft/beanstalk-flask:latest"
+  },
+  "Ports" : [
+   {"ContainerPort": "5000"}
+   
+   ]
+}

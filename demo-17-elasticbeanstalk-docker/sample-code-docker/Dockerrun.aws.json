@@ -1,0 +1,10 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+     "Name": "tomcat"
+  },
+  "Ports" : [
+   {"ContainerPort": "8080"}
+   
+   ]
+}
