@@ -28,7 +28,7 @@ resource "aws_db_instance" "postgresdb" {
   instance_class            = "db.t2.micro" # use micro if you want to use the free tier
   identifier                = "postgresdb115"
   name                      = "mydatabase"     # database name
-  username                  = "root"           # username
+  username                  = var.RDS_USERNAME # username
   password                  = var.RDS_PASSWORD # password
   db_subnet_group_name      = aws_db_subnet_group.postgresdb-subnet.name
   parameter_group_name      = aws_db_parameter_group.postgresdb-parameters.name
