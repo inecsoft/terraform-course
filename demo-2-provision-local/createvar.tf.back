@@ -1,0 +1,8 @@
+resource "null_resource" "myip" {
+  provisioner "local-exec" {
+    command = "myip=`curl icanhazip.com` ; export $myip; echo "variable "myip" {
+                                                         default = ["$myip"]
+} > vars.tfvars"
+    
+  }
+}
