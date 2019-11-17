@@ -1,0 +1,160 @@
+resource "aws_iam_policy_attachment" "AWSLambdaBasicExecutionRole-e0b496bb-ca66-4ad8-998d-dd2b23186ebc-policy-attachment" {
+    name       = "AWSLambdaBasicExecutionRole-e0b496bb-ca66-4ad8-998d-dd2b23186ebc-policy-attachment"
+    policy_arn = "arn:aws:iam::895352585421:policy/service-role/AWSLambdaBasicExecutionRole-e0b496bb-ca66-4ad8-998d-dd2b23186ebc"
+    groups     = []
+    users      = []
+    roles      = ["mylambdaexecutionrole"]
+}
+
+resource "aws_iam_policy_attachment" "AWSLambdaMicroserviceExecutionRole-2a81a591-a7d1-498d-a6a9-261731cd9c7f-policy-attachment" {
+    name       = "AWSLambdaMicroserviceExecutionRole-2a81a591-a7d1-498d-a6a9-261731cd9c7f-policy-attachment"
+    policy_arn = "arn:aws:iam::895352585421:policy/service-role/AWSLambdaMicroserviceExecutionRole-2a81a591-a7d1-498d-a6a9-261731cd9c7f"
+    groups     = []
+    users      = []
+    roles      = ["mylambdaexecutionrole"]
+}
+
+resource "aws_iam_policy_attachment" "CodeStar_inecsoft_Owner-policy-attachment" {
+    name       = "CodeStar_inecsoft_Owner-policy-attachment"
+    policy_arn = "arn:aws:iam::895352585421:policy/CodeStar_inecsoft_Owner"
+    groups     = []
+    users      = ["develop"]
+    roles      = []
+}
+
+resource "aws_iam_policy_attachment" "AWSLambdaFullAccess-policy-attachment" {
+    name       = "AWSLambdaFullAccess-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/AWSLambdaFullAccess"
+    groups     = ["nodedev"]
+    users      = []
+    roles      = []
+}
+
+resource "aws_iam_policy_attachment" "IAMFullAccess-policy-attachment" {
+    name       = "IAMFullAccess-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/IAMFullAccess"
+    groups     = ["nodedev"]
+    users      = []
+    roles      = []
+}
+
+resource "aws_iam_policy_attachment" "AutoScalingServiceRolePolicy-policy-attachment" {
+    name       = "AutoScalingServiceRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AutoScalingServiceRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["AWSServiceRoleForAutoScaling"]
+}
+
+resource "aws_iam_policy_attachment" "Billing-policy-attachment" {
+    name       = "Billing-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/job-function/Billing"
+    groups     = []
+    users      = ["ivanpedro"]
+    roles      = []
+}
+
+resource "aws_iam_policy_attachment" "AWSElasticBeanstalkServiceRolePolicy-policy-attachment" {
+    name       = "AWSElasticBeanstalkServiceRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AWSElasticBeanstalkServiceRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["AWSServiceRoleForElasticBeanstalk"]
+}
+
+resource "aws_iam_policy_attachment" "AmazonAPIGatewayInvokeFullAccess-policy-attachment" {
+    name       = "AmazonAPIGatewayInvokeFullAccess-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonAPIGatewayInvokeFullAccess"
+    groups     = ["nodedev"]
+    users      = []
+    roles      = []
+}
+
+resource "aws_iam_policy_attachment" "AWSElasticLoadBalancingServiceRolePolicy-policy-attachment" {
+    name       = "AWSElasticLoadBalancingServiceRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AWSElasticLoadBalancingServiceRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["AWSServiceRoleForElasticLoadBalancing"]
+}
+
+resource "aws_iam_policy_attachment" "AWSCodeStarServiceRole-policy-attachment" {
+    name       = "AWSCodeStarServiceRole-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeStarServiceRole"
+    groups     = []
+    users      = []
+    roles      = ["aws-codestar-service-role"]
+}
+
+resource "aws_iam_policy_attachment" "AmazonRDSServiceRolePolicy-policy-attachment" {
+    name       = "AmazonRDSServiceRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AmazonRDSServiceRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["AWSServiceRoleForRDS"]
+}
+
+resource "aws_iam_policy_attachment" "AmazonECSServiceRolePolicy-policy-attachment" {
+    name       = "AmazonECSServiceRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AmazonECSServiceRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["AWSServiceRoleForECS"]
+}
+
+resource "aws_iam_policy_attachment" "AdministratorAccess-policy-attachment" {
+    name       = "AdministratorAccess-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+    groups     = ["admin"]
+    users      = []
+    roles      = []
+}
+
+resource "aws_iam_policy_attachment" "AWSEC2SpotServiceRolePolicy-policy-attachment" {
+    name       = "AWSEC2SpotServiceRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AWSEC2SpotServiceRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["AWSServiceRoleForEC2Spot"]
+}
+
+resource "aws_iam_policy_attachment" "AmazonAPIGatewayAdministrator-policy-attachment" {
+    name       = "AmazonAPIGatewayAdministrator-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonAPIGatewayAdministrator"
+    groups     = ["nodedev"]
+    users      = []
+    roles      = []
+}
+
+resource "aws_iam_policy_attachment" "AWSSupportServiceRolePolicy-policy-attachment" {
+    name       = "AWSSupportServiceRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AWSSupportServiceRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["AWSServiceRoleForSupport"]
+}
+
+resource "aws_iam_policy_attachment" "AmazonECSTaskExecutionRolePolicy-policy-attachment" {
+    name       = "AmazonECSTaskExecutionRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["ecsTaskExecutionRole"]
+}
+
+resource "aws_iam_policy_attachment" "AWSTrustedAdvisorServiceRolePolicy-policy-attachment" {
+    name       = "AWSTrustedAdvisorServiceRolePolicy-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AWSTrustedAdvisorServiceRolePolicy"
+    groups     = []
+    users      = []
+    roles      = ["AWSServiceRoleForTrustedAdvisor"]
+}
+
+resource "aws_iam_policy_attachment" "AWSElasticBeanstalkService-policy-attachment" {
+    name       = "AWSElasticBeanstalkService-policy-attachment"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkService"
+    groups     = []
+    users      = []
+    roles      = ["aws-elasticbeanstalk-service-role"]
+}
+
