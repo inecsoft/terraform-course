@@ -29,7 +29,7 @@ resource "aws_subnet" "eks-node-subnet" {
 resource "aws_internet_gateway" "eks-gw" {
   vpc_id = "${aws_vpc.eks-vpc.id}"
 
-  tags {
+  tags = {
     Name = "terraform-eks-gw"
   }
 }

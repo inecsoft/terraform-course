@@ -41,7 +41,7 @@ resource "aws_autoscaling_group" "autoscaling" {
   max_size             = 5
   min_size             = 2
   name                 = "terraform-eks-autoscaling"
-  vpc_zone_identifier  = ["${aws_subnet.eks-node-subnet.*.id}"]
+  vpc_zone_identifier  = "${aws_subnet.eks-node-subnet.*.id}"
 
   tag {
     key                 = "Name"
