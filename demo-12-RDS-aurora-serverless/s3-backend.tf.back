@@ -1,0 +1,13 @@
+terraform {
+  backend "s3" {
+   bucket = "inecsoft.co.uk"
+   key    = "terraform/aurora-serverless.tfstate"
+   region = "eu-west-1"
+   }
+}
+
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
+  config  = "${var.vpc_state_config}"
+}
+
