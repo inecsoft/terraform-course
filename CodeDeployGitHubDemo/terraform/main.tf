@@ -7,7 +7,7 @@ resource "aws_instance" "instance" {
   key_name        = "${aws_key_pair.mykey.key_name}"
   user_data       = "${data.template_file.script.rendered}"
   #change the security group to private by using different file
-  vpc_security_group_ids = ["${aws_security_group.my_security_group.id}"]
+  vpc_security_group_ids = ["${aws_security_group.my_security_group.id}","${aws_security_group.http_security_group.id}"]
   iam_instance_profile         = "EC2InstanceRole"
 
   root_block_device {
@@ -19,9 +19,9 @@ resource "aws_instance" "instance" {
   }
 
   tags = {
-        Name      = "Codedeploy_EFS"
-        Terraform = "true"
-        CodePipelineDemo = ""
+        Name             = "CodePipelineDemo"
+        Description      = "Codedeploy_EFS"
+        CodePipelineDemo = "CodePipelineDemo"
       }
   volume_tags = {
           Name      = "Codedeploy_EFS_ROOT"

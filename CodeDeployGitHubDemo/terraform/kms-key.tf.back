@@ -1,0 +1,39 @@
+#----------------------------------------------------------------------------------------------------------------------
+resource "aws_kms_key" "9be5cab9-c1d3-44a1-b4ec-778a7084aced" {
+    description             = "Default master key that protects my RDS database volumes when no other key is defined"
+    key_usage               = "ENCRYPT_DECRYPT"
+    is_enabled              = true
+    enable_key_rotation     = true
+
+    policy = <<POLICY
+{
+  "Version" : "2012-10-17",
+  "Id" : "auto-rds-2",
+  "Statement" : [ {
+    "Sid" : "Allow access through RDS for all principals in the account that are authorized to use RDS",
+    "Effect" : "Allow",
+    "Principal" : {
+      "AWS" : "*"
+    },
+    "Action" : [ "kms:Encrypt", "kms:Decrypt", "kms:ReEncrypt*", "kms:GenerateDataKey*", "kms:CreateGrant", "kms:ListGrants", "kms:DescribeKey" ],
+    "Resource" : "*",
+    "Condition" : {
+      "StringEquals" : {
+        "kms:CallerAccount" : "895352585421",
+        "kms:ViaService" : "rds.eu-west-1.amazonaws.com"
+      }
+    }
+  }, {
+    "Sid" : "Allow direct access to key metadata to the account",
+    "Effect" : "Allow",
+    "Principal" : {
+      "AWS" : "arn:aws:iam::895352585421:root"
+    },
+    "Action" : [ "kms:Describe*", "kms:Get*", "kms:List*", "kms:RevokeGrant" ],
+    "Resource" : "*"
+  } ]
+}
+POLICY
+}
+#----------------------------------------------------------------------------------------------------------------------
+
