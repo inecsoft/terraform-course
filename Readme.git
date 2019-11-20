@@ -1,9 +1,12 @@
-ssh -T git@github.com
 git init
+git config user.name <username>
+git config user.email <user@domain>
+git remote set-url origin git@github.com:inecsoft/terraform-course.git
+ssh -T git@github.com
 git add .
 git commit -m "first commit"
-git remote set-url origin git@github.com:inecsoft/terraform-course.git
 git push
+
 #add the public key on the repo
 git remote remove origin
 git remote show origin
