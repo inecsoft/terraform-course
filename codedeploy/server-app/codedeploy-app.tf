@@ -14,7 +14,7 @@ resource "aws_codedeploy_deployment_group" "DemoDeploymentGroup" {
     autoscaling_groups     = []
     deployment_config_name = "CodeDeployDefault.OneAtATime"
     deployment_group_name  = "DemoDeploymentGroup"
-    service_role_arn       = "${aws_iam_role.CodeDeployRole1.id}"
+    service_role_arn       = "${aws_iam_role.CodeDeployRole1.arn}"
 
     deployment_style {
         deployment_option = "WITH_TRAFFIC_CONTROL"
