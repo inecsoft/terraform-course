@@ -1,0 +1,13 @@
+kops create cluster \
+  --name=kops.inecsoft.com \
+  --state=s3://kops.inecsoft.com \
+  --authorization RBAC \
+  --zones=eu-west-1a \
+  --node-count=2 \
+  --node-size=t2.micro \
+  --master-size=t2.micro \
+  --master-count=1 \
+  --dns-zone=kops.inecsoft.com \
+  --out=inecsoft_terraform \
+  --target=terraform \
+  --ssh-public-key=~/.ssh/id_rsa.pub
