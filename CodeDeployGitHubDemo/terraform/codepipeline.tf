@@ -1,10 +1,10 @@
 # terraform import aws_codepipeline.foo example
-
+#--------------------------------------------------------------------------------------------------
 #resource "aws_codepipeline" "pipeline-codedeploy" {
 #  name     = "pipeline-codedeploy"
- # role_arn = "${aws_iam_role.codepipeline_role.arn}"
+# role_arn = "${aws_iam_role.codepipeline_role.arn}"
 #}
-
+#--------------------------------------------------------------------------------------------------
 # aws_codepipeline.pipeline-codedeploy:
 resource "aws_codepipeline" "pipeline-codedeploy" {
     name     = "pipeline-codedeploy"
@@ -59,3 +59,4 @@ resource "aws_codepipeline" "pipeline-codedeploy" {
     }
 }
 
+#--------------------------------------------------------------------------------------------------

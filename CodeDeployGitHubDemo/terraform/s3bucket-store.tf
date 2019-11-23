@@ -34,6 +34,17 @@ resource "aws_s3_bucket" "codepipeline-eu-west-1-620136413607" {
   ]
 }
 POLICY
+   tags = {
+            Name        = "codedeploybucket"
+        }
+
+         lifecycle {
+    
+             # Any Terraform plan that includes a destroy of this resource will
+             # result in an error message.
+             #
+             prevent_destroy = false
+         }
 }
 #-----------------------------------------------------------------------
 ## aws_s3_bucket_policy.codepipeline-eu-west-1-620136413607:

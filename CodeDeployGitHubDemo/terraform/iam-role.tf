@@ -23,7 +23,14 @@ resource "aws_iam_policy_attachment" "AmazonEC2RoleforAWSCodeDeploy-policy-attac
     policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforAWSCodeDeploy"
     groups     = []
     users      = []
-    roles      = ["EC2InstanceRole"]
+    roles      = ["${aws_iam_role.EC2InstanceRole.name}"]
+    depends_on = ["aws_iam_role.EC2InstanceRole"]
+}
+#------------------------------------------------------------------
+resource "aws_iam_instance_profile" "EC2InstanceRoleProfile" {
+  name = "EC2InstanceRoleProfile"
+  role = "${aws_iam_role.EC2InstanceRole.name}"
+  depends_on = ["aws_iam_role.EC2InstanceRole"]
 }
 #------------------------------------------------------------------
 resource "aws_iam_role" "CodeDeployRole" {
@@ -56,7 +63,8 @@ resource "aws_iam_policy_attachment" "AWSCodeDeployRole-policy-attachment" {
     policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
     groups     = []
     users      = []
-    roles      = ["CodeDeployRole"]
+    roles      = ["${aws_iam_role.CodeDeployRole.name}"]
+    depends_on = ["aws_iam_role.CodeDeployRole"]
 }
 #------------------------------------------------------------------
 resource "aws_iam_role" "AWSCodePipelineServiceRole-eu-west-1-pipeline-codedeploy" {
@@ -83,7 +91,8 @@ resource "aws_iam_policy_attachment" "AWSCodePipelineServiceRole-eu-west-1-pipel
     policy_arn = "arn:aws:iam::895352585421:policy/service-role/AWSCodePipelineServiceRole-eu-west-1-pipeline-codedeploy"
     groups     = []
     users      = []
-    roles      = ["AWSCodePipelineServiceRole-eu-west-1-pipeline-codedeploy"]
+    roles      = ["${aws_iam_role.AWSCodePipelineServiceRole-eu-west-1-pipeline-codedeploy.name}"]
+    depends_on = ["aws_iam_role.AWSCodePipelineServiceRole-eu-west-1-pipeline-codedeploy"]
 }
 #------------------------------------------------------------------
 

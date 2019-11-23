@@ -11,7 +11,7 @@ resource "aws_codedeploy_app" "DemoApplication" {
 #----------------------------------------------------------------------
 resource "aws_codedeploy_deployment_group" "DemoDeploymentGroup" {
     app_name               = "DemoApplication"
-    autoscaling_groups     = []
+    autoscaling_groups     = ["${aws_autoscaling_group.performance.name}"]
     deployment_config_name = "CodeDeployDefault.OneAtATime"
     deployment_group_name  = "DemoDeploymentGroup"
     service_role_arn       = "${aws_iam_role.CodeDeployRole.arn}"
@@ -32,7 +32,7 @@ resource "aws_codedeploy_deployment_group" "DemoDeploymentGroup" {
     load_balancer_info {
 
         target_group_info {
-            name = "targetgroupcodedeploy"
+            name = "${aws_lb_target_group.deploymentgroup-targetgroup.name}"
         }
     }
 }

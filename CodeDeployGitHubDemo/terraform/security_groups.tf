@@ -27,12 +27,12 @@ resource "aws_security_group" "my_security_group" {
 }
 #------------------------------------------------------------------------------
 resource "aws_security_group" "http_security_group" {
-  name = "http:q_security_group"
+  name = "http_security_group"
   vpc_id = "${aws_vpc.my_vpc.id}"
   ingress {
     from_port = 80 
     to_port = 80
-    protocol = "HTTP"
+    protocol = "TCP"
     #cidr_blocks = ["0.0.0.0/0"]
     cidr_blocks       = [local.workstation-external-cidr]
   }
