@@ -90,7 +90,7 @@ data "aws_instances" "deploymentgroup-targetgroup-attach" {
   #  values = ["sg-12345678"]
   # }
 
-  instance_state_names = ["running"]
+ # instance_state_names = ["running"]
 }
 #---------------------------------------------------------------------------------------------------------
 resource "aws_lb_target_group_attachment" "deploymentgroup-targetgroup-attach" {
