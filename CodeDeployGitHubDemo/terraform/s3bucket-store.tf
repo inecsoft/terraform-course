@@ -2,6 +2,7 @@
 resource "aws_s3_bucket" "codepipeline-eu-west-1-620136413607" {
     bucket = "codepipeline-eu-west-1-620136413607"
     acl    = "private"
+    force_destroy = true
     policy = <<POLICY
 {
   "Version": "2012-10-17",

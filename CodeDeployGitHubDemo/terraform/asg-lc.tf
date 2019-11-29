@@ -46,6 +46,7 @@ resource "aws_autoscaling_group" "performance" {
     #vpc_zone_identifier       = ["${element(aws_subnet.my_vpc_subnet_public[*].id, count.index)}"]
     #availability_zones        = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
  
+   wait_for_elb_capacity  =  1 
     lifecycle {
        create_before_destroy = false
     }   
@@ -77,29 +78,10 @@ resource "aws_lb_target_group" "deploymentgroup-targetgroup" {
  
   }
 }
-
 #---------------------------------------------------------------------------------------------------------
-data "aws_instances" "deploymentgroup-targetgroup-attach" {
-  depends_on = [aws_lb_target_group.deploymentgroup-targetgroup]
-  instance_tags = {
-    CodePipelineDemo = "CodePipelineDemo"
-  }
-
-  # filter {
-  #  name   = "instance.group-id"
-  #  values = ["sg-12345678"]
-  # }
-
- # instance_state_names = ["running"]
-}
-#---------------------------------------------------------------------------------------------------------
-resource "aws_lb_target_group_attachment" "deploymentgroup-targetgroup-attach" {
-  #depends_on = [data.aws_instances.deploymentgroup-targetgroup-attach]
-  #count            = "${length(data.aws_instances.deploymentgroup-targetgroup-attach.ids)}"
-  target_group_arn = "${aws_lb_target_group.deploymentgroup-targetgroup.arn}"
-  #target_id        = "${data.aws_instances.deploymentgroup-targetgroup-attach.ids[count.index]}"
-  target_id        = "${data.aws_instances.deploymentgroup-targetgroup-attach.ids[0]}"
-  port             = 80
+resource "aws_autoscaling_attachment" "deploymentgroup-targetgroup-asg_attachment" {
+  autoscaling_group_name = "${aws_autoscaling_group.performance.id}"
+  alb_target_group_arn   = "${aws_lb_target_group.deploymentgroup-targetgroup.arn}"
 }
 #---------------------------------------------------------------------------------------------------------
 
