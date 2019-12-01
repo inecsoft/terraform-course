@@ -8,7 +8,7 @@ variable "WIN_AMIS" {
   default = {
     us-east-1 = "ami-30540427"
     us-west-2 = "ami-9f5efbff"
-    eu-west-1 = "ami-011b5156c098025a0"
+    eu-west-1 = "ami-00f8336af4b6b40bf"
   }
 }
 
@@ -21,4 +21,7 @@ variable "PATH_TO_PUBLIC_KEY" {
 variable "INSTANCE_USERNAME" {
   default = "Terraform"
 }
-variable "INSTANCE_PASSWORD" { }
+variable "INSTANCE_PASSWORD" {
+  default = "!WindowsInstance123$$$"
+
+ }
