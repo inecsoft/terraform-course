@@ -13,6 +13,13 @@ resource "aws_instance" "example" {
 
   # the public SSH key
   key_name = "${aws_key_pair.mykey.key_name}"
+
+  root_block_device {
+   volume_size = "10"
+   volume_type = "gp2"
+   delete_on_termination = true
+
+  }
   
   #name the instance
   tags = {
@@ -22,9 +29,9 @@ resource "aws_instance" "example" {
 #--------------------------------------------------------------------------
 #provide the ip address of the intance 
 #------------------------------------------------------------------------------
-  output "ipaddress" {
+output "ipaddress" {
     value = "${aws_instance.example.public_ip}"
-  }
+}
 #------------------------------------------------------------------------------
 #create ebs volumen for the intance
 #----------------------------------------------------------------------------
@@ -43,6 +50,7 @@ resource "aws_volume_attachment" "ebs-volume-1-attachment" {
   device_name = "/dev/xvdh"
   volume_id = "${aws_ebs_volume.ebs-volume-1.id}"
   instance_id = "${aws_instance.example.id}"
+  force_detach = true
 }
 
 #----------------------------------------------------------------------------
