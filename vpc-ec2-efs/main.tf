@@ -9,6 +9,13 @@ resource "aws_instance" "instance" {
   #change the security group to private by using different file
   vpc_security_group_ids = ["${aws_security_group.my_security_group.id}"]
 
+  root_block_device {
+   volume_size = "10"
+   volume_type = "gp2"
+   delete_on_termination = true
+
+  }
+ 
   tags = {
         Name      = "EFS_TEST"
         Terraform = "true"
