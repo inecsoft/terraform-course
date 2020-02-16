@@ -1,0 +1,57 @@
+#create an eip address to asign it to the nat gateway 
+#----------------------------------------------------------------
+#Error: Error creating EIP: AddressLimitExceeded: The maximum number of addresses has been reached.
+#       status code: 400, request id: dc78b9b2-8a4d-40b0-b6f6-c2c3e4b724c8
+
+#  on nat.tf line 3, in resource "aws_eip" "betterproject_vpc-nat":
+#  3: resource "aws_eip" "betterproject_vpc-nat" {
+#---------------------------------------------------------------------
+resource "aws_eip" "betterproject_vpc-nat" {
+  vpc  = true
+  tags = {
+    Name = "betterproject_vpc-nat ip gateway" 
+  }
+}
+
+#------------------------------------------------------------------------------
+#create  nat gw to provide internet access to the private subnets
+#------------------------------------------------------------------------------
+resource "aws_nat_gateway" "betterproject_vpc-nat_gw" {
+  allocation_id = "${aws_eip.betterproject_vpc-nat.id}"
+  subnet_id = "${aws_subnet.betterproject_vpc-public-1.id}"
+  depends_on = ["aws_internet_gateway.betterproject_vpc-gw"]
+ 
+  tags = {
+   Name = "betterproject_vpc-nat_nat_gateway"
+  }
+}
+#-----------------------------------------------------------------------------------
+resource "aws_route_table" "betterproject_vpc_route_table_private" {
+    vpc_id = "${aws_vpc.betterproject_vpc.id}"
+    route {
+        cidr_block = "0.0.0.0/0"
+        nat_gateway_id = "${aws_nat_gateway.betterproject_vpc-nat_gw.id}"
+    }
+
+    tags = {
+        Name = "my_vpc_route_table_nat_private"
+    }
+}
+
+#---------------------------------------------------------------------------------------
+# route associations private
+resource "aws_route_table_association" "betterproject_vpc-private-1-a" {
+  subnet_id      = aws_subnet.betterproject_vpc-private-1.id
+  route_table_id = aws_route_table.betterproject_vpc_route_table_private.id
+}
+
+resource "aws_route_table_association" "betterproject_vpc-private-2-a" {
+  subnet_id      = aws_subnet.betterproject_vpc-private-2.id
+  route_table_id = aws_route_table.betterproject_vpc_route_table_private.id
+}
+
+resource "aws_route_table_association" "betterproject_vpc-private-3-a" {
+  subnet_id      = aws_subnet.betterproject_vpc-private-3.id
+  route_table_id = aws_route_table.betterproject_vpc_route_table_private.id
+}
+#-----------------------------------------------------------------------------------------

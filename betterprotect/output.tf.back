@@ -1,0 +1,10 @@
+#----------------------------------------------------------------
+output "elb" {
+  value = aws_elb.betterproject-elb.dns_name
+}
+
+#----------------------------------------------------------------
+output "myapp-repository-URL" {
+  value = "${aws_ecr_repository.betterproject-repo.repository_url}"
+}
+#----------------------------------------------------------------
