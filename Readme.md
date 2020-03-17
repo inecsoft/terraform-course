@@ -85,10 +85,10 @@ git add .
 git commit -am "comments"
 
 ### __Manage credentials__
-* #### _Helper to store password disk__
+* #### _Helper to store password disk_
 git config credential.helper store
 
-* #### _Helper to temporaly (2hours) store password in memory__
+* #### _Helper to temporaly (2hours) store password in memory_
 git config --global credential.helper 'cache --timeout=7200'
 
 ### __Colaboration__
