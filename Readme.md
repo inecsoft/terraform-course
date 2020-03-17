@@ -28,28 +28,34 @@ git push -u origin master
 
 ### __To remove file from remote repo__
 git checkout master
+
 git rm -r folder-name
+
 git commit -m "folder-name deleted"
+
 git push origin master
 
 ### __Undo commits__
 git log --oneline
 * #### _The savest way to do it_
-git chechout \<commit\>
+git checkout \<commit\>
 * #### _Undo a commit_
 git revert \<commit\>
 * #### _Destroy the content_
 git reset \<commit\>
+
 git checkout master
 
 ### __Navigation branch__
 git log --pretty=oneline --abbrev-commit
-#to rollback to previos commit 
+#### To rollback to previos commit 
 git reset HEAD~1
 git rebase -i HEAD~6
-#delete the line of the commit that you want to delete
+#### Delete the line of the commit that you want to delete
 git push
+
 git pull
+
 git push
 
 ### __Manage Branches__
