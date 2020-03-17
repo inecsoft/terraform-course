@@ -34,12 +34,13 @@ git push origin master
 
 ### __Undo commits__
 git log --oneline
-* #### _the savest way to do it_
+* #### _The savest way to do it_
 git chechout \<commit\>
 * #### _Undo a commit_
 git revert \<commit\>
 * #### _Destroy the content_
-git cheout master
+git reset \<commit\>
+git checkout master
 
 ### __Navigation branch__
 git log --pretty=oneline --abbrev-commit
