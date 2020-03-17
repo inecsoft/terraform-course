@@ -10,17 +10,29 @@ git push
 
 ### __Add the public key on the repo__
 git remote remove origin
-git remote show origin
-git config -l
-git remote add origin git@github.com:inecsoft/terraform-course.git
-git push -u origin master
 
+git remote show origin
+
+git config -l
+
+git remote add origin git@github.com:inecsoft/terraform-course.git
+
+git push -u origin master
 
 ### __To remove file from remote repo__
 git checkout master
 git rm -r folder-name
 git commit -m "folder-name deleted"
 git push origin master
+
+### __Undo commits__
+git log --oneline
+* #### _the savest way to do it_
+git chechout \<commit\>
+* #### _Undo a commit_
+git revert \<commit\>
+* #### _Destroy the content_
+git cheout master
 
 ### __Navigation branch__
 git log --pretty=oneline --abbrev-commit
@@ -52,7 +64,7 @@ git branch -D \<branch name\>
 git checkout master
 
 git merge \<branch name\>
-* #### If error edit what you want to change and save
+#### If error edit what you want to change and save
 git add .
 
 git commit -am "comments"
