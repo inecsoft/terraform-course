@@ -1,3 +1,4 @@
+### __Inicialize Repo__
 git init
 git config user.name <username>
 git config user.email <user@domain>
@@ -7,7 +8,7 @@ git add .
 git commit -m "first commit"
 git push
 
-### __add the public key on the repo__
+### __Add the public key on the repo__
 git remote remove origin
 git remote show origin
 git config -l
@@ -21,7 +22,7 @@ git rm -r folder-name
 git commit -m "folder-name deleted"
 git push origin master
 
-### __navigation branch__
+### __Navigation branch__
 git log --pretty=oneline --abbrev-commit
 #to rollback to previos commit 
 git reset HEAD~1
@@ -49,7 +50,7 @@ git branch -D <branch name>
 
 ### __Merge into master__
 git checkout master
-git merge <branch name>
+git merge '<branch name>'
 #### if error edit what you want to change and save
 git add .
 git commit -am "comments"
