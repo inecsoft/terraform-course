@@ -37,21 +37,22 @@ git push
 git branch <name of branch>
 #### _show branches_
 git branch -a
-#### _go to the a branch_
+#### _Go to the a branch_
 git checkout <branch name>
-#### _get back to master branch_
+#### _Get back to master branch_
 git checkout master
-#### _creates brand and select it (best practice)_
+#### _Creates brand and select it (best practice)_
 git checkout -b <branch name>
-#### _delete branch when merged_
+#### _Delete branch when merged_
 git branch -d <branch name>
-#### _delete branch when branch is not merged with master_
+#### _Delete branch when branch is not merged with master_
 git branch -D <branch name>
 
 ### __Merge into master__
 git checkout master
-git merge '<branch name>'
-#### if error edit what you want to change and save
+git merge "<branch name>"
+#### If error edit what you want to change and save
 git add .
+
 git commit -am "comments"
 
