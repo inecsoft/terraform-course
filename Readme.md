@@ -1,11 +1,18 @@
 ### __Inicialize Repo__
 git init
+
 git config user.name \<username\>
+
 git config user.email \<user@domain\>
+
 git remote set-url origin git@github.com:inecsoft/terraform-course.git
+
 ssh -T git@github.com
+
 git add .
+
 git commit -m "first commit"
+
 git push
 
 ### __Add the public key on the repo__
