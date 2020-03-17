@@ -84,3 +84,19 @@ git add .
 
 git commit -am "comments"
 
+### __Manage credentials__
+* #### _Helper to store password disk__
+git config credential.helper store
+
+* #### _Helper to temporaly (2hours) store password in memory__
+git config --global credential.helper 'cache --timeout=7200'
+
+### __Colaboration__
+git clone \<your fork url\>
+
+git push origin \<branch name\>
+
+git remote add upstream \<URL master git repo\>
+
+git push upstream master
+
