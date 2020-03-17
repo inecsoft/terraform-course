@@ -32,10 +32,10 @@ git push
 git pull
 git push
 
-### __Create Branch__
-#### _create branch_
+### __Manage Branches__
+#### _Create branch_
 git branch <name of branch>
-#### _show branches_
+#### _Show branches_
 git branch -a
 #### _Go to the a branch_
 git checkout <branch name>
@@ -50,7 +50,8 @@ git branch -D <branch name>
 
 ### __Merge into master__
 git checkout master
-git merge "<branch name>"
+
+git merge "\<branch name\>"
 #### If error edit what you want to change and save
 git add .
 
