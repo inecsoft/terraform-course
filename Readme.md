@@ -49,8 +49,9 @@ git checkout master
 ### __Navigation branch__
 git log --pretty=oneline --abbrev-commit
 #### To rollback to previos commit 
-git reset HEAD~1
-git rebase -i HEAD~6
+git reset HEAD\~1
+
+git rebase -i HEAD\~6
 #### Delete the line of the commit that you want to delete
 git push
 
