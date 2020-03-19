@@ -41,8 +41,10 @@ git log --oneline
 git checkout \<commit\>
 * #### _Undo a commit_
 git revert \<commit\>
-* #### _Destroy the content_
+* #### _Undoes all commits after \<commits\>, preserving changes locally_
 git reset \<commit\>
+* #### _Discards all history and changes back to the specified commit_
+git reset --hard \<commit\>
 
 git checkout master
 
@@ -77,10 +79,14 @@ git branch -D \<branch name\>
 
 ### __Merge into master__
 git checkout master
+* #### _Show content differences between two branches_
+git diff \<first-branch\>...\<second-branch\>
 
 git merge \<branch name\>
 #### If error edit what you want to change and save
 git add .
+or 
+git add \<file name\>
 
 git commit -am "comments"
 
