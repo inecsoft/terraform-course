@@ -96,6 +96,12 @@ git config credential.helper store
 
 * #### _Helper to temporaly (2hours) store password in memory_
 git config --global credential.helper 'cache --timeout=7200'
+* #### _Helper to temporaly store credential in memory locally_
+git config --local credential.helper ""
+* #### _Edit the account in .gitconfig_
+git config --global --list
+
+git config --global -e
 
 ### __Colaboration__
 git clone \<your fork url\>
