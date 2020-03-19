@@ -85,7 +85,7 @@ git diff \<first-branch\>...\<second-branch\>
 git merge \<branch name\>
 #### If error edit what you want to change and save
 git add .
-or 
+
 git add \<file name\>
 
 git commit -am "comments"
