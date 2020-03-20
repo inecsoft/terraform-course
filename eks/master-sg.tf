@@ -20,7 +20,7 @@ resource "aws_security_group" "eks-cluster-sg" {
 resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
   #cidr_blocks       = ["A.B.C.D/32"]
   #cidr_blocks       = ["${var.myip}/32"]
-  cidr_blocks       = ["${"local.workstation-external-cidr"]
+  cidr_blocks       = ["${"local.workstation-external-cidr}"]
   description       = "Allow workstation to communicate with the cluster API Server"
   from_port         = 443
   protocol          = "tcp"
