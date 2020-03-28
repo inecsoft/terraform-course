@@ -33,9 +33,11 @@ We will deploy a resource codepipeline which defines the following stages:
   The develper pushes the code to AWS codecommit.
 
   * _Source_ __(CodeCommit)__
+
   CodeCommit is where we store our code. Where codecommit detect new changes on the repo it triggers codepipeline to start building.
 
-  * _Build_  (CodeBuild)
+  * _Build_  __(CodeBuild)__
+
   The build uses docker build and docker push command. It creates the images using Dockerfile stored in git  repo. The image built will be stored in a container Registry.
   The artifacts will be stored in an S3 bucket.
   
@@ -43,7 +45,8 @@ We will deploy a resource codepipeline which defines the following stages:
      - appspec.yaml
      - taskdef.json
 
-  * _Deploy_ (CodeDeploy)
+  * _Deploy_ __(CodeDeploy)__
+  
     The deployment will be done on ECS service using a new task by pulling the images from docker registry. the task will be assign to a loadbalancer and when the task is healthy; the app is deployed using Blue/Green deployment strategy in a target group. Then the user can reach the url of the loadbalancer app.
 
 <div align="center">
@@ -51,5 +54,5 @@ We will deploy a resource codepipeline which defines the following stages:
 </div>
 
 <div align="center">
-    <img src="images/codepipeline-3.png" width="700" />
+    <img src="images/codepipeline-3.png" width="850" />
 </div>
