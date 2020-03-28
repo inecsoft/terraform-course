@@ -22,7 +22,7 @@
 </div>
 
 <div align="center">
-    <img src="images/diagram-flow.png" width="700" />
+    <img src="images/diagram-flow.png" width="1080" />
 </div>
 
 ***
@@ -46,7 +46,7 @@ We will deploy a resource codepipeline which defines the following stages:
      - taskdef.json
 
   * _Deploy_ __(CodeDeploy)__
-  
+
     The deployment will be done on ECS service using a new task by pulling the images from docker registry. the task will be assign to a loadbalancer and when the task is healthy; the app is deployed using Blue/Green deployment strategy in a target group. Then the user can reach the url of the loadbalancer app.
 
 <div align="center">
@@ -54,5 +54,6 @@ We will deploy a resource codepipeline which defines the following stages:
 </div>
 
 <div align="center">
-    <img src="images/codepipeline-3.png" width="850" />
+    <img src="images/codepipeline-3.png" width="1080" />
 </div>
+***
