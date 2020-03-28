@@ -45,3 +45,11 @@ We will deploy a resource codepipeline which defines the following stages:
 
   * _Deploy_ (CodeDeploy)
     The deployment will be done on ECS service using a new task by pulling the images from docker registry. the task will be assign to a loadbalancer and when the task is healthy; the app is deployed using Blue/Green deployment strategy in a target group. Then the user can reach the url of the loadbalancer app.
+
+<div align="center">
+    <h3>WorkFlow detailed</h3>
+</div>
+
+<div align="center">
+    <img src="images/codepipeline-3.png" width="700" />
+</div>
