@@ -12,11 +12,16 @@ resource "aws_codebuild_project" "codepipeline" {
     type = "CODEPIPELINE"
   }
 
+  #The type of storage that will be used for the AWS CodeBuild project cache
+  #values: NO_CACHE, LOCAL, and S3
   #cache {
   #  type     = "S3"
   #  location = aws_s3_bucket.codebuild-cache.bucket
   #}
 
+  #compute_type: BUILD_GENERAL1_SMALL, BUILD_GENERAL1_MEDIUM, BUILD_GENERAL1_LARGE
+  #https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+  #image for dotnet  Amazon Linux 2 standard:3.0; Ubuntu standard:4.0
   environment {
     compute_type    = "BUILD_GENERAL1_SMALL"
     image           = "aws/codebuild/docker:18.09.0"
