@@ -56,4 +56,5 @@ We will deploy a resource codepipeline which defines the following stages:
 <div align="center">
     <img src="images/codepipeline-3.png" width="1080" />
 </div>
+
 ***
