@@ -1,7 +1,8 @@
 
 <div align="center">
-    <h3>CodePipeline Project</h3>
+    <h1>CodePipeline Project</h1>
 </div>
+
 ***
 <div align="center">
     <h3>"What is Codepipeline?"</h3>
