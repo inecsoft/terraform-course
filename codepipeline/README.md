@@ -47,7 +47,7 @@ We will deploy a resource codepipeline which defines the following stages:
   The artifacts will be stored in an S3 bucket. An S3 cache example is commented out in case we need it.
   The task defiinition will be updated with the latest image with and script called "create-new-task-def.sh".  
    
-    __Creates and stores artifacts files in S3 bucket:__
+    __Creates and stores artifacts files in S3 bucket:__  
      - appspec.yaml
      - taskdef.json
 
