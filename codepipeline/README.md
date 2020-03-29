@@ -45,11 +45,6 @@ We will deploy a resource codepipeline which defines the following stages:
 
   The build uses docker build and docker push command (file config "buildspec.yml"). It creates the images using Dockerfile stored in git repo. The image built will be stored in a container Registry. The artifacts will be stored in an S3 bucket. An S3 cache example is commented out in case we need it. The task defiinition will be updated with the latest image with and script called "create-new-task-def.sh".
 
-    **Creates and stores artifacts files in S3 bucket:**
-
-      * appspec.yaml
-      * taskdef.json
-
   * _Deploy_ __(CodeDeploy)__
 
     The deployment will be done on ECS service using a new task by pulling the images from docker registry. the task will be assign to a loadbalancer and when the task is healthy; the app is deployed using Blue/Green deployment strategy in a target group which will be swithed in every successful deployment. Then the user can reach the url of the loadbalancer app.
