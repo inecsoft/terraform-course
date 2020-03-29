@@ -1,4 +1,7 @@
-# __CodePipeline Project__
+
+<div align="center">
+    <h3>CodePipeline Project</h3>
+</div>
 ***
 <div align="center">
     <h3>"What is Codepipeline?"</h3>
@@ -63,7 +66,9 @@ We will deploy a resource codepipeline which defines the following stages:
 </div>
 
 ***
-# __Process to work with Codecommit__
+<div align="center">
+    <h1>Process to work with Codecommit</h1>
+</div>
 ***
 1. Go to iam and select your user 
 2. Go to security credential
@@ -95,4 +100,6 @@ git remote add origin ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-
 git clone ssh://Your-SSH-Key-ID@git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-pro  
 url-http = https://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod  
 url-ssh = ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod  
+
 ***
+
