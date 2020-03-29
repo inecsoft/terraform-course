@@ -4,6 +4,7 @@
 </div>
 
 ***
+
 <div align="center">
     <h3>"What is Codepipeline?"</h3>
 </div>
@@ -70,13 +71,16 @@ We will deploy a resource codepipeline which defines the following stages:
 <div align="center">
     <h1>Process to work with Codecommit</h1>
 </div>
+
 ***
+
 1. Go to iam and select your user 
 2. Go to security credential
 3. Upload you public key pair
 4. Copy the id
 
 vim ~/.ssh/config
+
 ```
 Host git-codecommit.*.amazonaws.com
   User APKAEIBAERJR2EXAMPLE
