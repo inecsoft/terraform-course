@@ -1,4 +1,4 @@
-#__Documentation__
+# __Documentation__
 ***
 1- Go to iam and select your user 
 2- Go to security credential
@@ -14,12 +14,12 @@ Host git-codecommit.*.amazonaws.com
 
 chmod 600 ~/.ssh/config
 
-###  _Test if repo works_
+* ###  __Test if repo works__
 ssh git-codecommit.us-east-2.amazonaws.com
 
-### _Clone repo_
+* ### __Clone repo__
 git clone ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod
-### _To push to the repo_
+* ### __To push to the repo__
 
 git add .
 git commit -m "first commit"
@@ -27,7 +27,7 @@ git push --set-upstream ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/ap
 
 git remote add origin ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod
 
-### _push repo_
+* ### __push repo__
 git clone ssh://Your-SSH-Key-ID@git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-pro   my-demo-repo
 
 efs-id = fs-d89b1513
