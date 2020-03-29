@@ -1,7 +1,8 @@
 #---------------------------------------------------------------------------------------------------------
 resource "aws_launch_configuration" "performance" {
     name                        = "performance"
-    image_id                    = "${lookup(var.AMIS, var.AWS_REGION)}"
+    #image_id                    = "${lookup(var.AMIS, var.AWS_REGION)}"
+    image_id                    = "${data.aws_ami.amazon_linux.id}"
     instance_type               = "${var.instance_type}"
     key_name                    = "${aws_key_pair.mykey.key_name}"
     associate_public_ip_address = true
