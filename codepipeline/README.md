@@ -64,7 +64,7 @@ We will deploy a resource codepipeline which defines the following stages:
 </div>
 
 <div align="center">
-    <img src="images/codepipeline-3.png" width="1080" />
+    <img src="images/codepipeline-3.png" width="1600" />
 </div>
 
 ***
@@ -101,7 +101,7 @@ git commit -m "first commit"
 git push --set-upstream ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod master  
 git remote add origin ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod  
 
-* ### __push repo__
+* ### __Push repo__
 git clone ssh://Your-SSH-Key-ID@git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-pro  
 url-http = https://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod  
 url-ssh = ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod  
