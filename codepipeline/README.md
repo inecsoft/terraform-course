@@ -47,8 +47,8 @@ We will deploy a resource codepipeline which defines the following stages:
 
    __Creates and stores artifacts files in S3 bucket:__  
 
-      * _appspec.yaml_
-      * _taskdef.json_
+      appspec.yaml
+      taskdef.json
 
   * _Deploy_ __(CodeDeploy)__
 
