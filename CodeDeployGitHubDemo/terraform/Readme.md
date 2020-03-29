@@ -22,7 +22,9 @@ git clone ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod
 * ### __To push to the repo__
 
 git add .
+
 git commit -m "first commit"
+
 git push --set-upstream ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod master
 
 git remote add origin ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod
@@ -31,7 +33,10 @@ git remote add origin ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-
 git clone ssh://Your-SSH-Key-ID@git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-pro   my-demo-repo
 
 efs-id = fs-d89b1513
+
 ipaddress = 52.51.140.11
+
 url-http = https://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod
+
 url-ssh = ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/app-node-prod
 ***
