@@ -81,6 +81,6 @@ resource "aws_ecs_service" "codepipeline" {
 # logs
 #------------------------------------------------------------------------------------------------------
 resource "aws_cloudwatch_log_group" "codepipeline" {
-  name = "codepipeline"
+  name = "${local.default_name}"
 }
 #------------------------------------------------------------------------------------------------------

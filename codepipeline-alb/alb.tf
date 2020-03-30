@@ -9,14 +9,14 @@ resource "aws_lb" "codepipeline" {
 
   enable_deletion_protection = false
   enable_http2               = true
-
+  #routing.http.drop_invalid_header_fields.enabled
+  
   idle_timeout    = 60
 
-  access_logs {
-      bucket  = "dev-suluq-alb-logs"
-      enabled = true
+  access_logs = {
+    bucket = "${aws_s3_bucket.codepipeline-alb-logs.id}"
+    enabled = true
   }
-
 
   tags = {
     Name    = "${local.default_name}-alb"

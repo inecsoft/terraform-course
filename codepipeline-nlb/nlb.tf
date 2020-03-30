@@ -6,8 +6,12 @@ resource "aws_lb" "codepipeline" {
   enable_cross_zone_load_balancing = true
 
   internal           = false
-
   enable_deletion_protection = false
+
+  access_logs = {
+    bucket = "${aws_s3_bucket.codepipeline-nlb-logs.id}"
+    enabled = true
+  }
 
   tags = {
     Name = "${local.default_name}-alb"
