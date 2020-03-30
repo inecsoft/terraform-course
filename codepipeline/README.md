@@ -51,7 +51,7 @@ We will deploy a resource codepipeline which defines the following stages:
     The deployment will be done on ECS service using a new task by pulling the images from docker registry. the task will be assign to a loadbalancer and when the task is healthy; the app is deployed using Blue/Green deployment strategy in a target group which will be swithed in every successful deployment. Then the user can reach the url of the loadbalancer app.
 
     The service fargate is used to provide autoscale.
-    you can set up the fargate service in a private subnet to improve security. Make sure if you use private 
+    You can set up the fargate service in a private subnet to improve security. Make sure if you use private 
     subnets you have a nat gateway enable on your vpc.
 
 <div align="center">
