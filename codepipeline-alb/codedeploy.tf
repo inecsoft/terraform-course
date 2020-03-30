@@ -40,7 +40,7 @@ resource "aws_codedeploy_deployment_group" "codepipeline" {
   load_balancer_info {
     target_group_pair_info {
       prod_traffic_route {
-        listener_arns = [aws_lb_listener.codepipeline.arn]
+        listener_arns = [aws_lb_listener.codepipeline-443.arn]
       }
 
       target_group {

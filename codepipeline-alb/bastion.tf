@@ -2,7 +2,7 @@ resource  "aws_instance" "bastion" {
    #ami                          = "${data.aws_ami.amazon_linux.id}"
    ami                          = data.aws_ami.redhat.id
    instance_type                = "t3.micro"
-   key_name                     = "${aws_key_pair.suluq.key_name}"
+   key_name                     = "${aws_key_pair.codepipeline.key_name}"
    associate_public_ip_address  = true
    user_data                    = data.template_cloudinit_config.cloudinit-bastion.rendered
 
@@ -21,6 +21,7 @@ resource  "aws_instance" "bastion" {
 
    }
 
+
   provisioner "file" {
   source      = "codepipeline"
   destination = "/home/${var.redhat-user}/.ssh/codepipeline"
@@ -31,6 +32,15 @@ resource  "aws_instance" "bastion" {
    }
   }
 
+ provisioner "file" {
+  source      = "scripts/jail.local"
+  destination = "/etc/fail2ban/"
+    connection {
+    host = "${self.public_ip}"
+    user = "${var.redhat-user}"
+    private_key = "${file("${var.PATH_TO_PRIVATE_KEY}")}"
+   }
+  }
   provisioner "remote-exec" {
     inline = ["sudo chmod 400 /home/${var.redhat-user}/.ssh/codepipeline"]
     connection {
@@ -64,3 +74,36 @@ output "Bation-IPAddress" {
 #}
 #----------------------------------------------------------------------------------
 #ANSIBLE_HOST_KEY_CHECKING=false
+#-----------------------------------------------------------------------------------------------------
+
+data "template_file" "bastion-init" {
+  template = file("scripts/bastion-init.tpl")
+    vars = {
+    REGION = var.AWS_REGION
+  }
+
+}
+
+data "template_file" "bastion" {
+  template = file("scripts/bastion.sh")
+    vars = {
+    REGION = var.AWS_REGION
+  }
+
+}
+data "template_cloudinit_config" "cloudinit-bastion" {
+  gzip          = false
+  base64_encode = false
+
+  part {
+    content_type = "text/cloud-config"
+    content      = data.template_file.bastion-init.rendered
+    filename     = "cloud-config"
+  }
+
+  part {
+    content_type = "text/x-shellscript"
+    content      = data.template_file.bastion.rendered
+  }
+}
+#-----------------------------------------------------------------------------------------------------

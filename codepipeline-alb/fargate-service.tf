@@ -51,7 +51,7 @@ resource "aws_ecs_service" "codepipeline" {
   desired_count   = 1
   task_definition = aws_ecs_task_definition.codepipeline.arn
   launch_type     = "FARGATE"
-  depends_on      = [aws_lb_listener.codepipeline]
+  depends_on      = [aws_lb_listener.codepipeline-443]
 
   deployment_controller {
     type = "CODE_DEPLOY"
@@ -74,30 +74,6 @@ resource "aws_ecs_service" "codepipeline" {
     ignore_changes = [
       task_definition,
       load_balancer
-    ]
-  }
-}
-#------------------------------------------------------------------------------------------------------
-# security group
-#------------------------------------------------------------------------------------------------------
-resource "aws_security_group" "ecs-codepipeline" {
-  name        = "ECS codepipeline"
-  vpc_id      = module.vpc.vpc_id
-  description = "ECS codepipeline"
-
-  ingress {
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-    cidr_blocks = [
-      "0.0.0.0/0"
     ]
   }
 }
