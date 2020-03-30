@@ -1,4 +1,3 @@
-
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
  default = "eu-west-1"
@@ -17,19 +16,19 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "code-pipeline"))}"
+  default_name = "${join("-", list(terraform.workspace, "proxy"))}"
 }
 #-------------------------------------------------------------------
 variable  "domain" {
-  default = "codepipeline.inchoratech.com"
+  default = "proxy.inchoratech.com"
 }
 #-------------------------------------------------------------------
-#ssh-keygen -t ecdsa -b 384 -f codepipeline
+#ssh-keygen -t ecdsa -b 384 -f proxy
 variable "PATH_TO_PRIVATE_KEY" {
-  default = "codepipeline"
+  default = "proxy"
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-    default = "codepipeline.pub"
+    default = "proxy.pub"
 }
 #-------------------------------------------------------------------
