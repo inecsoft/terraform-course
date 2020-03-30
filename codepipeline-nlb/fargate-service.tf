@@ -10,6 +10,7 @@ resource "aws_ecs_task_definition" "codepipeline" {
     "FARGATE"
   ]
 
+ #container_definitions = "${file("task-definitions/service.json")}"
   container_definitions = <<DEFINITION
 [
   {
