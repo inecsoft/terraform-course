@@ -81,6 +81,9 @@ We will deploy a resource codepipeline which defines the following stages:
 vim ~/.ssh/config
 
 ```
+Host *
+  StrictkHostKeyChecking no
+
 Host git-codecommit.*.amazonaws.com
   User APKAEIBAERJR2EXAMPLE
   IdentityFile ~/.ssh/codecommit_rsa
