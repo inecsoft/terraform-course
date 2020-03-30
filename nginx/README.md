@@ -4,7 +4,7 @@
 
 ***
 <div align="left">
-<p>1. sed "a" command lets us append lines to a file, based on the line number or regex provided. So, the lines will be added to the file AFTER the line where condition matches.
+<p>1. sed "a" command lets us append lines to a file, based on the line number or regex provided. So, the lines will be added to the file AFTER the line where condition matches. \n
 2. sed "i" command lets us insert lines in a file, based on the line number or regex provided. So, the lines will be added to the file AT the location where line number matches or BEFORE the line where pattern matches.
 3. sed with option -i will edit the file in place, i.e. unless you use the option -i, the changes will not be written to the file. (Explained in later section)
 </p>
