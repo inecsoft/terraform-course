@@ -6,6 +6,7 @@
 ***
 <div  align="center"> 
    <h3>AWS Global Accelerator features</h3>
+   <div align="left">
     <b style="text-align:left">
        <ul style="list-style-type:circle;">
          <li>Static anycast IP addresses</li>
@@ -19,17 +20,8 @@
          <li>Distributed denial of service (DDoS) resiliency at the edge</li>
        </ul> 
     </b>
+   </div>
 </div>
-
-   - __Static anycast IP addresses__
-   - __Fault tolerance using network zones__
-   - __Global performance-based routing__
-   - __TCP Termination at the Edge__
-   - __Bring your own IP (BYOIP)__
-   - __Fine-grained traffic control__
-   - __Continuous availability monitoring__
-   - __Client affinity__
-   - __Distributed denial of service (DDoS) resiliency at the edge__
 
 ***
 <div  align="center"> 
@@ -51,12 +43,14 @@ The Global Accelerator provides two static Anycast IPv4 addresses. All you need 
 ***
 <div  align="center"> 
    <h3>To make use of Global Accelerator, you need to:</h3>
+   <div align="left">
      <ol style="text-align:left" type="1">
        <li>Create an accelerator which provisions two static Anycast IP addresses.</li>
        <li>Create a listener for the protocol and port or port range.</li>
        <li>Create an endpoint group for every region you want to route traffic to.</li>
        <li>Add an endpoint (e.g., an ALB) to each endpoint group.</li>
-    </ol>
+     </ol>
+   </div>
 </div>
 
 ***
