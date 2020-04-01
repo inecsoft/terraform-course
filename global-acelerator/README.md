@@ -52,6 +52,20 @@ The Global Accelerator provides two static Anycast IPv4 addresses. All you need 
      </ol>
    </div>
 </div>
+***
+<div  align="center">
+    <h3>Use cases:</h3>
+    <div align="left">
+       <ol type="1">
+          <li>Multi-Region: deploy your infrastructure to multiple regions and route traffic to the region that is closest to the client.</li>
+<li>Disaster Recovery: shift traffic from a region or endpoint affected by an outage to another endpoint. The Anycast IP addresses make sure all clients send requests to healthy endpoints only immediately.1 Doing so is a challenge when using routing mechanisms based on Route 53 (DNS) due to caching issues.</li>
+<li>Static IP Address: some clients (e.g., IoT devices) might not be able to resolve names via DNS, or static IP addresses might be needed for a firewall rule (NLB is an alternative in that scenario).</li>
+<li>Low Latency: all scenarios, where latency is critical (e.g., trading, gaming, …).</li>
+<li>Blue-Green or Canary Deployment: shift traffic between infrastructures during deployments or for testing purposes.</li>
+<li>Origin Cloaking: use the Global Accelerator as public and protected (see AWS Shield) endpoint for an ALB or EC2 running in a private subnet.</li>
+      </ol>
+    </div>
+</div>
 
 ***
 <div  align="center"> 
