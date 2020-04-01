@@ -46,7 +46,7 @@ The Global Accelerator provides two static Anycast IPv4 addresses. All you need 
 
  <div align="center">
     <img src="images/global-acelerator.JPG" width="700"/>
-</div>$
+</div>
 
 ***
 <div  align="center"> 
@@ -62,12 +62,14 @@ The Global Accelerator provides two static Anycast IPv4 addresses. All you need 
 ***
 <div  align="center"> 
    <h3>CloudFront vs. Global Accelerator</h3>
-   <p style="text-align:left"> When optimizing for low latency and response times, CloudFront - the    Content Delivery Network (CDN) - is an obvious choice. Both services optimize the route of a request from clients all over the world to your endpoints. However, CloudFront can process a request and cache a response from 200 locations distributed worldwide. The Global Accelerator routes the packages to one of your endpoints (one or multiple endpoints optionally distributed among regions).
+   <div  align="left">
+   <p> When optimizing for low latency and response times, CloudFront - the    Content Delivery Network (CDN) - is an obvious choice. Both services optimize the route of a request from clients all over the world to your endpoints. However, CloudFront can process a request and cache a response from 200 locations distributed worldwide. The Global Accelerator routes the packages to one of your endpoints (one or multiple endpoints optionally distributed among regions).
 
    There is another fundamental difference between CloudFront and Global Accelerator: CloudFront caches responses from your endpoints. At best, CloudFront can answer an incoming request from an edge location near to the client without forwarding a request to your endpoint. Depending on your workload, the majority of requests are cacheable, which reduces the response times and latencies enormously.
 
    In summary, the result of the latency benchmark with the same setup, as described above, is not a surprise. The Global Accelerator reduces the latency to the ALB. But still, the package is routed from each continent to the ALB in eu-west-1. CloudFront, on the other hand, was able to cache the responses at the edge locations.
    </p>
+   </div>
 </div>
 
 ***
