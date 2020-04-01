@@ -52,7 +52,9 @@ The Global Accelerator provides two static Anycast IPv4 addresses. All you need 
      </ol>
    </div>
 </div>
+
 ***
+
 <div  align="center">
     <h3>Use cases:</h3>
     <div align="left">
