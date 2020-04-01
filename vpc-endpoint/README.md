@@ -1,6 +1,6 @@
 ***
 
-<div aling="center">
+<div align="center">
   <h1>VPC Endpoint</h1>
 
 </div>
