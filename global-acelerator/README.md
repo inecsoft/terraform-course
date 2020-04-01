@@ -45,7 +45,7 @@ The Global Accelerator provides two static Anycast IPv4 addresses. All you need 
   * _EC2 Instance (with or without Public IP)_
 
  <div align="center">
-    <img src="images/global-acelerator.jpg" width="700"/>
+    <img src="images/global-acelerator.JPG" width="700"/>
 </div>$
 
 ***
