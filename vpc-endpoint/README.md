@@ -1,6 +1,9 @@
 ***
 
-<div aling="center">VPC Endpoint</div>
+<div aling="center">
+  <h1>VPC Endpoint</h1>
+
+</div>
 
 ***
 #### __*NOTE:*__  
@@ -19,3 +22,5 @@
 #### __To test:__
 Delete the route table for the natgateway and create the endpoint then test that the EC2 instance has access to S3 bucket.
 check that you have a route table pointing to the endpoint
+
+***
