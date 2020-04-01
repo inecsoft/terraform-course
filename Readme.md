@@ -1,6 +1,11 @@
+***
+
  <div align="center">
     <img src="images/devops.JPG" width="700" />
 </div>
+
+***
+
 ### __Inicialize Repo__
 git init
 
