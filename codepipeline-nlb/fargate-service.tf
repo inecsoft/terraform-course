@@ -61,7 +61,7 @@ resource "aws_ecs_service" "codepipeline" {
   #you can change the subnet to private but you nee to make sure that you use nat gateway.
   #------------------------------------------------------------------------------------------------------
   network_configuration {
-    subnets          = slice(module.vpc.public_subnets, 1, 2)
+    subnets          = slice(module.vpc.private_subnets, 0, 3)
     security_groups  = [aws_security_group.ecs-codepipeline.id]
     assign_public_ip = true
   }
