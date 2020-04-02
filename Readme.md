@@ -112,11 +112,27 @@ git config --global --list
 git config --global -e
 
 ### __Colaboration__
-git clone \<your fork url\>
+git clone \<your fork url\>  
+git push origin \<branch name\>  
+git remote add upstream \<URL master git repo\>  
+git push upstream master  
 
-git push origin \<branch name\>
+### __Configuration file to manage git repos__
+ssh-keygen -t rsa -t 2048 -f github  
+vim ~/.ssh/config  
 
-git remote add upstream \<URL master git repo\>
+```
+Host github.com
+    HostName github.com
+    User inecsoft
+    IdentityFile C:\Users\Ivan\.ssh\github
+```
 
-git push upstream master
+git clone <repo URL>  
+git add .  
+git commit -am "message"  
+ssh-agent bash  
+ssh-add -k github  
+git push  
 
+***
