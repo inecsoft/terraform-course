@@ -18,13 +18,13 @@ locals {
 }
 #-------------------------------------------------------------------
 variable "MYSQL_USER" {
-      value = "codepipeline"
+      default = "codepipeline"
 }
 variable "MYSQL_PASSWORD" {
-      value = "JO3a2NIXapLl0zG76AE41o2e4jdqB66oinmegVPL1y5bRvo=" 
+     default = "JO3a2NIXapLl0zG76AE41o2e4jdqB66oinmegVPL1y5bRvo=" 
 }
 variable "MYSQL_DATABASE" {
-      value = "codepipeline"
+      default = "codepipeline"
 }
 #-------------------------------------------------------------------
 

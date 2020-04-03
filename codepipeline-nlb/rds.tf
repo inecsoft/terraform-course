@@ -34,9 +34,9 @@ resource "aws_db_instance" "mariadb" {
   instance_class          = "db.t2.micro"                               # use micro if you want to use the free tier
 
   identifier              = "codepipeline"
-  name                    = var.MYSQL_DATABASE
+  name                    = var.MYSQL_DATABASE       # db-name
   username                = var.MYSQL_USER           # username
-  password                = var.MYSQL_PASSWORD # password
+  password                = var.MYSQL_PASSWORD       # password
 
   db_subnet_group_name    = aws_db_subnet_group.mariadb-subnet.name
   parameter_group_name    = aws_db_parameter_group.mariadb-parameters.name
@@ -51,9 +51,7 @@ resource "aws_db_instance" "mariadb" {
     Name = "${local.default_name}-mariadb-rds"
   }
 }
-
------------------------------------------
-
+#------------------------------------------------------
 output "rds_endpoint" {
   value = aws_db_instance.mariadb.endpoint
 }
