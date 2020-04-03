@@ -5,13 +5,25 @@ resource "aws_ecs_task_definition" "codepipeline" {
   task_role_arn      = aws_iam_role.ecs-task-role.arn
   cpu                = 256
   memory             = 512
-  #The valid values are none, bridge, awsvpc, and host.
+  #The host and awsvpc network modes offer the highest networking performance for containers because
+  # they use the Amazon EC2 network stack instead of the virtualized network stack provided by the bridge mode.
+  # With the host and awsvpc network modes, exposed container ports are mapped directly to the corresponding host port
+  # (for the host network mode) or the attached elastic network interface port (for the awsvpc network mode),
+  # so you cannot take advantage of dynamic host port mappings.
   network_mode       = "awsvpc"
   requires_compatibilities = [
     "FARGATE"
   ]
 
  #container_definitions = "${file("task-definitions/service.json")}"
+
+     #"environment": [
+     #   {
+     #     "name": "DATABASE_URL",
+     #     "value": "mariadb://db_admin:YOUR_DB_PASSWORD@YOUR_DB_HOST:3306/express_app?ssl=Amazon+RDS"
+     #   }
+     # ],
+
   container_definitions = <<DEFINITION
 [
   {

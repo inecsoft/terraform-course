@@ -9,6 +9,12 @@ CURRENT_TASKDEF_CONTAINERDEF=`echo $CURRENT_TASKDEF| jq --raw-output ".taskDefin
 TASKDEF_ROLE_ARN=`echo $CURRENT_TASKDEF| jq --raw-output ".taskDefinition.taskRoleArn"`
 EXECUTION_ROLE_ARN=`echo $CURRENT_TASKDEF| jq --raw-output ".taskDefinition.executionRoleArn"`
 TASKDEF=`echo $CURRENT_TASKDEF_CONTAINERDEF | jq ' [ .[] |  .image = "'${IMAGE_URI}'" ]'`
+TASKDEF=`echo $TASKDEF | jq ' [ .[] |  .environment = [ 
+ {"name": "MYSQL_HOST", "value": "'${MYSQL_HOST}'" },
+ {"name": "MYSQL_USER", "value": "'${MYSQL_USER}'" },
+ {"name": "MYSQL_ROOT_PASSWORD", "value": "'${MYSQL_ROOT_PASSWORD}'" },
+ {"name": "MYSQL_DATABASE", "value": "'${MYSQL_DATABASE}'" }
+ ] ]'`
 CPU=$(echo $CURRENT_TASKDEF |jq -r '.taskDefinition.cpu')
 MEMORY=$(echo $CURRENT_TASKDEF |jq -r '.taskDefinition.memory')
 NETWORK_MODE=$(echo $CURRENT_TASKDEF |jq -r '.taskDefinition.networkMode')

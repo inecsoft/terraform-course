@@ -44,6 +44,8 @@ resource "aws_lb_target_group" "blue" {
   name                 = "http-blue"
   port                 = "3000"
   protocol             = "TCP"
+  #when you create any target groups for these services, you must choose ip as the target type, not instance. 
+  #This is because tasks that use the awsvpc network mode are associated with an ENI, not with an Amazon EC2 instance.
   target_type          = "ip"
   vpc_id               = module.vpc.vpc_id
   deregistration_delay = "30"

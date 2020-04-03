@@ -17,3 +17,19 @@ locals {
   default_name = "${join("-", list(terraform.workspace, "code-pipeline"))}"
 }
 #-------------------------------------------------------------------
+variable  "MYSQL_HOST" {
+  value = aws_db_instance.mariadb.endpoint
+}
+
+variable "MYSQL_USER" {
+      value = "codepipeline"
+}
+
+variable "MYSQL_PASSWORD" {
+      value = "JO3a2NIXapLl0zG76AE41o2e4jdqB66oinmegVPL1y5bRvo=" 
+}
+variable "MYSQL_DATABASE" {
+      value = "codepipeline"
+}
+#-------------------------------------------------------------------
+

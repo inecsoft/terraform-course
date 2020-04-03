@@ -40,6 +40,27 @@ resource "aws_codebuild_project" "codepipeline" {
       name  = "IMAGE_REPO_NAME"
       value = aws_ecr_repository.codepipeline.name
     }
+
+    environment_variable {
+      name  = "MYSQL_HOST"
+      value = aws_db_instance.mariadb.endpoint
+    }
+	  
+    environment_variable {
+      name  = "MYSQL_USER"
+      value = var.MYSQL_USER
+    }
+    
+    environment_variable {
+      name  = "MYSQL_PASSWORD"
+      value = var.MYSQL_PASSWORD
+    }
+    environment_variable {
+      name  = "MYSQL_DATABASE"
+      value = var.MYSQL_DATABASE
+    }
+
+
   }
 
   source {
