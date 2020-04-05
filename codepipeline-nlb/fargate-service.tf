@@ -39,7 +39,13 @@ resource "aws_ecs_task_definition" "codepipeline" {
             }
      },
      "secrets": [],
-     "environment": [],
+     "environment": [
+       {"name": "MYSQL_HOST", "value": "${aws_db_instance.mariadb.endpoint}"},
+       {"name": "MYSQL_USER", "value": "${var.MYSQL_USER}"},
+       {"name": "MYSQL_ROOT_PASSWORD", "value": "${var.MYSQL_PASSWORD}"},
+       {"name": "MYSQL_DATABASE", "value": "${var.MYSQL_DATABASE}
+     ],
+
      "healthCheck": {
        "command": [ "CMD-SHELL", "curl -f http://localhost:3000/ || exit 1" ],
        "interval": 30,
