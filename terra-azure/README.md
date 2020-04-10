@@ -1,12 +1,12 @@
 ***  
 
-<div align="centre">
+<div align="center">
   <h1>Terraform for Azure</h1>
 </div>
 
 ***
 
-#### __Install Azure CLI with yum__  
+* #### __Install Azure CLI with yum__  
   1. _Import the Microsoft repository key._
   
 ``` bash
@@ -26,9 +26,8 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azu
 ``` bash
 sudo yum install azure-cli -y  
 ```
-  
 
-* #### __Run the login command.__
+* #### __Login to get the credentials.__
 ``` bash
 az login
 az account show
@@ -37,7 +36,7 @@ _*Note:*_ After login set your project it works fine.
 
 * ### __Set up Terraform access to Azure__
 
-  1. __get a list of subscription ID and tenant ID values:__ 
+  1.  __Get a list of subscription ID and tenant ID values:__ 
 ```
 az account list
 az account list --query "[].{name:name, subscriptionId:id, tenantId:tenantId}"
