@@ -10,7 +10,7 @@ yum -y install nginx \
                wget
 
 
-cp /usr/local/nginx/conf/nginx.conf /usr/local/nginx/conf/nginx.conf.bak
+cp /usr/local/nginx/conf/nginx.conf /usr/local/nginx/conf/nginx.conf.back
 
 systemctl start nginx
 systemctl enable --now nginx

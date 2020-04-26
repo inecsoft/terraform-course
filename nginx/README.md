@@ -96,4 +96,10 @@ Include /usr/local/owasp-modsecurity-crs-3.0.2/rules/RESPONSE-999-EXCLUSION-RULE
 ***
 #### __Ref:__
 https://docs.nginx.com/nginx-waf/admin-guide/nginx-plus-modsecurity-waf-owasp-crs/
+
+***
+
+mkdir -p /var/lib/containers/disk01
+podman run --privileged -d -p 80:80 -v /var/lib/containers/disk01:/mnt --name nginx nginx
+
 ***

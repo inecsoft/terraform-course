@@ -1,0 +1,15 @@
+#cloud-config
+
+preserve_hostname: false
+fqdn: proxy.inchoratech.com
+hostname: proxy
+
+runcmd:
+ - yum update
+
+write_files:
+    - encoding: b64
+      content: CiMgVGhpcyBmaWxlIGNvbnRyb2xzIHRoZSBzdGF0ZSBvZiBTRUxpbnV4...
+      owner: root:root
+      path: /etc/sysconfig/selinux
+      permissions: '0644'

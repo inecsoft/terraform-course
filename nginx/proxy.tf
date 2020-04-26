@@ -79,7 +79,7 @@ output "proxy-IPAddress" {
 data "template_file" "proxy-init" {
   template = file("scripts/proxy-init.tpl")
     vars = {
-    REGION = var.AWS_REGION
+    HOSTNAME = aws_instance.proxy.public_ip
   }
 
 }
@@ -107,3 +107,4 @@ data "template_cloudinit_config" "cloudinit-proxy" {
   }
 }
 #-----------------------------------------------------------------------------------------------------
+
