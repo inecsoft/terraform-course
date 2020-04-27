@@ -78,8 +78,6 @@ output "proxy-IPAddress" {
 
 data "template_file" "proxy-init" {
   template = file("scripts/proxy-init.tpl")
-    vars = {
-    HOSTNAME = aws_instance.proxy.public_ip
   }
 
 }
