@@ -1,0 +1,11 @@
+/home/devop/terraform/tutorial/devops-azure/core-app/app/bin/Debug/netcoreapp3.0/app
+/home/devop/terraform/tutorial/devops-azure/core-app/app/bin/Debug/netcoreapp3.0/app.deps.json
+/home/devop/terraform/tutorial/devops-azure/core-app/app/bin/Debug/netcoreapp3.0/app.runtimeconfig.json
+/home/devop/terraform/tutorial/devops-azure/core-app/app/bin/Debug/netcoreapp3.0/app.runtimeconfig.dev.json
+/home/devop/terraform/tutorial/devops-azure/core-app/app/bin/Debug/netcoreapp3.0/app.dll
+/home/devop/terraform/tutorial/devops-azure/core-app/app/bin/Debug/netcoreapp3.0/app.pdb
+/home/devop/terraform/tutorial/devops-azure/core-app/app/obj/Debug/netcoreapp3.0/app.csprojAssemblyReference.cache
+/home/devop/terraform/tutorial/devops-azure/core-app/app/obj/Debug/netcoreapp3.0/app.AssemblyInfoInputs.cache
+/home/devop/terraform/tutorial/devops-azure/core-app/app/obj/Debug/netcoreapp3.0/app.AssemblyInfo.cs
+/home/devop/terraform/tutorial/devops-azure/core-app/app/obj/Debug/netcoreapp3.0/app.dll
+/home/devop/terraform/tutorial/devops-azure/core-app/app/obj/Debug/netcoreapp3.0/app.pdb
