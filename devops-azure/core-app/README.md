@@ -3,8 +3,8 @@
 
 ***  
 ###  __Create Core App__
-dotnet new console -o app -n app
-cd app
+dotnet new console -o app -n app  
+cd app  
 
 ### __Edit the app__
 vim Program.cs
