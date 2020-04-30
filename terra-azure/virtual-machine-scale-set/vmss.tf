@@ -1,6 +1,6 @@
 #---------------------------------------------------------------------------------
 #Define the network infrastructure:
-
+#---------------------------------------------------------------------------------
 #  * One virtual network with the address space of 10.0.0.0/16.
 #  * One subnet with the address space of 10.0.2.0/24.
 #  * Two public IP addresses. One is used by the virtual machine scale set load balancer. The other is used to connect to the SSH jumpbox.

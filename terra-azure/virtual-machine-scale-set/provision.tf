@@ -6,6 +6,7 @@
 
 # depends_on = ["aws_instance.bastion"]
 
+#----------------------------------------------------------------------------------
 resource "azurerm_resource_group" "image" {
   name     = "${local.default_name}-ResourceGroup"
   location = var.location
@@ -18,3 +19,4 @@ resource "azurerm_resource_group" "image" {
      environment = "codelab"
   }
 }
+#----------------------------------------------------------------------------------
