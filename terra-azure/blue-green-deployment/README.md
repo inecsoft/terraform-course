@@ -27,9 +27,11 @@ terraform apply -auto-approve
 </div>
      6- After Azure makes the connection and displays all the options, select Authorization.
 
-     7- On the Authorization tab, select Authorize, and supply the credentials that Azure needs to access your GitHub account.
+     7- On the Authorization tab, select Authorize, and supply the credentials that Azure needs to access  
+          your GitHub account.
 
-     8- After Azure validates your GitHub credentials, a message appears and says that the authorization process has finished. Select OK to close the Authorization tab.
+     8- After Azure validates your GitHub credentials, a message appears and says that the authorization process has finished.
+         Select OK to close the Authorization tab.
 
      9- Select Choose your organization and select your organization.
 
