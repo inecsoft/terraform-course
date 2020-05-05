@@ -91,7 +91,7 @@ resource "azurerm_lb_nat_rule" "lb_nat_rule" {
   frontend_ip_configuration_name = azurerm_lb.lb.frontend_ip_configuration[0].name
 }
 #-----------------------------------------------------------------------
-resource "azurerm_network_interface_backend_address_pool_association" "example" {
+resource "azurerm_network_interface_backend_address_pool_association" "nic-back-add-p-ass" {
   count                   = local.instance_count
   backend_address_pool_id = azurerm_lb_backend_address_pool.lb_pool.id
   ip_configuration_name   = "${local.default_name}-primary"

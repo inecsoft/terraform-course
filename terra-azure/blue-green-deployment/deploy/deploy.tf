@@ -13,6 +13,8 @@ resource "azurerm_resource_group" "slotDemo" {
     location = "East US 2"
 }
 #--------------------------------------------------------------------------------------------
+#Service plan can host multiple App Service web apps
+#--------------------------------------------------------------------------------------------
 resource "azurerm_app_service_plan" "slotDemo" {
     name                = "${local.default_name}-slotAppServicePlan"
     location            = azurerm_resource_group.slotDemo.location
@@ -23,6 +25,8 @@ resource "azurerm_app_service_plan" "slotDemo" {
         size = "S1"
     }
 }
+#--------------------------------------------------------------------------------------------
+#Every App Service web app you create must be assigned to a single App Service plan that runs it
 #--------------------------------------------------------------------------------------------
 resource "azurerm_app_service" "slotDemo" {
     name                = "${local.default_name}-AppService-blue"
