@@ -39,6 +39,14 @@ resource "azurerm_storage_account" "storage" {
   }
 }
 #--------------------------------------------------------------------------------------------
+#az storage container create --name terraform --account-name inecsoftstorage
+#--------------------------------------------------------------------------------------------
+resource "azure_storage_container" "stor-cont" {
+  name                  = "${local.default_name}-terraform-storage-container"
+  container_access_type = "container"
+  storage_service_name  = azurerm_storage_account.storage.name
+}
+#--------------------------------------------------------------------------------------------
 resource "azurerm_container_registry" "acr" {
   name                      = var.ACR_NAME
   resource_group_name       = azurerm_resource_group.rg.name
@@ -50,6 +58,9 @@ resource "azurerm_container_registry" "acr" {
   tags = {
      Env = "${terraform.workspace}"
   }
+}
+output "login_server" {
+  value = data.azurerm_container_registry.acr.login_server
 }
 #--------------------------------------------------------------------------------------------
 resource "null_resource" "docker-build" {
@@ -164,6 +175,9 @@ resource "azurerm_key_vault" "key-vault" {
 #                --role acrpull \
 #                --query password \
 #                --output tsv)
+#
+#az ad sp show --id http://inesoftnodejsapp --query appId --output tsv
+#https://docs.microsoft.com/bs-latn-ba/azure/container-registry/container-registry-auth-service-principal
 #--------------------------------------------------------------------------------------------
 resource "azurerm_key_vault_secret" "key-vault-secret" {
   name         = "${local.default_name}-secret-sauce"

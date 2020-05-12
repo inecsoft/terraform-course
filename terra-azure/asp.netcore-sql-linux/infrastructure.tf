@@ -223,6 +223,8 @@ resource "azurerm_app_service" "app-service" {
        name  = "${local.default_name}-Database"
        type  = "SQLServer"
        value = "Server=some-server.mydomain.com;Integrated Security=SSPI"
+       value = "Server=${azurerm_sql_server.sql-server-1.fully_qualified_domain_name},1433;Database=${azurerm_sql_database.sql-db.name};User ID=${azurerm_sql_server.sql-server-1.administrator_login};Password=${azurerm_sql_server.sql-server-1.administrator_login_password};Encrypt=true;Connection Timeout=30;"
+
     }
 
     tags = {
