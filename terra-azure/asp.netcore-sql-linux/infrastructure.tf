@@ -219,10 +219,13 @@ resource "azurerm_app_service" "app-service" {
     #  "DOCKER_REGISTRY_SERVER_URL"          = "https://${azurerm_container_registry.acr.login_server}"
     #}
 
+    site_config {
+      scm_type                 = "LocalGit"
+    }
+
     connection_string {
        name  = "${local.default_name}-Database"
        type  = "SQLServer"
-       value = "Server=some-server.mydomain.com;Integrated Security=SSPI"
        value = "Server=${azurerm_sql_server.sql-server-1.fully_qualified_domain_name},1433;Database=${azurerm_sql_database.sql-db.name};User ID=${azurerm_sql_server.sql-server-1.administrator_login};Password=${azurerm_sql_server.sql-server-1.administrator_login_password};Encrypt=true;Connection Timeout=30;"
 
     }
@@ -232,5 +235,5 @@ resource "azurerm_app_service" "app-service" {
     }
 }
 #--------------------------------------------------------------------------------------------
-
+#az webapp config connection-string set --resource-group myResourceGroup --name <app-name> --settings MyDbConnection="<connection-string>" --connection-string-type SQLAzure
 

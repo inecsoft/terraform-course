@@ -12,3 +12,9 @@ output "RDS-endpoint" {
   value = aws_db_instance.postgresdb.endpoint
 }
 #----------------------------------------------------------------------------------------------
+output "RDS-database_name" {
+  value = aws_db_instance.postgresdb.master_username
+}
+#----------------------------------------------------------------------------------------------
+
+

@@ -4,7 +4,7 @@
 resource "aws_db_subnet_group" "postgresdb-subnet" {
   name        = "postgresdb-subnet"
   description = "RDS subnet group"
-  subnet_ids   = [ element(module.vpc.public_subnets,0) ]
+  subnet_ids   = module.vpc.public_subnets
 }
 
 resource "aws_db_parameter_group" "postgresdb-parameters" {
@@ -31,6 +31,7 @@ resource "aws_db_instance" "postgresdb" {
   username                  = var.RDS_USERNAME          # username
   password                  = random_password.password.result
   # password                  = var.RDS_PASSWORD          # password
+
   db_subnet_group_name      = aws_db_subnet_group.postgresdb-subnet.name
   parameter_group_name      = aws_db_parameter_group.postgresdb-parameters.name
   multi_az                  = "false" # set to true to have high availability: 2 instances synchronized with each other
@@ -40,7 +41,7 @@ resource "aws_db_instance" "postgresdb" {
   storage_type              = "gp2"
   #iops  =  "2000"
 
-  storage_encrypted = true
+  #storage_encrypted = true
   # arn:aws:kms:<region>:<accountID>:key/<key-id>
 
   backup_retention_period   = 30                                          # how long you're going to keep your backups
