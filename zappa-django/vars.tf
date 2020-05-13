@@ -27,7 +27,7 @@ variable "RDS_DB_IDENTIFIER" {
 }
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length = 35 
+  length = 20 
   special = true
   override_special = "_%@"
 }

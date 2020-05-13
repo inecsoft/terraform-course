@@ -4,7 +4,7 @@
 resource "aws_db_subnet_group" "postgresdb-subnet" {
   name        = "postgresdb-subnet"
   description = "RDS subnet group"
-  subnet_ids   = module.vpc.public_subnets
+  subnet_ids   = module.vpc.private_subnets
 }
 
 resource "aws_db_parameter_group" "postgresdb-parameters" {
@@ -27,10 +27,10 @@ resource "aws_db_instance" "postgresdb" {
   engine_version            = "11.5"
   instance_class            = "db.t2.micro" # use micro if you want to use the free tier
   identifier                = "postgresdb"
-  name                      = var.RDS_DB_NAME     # database name
+  name                      = var.RDS_DB_NAME           # database name
   username                  = var.RDS_USERNAME          # username
   password                  = random_password.password.result
-  # password                  = var.RDS_PASSWORD          # password
+  #password                  = var.RDS_PASSWORD          # password
 
   db_subnet_group_name      = aws_db_subnet_group.postgresdb-subnet.name
   parameter_group_name      = aws_db_parameter_group.postgresdb-parameters.name
@@ -48,7 +48,7 @@ resource "aws_db_instance" "postgresdb" {
   #availability_zone         = aws_subnet.main-private-1.availability_zone # prefered AZ
 
   copy_tags_to_snapshot = true
-  final_snapshot_identifier = "postgresdb-final-snapshot"                 # final snapshot when executing terraform destroy
+  #final_snapshot_identifier = "postgresdb-final-snapshot+timestamp()"                 # final snapshot when executing terraform destroy
   #skip_final_snapshot = true 
   
   # Specifies whether or not to create this database from a snapshot.
