@@ -32,4 +32,20 @@ output "db_sg_id" {
   value       = aws_security_group.allow-postgresdb.id
 }
 #----------------------------------------------------------------------------------------------
+output "secretsmanager_secret-id" {
+  value = aws_secretsmanager_secret.rotation-secret.id
+}
+#----------------------------------------------------------------------------------------------
+output "secretsmanager_secret-arn" {
+  value = aws_secretsmanager_secret.rotation-secret.arn
+}
+#----------------------------------------------------------------------------------------------
+output "secretsmanager_secret_version-arn" {
+  value = aws_secretsmanager_secret_version.secret_version.arn
+}
+#----------------------------------------------------------------------------------------------
+output "secretsmanager_secret_version-id" {
+  value = aws_secretsmanager_secret_version.secret_version.id
+}
+#----------------------------------------------------------------------------------------------
 

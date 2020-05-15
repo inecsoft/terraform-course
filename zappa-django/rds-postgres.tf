@@ -47,9 +47,11 @@ resource "aws_db_instance" "postgresdb" {
   backup_retention_period   = 30                                          # how long you're going to keep your backups
   #availability_zone         = aws_subnet.main-private-1.availability_zone # prefered AZ
 
-  copy_tags_to_snapshot = true
-  #final_snapshot_identifier = "postgresdb-final-snapshot+timestamp()"                 # final snapshot when executing terraform destroy
-  #skip_final_snapshot = true 
+  copy_tags_to_snapshot = true  
+
+  # final snapshot when executing terraform destroy
+  #final_snapshot_identifier = "postgresdb-final-snapshot"     
+  skip_final_snapshot = true 
   
   # Specifies whether or not to create this database from a snapshot.
   # This correlates to the snapshot ID you'd find in the RDS console,
