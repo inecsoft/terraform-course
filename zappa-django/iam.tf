@@ -69,21 +69,7 @@ resource "aws_iam_role_policy" "lambda-vpc-role-policy" {
             "Resource": "*"
         }
     ]
-  },
-  {
-   "Statement": [
-      {
-         "Effect": "Allow",
-         "Action": [
-             "rds-db:connect"
-         ],
-         "Resource": [
-             "${aws_db_instance.postgresdb.arn}"
-         ]
-      }
-   ]
   }
-      
   EOF
 }
 #----------------------------------------------------------------------------
