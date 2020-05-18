@@ -56,7 +56,7 @@ az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/${SUBSCRI
 # __Kubernetes tutorial__
 
 ***
-```
+
 ```
 version=$(az aks get-versions -l "West Europe" --query 'orchestrators[-1].orchestratorVersion' -o tsv)
 ```
