@@ -1,0 +1,14 @@
+LICENSE
+MANIFEST.in
+README.md
+requirements.txt
+setup.cfg
+setup.py
+placebo/__init__.py
+placebo/pill.py
+placebo/serializer.py
+placebo/utils.py
+placebo.egg-info/PKG-INFO
+placebo.egg-info/SOURCES.txt
+placebo.egg-info/dependency_links.txt
+placebo.egg-info/top_level.txt
