@@ -19,7 +19,7 @@ psycopg2==2.7.6.1
 python-dateutil==2.6.1
 python-slugify==1.2.4
 pytz==2018.7
-PyYAML==3.13
+PyYAML==5.1
 requests==2.20.1
 s3transfer==0.1.13
 six==1.11.0
