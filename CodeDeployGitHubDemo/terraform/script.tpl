@@ -1,5 +1,4 @@
 #!/bin/bash
-sleep 5m
 sudo su - root
 # Install AWS EFS Utilities
 yum install -y amazon-efs-utils

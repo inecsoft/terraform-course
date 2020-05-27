@@ -1,0 +1,47 @@
+#-------------------------------------------------------------------------------
+resource "aws_sns_topic" "sns_alert_topic" {
+    name  = "${local.default_name}-billing-alarm-notification"
+    application_success_feedback_sample_rate = 0
+    http_success_feedback_sample_rate        = 0
+    lambda_success_feedback_sample_rate      = 0
+    #policy                                   = jsonencode(
+    policy                                   = <<policy
+{
+  "Version": "2008-10-17",
+  "Id": "__default_policy_ID",
+  "Statement": [
+    {
+      "Sid": "__default_statement_ID",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": [
+        "SNS:GetTopicAttributes",
+        "SNS:SetTopicAttributes",
+        "SNS:AddPermission",
+        "SNS:RemovePermission",
+        "SNS:DeleteTopic",
+        "SNS:Subscribe",
+        "SNS:ListSubscriptionsByTopic",
+        "SNS:Publish",
+        "SNS:Receive"
+      ],
+      "Resource": "arn:aws:sns:us-east-1:895352585421:${local.default_name}-billing-alarm-notification",
+      "Condition": {
+        "StringEquals": {
+          "AWS:SourceOwner": "${data.aws_caller_identity.current.id}"
+        }
+      }
+    }
+  ]
+}
+policy
+    sqs_success_feedback_sample_rate         = 0
+
+  tags = {
+    Name =  "${local.default_name}-sns-alert"
+  }
+}
+#-------------------------------------------------------------------------------
+

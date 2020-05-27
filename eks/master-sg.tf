@@ -13,6 +13,7 @@ resource "aws_security_group" "eks-cluster-sg" {
   tags = {
     Name = "terraform-eks-cluster-sg"
   }
+
 }
 # OPTIONAL: Allow inbound traffic from your local workstation external IP
 #           to the Kubernetes. You will need to replace A.B.C.D below with
@@ -20,7 +21,7 @@ resource "aws_security_group" "eks-cluster-sg" {
 resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
   #cidr_blocks       = ["A.B.C.D/32"]
   #cidr_blocks       = ["${var.myip}/32"]
-  cidr_blocks       = ["${"local.workstation-external-cidr}"]
+  cidr_blocks       = ["${local.workstation-external-cidr}"]
   description       = "Allow workstation to communicate with the cluster API Server"
   from_port         = 443
   protocol          = "tcp"

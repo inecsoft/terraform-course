@@ -1,0 +1,37 @@
+version: '3.4'
+ 
+networks:
+  dockerapi:
+    driver: bridge 
+ 
+services:
+  dockerapi:
+    image: dockerapi
+    depends_on:
+      - "database"
+    build:
+      context: ./dockerapi
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"     
+    environment:
+      DB_CONNECTION_STRING: "host=database;port=5432;database=postgres;username=postgres;password=aIqWQadE4+38Q+0mxZSHFVl7n+8GvVhxehWNFzPlrJgjBYo="
+    networks:
+      - dockerapi  
+  
+  database:
+    image: postgres:latest
+    ports:
+      - "5432"
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+      - ./dbscripts/seed.sql :/docker-entrypoint-initdb.d/seed.sql
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "aIqWQadE4+38Q+0mxZSHFVl7n+8GvVhxehWNFzPlrJgjBYo="
+      POSTGRES_DB: "postgres"
+    networks:
+      - dockerapi
+volumes:
+  db_volume:

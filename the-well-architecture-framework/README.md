@@ -63,3 +63,5 @@ mysql --host=$RDSHOST --port=5432 --ssl-ca=/sample_dir/rds-combined-ca-bundle.pe
 </div>
 
 [ Manual Doc](doc/aws-waf-owasp.pdf)
+
+[ Presentation Slide Doc ](doc/well-architectureframework.pptx)
