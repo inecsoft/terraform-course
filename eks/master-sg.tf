@@ -13,6 +13,7 @@ resource "aws_security_group" "eks-cluster-sg" {
   tags = {
     Name = "terraform-eks-cluster-sg"
   }
+
 }
 # OPTIONAL: Allow inbound traffic from your local workstation external IP
 #           to the Kubernetes. You will need to replace A.B.C.D below with
