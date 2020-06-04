@@ -1,0 +1,20 @@
+web:
+  build: .
+  command: node index-db.js
+  ports:
+    - "3000:3000"
+  links:
+    - db
+  environment:
+    POSTGRES_DATABASE: api
+    POSTGRES_USER: me
+    POSTGRES_PASSWORD: password
+    POSTGRES_HOST: db
+db:
+  image: postgresql
+  ports:
+    - "5432:5432"
+  environment:
+    POSTGRES_DATABASE: api
+    POSTGRES_USER: me
+    POSTGRES_PASSWORD: password
