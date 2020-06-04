@@ -1,0 +1,51 @@
+resource "aws_codebuild_project" "code-build" {
+    arn            = "arn:aws:codebuild:eu-west-1:230941810881:project/prod-cmrs-jenkins"
+    badge_enabled  = false
+    build_timeout  = 60
+    description    = "A description about my project"
+    encryption_key = "arn:aws:kms:eu-west-1:230941810881:alias/aws/s3"
+    id             = "prod-cmrs-jenkins"
+    name           = "prod-cmrs-jenkins"
+    queued_timeout = 480
+    service_role   = "arn:aws:iam::230941810881:role/prod-cmrs-jenkins-CodeBuildRole-SPYE5VKERK73"
+    tags           = {
+      Env = terraform.workspace
+
+    }
+
+    artifacts {
+        encryption_disabled    = true
+        location               = "prod-cmrs-jenkins-codedeploybucket-15a98tfk4pqm6"
+        name                   = "codebuild-artifact.zip"
+        namespace_type         = "NONE"
+        override_artifact_name = false
+        packaging              = "ZIP"
+        type                   = "S3"
+    }
+
+    cache {
+        modes = []
+        type  = "NO_CACHE"
+    }
+
+    environment {
+        compute_type                = "BUILD_GENERAL1_SMALL"
+        image                       = "aws/codebuild/ubuntu-base:14.04"
+        image_pull_credentials_type = "CODEBUILD"
+        privileged_mode             = false
+        type                        = "LINUX_CONTAINER"
+    }
+
+    source {
+        git_clone_depth     = 1
+        insecure_ssl        = false
+        location            = "https://github.com/inecsoft/terraform-course/tree/master/webapi"
+        report_build_status = false
+        type                = "GITHUB"
+
+        git_submodules_config {
+            fetch_submodules = false
+        }
+    }
+}
+
