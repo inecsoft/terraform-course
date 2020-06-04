@@ -121,15 +121,25 @@ git push origin \<branch name\>
 git remote add upstream \<URL master git repo\>  
 git push upstream master  
 
-### __Configuration file to manage git repos__
+### __Configuration file to manage git repos using custom ssh key pair__
 ssh-keygen -t rsa -t 2048 -f github  
 vim ~/.ssh/config  
 
 ```
-Host github.com
+Host your.hostname.com
     HostName github.com
-    User inecsoft
+    User username
     IdentityFile C:\Users\Ivan\.ssh\github
+```
+
+```
+git config -e
+```
+
+```
+# .git/config
+[remote "origin"]
+    url = git@your.hostname.com:username/reponame.git
 ```
 
 git clone <repo URL>  
