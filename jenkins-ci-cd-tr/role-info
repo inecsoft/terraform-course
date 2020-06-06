@@ -1,0 +1,191 @@
+resource "aws_iam_role" "AWSServiceRoleForAutoScaling" {
+    name               = "AWSServiceRoleForAutoScaling"
+    path               = "/aws-service-role/autoscaling.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "autoscaling.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForElasticLoadBalancing" {
+    name               = "AWSServiceRoleForElasticLoadBalancing"
+    path               = "/aws-service-role/elasticloadbalancing.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "elasticloadbalancing.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForRDS" {
+    name               = "AWSServiceRoleForRDS"
+    path               = "/aws-service-role/rds.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "rds.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForSupport" {
+    name               = "AWSServiceRoleForSupport"
+    path               = "/aws-service-role/support.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "support.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForTrustedAdvisor" {
+    name               = "AWSServiceRoleForTrustedAdvisor"
+    path               = "/aws-service-role/trustedadvisor.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "trustedadvisor.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "default-cmrs-jenkins-CodeBuildRole-DTZGAG8RSVPP" {
+    name               = "default-cmrs-jenkins-CodeBuildRole-DTZGAG8RSVPP"
+    path               = "/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codebuild.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "default-cmrs-jenkins-CodeDeployTrustRole-BS2P08AQRY10" {
+    name               = "default-cmrs-jenkins-CodeDeployTrustRole-BS2P08AQRY10"
+    path               = "/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "1",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codedeploy.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "default-cmrs-jenkins-InstanceRole-1QDB8AW8HBJ8O" {
+    name               = "default-cmrs-jenkins-InstanceRole-1QDB8AW8HBJ8O"
+    path               = "/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "default-cmrs-jenkins-JenkinsRole-LCB0FH9PCBEM" {
+    name               = "default-cmrs-jenkins-JenkinsRole-LCB0FH9PCBEM"
+    path               = "/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "prod-cmrs-jenkins-CodeBuildRole-SPYE5VKERK73" {
+    name               = "prod-cmrs-jenkins-CodeBuildRole-SPYE5VKERK73"
+    path               = "/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codebuild.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+

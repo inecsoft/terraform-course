@@ -1,21 +1,20 @@
+#--------------------------------------------------------------------------------------------------------------------
 resource "aws_codebuild_project" "code-build" {
-    arn            = "arn:aws:codebuild:eu-west-1:230941810881:project/prod-cmrs-jenkins"
+    name           = "${local.default_name}-jenkins"
+    description    = "A description about my project"
     badge_enabled  = false
     build_timeout  = 60
-    description    = "A description about my project"
     encryption_key = "arn:aws:kms:eu-west-1:230941810881:alias/aws/s3"
-    id             = "prod-cmrs-jenkins"
-    name           = "prod-cmrs-jenkins"
     queued_timeout = 480
-    service_role   = "arn:aws:iam::230941810881:role/prod-cmrs-jenkins-CodeBuildRole-SPYE5VKERK73"
+    service_role   = aws_iam_role.CodeBuildRole.arn
+
     tags           = {
       Env = terraform.workspace
-
     }
 
     artifacts {
         encryption_disabled    = true
-        location               = "prod-cmrs-jenkins-codedeploybucket-15a98tfk4pqm6"
+        location               = aws_s3_bucket.jenkins-codedeploybucket.id
         name                   = "codebuild-artifact.zip"
         namespace_type         = "NONE"
         override_artifact_name = false
@@ -36,16 +35,25 @@ resource "aws_codebuild_project" "code-build" {
         type                        = "LINUX_CONTAINER"
     }
 
-    source {
-        git_clone_depth     = 1
-        insecure_ssl        = false
-        location            = "https://github.com/inecsoft/terraform-course/tree/master/webapi"
-        report_build_status = false
-        type                = "GITHUB"
+#    source {
+#        git_clone_depth     = 1
+#        insecure_ssl        = false
+#        location            = "https://github.com/inecsoft/terraform-course/tree/master/webapi"
+#        report_build_status = false
+#        type                = "GITHUB"
+#
+#        git_submodules_config {
+#            fetch_submodules = false
+#        }
+#    }
 
-        git_submodules_config {
-            fetch_submodules = false
-        }
+    source {
+        git_clone_depth     = 0
+        insecure_ssl        = false
+        location            = "${aws_s3_bucket.jenkins-codedeploybucket.id}/test"
+        report_build_status = false
+        type                = "S3"
     }
 }
+#--------------------------------------------------------------------------------------------------------------------
 

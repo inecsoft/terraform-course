@@ -1,0 +1,126 @@
+resource "aws_iam_role_policy" "default-cmrs-jenkins-CodeBuildRole-DTZGAG8RSVPP_CodeBuildRole" {
+    name   = "CodeBuildRole"
+    role   = "default-cmrs-jenkins-CodeBuildRole-DTZGAG8RSVPP"
+    policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:PutObject"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy" "default-cmrs-jenkins-CodeDeployTrustRole-BS2P08AQRY10_CodeDeployPolicy" {
+    name   = "CodeDeployPolicy"
+    role   = "default-cmrs-jenkins-CodeDeployTrustRole-BS2P08AQRY10"
+    policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": [
+        "ec2:Describe*"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "autoscaling:CompleteLifecycleAction",
+        "autoscaling:DeleteLifecycleHook",
+        "autoscaling:DescribeLifecycleHooks",
+        "autoscaling:DescribeAutoScalingGroups",
+        "autoscaling:PutLifecycleHook",
+        "autoscaling:RecordLifecycleActionHeartbeat"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "Tag:getResources",
+        "Tag:getTags",
+        "Tag:getTagsForResource",
+        "Tag:getTagsForResourceList"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy" "default-cmrs-jenkins-InstanceRole-1QDB8AW8HBJ8O_InstanceRole" {
+    name   = "InstanceRole"
+    role   = "default-cmrs-jenkins-InstanceRole-1QDB8AW8HBJ8O"
+    policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": [
+        "autoscaling:Describe*",
+        "cloudformation:Describe*",
+        "cloudformation:GetTemplate",
+        "s3:Get*",
+        "s3:List*"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy" "default-cmrs-jenkins-JenkinsRole-LCB0FH9PCBEM_JenkinsPolicy" {
+    name   = "JenkinsPolicy"
+    role   = "default-cmrs-jenkins-JenkinsRole-LCB0FH9PCBEM"
+    policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "codedeploy:ListApplications",
+        "codedeploy:ListDeploymentGroups",
+        "codedeploy:RegisterApplicationRevision",
+        "codedeploy:CreateDeployment",
+        "codedeploy:GetDeploymentConfig",
+        "codedeploy:GetApplicationRevision",
+        "codedeploy:GetDeployment"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    }
+  ]
+}
+POLICY
+}
+

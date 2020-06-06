@@ -1,0 +1,36 @@
+resource "aws_autoscaling_group" "default-cmrs-jenkins-WSASG-NO1YHD9GZWGC" {
+    desired_capacity          = 2
+    health_check_grace_period = 600
+    health_check_type         = "ELB"
+    launch_configuration      = "default-cmrs-jenkins-WSLaunchConfiguration-1X3GER45P6YVF"
+    max_size                  = 4
+    min_size                  = 0
+    name                      = "default-cmrs-jenkins-WSASG-NO1YHD9GZWGC"
+    vpc_zone_identifier       = ["subnet-02fb56d5ad96c820e", "subnet-0b151f19924e0dce9"]
+
+    tag {
+        key   = "Name"
+        value = "CodeDeployDemo"
+        propagate_at_launch = true
+    }
+
+    tag {
+        key   = "aws:cloudformation:logical-id"
+        value = "WSASG"
+        propagate_at_launch = true
+    }
+
+    tag {
+        key   = "aws:cloudformation:stack-id"
+        value = "arn:aws:cloudformation:eu-west-1:230941810881:stack/default-cmrs-jenkins/fcb0e760-a76c-11ea-818b-02bc3c3f62ee"
+        propagate_at_launch = true
+    }
+
+    tag {
+        key   = "aws:cloudformation:stack-name"
+        value = "default-cmrs-jenkins"
+        propagate_at_launch = true
+    }
+
+}
+

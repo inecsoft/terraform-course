@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-resource "aws_iam_role" "jenkins-CodeBuildRole" {
+resource "aws_iam_role" "CodeBuildRole" {
     name               = "${local.default_name}-CodeBuildRole"
     path               = "/"
     force_detach_policies = true
@@ -18,9 +18,8 @@ resource "aws_iam_role" "jenkins-CodeBuildRole" {
 }
 POLICY
 }
-
 #------------------------------------------------------------------------------
-resource "aws_iam_role_policy" "jenkins-CodeBuildRole-Policy" {
+resource "aws_iam_role_policy" "CodeBuildRole-Policy" {
   name = "${local.default_name}-jenkins-CodeBuildRole-Policy"
   role = aws_iam_role.jenkins-CodeBuildRole.id
 
@@ -31,8 +30,8 @@ resource "aws_iam_role_policy" "jenkins-CodeBuildRole-Policy" {
         {
             "Effect": "Allow",
             "Resource": [
-                "arn:aws:logs:eu-west-1:230941810881:log-group:/aws/codebuild/prod-cmrs-jenkins",
-                "arn:aws:logs:eu-west-1:230941810881:log-group:/aws/codebuild/prod-cmrs-jenkins:*"
+                "arn:aws:logs:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/prod-project-jenkins",
+                "arn:aws:logs:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/prod-project-jenkins:*"
             ],
             "Action": [
                 "logs:CreateLogGroup",
@@ -43,7 +42,7 @@ resource "aws_iam_role_policy" "jenkins-CodeBuildRole-Policy" {
         {
             "Effect": "Allow",
             "Resource": [
-                "arn:aws:s3:::codepipeline-eu-west-1-*"
+                "arn:aws:s3:::codepipeline-${var.AWS_REGION}-*"
             ],
             "Action": [
                 "s3:PutObject",
@@ -56,8 +55,8 @@ resource "aws_iam_role_policy" "jenkins-CodeBuildRole-Policy" {
         {
             "Effect": "Allow",
             "Resource": [
-                "arn:aws:s3:::prod-cmrs-jenkins-codedeploybucket-15a98tfk4pqm6",
-                "arn:aws:s3:::prod-cmrs-jenkins-codedeploybucket-15a98tfk4pqm6/*"
+                "${aws_s3_bucket.jenkins-codedeploybucket.arn}",
+                "${aws_s3_bucket.jenkins-codedeploybucket.arn}/*"
             ],
             "Action": [
                 "s3:PutObject",
@@ -74,11 +73,11 @@ resource "aws_iam_role_policy" "jenkins-CodeBuildRole-Policy" {
                 "codebuild:BatchPutTestCases"
             ],
             "Resource": [
-                "arn:aws:codebuild:eu-west-1:230941810881:report-group/prod-cmrs-jenkins-*"
+                "arn:aws:codebuild:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:report-group/prod-project-jenkins-*"
             ]
         }
     ]
 }
 EOF
 }
-
+#------------------------------------------------------------------------------

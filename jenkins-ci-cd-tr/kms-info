@@ -1,0 +1,69 @@
+resource "aws_kms_key" "0db4a5d5-3669-4346-b613-88dc09f7302a" {
+    description             = "kms key for codepipeline artifacts"
+    key_usage               = "ENCRYPT_DECRYPT"
+    is_enabled              = false
+    enable_key_rotation     = false
+
+    policy = <<POLICY
+{
+  "Version" : "2012-10-17",
+  "Id" : "key-default-1",
+  "Statement" : [ {
+    "Sid" : "Enable IAM User Permissions",
+    "Effect" : "Allow",
+    "Principal" : {
+      "AWS" : "arn:aws:iam::230941810881:root"
+    },
+    "Action" : "kms:*",
+    "Resource" : "*"
+  } ]
+}
+POLICY
+}
+
+resource "aws_kms_key" "7d09f7ee-aead-4a0d-bb62-ce5b3adfd1f4" {
+    description             = "kms key for codepipeline artifacts"
+    key_usage               = "ENCRYPT_DECRYPT"
+    is_enabled              = false
+    enable_key_rotation     = false
+
+    policy = <<POLICY
+{
+  "Version" : "2012-10-17",
+  "Id" : "key-default-1",
+  "Statement" : [ {
+    "Sid" : "Enable IAM User Permissions",
+    "Effect" : "Allow",
+    "Principal" : {
+      "AWS" : "arn:aws:iam::230941810881:root"
+    },
+    "Action" : "kms:*",
+    "Resource" : "*"
+  } ]
+}
+POLICY
+}
+
+resource "aws_kms_key" "eb2c4593-2431-455f-9d57-928f01f19e68" {
+    description             = "kms key for codepipeline artifacts"
+    key_usage               = "ENCRYPT_DECRYPT"
+    is_enabled              = false
+    enable_key_rotation     = false
+
+    policy = <<POLICY
+{
+  "Version" : "2012-10-17",
+  "Id" : "key-default-1",
+  "Statement" : [ {
+    "Sid" : "Enable IAM User Permissions",
+    "Effect" : "Allow",
+    "Principal" : {
+      "AWS" : "arn:aws:iam::230941810881:root"
+    },
+    "Action" : "kms:*",
+    "Resource" : "*"
+  } ]
+}
+POLICY
+}
+

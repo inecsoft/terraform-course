@@ -1,8 +1,8 @@
 #---------------------------------------------------------------
 #key.tf
 #---------------------------------------------------------------
-resource "aws_key_pair" "cmrs" {
-  key_name   = "cmrs"
+resource "aws_key_pair" "key" {
+  key_name   = "project"
   public_key = file(var.PATH_TO_PUBLIC_KEY)
 }
 #---------------------------------------------------------------
