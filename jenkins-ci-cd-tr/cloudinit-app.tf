@@ -1,20 +1,20 @@
 #----------------------------------------------------------------------
-#data "template_file" "app-init" {
-#  template = file("scripts/app-init.sh")
+data "template_file" "app-init" {
+  template = file("scripts/app-init.sh")
 #  vars = {
 #    DEVICE          = var.INSTANCE_DEVICE_NAME
 #    JENKINS_VERSION = var.JENKINS_VERSION
 #  }
-#}
+}
 #----------------------------------------------------------------------
 data "template_cloudinit_config" "cloudinit-app" {
   gzip          = false
   base64_encode = false
 
-#  part {
-#    content_type = "text/x-shellscript"
-#    content      = data.template_file.app-init.rendered
-#  }
+  part {
+    content_type = "text/x-shellscript"
+    content      = data.template_file.app-init.rendered
+  }
  
   part {
     content_type = "text/x-shellscript"
