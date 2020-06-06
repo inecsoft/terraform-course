@@ -11,6 +11,7 @@ package_update: true
 package_upgrade: true
 packages:
   - nginx
+  - aws-cfn-bootstrap
   - nodejs
   - npm
   - firewalld 
@@ -27,7 +28,8 @@ write_files:
     path: /etc/nginx/nginx.conf
     content: |
      # For more information on configuration, see:user nginx;
-     worker_processes auto;
+     user nginx;
+     worker_processes 1;
      error_log /var/log/nginx/error.log;
      pid /run/nginx.pid;
       
@@ -62,10 +64,10 @@ write_files:
          server {
              listen       80 default_server;
              listen       [::]:80 default_server;
-             server_name   proxy.inchoratech.com *.mycmrs.com;
+             server_name   build.mycmrs.com;
          
           location / {
-             proxy_pass         http://localhost:5001;
+             proxy_pass         http://localhost:8080;
              proxy_http_version 1.1;
              proxy_set_header   Upgrade $http_upgrade;
              proxy_set_header   Connection keep-alive;
@@ -75,39 +77,32 @@ write_files:
              proxy_set_header   X-Forwarded-Proto $scheme;
              proxy_set_header   X-Real-IP         $remote_addr;
              proxy_set_header   X-Forwarded-Port  $server_port;
+             proxy_connect_timeout   150;
+             proxy_send_timeout      100;
+             proxy_read_timeout      100;
+             proxy_buffers           4 32k;
+             client_max_body_size    8m;
+             client_body_buffer_size 128k;
+
            }
        }
      }
 
-  - owner: app:app
-    path: /root/index.js
-    content: |
-      var express = require('express')
-      var app = express()
-      var os = require('os');
-      app.get('/', function (req, res) {
-        res.send('Hello World from host ' + os.hostname() + '!')
-      })
-      app.listen(5001, function () {
-        console.log('Hello world app listening on port 5001!')
-      })
-
-     
 runcmd:
   - sudo  service nginx restart
-  - sudo  echo "127.0.0.1      proxy.inchoratech.com" >> /etc/hosts  
   - sudo  service enable firewalld
   - sudo  service start firewalld
   - sudo  setenforce 0 
   - sudo  firewall-cmd --add-service=http   --permanent
   - sudo  firewall-cmd --add-service=ssh    --permanent
-  - sudo  firewall-cmd --add-port=5001/tcp  --permanent
+  - sudo  firewall-cmd --add-port=8080/tcp  --permanent
   - sudo  firewall-cmd --reload
   - sudo  setsebool -P httpd_can_network_connect on
   - sudo  setenforce 1 
+  - sudo  amazon-linux-extras install epel 
 
 preserve_hostname: false
-fqdn: proxy.inchoratech.com
+fqdn: build.mycmrs.com
 hostname: mycmrs
 
 

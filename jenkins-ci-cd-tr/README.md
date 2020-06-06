@@ -8,7 +8,7 @@
 ***
 
 <div align="center">
-    <img src="images/jenkinspipeline.JPG" width="500" />
+    <img src="images/jenkinspipeline.JPG" width="700" />
 </div>
 
 ***

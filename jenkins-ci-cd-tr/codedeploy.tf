@@ -8,6 +8,7 @@ resource "aws_codedeploy_app" "codedeploy-app" {
 #to be able to import this resource
 #terraform import aws_codedeploy_deployment_group.DemoDeploymentGroup DemoApplication:DemoDeploymentGroup
 # aws_codedeploy_deployment_group.CodeDeploymentGroup:
+#s3://aws-codedeploy-eu-west-1/samples/latest/SampleApp_Linux.zip
 #----------------------------------------------------------------------
 resource "aws_codedeploy_deployment_group" "CodeDeploymentGroup" {
     app_name               = aws_codedeploy_app.codedeploy-app.name
