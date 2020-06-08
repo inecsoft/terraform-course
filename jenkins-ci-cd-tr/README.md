@@ -75,17 +75,70 @@ cat /var/lib/jenkins/initialAdminPassword
     <img src="images/env.JPG" width="700" />
 </div>
 
-9. _Under Build Actions, add a Build Step, and AWS CodeBuild. On the AWS Configurations, choose Manually specify access and secret keys and provide the keys._
+6. _Under Build Actions, add a Build Step, and AWS CodeBuild. On the AWS Configurations, choose Manually specify access and secret keys and provide the keys._
 
 <div align="center">
     <img src="images/codebuild.JPG" width="700" />
 </div>
 
-10. _From the CloudFormation stack Outputs tab, copy the AWS CodeBuild project name (myProjectName) and paste it in the Project Name field. Also, set the Region that you are using and choose Use Jenkins source.
-It is a best practice is to store AWS credentials for CodeBuild in the native Jenkins credential store. _
+7. _From the CloudFormation stack Outputs tab, copy the AWS CodeBuild project name (myProjectName) and paste it in the Project Name field. Also, set the Region that you are using and choose Use Jenkins source.
+It is a best practice is to store AWS credentials for CodeBuild in the native Jenkins credential store._
 
 <div align="center">
     <img src="images/projectconfig.JPG" width="700" />
+</div>
+
+8. _To make sure that all files cloned from the GitHub repository are deleted choose Add build step and select File Operation plugin, then click Add and select File Delete. Under File Delete operation in the Include File Pattern, type an asterisk._
+
+<div align="center">
+    <img src="images/deleteclonedfiles.JPG" width="700" />
+</div>
+
+9. _Under Build, configure the following:_
+   a. Choose Add a Build step.
+   b. Choose HTTP Request.
+   c. Copy the S3 bucket name from the CloudFormation stack Outputs tab and paste it after (http://s3-eu-central-1.amazonaws.com/) along with the name of the zip file codebuild-artifact.zip as the value for HTTP Plugin URL.
+      Example: (http://s3-eu-central-1.amazonaws.com/mybucketname/codebuild-artifact.zip)
+   d. For Ignore SSL errors?, choose Yes.
+
+<div align="center">
+    <img src="images/s3config.JPG" width="700" />
+</div>
+
+10. _Under HTTP Request, choose Advanced and leave the default values for Authorization, Headers, and Body. Under Response, for Output response to file, enter the codebuild-artifact.zip file name_
+
+<div align="center">
+    <img src="images/httprequest.JPG" width="700" />
+</div>
+
+11. _Add the two build steps for the File Operations plugin, in the following order:_
+   a. Unzip action: This build step unzips the codebuild-artifact.zip file and places the contents in the root workspace directory.
+   b. File Delete action: This build step deletes the codebuild-artifact.zip file, leaving only the source bundle contents for deployment.
+
+<div align="center">
+    <img src="images/fileoperation.JPG" width="700" />
+</div>
+
+12. _On the Post-build Actions, choose Add post-build actions and select the Deploy an application to AWS CodeDeploy check box._
+13. _Enter the following values from the Outputs tab of your CloudFormation stack and leave the other settings at their default (blank):_
+    * For AWS CodeDeploy Application Name, enter the value of CodeDeployApplicationName.
+    * For AWS CodeDeploy Deployment Group, enter the value of CodeDeployDeploymentGroup.
+    * For AWS CodeDeploy Deployment Config, enter CodeDeployDefault.OneAtATime.
+    * For AWS Region, choose the Region where you created the CodeDeploy environment.
+    * For S3 Bucket, enter the value of S3BucketName.
+      The CodeDeploy plugin uses the Include Files option to filter the files based on specific file names existing in your current Jenkins deployment workspace directory. The plugin zips specified files into one file. It then sends them to the location specified in the S3 Bucket parameter for CodeDeploy to download and use in the new deployment.
+.
+      As shown below, in the optional Include Files field, I used (**) so all files in the workspace directory get zipped.
+
+<div align="center">
+    <img src="images/codedeploy.JPG" width="700" />
+</div>
+
+14. _Choose Deploy Revision. This option registers the newly created revision to your CodeDeploy application and gets it ready for deployment._
+15. _Select the Wait for deployment to finish? check box. This option allows you to view the CodeDeploy deployments logs and events on your Jenkins server console output._
+
+<div align="center">
+    <img src="images/appspec.JPG" width="700" />
 </div>
 
 ***
