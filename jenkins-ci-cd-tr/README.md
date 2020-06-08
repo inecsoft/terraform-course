@@ -112,8 +112,8 @@ It is a best practice is to store AWS credentials for CodeBuild in the native Je
 </div>
 
 11. _Add the two build steps for the File Operations plugin, in the following order:_
-   a. Unzip action: This build step unzips the codebuild-artifact.zip file and places the contents in the root workspace directory.
-   b. File Delete action: This build step deletes the codebuild-artifact.zip file, leaving only the source bundle contents for deployment.
+   a. Unzip action: This build step unzips the codebuild-artifact.zip file and places the contents in the root workspace directory.  
+   b. File Delete action: This build step deletes the codebuild-artifact.zip file, leaving only the source bundle contents for deployment.  
 
 <div align="center">
     <img src="images/fileoperation.JPG" width="700" />
@@ -126,7 +126,7 @@ It is a best practice is to store AWS credentials for CodeBuild in the native Je
     * For AWS CodeDeploy Deployment Config, enter CodeDeployDefault.OneAtATime.
     * For AWS Region, choose the Region where you created the CodeDeploy environment.
     * For S3 Bucket, enter the value of S3BucketName.
-      The CodeDeploy plugin uses the Include Files option to filter the files based on specific file names existing in your current Jenkins deployment workspace directory. The plugin zips specified files into one file. It then sends them to the location specified in the S3 Bucket parameter for CodeDeploy to download and use in the new deployment.
+      The CodeDeploy plugin uses the Include Files option to filter the files based on specific file names existing in your current Jenkins deployment workspace directory. The plugin zips specified files into one file. It then sends them to the location specified in the S3 Bucket parameter for CodeDeploy to download and use in the new deployment.  
 .
       As shown below, in the optional Include Files field, I used (**) so all files in the workspace directory get zipped.
 
