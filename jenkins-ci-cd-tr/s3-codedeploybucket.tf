@@ -24,7 +24,7 @@ resource "aws_s3_bucket" "jenkins-codedeploybucket" {
       "Resource": "arn:aws:s3:::${local.default_name}-jenkins-codedeploybucket/*",
       "Condition": {
         "IpAddress": {
-          "aws:SourceIp": "${local.workstation-external-cidr}"
+          "aws:SourceIp": "${aws_instance.jenkins-instance.private_ip}"
         }
       }
     }
