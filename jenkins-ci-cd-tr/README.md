@@ -95,11 +95,11 @@ It is a best practice is to store AWS credentials for CodeBuild in the native Je
 </div>
 
 9. _Under Build, configure the following:_
-   a. Choose Add a Build step.
-   b. Choose HTTP Request.
-   c. Copy the S3 bucket name from the CloudFormation stack Outputs tab and paste it after (http://s3-eu-central-1.amazonaws.com/) along with the name of the zip file codebuild-artifact.zip as the value for HTTP Plugin URL.
-      Example: (http://s3-eu-central-1.amazonaws.com/mybucketname/codebuild-artifact.zip)
-   d. For Ignore SSL errors?, choose Yes.
+   a. Choose Add a Build step.  
+   b. Choose HTTP Request.  
+   c. Copy the S3 bucket name from the CloudFormation stack Outputs tab and paste it after (http://s3-eu-central-1.amazonaws.com/) along with the name of the zip file codebuild-artifact.zip as the value for HTTP Plugin URL.  
+      Example: (http://s3-eu-central-1.amazonaws.com/mybucketname/codebuild-artifact.zip)  
+   d. For Ignore SSL errors?, choose Yes.  
 
 <div align="center">
     <img src="images/s3config.JPG" width="700" />
