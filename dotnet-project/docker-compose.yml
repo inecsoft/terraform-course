@@ -3,14 +3,15 @@ version: '3.4'
 
 services:
   efgetstarted:
+    container_name: efgetstarted
     image: efgetstarted
     build:
       context: .
       dockerfile: EFGetStarted/Dockerfile
     ports:
-      - 5000
+      - 5000:5000
     depends_on:
-      - 'database'
+      - database
     links:
     - database:database
     environment:
@@ -19,14 +20,14 @@ services:
     volumes:
      - ./data/web:/app
 
-   database:
-     container_name: database
-     environment:
-       POSTGRES_DB: postgres 
-       POSTGRES_USER: postgres
-       POSTGRES_PASSWORD: 2YKEQC9e2mSUdt7a8teRp+Wre1FZwkIaHQ==
- 
-     restart: always
-     image: postgres
-     volumes:
+  database:
+    container_name: database
+    environment:
+      POSTGRES_DB: postgres 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2YKEQC9e2mSUdt7a8teRp+Wre1FZwkIaHQ==
+    
+    restart: always
+    image: postgres
+    volumes:
       - ./data/database:/var/lib/postgresql/data

@@ -1,5 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
+COPY ./entrypoint.sh .
 EXPOSE 5000
 EXPOSE 5001
 
@@ -17,4 +18,6 @@ RUN dotnet publish "EFGetStarted.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN chmod +x ./entrypoint.sh
+CMD /bin/bash ./entrypoint.sh
 ENTRYPOINT ["dotnet", "EFGetStarted.dll"]

@@ -53,3 +53,5 @@
 /home/devop/terraform/dotnet-project/EFGetStarted/obj/Debug/netcoreapp3.0/EFGetStarted.dll
 /home/devop/terraform/dotnet-project/EFGetStarted/obj/Debug/netcoreapp3.0/EFGetStarted.pdb
 /home/devop/terraform/dotnet-project/EFGetStarted/bin/Debug/netcoreapp3.0/Microsoft.EntityFrameworkCore.Design.dll
+/home/devop/terraform/dotnet-project/EFGetStarted/bin/Debug/netcoreapp3.0/Npgsql.dll
+/home/devop/terraform/dotnet-project/EFGetStarted/bin/Debug/netcoreapp3.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll

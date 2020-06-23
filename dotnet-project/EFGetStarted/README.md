@@ -1,3 +1,5 @@
+***
+
 ### __Create project__
 ```
 dotnet new console -o EFGetStarted
@@ -7,8 +9,7 @@ cd EFGetStarted
 ### __Create Entity Framework Core__
 ```
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
-
-
+dotnet add package Microsoft.EntityFrameworkCore.Analyzers
 dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 3.1.4
 ```
 
@@ -24,3 +25,10 @@ dotnet ef database update
 ```
 dotnet run
 ```
+
+***
+```
+docker exec -it  database psql -U postgres
+```
+
+***
