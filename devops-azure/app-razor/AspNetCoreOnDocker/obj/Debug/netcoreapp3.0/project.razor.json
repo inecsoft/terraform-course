@@ -1,5 +1,5 @@
 {
-  "FilePath": "/home/devop/terraform/tutorial/docker-webapi/docker-webapi.csproj",
+  "FilePath": "/home/devop/terraform/tutorial/devops-azure/app-razor/AspNetCoreOnDocker/AspNetCoreOnDocker.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -14361,7 +14361,43 @@
     ],
     "CSharpLanguageVersion": 800
   },
-  "RootNamespace": "docker_webapi",
-  "Documents": [],
+  "RootNamespace": "AspNetCoreOnDocker",
+  "Documents": [
+    {
+      "FilePath": "/home/devop/terraform/tutorial/devops-azure/app-razor/AspNetCoreOnDocker/Pages/Shared/_Layout.cshtml",
+      "TargetPath": "Pages\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/devops-azure/app-razor/AspNetCoreOnDocker/Pages/Shared/_ValidationScriptsPartial.cshtml",
+      "TargetPath": "Pages\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/devops-azure/app-razor/AspNetCoreOnDocker/Pages/_ViewImports.cshtml",
+      "TargetPath": "Pages\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/devops-azure/app-razor/AspNetCoreOnDocker/Pages/Privacy.cshtml",
+      "TargetPath": "Pages\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/devops-azure/app-razor/AspNetCoreOnDocker/Pages/_ViewStart.cshtml",
+      "TargetPath": "Pages\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/devops-azure/app-razor/AspNetCoreOnDocker/Pages/Error.cshtml",
+      "TargetPath": "Pages\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/devops-azure/app-razor/AspNetCoreOnDocker/Pages/Index.cshtml",
+      "TargetPath": "Pages\\Index.cshtml",
+      "FileKind": "mvc"
+    }
+  ],
   "SerializationFormat": "0.2"
 }
