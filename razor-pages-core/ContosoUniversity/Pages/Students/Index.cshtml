@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.Student[0].FirstMidName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Student[0].Email)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Student[0].EnrollmentDate)
             </th>
             <th></th>
@@ -33,6 +36,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstMidName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EnrollmentDate)

@@ -10,9 +10,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    
     restart: always
-    
     volumes:
       - ./data/database:/var/lib/postgresql/data
     networks:
@@ -29,11 +27,12 @@ services:
       dockerfile: ContosoUniversity/Dockerfile
     ports:
       - "5000:80"
-
     environment: 
-      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
+      - ASPNETCORE_ENVIRONMENT=Prod
+      - ASPNETCORE_URLS=http://+:80
+      - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
     volumes:
-      - ./data/web:/app
+      - .data/web:/remote_debugger:rw
     networks: 
       - contosouniversity
 
