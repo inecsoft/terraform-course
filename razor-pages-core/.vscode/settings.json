@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "CUsqlite.db",
+            "driver": "SQLite",
+            "name": "postgres",
+            "previewLimit": 50
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
