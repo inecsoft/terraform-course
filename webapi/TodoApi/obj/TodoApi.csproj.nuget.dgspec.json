@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/devop/terraform/webapi/TodoApi/TodoApi.csproj": {}
+    "/home/devop/terraform/tutorial/webapi/TodoApi/TodoApi.csproj": {}
   },
   "projects": {
-    "/home/devop/terraform/webapi/TodoApi/TodoApi.csproj": {
+    "/home/devop/terraform/tutorial/webapi/TodoApi/TodoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/devop/terraform/webapi/TodoApi/TodoApi.csproj",
+        "projectUniqueName": "/home/devop/terraform/tutorial/webapi/TodoApi/TodoApi.csproj",
         "projectName": "TodoApi",
-        "projectPath": "/home/devop/terraform/webapi/TodoApi/TodoApi.csproj",
+        "projectPath": "/home/devop/terraform/tutorial/webapi/TodoApi/TodoApi.csproj",
         "packagesPath": "/home/devop/.nuget/packages/",
-        "outputPath": "/home/devop/terraform/webapi/TodoApi/obj/",
+        "outputPath": "/home/devop/terraform/tutorial/webapi/TodoApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/devop/.nuget/NuGet/NuGet.Config"
@@ -53,6 +53,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.3, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "(, )"
             }
           },
           "imports": [
