@@ -12,7 +12,7 @@ namespace EFGetStarted
         //    => options.UseSqlite("Data Source=blogging.db");
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=aIqWQadE4+38Q+0mxZSHFVl7n+8GvVhxehWNFzPlrJgjBYo=");
+            => optionsBuilder.UseNpgsql("Host=database;Database=postgres;Username=postgres;Password=aIqWQadE4+38Q+0mxZSHFVl7n+8GvVhxehWNFzPlrJgjBYo=;");
     }
 
     public class Blog

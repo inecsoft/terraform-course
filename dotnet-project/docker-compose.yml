@@ -9,25 +9,31 @@ services:
       context: .
       dockerfile: EFGetStarted/Dockerfile
     ports:
-      - 5000:5000
+      - "5000:80"
     depends_on:
       - database
-    links:
-    - database:database
     environment:
-    - DATABASE_URL=postgres://postgres:2YKEQC9e2mSUdt7a8teRp+Wre1FZwkIaHQ==@database/postgres
-    - DB_CONNECTION_STRING="host=database;port=5432;database=postgres;username=postgres;password=2YKEQC9e2mSUdt7a8teRp+Wre1FZwkIaHQ=="
+      - DATABASE_URL=postgres://postgres:2YKEQC9e2mSUdt7a8teRp+Wre1FZwkIaHQ==@database/postgres
+      - DB_CONNECTION_STRING="host=database;port=5432;database=postgres;username=postgres;password=2YKEQC9e2mSUdt7a8teRp+Wre1FZwkIaHQ==;"
     volumes:
-     - ./data/web:/app
+      - ./data/web:/remote_debugger:rw
+    networks: 
+      - efgetstarted
 
   database:
+    hostname: database
     container_name: database
     environment:
       POSTGRES_DB: postgres 
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 2YKEQC9e2mSUdt7a8teRp+Wre1FZwkIaHQ==
-    
     restart: always
     image: postgres
     volumes:
       - ./data/database:/var/lib/postgresql/data
+    networks: 
+      - efgetstarted
+
+networks: 
+  efgetstarted:
+    driver: bridge
