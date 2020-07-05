@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/devop/terraform/ping/pingapp/pingapp.csproj": {}
+  },
+  "projects": {
+    "/home/devop/terraform/ping/pingapp/pingapp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/devop/terraform/ping/pingapp/pingapp.csproj",
+        "projectName": "pingapp",
+        "projectPath": "/home/devop/terraform/ping/pingapp/pingapp.csproj",
+        "packagesPath": "/home/devop/.nuget/packages/",
+        "outputPath": "/home/devop/terraform/ping/pingapp/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/devop/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/3.1.105/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
