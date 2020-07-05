@@ -10,6 +10,13 @@ COPY ["EFGetStarted/EFGetStarted.csproj", "EFGetStarted/"]
 RUN dotnet restore "EFGetStarted/EFGetStarted.csproj"
 COPY . .
 WORKDIR "/src/EFGetStarted"
+#This installs dotnet ef and the design package which is required to run the command on a project
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="${PATH}:/root/.dotnet/tools"
+#The migrations command scaffolds a migration to create the initial set of tables for the model
+RUN dotnet ef migrations add InitialCreate
+#The database update command creates the database and applies the new migration to it.
+RUN dotnet ef database update
 RUN dotnet build "EFGetStarted.csproj" -c Release -o /app/build
 
 FROM build AS publish
