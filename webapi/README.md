@@ -186,8 +186,9 @@ curl localhost:5001/api/TodoItems | jq
 ***
 ### __Troutbleshoot__
 
-    * docker-compose ps -a
-    * docker logs todoapi 
+    * docker-compose ps -a  
+    * docker logs todoapi  
+    * docker run --rm -it --network webapi_todoapi --name test busybox ping -c 5 database 
 
 ***
 [REF:](https://docs.microsoft.com/en-gb/aspnet/core/tutorials/first-web-api?view=aspnetcore-3.1&tabs=visual-studio-code)

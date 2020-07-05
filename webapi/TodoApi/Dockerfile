@@ -13,7 +13,7 @@ WORKDIR "/src/TodoApi"
 #RUN dotnet tool install --global dotnet-ef
 #ENV PATH="${PATH}:/root/.dotnet/tools"
 #RUN dotnet ef migrations add InitialCreate
-#RUN dotnet ef database update
+#RUN until dotnet ef database update; do >&2 echo "SQL Server is starting up"; sleep 1; done
 
 RUN dotnet build "TodoApi.csproj" -c Release -o /app/build
 
