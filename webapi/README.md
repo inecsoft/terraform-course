@@ -184,5 +184,11 @@ curl localhost:5001/api/TodoItems | jq
     * Select Send.
 
 ***
+### __Troutbleshoot__
+
+    * docker-compose ps -a
+    * docker logs todoapi 
+
+***
 [REF:](https://docs.microsoft.com/en-gb/aspnet/core/tutorials/first-web-api?view=aspnetcore-3.1&tabs=visual-studio-code)
 ***

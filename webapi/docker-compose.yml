@@ -2,6 +2,19 @@
 version: '3.4'
 
 services:
+  database:
+    hostname: database
+    container_name: database
+    image: postgres
+    environment: 
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: always
+    volumes: 
+      - "./data/database:/var/lib/postgresql/data"
+    networks: 
+      - todoapi
   todoapi:
     container_name: todoapi
     hostname: todoapi
@@ -18,20 +31,6 @@ services:
     networks: 
       - todoapi
   
-  database:
-    hostname: database
-    container_name: database
-    image: postgres
-    environment: 
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    restart: always
-    volumes: 
-      - "./data/database:/var/lib/postgresql/data"
-    networks: 
-      - todoapi
-
 networks: 
   todoapi:
     driver: bridge
