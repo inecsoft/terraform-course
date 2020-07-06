@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  datascience:
+    hostname: datascience
+    container_name: datascience
+    image: datascience
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "5000:8501"
