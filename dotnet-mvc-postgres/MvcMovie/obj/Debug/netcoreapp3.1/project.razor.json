@@ -20521,6 +20521,11 @@
   "RootNamespace": "MvcMovie",
   "Documents": [
     {
+      "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/Movies/Edit.cshtml",
+      "TargetPath": "Views\\Movies\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
@@ -20531,13 +20536,33 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/HelloWorld/Welcome.cshtml",
+      "TargetPath": "Views\\HelloWorld\\Welcome.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/Home/Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/Movies/Details.cshtml",
+      "TargetPath": "Views\\Movies\\Details.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/Movies/Delete.cshtml",
+      "TargetPath": "Views\\Movies\\Delete.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/Home/Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/Movies/Create.cshtml",
+      "TargetPath": "Views\\Movies\\Create.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -20551,8 +20576,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/HelloWorld/Index.cshtml",
+      "TargetPath": "Views\\HelloWorld\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/Views/Movies/Index.cshtml",
+      "TargetPath": "Views\\Movies\\Index.cshtml",
       "FileKind": "mvc"
     }
   ],

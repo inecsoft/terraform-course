@@ -5,7 +5,8 @@ services:
   mvcmovie:
     hostname: mvcmovie
     container_name: mvcmovie
-
+    depends_on: 
+      - database
     image: mvcmovie
     build:
       context: .
@@ -19,11 +20,11 @@ services:
     hostname: database
     container_name: database
     image: postgres
-    restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}$
-      POSTGRES_USER: ${POSTGRES_USER}$
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: always
     volumes: 
       - "./data/database:/var/lib/postgresql/data"
     networks: 
