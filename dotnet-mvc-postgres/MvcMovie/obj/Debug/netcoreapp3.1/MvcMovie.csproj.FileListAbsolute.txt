@@ -203,3 +203,4 @@
 /home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/obj/Debug/netcoreapp3.1/Razor/Views/Movies/Details.cshtml.g.cs
 /home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/obj/Debug/netcoreapp3.1/Razor/Views/Movies/Edit.cshtml.g.cs
 /home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/obj/Debug/netcoreapp3.1/Razor/Views/Movies/Index.cshtml.g.cs
+/home/devop/terraform/tutorial/dotnet-mvc-postgres/MvcMovie/bin/Debug/netcoreapp3.1/Npgsql.EntityFrameworkCore.PostgreSQL.dll

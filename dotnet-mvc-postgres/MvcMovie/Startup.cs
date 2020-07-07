@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MvcMovie.Data;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace MvcMovie
 {
@@ -17,18 +18,36 @@ namespace MvcMovie
     {
         public Startup(IConfiguration configuration)
         {
+            Environment = env;
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
+        public IWebHostEnvironment Environment { get; }
+         
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
+            //services.AddDbContext<MvcMovieContext>(options =>
+            //     options.UseSqlite(Configuration.GetConnectionString("MvcMovieContext")));
+            
+            //services.AddDbContext<MvcMovieContext>(options =>
+            //     options.UseNpgsql(Configuration.GetConnectionString("MvcMovieContextpostgres")));
+            
             services.AddDbContext<MvcMovieContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("MvcMovieContext")));
+            {
+                //var connectionString = Configuration.GetConnectionString("MvcMovieContext");
+
+                if (Environment.IsDevelopment())
+                {
+                    options.UseSqlite(Configuration.GetConnectionString("MvcMovieContext"));
+                }
+                else
+                {
+                    options.UseNpgsql(Configuration.GetConnectionString("MvcMovieContextpostges"));
+                }
+            });
 
         }
 

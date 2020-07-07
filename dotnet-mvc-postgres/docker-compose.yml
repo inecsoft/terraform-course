@@ -26,7 +26,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: always
     volumes: 
-      - "./data/database:/var/lib/postgresql/data"
+      - ./data/database:/var/lib/postgresql/data
     networks: 
       - mvcmovie
       
