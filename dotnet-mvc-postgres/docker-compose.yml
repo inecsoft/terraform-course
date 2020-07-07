@@ -1,0 +1,35 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+version: '3.4'
+
+services:
+  mvcmovie:
+    hostname: mvcmovie
+    container_name: mvcmovie
+
+    image: mvcmovie
+    build:
+      context: .
+      dockerfile: MvcMovie/Dockerfile
+    ports:
+      - "5000:80"
+    networks: 
+      - mvcmovie
+  
+  database:
+    hostname: database
+    container_name: database
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}$
+      POSTGRES_USER: ${POSTGRES_USER}$
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes: 
+      - "./data/database:/var/lib/postgresql/data"
+    networks: 
+      - mvcmovie
+      
+
+networks: 
+  mvcmovie:
+    driver: bridge
