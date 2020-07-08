@@ -14,8 +14,8 @@ RUN dotnet tool install --global dotnet-ef
 ENV PATH=${PATH}:/root/.dotnet/tools
 #RUN dotnet ef migrations add InitialCreate
 #RUN dotnet ef database update
-RUN RUN dotnet ef migrations add final
-RUN until dotnet ef database update final; do >&2 echo "Migrations executing"; sleep 1; done
+RUN dotnet ef migrations add docker
+RUN until dotnet ef database update docker; do >&2 echo "Migrations executing"; sleep 1; done
 RUN echo "DB Migrations complete, starting app."
 
 
