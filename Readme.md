@@ -47,6 +47,13 @@ git commit -m "folder-name deleted"
 
 git push origin master
 
+### __Undo removed files locally without commit__
+
+git ls-files --deleted | xargs git checkout 
+
+### __If you haven't committed the deletion, yet__
+git checkout HEAD \<filename\>  
+
 ### __Undo commits__
 git log --oneline
 * #### _The savest way to do it_
@@ -82,7 +89,7 @@ git branch -a
 git checkout \<branch name\>
 * #### _Get back to master branch_
 git checkout master
-* #### _Creates brand and select it (best practice)_
+* #### _Creates branh and select it (best practice)_
 git checkout -b \<branch name\>
 * #### _Delete branch when merged_
 git branch -d \<branch name\>
