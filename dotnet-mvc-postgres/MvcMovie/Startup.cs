@@ -45,7 +45,7 @@ namespace MvcMovie
                 }
                 else
                 {
-                    options.UseNpgsql(Configuration.GetConnectionString("MvcMovieContextpostges"));
+                    options.UseNpgsql(Configuration.GetConnectionString("MvcMovieContextpostgres"));
                 }
             });
         }
