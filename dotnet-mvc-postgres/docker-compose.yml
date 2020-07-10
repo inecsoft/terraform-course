@@ -7,16 +7,25 @@ services:
     container_name: mvcmovie
     depends_on: 
       - database
+    links: 
+      - database:database
     image: mvcmovie
     build:
       context: .
       dockerfile: MvcMovie/Dockerfile
     ports:
       - "5000:80"
+      - "5001:443"
     environment: 
       - ASPNETCORE_ENVIRONMENT=Prod
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=443
       - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=ivanpedro
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/movie.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      - ~/.vsdbg:/remote_debugger:rw
     networks: 
       - mvcmovie
   
@@ -31,6 +40,7 @@ services:
     restart: always
     volumes: 
       - ./data/database:/var/lib/postgresql/data
+      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks: 
       - mvcmovie
       

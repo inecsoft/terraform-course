@@ -9,8 +9,13 @@ services:
       dockerfile: MvcMovie/Dockerfile
     ports:
       - 80
+      - 443
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_HTTPS_PORT=443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     volumes:
+      - ~/.aspnet/https:/https:ro
       - ~/.vsdbg:/remote_debugger:rw

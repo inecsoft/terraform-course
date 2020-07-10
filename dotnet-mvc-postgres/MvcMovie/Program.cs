@@ -13,7 +13,7 @@ namespace MvcMovie
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Production");
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
