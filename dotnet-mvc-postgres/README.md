@@ -9,11 +9,13 @@ dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Npgsql --version 4.1.3.1
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 ```
 ### __Create database__
 ```
 dotnet ef migrations add InitialCreate
 dotnet ef database update
+dotnet ef migrations script -o init.sql
 ```
 ***
 sqlite3 MvcMovie.db .dump > mvcmoviesqlitedump.sql
@@ -21,9 +23,9 @@ sqlite3 MvcMovie.db .dump > mvcmoviesqlitedump.sql
 docker exec -it database psql -U postgres -f /var/lib/postgresql/data/mvcmoviesqlitedump.sql
 ***
 
-export ASPNETCORE_ENVIRONMENT=Production
-dotnet run --environment "Staging"
-docker inspect --format '{{ .NetworkSettings.IPAddress }}' database
+export ASPNETCORE_ENVIRONMENT=Production  
+dotnet run --environment "Staging"  
+docker inspect --format '{{ .NetworkSettings.IPAddress }}' database  
 
 ***
 ### __How to generate the ssl certificate__

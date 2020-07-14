@@ -16,7 +16,7 @@ git config user.email \<user@domain\>
 * __For ssh login use following config and as credentials keypair__
 git remote set-url origin git@github.com:inecsoft/terraform-course.git
 
-* __For https login use following config and as credentials user + access tocken __
+* __For https login use following config and as credentials user + access tocken__  
 git remote set-url origin https://github.com/inecsoft/terraform-course.git
 
 ssh -T git@github.com
