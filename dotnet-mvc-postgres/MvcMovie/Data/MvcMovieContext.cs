@@ -11,5 +11,11 @@ namespace MvcMovie.Data
         }
 
         public DbSet<Movie> Movie { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Movie>().ToTable("Movie");
+
+        }
     }
 }

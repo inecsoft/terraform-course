@@ -26,6 +26,7 @@ services:
     volumes:
       - ~/.aspnet/https:/https:ro
       - ~/.vsdbg:/remote_debugger:rw
+      - ./data/secrets:/root/.aspnet/DataProtection-Keys
     networks: 
       - mvcmovie
   
