@@ -1,5 +1,5 @@
 {
-  "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/ContosoUniversity.csproj",
+  "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/ContosoUniversity.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -20521,63 +20521,63 @@
   "RootNamespace": "ContosoUniversity",
   "Documents": [
     {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Students/Edit.cshtml",
-      "TargetPath": "Pages\\Students\\Edit.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Students/Create.cshtml",
-      "TargetPath": "Pages\\Students\\Create.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Students/Details.cshtml",
-      "TargetPath": "Pages\\Students\\Details.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Students/Index.cshtml",
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Students/Index.cshtml",
       "TargetPath": "Pages\\Students\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/_ViewImports.cshtml",
-      "TargetPath": "Pages\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Shared/_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Pages\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Error.cshtml",
-      "TargetPath": "Pages\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Shared/_Layout.cshtml",
-      "TargetPath": "Pages\\Shared\\_Layout.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Privacy.cshtml",
-      "TargetPath": "Pages\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Students/Delete.cshtml",
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Students/Delete.cshtml",
       "TargetPath": "Pages\\Students\\Delete.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/Index.cshtml",
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Error.cshtml",
+      "TargetPath": "Pages\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/_ViewImports.cshtml",
+      "TargetPath": "Pages\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Shared/_ValidationScriptsPartial.cshtml",
+      "TargetPath": "Pages\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Shared/_Layout.cshtml",
+      "TargetPath": "Pages\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Index.cshtml",
       "TargetPath": "Pages\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/devop/terraform/razor-pages-core/ContosoUniversity/Pages/_ViewStart.cshtml",
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Students/Create.cshtml",
+      "TargetPath": "Pages\\Students\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Students/Edit.cshtml",
+      "TargetPath": "Pages\\Students\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/_ViewStart.cshtml",
       "TargetPath": "Pages\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Students/Details.cshtml",
+      "TargetPath": "Pages\\Students\\Details.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/devop/terraform/tutorial/razor-pages-core/ContosoUniversity/Pages/Privacy.cshtml",
+      "TargetPath": "Pages\\Privacy.cshtml",
       "FileKind": "mvc"
     }
   ],

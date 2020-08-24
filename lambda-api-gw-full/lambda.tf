@@ -1,9 +1,4 @@
 #----------------------------------------------------------------------------------------
-provider "aws" {
-  region = "eu-west-1"
-}
-
-#----------------------------------------------------------------------------------------
 #In order to allow easy switching between versions you can define 
 #a variable to allow the version number to be chosen dynamically
 #----------------------------------------------------------------------------------------
@@ -31,7 +26,7 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 resource "aws_s3_bucket_object" "bucket_object" {
-  key    = "v${var.app_version}/example.zip"
+  key    = "${var.app_version}/example.zip"
   bucket = aws_s3_bucket.bucket.id
   source = "example.zip"
 
@@ -45,7 +40,7 @@ resource "aws_s3_bucket_object" "bucket_object" {
 
 data "aws_s3_bucket_object" "s3-lambda" {
   bucket = "inecsoft-serverless"
-  key    = "v${var.app_version}/example.zip"
+  key    = "${var.app_version}/example.zip"
 }
 
 #----------------------------------------------------------------------------------------

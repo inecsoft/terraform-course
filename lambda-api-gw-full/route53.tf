@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------------------------------------
 resource "aws_acm_certificate" "cert" {
-  domain_name               = "*.api.api-inecsoft.cub"
-  subject_alternative_names = ["prod.api.api-inecsoft.cub", "dev.api.api-inecsoft.cub"]
+  domain_name               = "*.api.api-inecsoft.co.uk"
+  subject_alternative_names = ["prod.api.api-inecsoft.co.uk", "dev.api.api-inecsoft.co.uk"]
   validation_method         = "DNS"
  
   lifecycle {
@@ -11,10 +11,10 @@ resource "aws_acm_certificate" "cert" {
 #---------------------------------------------------------------------------------------------------
 
 resource "aws_route53_zone" "zone" {
-  name = "api.api-inecsoft.cub"
+  name = "api.api-inecsoft.co.uk"
 }
 data "aws_route53_zone" "zone" {
-  name = "api.api-inecsoft.cub."
+  name = "api.api-inecsoft.co.uk."
   depends_on = [aws_route53_zone.zone]
   private_zone = false
 }
@@ -41,7 +41,7 @@ resource "aws_acm_certificate_validation" "cert" {
 #---------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_domain_name" "api_domain_name" {
   certificate_arn = aws_acm_certificate_validation.cert.certificate_arn
-  domain_name     = "api.api-inecsoft.cub"
+  domain_name     = "api.api-inecsoft.co.uk"
 }
 
 # api_domain_name DNS record using Route53.
