@@ -1,4 +1,5 @@
-#!/bin/bash -xv
+##!/bin/bash -xv
+#!/bin/bash 
 
 version=0.12.20
 TERRAFORM_ZIP_FILE=terraform_${version}_linux_amd64.zip
@@ -12,10 +13,31 @@ function install_terraform {
            unzip ${TERRAFORM_ZIP_FILE}
            sudo mv ${TERRAFORM_BIN} /usr/local/bin/${TERRAFORM_BIN}
            rm -rf ${TERRAFORM_ZIP_FILE}
-    else
-       echo "Terraform is most likely installed"
-    fi
- 
+           echo 'terraform was installed'
+           terraform version
+    fi  
+
 }
  
 install_terraform 
+
+versions=(`terraform version | grep -Eo [0-9]\.[0-9][0-9]\.[0-9]`)
+
+function update_terraform {
+
+    if [  -z ${versions[1]} ]  ; then
+    
+             echo "Terraform is most likely installed and updated"
+             exit
+    else
+              TERRAFORM_ZIP_FILE=terraform_${versions[1]}_linux_amd64.zip
+              TERRAFORM=https://releases.hashicorp.com/terraform/${versions[1]}
+              wget  ${TERRAFORM}/${TERRAFORM_ZIP_FILE}
+              unzip ${TERRAFORM_ZIP_FILE}
+              sudo mv ${TERRAFORM_BIN} /usr/local/bin/${TERRAFORM_BIN}
+              rm -rf ${TERRAFORM_ZIP_FILE}
+              echo "Terraform is installed with latest version ${versions[1]}" 
+    fi
+}
+
+update_terraform 
