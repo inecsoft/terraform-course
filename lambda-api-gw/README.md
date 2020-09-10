@@ -4,12 +4,12 @@ https://learn.hashicorp.com/terraform/aws/lambda-api-gateway
 aws s3api create-bucket --bucket inecsoft-serverless  --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1
 
 #pipeline update
-cd example
+cd code 
 #edit main.js
-zip ../example.zip main.js
+zip ../code.zip main.js
 cd ..
 #copy the  zip file to the bucket	
-aws s3 cp example.zip s3://inecsoft-serverless/v1.0.0/example.zip
+aws s3 cp code.zip s3://inecsoft-serverless/v1.0.0/code.zip
 #After the function is created successfully, try invoking it using the AWS CLI:
 aws lambda invoke --region=eu-west-1 --function-name=inecsoft-lambda output.txt
 
