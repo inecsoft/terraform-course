@@ -20,7 +20,7 @@ POLICY
 #------------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "rds-proxy-policy-attachment" {
     name       = "rds-proxy-policy-attachment"
-    policy_arn = aws_iam_role.rds-proxy-policy.arn
+    policy_arn = aws_iam_policy.rds-proxy-policy.arn
     groups     = []
     users      = []
     roles      = [aws_iam_role.rds-proxy-role.name]

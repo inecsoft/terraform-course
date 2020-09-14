@@ -8,7 +8,7 @@ resource "aws_db_proxy" "proxy" {
   #number in secunds of the connection time out.
   idle_client_timeout    = 1800
   require_tls            = true
-  role_arn               = aws_iam_role.proxy-role.arn
+  role_arn               = aws_iam_role.rds-proxy-role.arn
   vpc_security_group_ids = [aws_security_group.proxy-sg.id]
   #allow only the private subnets that uses the db.
   vpc_subnet_ids         = [module.vpc.private_subnets]

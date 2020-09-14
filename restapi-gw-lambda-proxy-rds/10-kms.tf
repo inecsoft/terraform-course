@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 data "aws_kms_alias" "secret-kms-alias" {
-  key_id = "alias/aws/secretsmanager"
+  name = "alias/aws/secretsmanager"
 }
 #------------------------------------------------------------------------------
 resource "aws_kms_key" "kms-key" {

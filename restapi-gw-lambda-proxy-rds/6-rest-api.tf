@@ -47,14 +47,13 @@ resource "aws_api_gateway_method" "restapi-method-request" {
 #----------------------------------------------------------------------------------------
 resource "aws_api_gateway_integration" "lambda" {
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
-  resource_id = aws_api_gateway_method.restapi-resource.resource_id
-  http_method = aws_api_gateway_method.restapi-resource.http_method
+  resource_id = aws_api_gateway_method.restapi-method-request.resource_id
+  http_method = aws_api_gateway_method.restapi-method-request.http_method
 
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.lambda-function.invoke_arn
 }
-#----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
 #Unfortunately the proxy resource cannot match an empty path at the root of the API.
 #To handle that, a similar configuration must be applied to the root resource 
