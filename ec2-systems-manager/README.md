@@ -1,4 +1,15 @@
 ***
+<div align="center">
+    <h1>Artchitecture Diagram of Host Bastion or Jump servers</h1> 
+</div>
+
+Bastion hosts (also called “jump servers”) are often used as a best practice for accessing privately accessible hosts within a system environment. For example, your system might include an application host that is not intended to be publicly accessible. To access it for product updates or managing system patches, you typically log in to a bastion host and then access (or “jump to”) the application host from there.
+
+<div align="center">
+    <img src="images/host-bastion.JPG" width="700" />
+</div>
+
+***
 
 <div align="center">
     <h1>Artchitecture Diagram of Ec2-systems-manager</h1> 
