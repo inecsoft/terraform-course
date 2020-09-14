@@ -10,11 +10,7 @@ The new architecture, seen in the diagram below, shows how the use of Systems Ma
 ***
 
 <div>
-   <h1>
-   
-      <p style="text-align:center;">Alternative solution</p>
-   </h1>
-      
+    <h1 style="text-align:center;">Alternative solution</h1> 
 </div>
 
 Systems Manager allows you to remotely execute commands on managed hosts without using a bastion host (you might know this feature as EC2 Run Command). A host-based agent polls Systems Manager to determine whether a command awaits execution.
@@ -29,6 +25,7 @@ Here are some of the benefits:
       - The principal who executed it
       - The time when the command was executed
       - An abbreviated output of the command
+      
     * When AWS CloudTrail is enabled to record and log events in the region where you’re running Systems Manager, every event is recorded by CloudTrail and logged in Amazon CloudWatch Logs.
     * Using CloudTrail and CloudWatch rules gives you the ability to use Systems Manager events as triggers for automated responses, such as Amazon SNS notifications or AWS Lambda function invocations.
     * Systems Manager can optionally store command history and the entire output of each command in Amazon S3.
@@ -40,5 +37,5 @@ You are responsible for the costs of the resources that use Systems Manager, suc
 
 
 ***
-__Ref: https://aws.amazon.com/blogs/mt/replacing-a-bastion-host-with-amazon-ec2-systems-manager/
+__Ref:__ https://aws.amazon.com/blogs/mt/replacing-a-bastion-host-with-amazon-ec2-systems-manager/
 ***
