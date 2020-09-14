@@ -5,5 +5,3 @@ aws cloudformation create-stack --stack-name MythicalMysfitsCoreStack --capabili
 sleep 10m &
 aws cloudformation describe-stacks --stack-name MythicalMysfitsCoreStack
 
-JSON="$(aws cloudformation describe-stacks --stack-name MythicalMysfitsCoreStack)"
-echo "$JSON" | cf-to-tf -s - config
