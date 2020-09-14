@@ -1,6 +1,6 @@
 #!/bin/bash
 cd code
-zip ../code.zip main.js
+zip ../code.zip app.js
 cd ..
 
 app_version=`date "+%y%m%d%H%M"`

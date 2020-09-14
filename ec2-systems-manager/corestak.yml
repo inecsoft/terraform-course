@@ -1,0 +1,361 @@
+---
+#===============================================================================
+# SSM VPC
+#
+# This template creates an application VPC that leverages EC2 Systems Manager.
+# The purpose of the template is to demonstrate the use of host management
+# without the use of a bastion host.
+#===============================================================================
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: SSM VPC
+
+#============================================================
+# UI Definition
+#============================================================
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      -
+        Label:
+          default: EC2 Systems Manager (SSM) Parameters
+        Parameters:
+          - NotifationEmailAddress
+
+    ParameterLabels:
+      # General Parameter Labels
+      NotifationEmailAddress:
+        default: Notification Email
+
+Parameters:
+  # General Parameters
+  NotifationEmailAddress:
+    Type: String
+    Description: >
+      SSM will send command execution notifications to this email address. 
+      You will receive a confirmation email that you must accept in order to 
+      receive the SSM notifications.
+
+#============================================================
+# Mappings
+#============================================================
+Mappings:
+  Region:
+    us-east-1:
+      HostAmi: ami-0b33d91d
+    us-east-2:
+      HostAmi: ami-c55673a0
+    us-west-1:
+      HostAmi: ami-165a0876
+    us-west-2:
+      HostAmi: ami-f173cc91
+    eu-west-1:
+      HostAmi: ami-70edb016
+
+#============================================================
+# Resources
+#============================================================
+Resources:
+
+#============================================================
+# Application VPC Configuration
+#============================================================
+
+  ApplicationVpc:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: 10.20.0.0/16
+      Tags:
+        - Key: Name
+          Value: Application VPC
+
+  ApplicationPublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 10.20.10.0/24
+      Tags:
+        - Key: Name
+          Value: Application Public Subnet
+      VpcId: !Ref ApplicationVpc
+
+  ApplicationPrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 10.20.20.0/24
+      Tags:
+        - Key: Name
+          Value: Application Private Subnet
+      VpcId: !Ref ApplicationVpc
+
+  ApplicationInternetGateway:
+      Type: AWS::EC2::InternetGateway
+      Properties:
+          Tags:
+            - Key: Name
+              Value: Application Internet Gateway
+
+  ApplicationInternetGatewayAttachment:
+      Type: AWS::EC2::VPCGatewayAttachment
+      Properties:
+          VpcId: !Ref ApplicationVpc
+          InternetGatewayId: !Ref ApplicationInternetGateway
+
+  ApplicationPublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+        VpcId: !Ref ApplicationVpc
+        Tags:
+          - Key: Name
+            Value: Application Public Subnet Route Table
+
+  ApplicationPublicSubnetRouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+          RouteTableId: !Ref ApplicationPublicRouteTable
+          SubnetId: !Ref ApplicationPublicSubnet
+
+  ApplicationRouteToInternetGateway:
+      Type: AWS::EC2::Route
+      DependsOn: [ApplicationInternetGatewayAttachment]
+      Properties:
+          RouteTableId: !Ref ApplicationPublicRouteTable
+          GatewayId: !Ref ApplicationInternetGateway
+          DestinationCidrBlock: 0.0.0.0/0
+
+  ApplicationHostSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+          GroupDescription: Allow SSH from Management VPC
+          VpcId: !Ref ApplicationVpc
+          SecurityGroupEgress:
+            -
+              IpProtocol: tcp
+              FromPort: 80
+              ToPort: 80
+              CidrIp: 0.0.0.0/0
+            -
+              IpProtocol: tcp
+              FromPort: 443
+              ToPort: 443
+              CidrIp: 0.0.0.0/0
+          Tags:
+            - Key: Name
+              Value: Application Host Security Group
+
+  ApplicationNatSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+          GroupDescription: Allow outbound HTTPS traffic
+          VpcId: !Ref ApplicationVpc
+          SecurityGroupIngress:
+            -
+              IpProtocol: tcp
+              FromPort: 443
+              ToPort: 443
+              CidrIp: 0.0.0.0/0
+          Tags:
+            - Key: Name
+              Value: Application NAT Security Group
+
+  ApplicationRouteToInternetGateway:
+      Type: AWS::EC2::Route
+      DependsOn: ApplicationInternetGatewayAttachment
+      Properties:
+          RouteTableId: !Ref ApplicationPublicRouteTable
+          GatewayId: !Ref ApplicationInternetGateway
+          DestinationCidrBlock: 0.0.0.0/0
+
+  ApplicationNatEip:
+      Type: AWS::EC2::EIP
+      Properties:
+          Domain: vpc
+
+  ApplicationNatGateway:
+      Type: AWS::EC2::NatGateway
+      DependsOn: ApplicationInternetGatewayAttachment
+      Properties:
+          AllocationId: !GetAtt ApplicationNatEip.AllocationId
+          SubnetId: !Ref ApplicationPublicSubnet
+
+  ApplicationPrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+        VpcId: !Ref ApplicationVpc
+        Tags:
+          - Key: Name
+            Value: Application Private Subnet Route Table
+
+  ApplicationPrivateSubnetRouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+          RouteTableId: !Ref ApplicationPrivateRouteTable
+          SubnetId: !Ref ApplicationPrivateSubnet
+
+  ApplicationRouteToNatGateway:
+      Type: AWS::EC2::Route
+      Properties:
+          RouteTableId: !Ref ApplicationPrivateRouteTable
+          NatGatewayId: !Ref ApplicationNatGateway
+          DestinationCidrBlock: 0.0.0.0/0
+
+  ApplicationHostInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ApplicationHostInstanceRole-${AWS::Region}
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM
+
+  ApplicationHostInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles: [!Ref ApplicationHostInstanceRole]
+
+  ApplicationHostInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      IamInstanceProfile: !Ref ApplicationHostInstanceProfile
+      ImageId: !FindInMap [Region, !Ref "AWS::Region", HostAmi]
+      InstanceType: t2.micro
+      SecurityGroupIds: [!Ref ApplicationHostSecurityGroup]
+      SubnetId: !Ref ApplicationPrivateSubnet
+      Tags:
+        - Key: Name
+          Value: Application Host
+      UserData:
+        "Fn::Base64":
+          !Sub |
+            #!/bin/bash -xe
+            # Install the SSM agent.
+            cd /tmp
+            curl https://amazon-ssm-${AWS::Region}.s3.amazonaws.com/latest/linux_amd64/amazon-ssm-agent.rpm -o amazon-ssm-agent.rpm
+            sudo yum install -y amazon-ssm-agent.rpm
+
+#============================================================
+# S3 Bucket
+#============================================================
+  SsmOutputBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ssm-output-history-${AWS::AccountId}-${AWS::Region}
+      AccessControl: Private
+      VersioningConfiguration:
+        Status: Enabled
+
+  SsmOutputBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref SsmOutputBucket
+      PolicyDocument:
+        Statement:
+          -
+            Sid: Allow writes from the SSM service
+            Effect: Allow
+            Principal:
+                Service: ssm.amazonaws.com
+            Action: s3:PutObject
+            Resource: !Sub arn:aws:s3:::${SsmOutputBucket}/*
+          -
+            Sid: Enforce HTTPS Connections
+            Action: s3:*
+            Effect: Deny
+            Principal: '*'
+            Resource: !Sub arn:aws:s3:::${SsmOutputBucket}/*
+            Condition:
+              Bool:
+                aws:SecureTransport: false
+          -
+            Sid: Restrict Delete* Actions
+            Action: s3:Delete*
+            Effect: Deny
+            Principal: '*'
+            Resource: !Sub arn:aws:s3:::${SsmOutputBucket}/*
+          -
+            Sid: Deny Unencrypted Object Uploads
+            Effect: Deny
+            Principal: '*'
+            Action: s3:PutObject
+            Resource: !Sub arn:aws:s3:::${SsmOutputBucket}/*
+            Condition:
+              StringNotEquals:
+                s3:x-amz-server-side-encryption: AES256
+
+#============================================================
+# SNS Topic
+#============================================================
+  SsmNotificationTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: SsmNotificationTopic
+      Subscription:
+        - Endpoint: !Ref NotifationEmailAddress
+          Protocol: email
+
+#============================================================
+# IAM Role
+#============================================================
+  SsmNotificationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub SsmNotificationRole-${AWS::Region}
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+                - ssm.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: cloudtrail-limited-actions
+          PolicyDocument:
+              Version: 2012-10-17
+              Statement:
+                -
+                  Sid: AllowSnsTopicPost
+                  Action: sns:Publish
+                  Effect: Allow
+                  Resource: !Ref SsmNotificationTopic
+
+#============================================================
+# Outputs
+#============================================================
+Outputs:
+  ApplicationHostInstance:
+    Description: Application host ID
+    Value: !Ref ApplicationHostInstance
+
+  S3Bucket:
+    Description: Bucket used for SSM logging
+    Value: !Ref SsmOutputBucket
+      
+  SnsTopicArn:
+    Description: SNS topic used for notifications
+    Value: !Ref SsmNotificationTopic
+
+  RoleArn:
+    Description: Role used to publish to SNS topic
+    Value: !GetAtt SsmNotificationRole.Arn
