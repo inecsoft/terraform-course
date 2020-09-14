@@ -16,7 +16,7 @@
             "kind": "StorageV2",
             "sku": {
                 "name": "Premium_LRS",
-                "tier": "Premium"
+                "tier": "Standard"
             }
         }
     ],
