@@ -21,7 +21,7 @@ POLICY
 resource "aws_iam_instance_profile" "ApplicationHostInstanceProfile" {
   name = "${terraform.workspace}-ApplicationHostInstanceProfile"
   path = "/"
-  role = "aws_iam_role.ApplicationHostInstanceRole.name"
+  role = aws_iam_role.ApplicationHostInstanceRole.name
 }
 #--------------------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "AmazonEC2RoleforSSM-policy-attachment" {

@@ -2,6 +2,8 @@
 resource "aws_s3_bucket" "s3-ssm-output-history" {
   bucket = "${terraform.workspace}-s3-ssm-output-history"
   acl    = "private"
+
+  force_destroy = true
   
   tags = {
     Name = "${local.default_name}-s3"
