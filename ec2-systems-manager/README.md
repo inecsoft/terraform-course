@@ -1,16 +1,19 @@
 ***
-### __Artchitecture Diagram of Ec2-systems-manager__
+
+<div align="center">
+    <h1>Artchitecture Diagram of Ec2-systems-manager</h1> 
+</div>
 
 The new architecture, seen in the diagram below, shows how the use of Systems Manager eliminates the need for the bastion components and helps simplify the system architecture. Users no longer interact directly with the application hosts; Systems Manager is the broker that facilitates the execution of commands:
 
- <div align="center">
+<div align="center">
     <img src="images/ec2-systems-manager.JPG" width="700" />
 </div>
 
 ***
 
-<div>
-    <h1 style="text-align:center;">Alternative solution</h1> 
+<div align="center">
+    <h1>Alternative solution</h1> 
 </div>
 
 Systems Manager allows you to remotely execute commands on managed hosts without using a bastion host (you might know this feature as EC2 Run Command). A host-based agent polls Systems Manager to determine whether a command awaits execution.
