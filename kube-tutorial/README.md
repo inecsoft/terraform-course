@@ -6,8 +6,7 @@
 
 ***
 
-
-### __2.Display information about the Deployment:__
+### __2. Display information about the Deployment:__
 
 ```
 kubectl get deployments test-nginx
@@ -17,16 +16,19 @@ kubectl get deployments test-nginx
 ```
 kubectl rollout status deployment <deployment-name>
 ```
-Set the image of a deployment or upgrade the deployment:
+# __Set the image of a deployment or upgrade the deployment:__
+
 ```
 kubectl set image deployment/<deployment-name> container-name=image-name:version
 ```
-View the history of a rollout, including previous revisions:
+# __View the history of a rollout, including previous revisions:__
+
 ```
 kubectl rollout history deployment/deployment-name
 ```
 ```
 kubectl rollout history deployment/deployment-name --revision=<revision number>
+```
 ```
 kubectl describe deployments test-nginx
 ```
@@ -45,10 +47,12 @@ kubectl describe replicasets
 ```
 
 ### __9. Show environment variable for [test-nginx] pod__
+
 ```
 kubectl exec test-nginx-c8b797d7d-mzf9h env
 ```
 # __Shell access to [test-nginx] pod__
+
 ```
 kubectl exec -it test-nginx-c8b797d7d-mzf9h bash
 ```
@@ -101,8 +105,9 @@ kubectl get services test-nginx
 ```
 kubectl delete services my-service
 ```
-To delete the Deployment, the ReplicaSet, and the Pods that are running the test-ngnix application,
-enter this command:
+# __To delete the Deployment, the ReplicaSet, and the Pods that are running the test-ngnix application,
+enter this command:__
+
 ```
 kubectl delete deployment test-nginx
 ```
