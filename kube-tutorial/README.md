@@ -76,10 +76,10 @@ kubectl scale deployment test-nginx --replicas=3
 kubectl scale --replicas=3 -f test-nginx.yaml
 ```
 
-*__Auto scale a deployment "test-nginx":__* 
-  _--max The upper limit for the number of pods that can be set by the autoscaler. Required._  
-  _--min The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value._  
-  _--cpu-percent The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used._  
+ *__Auto scale a deployment "test-nginx":__*   
+   _--max The upper limit for the number of pods that can be set by the autoscaler. Required._    
+   _--min The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value._  
+   _--cpu-percent The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used._  
   
 ```
 kubectl autoscale deployment test-nginx --min=2 --max=10 --cpu-percent=90
