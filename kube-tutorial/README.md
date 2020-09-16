@@ -1,7 +1,7 @@
 ***
 
- <div align="center">
-    <img src="images/devops.JPG" width="700" />
+<div align="center">
+  <img src="images/kubernetes_architecture.JPG" width="700" />
 </div>
 
 ***
@@ -45,6 +45,56 @@ kubectl get replicasets
 ```
 kubectl describe replicasets
 ```
+# __6. Display detailed information about the Service:__
+### __Debugging Pods__
+```
+kubectl describe pods ${POD_NAME}
+```
+
+# __Debugging Services__
+
+```
+kubectl describe service my-service
+```
+
+<div align="center">
+   <img src="images/pods.JPG" width="700" />
+</div>
+
+__Endpoints:__ Which shows us the IPs of the pods available to answer service requests.
+
+```
+kubectl get endpoints ${SERVICE_NAME}
+```
+# __Debugging Replication Controllers__
+
+```
+kubectl describe rc ${CONTROLLER_NAME}
+```
+```
+kubectl get can output JSON, YAML, or be directly formatted
+```
+```
+kubectl get nodes -o json | jq ".items[] | {name:.metadata.name} + .status.capacity"
+```
+```
+kubectl get no -o yaml
+```
+
+# __7. In the preceding output, you can see that the service has several endpoints: 10.244.0.5:80,10.244.0.6:80. These are internal addresses of the pods that are running the test-nginx application. To verify these are pod addresses, enter this command:__
+
+```
+kubectl get pods --output=wide
+```
+# __8. Use the external IP address (LoadBalancer Ingress) to access the test-ngnxapplication:__
+
+*__Note:__* Obtain the IP address that was allocated for our service, programmatically:
+```
+IP=$(kubectl get svc my-service -o go-template --template '{{ .spec.clusterIP }}')
+```
+```
+curl http://exteranl-ip-cluster:port
+```
 
 # __9. Show environment variable for [test-nginx] pod__
 
@@ -77,7 +127,7 @@ kubectl scale --replicas=3 -f test-nginx.yaml
 ```
 
 - *__Auto scale a deployment "test-nginx":__*  
- 
+
     _--max The upper limit for the number of pods that can be set by the autoscaler. Required._    
     _--min The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value._  
     _--cpu-percent The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used._  
@@ -99,7 +149,7 @@ kubectl expose deployment test-nginx --type="NodePort" --port 80
 kubectl get services test-nginx
 ```
 
-# __10.Cleaning up__
+# __10. Cleaning up__
 
 ### __Delete service__
 
