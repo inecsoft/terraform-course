@@ -45,13 +45,64 @@ kubectl get replicasets
 ```
 kubectl describe replicasets
 ```
+
+# __4. Create a Service object that exposes the deployment to the outside world:__
+```
+kubectl expose <type name> <identifier/name> [--port=external port] [--target-port=container-port][--type=service-type]
+``` 
+```
+kubectl expose deployment test-nginx --type=NodePort --name=my-service
+```
+```
+kubectl expose deployment test-nginx --type=LoadBlancer --port=80 --targetport=80 --name=my-service-loadbalancer
+```
+
+# __Basic service types__
+
+*__ClusterIP:__* ___(default type) Exposes the service on a cluster-internal IP. Choosing this value makes the service only reachable from within the cluster. This is the default ServiceType.__
+  * A virtual IP address is allocated for the service (in an internal, private range)  
+  * This IP address is reachable only from within the cluster (nodes and pods)  
+  * Our code can connect to the service using the original port number.
+
+*__NodePort:__* __Exposes the service on each Node’s IP at a static port (the NodePort). A ClusterIP
+service, to which the NodePort service will route, is automatically created. You’ll be able to
+contact the NodePort service, from outside the cluster, by requesting <NodeIP>:<NodePort>.__
+
+  * A port is allocated for the service (by default, in the 30000-32768 range).
+  * That port is made available on all our nodes and anybody can connect to it.
+  * Our code must be changed to connect to that new port number.
+
+*__LoadBalancer:__* __Exposes the service externally using a cloud provider’s load balancer. NodePort and ClusterIP services, to which the external load balancer will route, are automatically created.__
+
+  * An external load balancer is allocated for the service.  
+  * The load balancer is configured accordingly. (e.g.: a NodePort service is created, and the load balancer sends traffic to that port).
+  * Available only when the underlying infrastructure provides some "load balancer as a service" (e.g. AWS, Azure, GCE, OpenStack...)
+
+*__ExternalName:__* __Maps the service to the contents of the externalName field (e.g. foo.bar.example.com), by returning a CNAME record with its value. No proxying of any kind is set up. This requires version 1.7 or higher of kube-dns.__  
+
+  * The DNS entry managed by CoreDNS will just be a CNAME to a provided record  
+  * No port, no IP address, no nothing else is allocated  
+
+### __5. Display information about the Service:__
+
+```
+kubectl get services my-service
+```
+
+<div align="center">
+   <img src="images/service-type.JPG" width="700" />
+</div>
+
+*__NOTE:__* If the external IP address is shown as <pending>, wait for a minute and enter the same command again.
+
 # __6. Display detailed information about the Service:__
 ### __Debugging Pods__
+
 ```
 kubectl describe pods ${POD_NAME}
 ```
 
-# __Debugging Services__
+### __Debugging Services__
 
 ```
 kubectl describe service my-service
@@ -66,7 +117,7 @@ __Endpoints:__ Which shows us the IPs of the pods available to answer service re
 ```
 kubectl get endpoints ${SERVICE_NAME}
 ```
-# __Debugging Replication Controllers__
+### __Debugging Replication Controllers__
 
 ```
 kubectl describe rc ${CONTROLLER_NAME}
@@ -81,7 +132,9 @@ kubectl get nodes -o json | jq ".items[] | {name:.metadata.name} + .status.capac
 kubectl get no -o yaml
 ```
 
-# __7. In the preceding output, you can see that the service has several endpoints: 10.244.0.5:80,10.244.0.6:80. These are internal addresses of the pods that are running the test-nginx application. To verify these are pod addresses, enter this command:__
+# __7. In the preceding output, you can see that the service has several endpoints: 10.244.0.5:80,10.244.0.6:80. These are internal addresses of the pods that are running the test-nginx application.__ 
+
+### __To verify these are pod addresses, enter this command:__
 
 ```
 kubectl get pods --output=wide
