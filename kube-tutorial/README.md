@@ -76,10 +76,10 @@ kubectl scale deployment test-nginx --replicas=3
 kubectl scale --replicas=3 -f test-nginx.yaml
 ```
 
-Auto scale a deployment "test-nginx":  
-  --max The upper limit for the number of pods that can be set by the autoscaler. Required.  
-  --min The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value.  
-  --cpu-percent The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used.  
+*__Auto scale a deployment "test-nginx":__* 
+  _--max The upper limit for the number of pods that can be set by the autoscaler. Required._  
+  _--min The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value._  
+  _--cpu-percent The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used._  
   
 ```
 kubectl autoscale deployment test-nginx --min=2 --max=10 --cpu-percent=90
@@ -105,17 +105,19 @@ kubectl get services test-nginx
 ```
 kubectl delete services my-service
 ```
-### __To delete the Deployment, the ReplicaSet, and the Pods that are running the test-ngnix application,
-enter this command:__
+### __To delete the Deployment, the ReplicaSet, and the Pods that are running the test-ngnix application, enter this command:__
 
 ```
 kubectl delete deployment test-nginx
 ```
 ### __Delete pods and services with label name=myLabkubectldelete pods, services -l name=myLabel__
+
 ```
 kubectl delete pods,services -l name=myLabel
 ```
+
 ### __Delete a pod using the type and name specified in pod.json__
+
 ```
 kubectl delete -f ./pod.json
 ```
