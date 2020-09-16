@@ -40,8 +40,7 @@ resource "aws_iam_policy" "rds-proxy-policy" {
         "secretsmanager:GetSecretValue"
       ],
       "Effect": "Allow",
-      "Resource": [
-        "${aws_secretsmanager_secret.proxy-secret.arn}"
+      "Resource": [aws_secretsmanager_secret.proxy-secret.arn
       ]
     },
     {
@@ -51,8 +50,8 @@ resource "aws_iam_policy" "rds-proxy-policy" {
       ],
       "Effect": "Allow",
       "Resource": [
-        "${data.aws_kms_alias.secret-kms-alias.arn}",
-        "${aws_kms_key.kms-key.arn}"
+        data.aws_kms_alias.secret-kms-alias.arn,
+        aws_kms_key.kms-key.arn
       ],
       "Condition": {
         "StringEquals": {
