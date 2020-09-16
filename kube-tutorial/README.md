@@ -6,6 +6,88 @@
 
 ***
 
+# __Managing pods and Containers__
+
+### __Verify the health of the cluster:__
+
+```
+kubectl get cs
+```
+
+### __Shows all resources type:__
+
+```
+kubectl get all
+```
+
+# __What are these different things?__
+  - A deployment is a high-level construct
+    * Allows scaling, rolling updates, rollbacks.
+    * Multiple deployments can be used together to implement a canary deployment.
+    * Delegates pods management to replica sets.  
+  - A replica set is a low-level construct.
+    * Makes sure that a given number of identical pods are running.
+    * Allows scaling.
+    * Rarely used directly.
+  - A replication controller is the (deprecated) predecessor of a replica set
+
+### __Verify if nodes were created:__
+
+```
+kubectl get nodes -o=wide
+```
+
+### __Verify if pods were created:__
+
+```
+kubectl get pods -o wide --all-namespaces
+```
+
+### __verify the system namespace:__
+
+```
+kubectl -n kube-system get pods -o wide
+```
+### __Verify if deployments were created:__
+
+```
+kubectl get deployments -o wide --all-namespaces
+```
+
+# __Verify if services were created:__
+```
+kubectl get service -o wide --all-namespaces
+```
+Provides the manual for the command specified:__
+```
+kubectl explain namespaces
+```
+# __1. Deploys new container with replication equal 2, usingnginximage and open port 80 in the cluster:__
+
+```
+kubectl run test-nginx --image=nginx --replicas=2 --port=80
+```
+  * easyway to get started  
+  * versatile
+
+```
+kubectl create <resource>
+```
+  * Explicit, but lacks some features  .
+  * Can't create a CronJob.
+  * Can't pass command-line arguments to deployments.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples
+/application/nginx-app.yaml
+```
+Or
+```
+kubectl create -f foo.yaml
+```
+
+*__Note:__* kubectl run --restart=OnFailure or kubectl run --restart=Never all features are available
+
 # __2. Display information about the Deployment:__
 
 ```
@@ -37,7 +119,7 @@ kubectl describe deployments test-nginx
 ```
 kubectl rollout undo deploy test-nginx
 ```
-### __Display information about your ReplicaSet objects:__
+# __3. Display information about your ReplicaSet objects:__
 
 ```
 kubectl get replicasets
@@ -59,7 +141,7 @@ kubectl expose deployment test-nginx --type=LoadBlancer --port=80 --targetport=8
 
 # __Basic service types__
 
-*__ClusterIP:__* ___(default type) Exposes the service on a cluster-internal IP. Choosing this value makes the service only reachable from within the cluster. This is the default ServiceType.__
+*__ClusterIP:__* __(default type) Exposes the service on a cluster-internal IP. Choosing this value makes the service only reachable from within the cluster. This is the default ServiceType.__
   * A virtual IP address is allocated for the service (in an internal, private range)  
   * This IP address is reachable only from within the cluster (nodes and pods)  
   * Our code can connect to the service using the original port number.
@@ -89,7 +171,7 @@ contact the NodePort service, from outside the cluster, by requesting <NodeIP>:<
 kubectl get services my-service
 ```
 
-<div align="center">
+<div align="left">
    <img src="images/service-type.JPG" width="700" />
 </div>
 
@@ -108,7 +190,7 @@ kubectl describe pods ${POD_NAME}
 kubectl describe service my-service
 ```
 
-<div align="center">
+<div align="left">
    <img src="images/pods.JPG" width="700" />
 </div>
 
