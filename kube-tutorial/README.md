@@ -152,14 +152,14 @@ rm -rf /var/lib/docker
 ```
 
 # __Viewing log messages__
------------------------------------------------------------------
-| Command                      |    Description                 |
-------------------------------    -----------------------------
-| journalctl                   | Show all collected log messages| 
-| journalctl -u docker.service | See network service messages   |
-| journalctl -f                | Follow messages as they appear |
-| journalctl -k                | Show only kernel messages      |
------------------------------------------------------------------
+
+| Command                      |    Description                
+ -----------------------------  |  ----------------------------
+ journalctl | Show all collected log messages
+ journalctl -u docker.service | See network service messages 
+ journalctl -f | Follow messages as they appear 
+ journalctl -k | Show only kernel messages
+
 
 # __Managing pods and Containers__
 
