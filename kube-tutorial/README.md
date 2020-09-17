@@ -475,7 +475,7 @@ kubectl delete horizontalpodautoscalers.autoscaling test-ngnix
 # __Setting up High Availability with kops__
 ### __Export your environment variables:__
 
-````
+```
 export KOPS_SATATE_STORE=s3://basit-k8s-demo-bucket
 ```
 
