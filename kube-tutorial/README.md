@@ -283,13 +283,14 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 vim ~/.kube/config
 ```
+
 # __Install the Pod network:__
 
 ### __Now we must select your pod network to be deployed on the cluster with the command:__
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-``
+```
 ### __Calico Pod Network:__
 
 ```
@@ -304,20 +305,30 @@ kubectl apply -n kube-system -f "https://cloud.weave.works/k8s/net?k8s-version=$
 
 *__Reference:__* https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network
 
-### __Control plane node solation__
+### __Control plane node isolation__
+
 By default, your cluster will not schedule pods on the master for security reasons. If you want to be able to schedule pods on the
 master, e.g.
 for a single-machine Kubernetes cluster for development, run:
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
 In case of network issues you can start from scratch: To undo what kubeadm did, you should first drain the node and make sure that
-### __The node is empty before shutting it down:__
+
+### __The nodes have empty before shutting it down:__
+
 ```
 kubectl get nodes
+```
+```
 kubectl drain kubemaster --delete-local-data --force --ignore-daemonsets
+```
+```
 kubectl delete node kubemaster
+```
+```
 kubeadm reset
 ```
+
 # __Deploying Dashboard__
 
 ### __Create the Dashboad service__
