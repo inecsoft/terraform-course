@@ -486,8 +486,7 @@ Where TOKEN and DISCOVERY_TOKEN are the tokens displayed after the initializatio
 If you do it after the dashboard gets hosted on the nodes.
 
 # __Checking your nodes__
-### __Once the deploy command completes, you should be able to see both nodes on the master, by issuing the command kubectl get
-nodes.__
+### __Once the deploy command completes, you should be able to see both nodes on the master, by issuing the command kubectl get nodes.__
 
 ```
 kubectl get nodes
