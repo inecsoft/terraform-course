@@ -470,3 +470,106 @@ kubectl delete -f ./pod.json
 ```
 kubectl delete horizontalpodautoscalers.autoscaling test-ngnix
 ```
+
+
+# __Setting up High Availability with kops__
+### __Export your environment variables:__
+
+````
+export KOPS_SATATE_STORE=s3://basit-k8s-demo-bucket
+```
+
+### __HA multi nodes with kops__
+
+```
+kops create cluster basit-k8s-demo.k8s.local --zones us-west-2a, us-west-2b, us-west-2c \
+--node-count 3 \
+--master-zones us-west-2a, us-west-2b, us-west-2c --yes
+```
+### __Check the state of our cluster__
+```
+kops validate cluster
+```
+```
+kubectl get nodes
+```
+
+### __Deploy the services in HA cluster__
+
+```
+kubectl apply -f mysql-deployment.yaml
+```
+```
+kubectl apply -f workpress-deployment.yaml
+```
+
+### __Check the WordPress service and the loadbalance address provided by LBS.__
+```
+kubectl describe service workpress
+```
+
+*__Note:__* Check for loadbalancer ingress put the address on a browser to access WordPress.
+Make sure that you deleted all the resources on the cluster.
+
+```
+kops delete cluster basit-k8s-demo.k8s.local --yes
+```
+
+
+# __kubernetes in production volumes on AWS (EBS)__
+### __Export your environment variables:__
+
+```
+export KOPS_SATATE_STORE=s3://basit-k8s-demo-bucket
+```
+### __Create a single node master:__
+
+```
+kops create cluster basit-k8s-demo.k8s.local --zones us-west-2a --yes
+```
+
+### __Check the state of our cluster:__
+
+```
+kops validate cluster
+```
+###__Deploy the services in the cluster__
+```
+kubectl apply -f mysql-deployment.yaml
+```
+```
+kubectl apply -f workpress-deployment.yaml
+```
+*__Note:__* notice that the pvc were created.
+
+### __Get the persistent volumes__
+```
+kubectl get pv
+```
+
+### __Check the pv were created by the autoprovisioner automatically on EBS.__
+
+```
+kubectl describe pv
+```
+
+<div align="left">
+   <img src="images/aws-ebs-dynamic-provicioner.JPG" width="700" />
+</div>
+
+### __Get the URL for the load balancer that is serving wordpress service__
+
+```
+kubectl describe service workpress
+```
+### __Check for loadbalancer ingress and put the address on a browser to access WordPress__
+
+<div align="left">
+   <img src="images/loadbalancer-ingres.JPG" width="700" />
+</div>
+
+### __Make sure that you deleted all the resources.__
+
+```
+kops delete cluster basit-k8s-demo.k8s.local --yes
+```
