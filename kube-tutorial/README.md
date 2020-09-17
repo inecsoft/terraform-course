@@ -220,7 +220,7 @@ Now we need to ensure that both Docker-ce and Kubernetes belong to the same cont
 sed -i 's/cgroup-driver=systemd/cgroup-driver=cgroupfs/g'
 /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 ```
-### __Configure cgroup driver used by kubelet on Master Node:
+### __Configure cgroup driver used by kubelet on Master Node:__
 
 ```
 sed -i "s/cgroup-driver=systemd/cgroup-driver=cgroupfs/g" /var/lib/kubelet/kubeadm-flags.env
@@ -283,6 +283,208 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 vim ~/.kube/config
 ```
+# __Install the Pod network:__
+
+### __Now we must select your pod network to be deployed on the cluster with the command:__
+
+```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+``
+### __Calico Pod Network:__
+
+```
+kubectl apply -f https://docs.projectcalico.org/v1.5/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml
+```
+### __Weave Pod Network:__
+
+```
+kubectl apply -n kube-system -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64
+|tr -d '\n')"
+```
+
+*__Reference:__* https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network
+
+### __Control plane node solation__
+By default, your cluster will not schedule pods on the master for security reasons. If you want to be able to schedule pods on the
+master, e.g.
+for a single-machine Kubernetes cluster for development, run:
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+In case of network issues you can start from scratch: To undo what kubeadm did, you should first drain the node and make sure that
+### __The node is empty before shutting it down:__
+```
+kubectl get nodes
+kubectl drain kubemaster --delete-local-data --force --ignore-daemonsets
+kubectl delete node kubemaster
+kubeadm reset
+```
+# __Deploying Dashboard__
+
+### __Create the Dashboad service__
+```
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommen
+ded/kubernetes-dashboard.yaml
+### __Create a service account called dashboard in namespace default__
+```
+kubectl create serviceaccount dashboard -n default
+```
+```
+kubectl create clusterrolebinding dashboard-admin -n default --clusterrole=cluster-admin
+--serviceaccount=default:dashboard
+
+### __Get a token to authenticate on the Dashboard:__
+
+```
+kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
+```
+
+### __Get all the tokens on the cluster__
+```
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep kubernetes-admin
+| awk '{print $1}')
+```
+### __Edit the dashboard config to make it accessible publically:__
+
+  - Change type: 
+     * ClusterIP to type:
+     * NodePort
+```
+kubectl -n kube-system edit service kubernetes-dashboard
+```
+
+### __Kubernetes API server is exposed and accessible from outside you can directly access dashboard at:__
+```
+https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboar
+d:/proxy/
+```
+### __How to get the service account in yaml format:__
+
+```
+kubectl get serviceaccounts dashboard -o yaml
+```
+### __How to get the token of the service account__
+```
+kubectl get secret dashboard-token-pslw7 -o yaml
+```
+### __Make the dashboard accessible on hostname ip and port 443 you are able to skip access security.__
+
+```
+kubectl proxy --address=`hostname -i` -p 443 --accept-hosts='^*$' &
+```
+### __Deploy rancher dashboard manager:__
+```
+docker run -d --restart=unless-stopped --name rancher -p 80:80 -p 443:443 rancher/server:latest
+```
+
+# __Master server__
+
+You may access the UI directly via the Kubernetes master API server. Open a browser and navigate to:
+Get the access to URL for the dashboard
+### __Creates a proxy server or application-level gateway between localhost and the Kubernetes API Server.__
+
+```
+kubectl proxy & kubectl port-forward <pod name> [Local_port: Remote_port]
+```
+```
+curl localhost:8001
+```
+However, I want to be able to hit it remotely with my desktop’s web browser since kubectl proxy enables only access to localhost.
+Using putty, I created an ssh tunnel to map my local 8001 port to port 8001 on my master node kube.
+
+<div align="centre">
+   <img src="images/putty.JPG" width="700" />
+</div>
+
+<div align="centre">
+   <img src="images/putty-proxy.JPG" width="700" />
+</div>
+
+### __After authenticating browse to:__
+
+```
+http://127.0.0.1:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+```
+
+### __Get the token and paste it on the dashboard:__
+
+```
+kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o
+jsonpath="{.data.token}" | base64 --decode
+```
+<div align="centre">
+  <img src="images/dashboard.JPG" width="700" />
+</div>
+
+### __Now I can start up the kubectl proxy to access the dashboard.__
+
+```
+kubectl proxy
+```
+### __To access the dashboard on a different ip address and port:__
+
+```
+kubectl proxy --address `hostname -i` --port 8050 --accept-hosts= `hostname -i` &
+```
+```
+kubectl --kubeconfig ${HOME}/.
+```
+```
+kube/config proxy --port 8050 --address='192.168.85.129'
+```
+```
+curl 192.168.85.129:8050
+```
+*__Note:__* You may encounter <h3>Unauthorized</h3>.
+
+### __If you need to kill the process__
+```
+pkill -9 kubectl
+```
+```
+kubectl cluster-info
+```
+### __Kubectl will handle authentication with API server and make Dashboard available at:__
+```
+https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+```
+Where <master-ip> is IP address or domain name of the Kubernetes master.
+port:8050
+
+*__Note:__* The UI can only be accessed from the machine where the command is executed. See kubectl proxy --help for more options.
+If the username and password are configured but unknown to you, then use the following to find it:
+
+```
+kubectl config view
+```
+### __Get the logs from the dashboard pod__
+```
+kubectl get pods -o wide --all-namespaces
+```
+```
+kubectl -n kube-system logs kubernetes-dashboard-77fd78f978-n7zvd
+```
+# __Join nodes to the cluster__
+
+### __Once that completes, head over to kube2 and issue the command (adjusting the IP address to fit your needs):__
+
+```
+kubeadm join 192.168.1.99:6443 --token TOKEN --discovery-token-ca-cert-hash DISCOVERY_TOKEN
+```
+Where TOKEN and DISCOVERY_TOKEN are the tokens displayed after the initialization command completes.
+*__Note:__* Make sure that you deployed the dashboard before joining the nodes so the dashboard is hosted on the master.
+If you do it after the dashboard gets hosted on the nodes.
+
+# __Checking your nodes__
+### __Once the deploy command completes, you should be able to see both nodes on the master, by issuing the command kubectl get
+nodes.__
+
+```
+kubectl get nodes
+```
+
+<div align="centre">
+  <img src="images/get-nodes.JPG" width="700" />
+</div>
 
 # __Managing pods and Containers__
 
