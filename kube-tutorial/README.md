@@ -6,6 +6,149 @@
 
 ***
 
+# __Pre-installation__
+
+```
+vim /etc/hosts
+
+```
+```
+192.168.1.99 kubemaster
+192.168.1.109 kube2
+192.168.1.167 kube3
+```
+
+*__Note:__* Each machine can ping one another via hostname. 2CPU or more, 2 GB Ram or more.
+
+# __Disable SELinux, swap and firewall__
+
+### __Now we need to disable both SELinux and swap. On all three machines, issue the following commands:__
+
+```
+setenforce 0
+sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+```
+
+__Next, disable swap (on all three machines) with the following command:__
+
+```
+swapoff -a
+```
+### __We must also ensure that swap isn't re-enabled during a reboot on each server. Open up the /etc/fstab and comment out the swap entry like this:__
+
+```
+sed -ie "s/\/dev\/mapper\/centos-swap swap/#\/dev\/mapper\/centos-swap swap/g" /etc/fstab
+```
+or
+
+```
+vim /etc/fstab
+```
+```
+# /dev/mapper/centos-swap swap swap defaults 0 0
+```
+```
+systemctl stop firewalld
+systemctl disable firewalld
+```
+OR
+
+```
+firewall-cmd --permanent --add-port=10250-10252/tcp
+firewall-cmd --permanent --add-port=2379-2380/tcp
+firewall-cmd --permanent --add-port=30000-32767/{tcp,udp}
+firewall-cmd --permanent --add-port=6443/tcp
+```
+### __Canal/Flannel VXLAN overlay networking__
+```
+firewall-cmd --permanent --add-port=8472/udp
+```
+### __Canal/Flannel livenessProbe/readinessProbe__
+```
+firewall-cmd --permanent --add-port=9099/tcp
+firewall-cmd --reload
+```
+*__Reference:__* https://rancher.com/docs/rancher/v2.x/en/installation/requirements/
+
+# __Master Node__
+
+<div align="left">
+   <img src="images/master-node.JPG" width="700" />
+</div>
+
+# __Worker Node__
+
+<div align="left">
+   <img src="images/worker-node.JPG" width="700" />
+</div>
+
+For our next trick, we'll be enabling the br_netfilter kernel module on all three servers. This is done with the following commands:
+The network adapter on the hypervisor has to be set to Bridge and promiscuous mode.
+
+```
+modprobe br_netfilter
+echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+```
+
+# __Enable br_netfilter__
+
+```
+cat <<EOF > /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+```
+
+# __Install Docker-ce__
+
+### __It's time to install the necessary Docker tool. On all three machines, install the Docker-ce dependencies with the following command:__
+
+```
+yum install -y yum-utils device-mapper-persistent-data lvm2
+```
+__Next, add the Docker-ce repository with the command:__
+```
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+```
+__Install Docker-ce with the command:__
+```
+yum list docker-ce --showduplicates
+yum install -y docker-ce-18.06.1.ce-3.el7
+```
+__or run the following as not root user.__
+
+```
+wget -qO- https://get.docker.com/ | bash
+```
+*__Note:__*
+__If you would like to use Docker as a non-root user, you should now consider adding your user to the "docker" group with something like:__
+
+```
+sudo usermod -aG docker your-user
+```
+__If the docker version is not supported by kubernetes you can.__
+
+```
+yum downgrade -y docker-ce
+yum install -y docker-compose or pip install docker-compose
+systemctl enable docker && systemctl start docker
+ls -la /var/run/docker.sock
+```
+
+vim /etc/docker/daemon.json
+```
+{ "group": "docker" }
+{ "dns": ["8.8.8.8", "8.8.4.4"] }
+```
+```
+docker info
+```
+
+*__Note:__* in case of errors to start the daemon remove /var/lib/docker.
+```
+rm -rf /var/lib/docker
+```
+
 # __Managing pods and Containers__
 
 ### __Verify the health of the cluster:__
@@ -54,21 +197,24 @@ kubectl -n kube-system get pods -o wide
 kubectl get deployments -o wide --all-namespaces
 ```
 
-# __Verify if services were created:__
+### __Verify if services were created:__
+
 ```
 kubectl get service -o wide --all-namespaces
 ```
-Provides the manual for the command specified:__
+### __Provides the manual for the command specified:__
+
 ```
 kubectl explain namespaces
 ```
-# __1. Deploys new container with replication equal 2, usingnginximage and open port 80 in the cluster:__
+
+# __1. Deploys new container with replication equal 2, using nginx image and open port 80 in the cluster:__
 
 ```
 kubectl run test-nginx --image=nginx --replicas=2 --port=80
 ```
-  * easyway to get started  
-  * versatile
+  * Easyway to get started  
+  * Versatile
 
 ```
 kubectl create <resource>
