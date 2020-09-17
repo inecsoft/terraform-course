@@ -331,7 +331,7 @@ kubeadm reset
 
 # __Deploying Dashboard__
 
-### __Create the Dashboad service__
+### __Create the Dashboard service__
 ```
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommen
 ded/kubernetes-dashboard.yaml
