@@ -161,6 +161,108 @@ rm -rf /var/lib/docker
  journalctl -k | Show only kernel messages
 
 
+# __Install Kubernetes__
+
+This is also done on all three servers. First, we need to create a repository entry for yum.
+To do this, issue the command nano /etc/yum.repos.d/kubernetes.repo and then add the following contents:
+
+```
+cat <<'EOF' > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+```
+
+### __Save and close that file. Install Kubernetes with the command:__
+
+```
+yum install -y kubelet kubeadm kubectl
+```
+
+*__Note:__* yum error – Public key for *.rpm is not installed yum install {package-name} --nogpgcheck
+Once the installation completes, reboot all three machines. As soon as each machine has rebooted, log back in and su- to the root user.
+
+### __The bash-completion package which is not installed by default.__
+
+```
+yum install bash-completion -y
+```
+### __Setup autocomplete in bash into the current shell, bash-completion package should be installed first.__
+
+```
+source <(kubectl completion bash)
+```
+### __Setup autocompletes in bash into the current shell, bash-completion package should be installed first.__
+```
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+```
+### __Kops is an interactive suit provided by kubernetes maintainer to do a bit more of manual work for (AWS). it only requires kubectl installed:__
+
+```
+curl -LO https://github.com/kubernetes/kops/releases/download/ \
+$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | \
+grep tag_name | cut -d '"' -f 4)/kops-linux-amd64 \
+chmod +x kops-linux-amd64 \
+sudo mv kops-linux-amd64 /usr/local/bin/kops
+```
+
+# __Cgroup changes__
+
+Now we need to ensure that both Docker-ce and Kubernetes belong to the same control group (cgroup). By default, Docker should already belong to cgroupfs(you can check this with the command docker info | grep -i cgroup).
+### __To add Kubernetes to this, issue the command:__
+```
+sed -i 's/cgroup-driver=systemd/cgroup-driver=cgroupfs/g'
+/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+```
+### __Configure cgroup driver used by kubelet on Master Node:
+
+```
+sed -i "s/cgroup-driver=systemd/cgroup-driver=cgroupfs/g" /var/lib/kubelet/kubeadm-flags.env
+```
+
+### __Restart the systemd daemon and the kubelet service with the commands:__
+
+```
+systemctl daemon-reload
+systemctl enable kubelet.service
+systemctl restart kubelet
+```
+### __Show kubernetes version in json format:__
+```
+kubectl version -o json
+```
+
+# __Initialize the Kubernetes cluster__
+
+We're now ready to initialize the Kubernetes cluster. This is done on kubemaster (and only on that machine).
+Onkubemaster, issue the command (again, adjusting the IP addresses to fit your needs):
+
+### __1. Initializes cluster master node:__
+```
+kubeadm init --apiserver-advertise-address $(hostname -i)
+```
+
+### __2. Initialize cluster networking:__
+  
+  - For [--apiserver-advertise-address] option, specify the IP address Kubernetes API server listens.
+  - For [--pod-network-cidr] option, specify network which Pod Network uses.
+  - There are some plugins for Pod Network. (refer to details below) https://kubernetes.io/docs/concepts/cluster-administration/networking/ 
+  
+  In this example, select Flannel. For Flannel, specify [--pod-network-cidr=10.244.0.0/16] to let Pod Network work normally.
+
+### __Calico pod network uses 192.168.0.0/16 and Flannel pod network uses 10.244.0.0/16__
+
+```
+kubeadm init --apiserver-advertise-address=`hostname -i` --pod-network-cidr=10.244.0.0/16
+```
+When this completes (it'll take anywhere from 30 seconds to 5 minutes), the output should include the joining command for your nodes.
+
 # __Managing pods and Containers__
 
 ### __Verify the health of the cluster:__
@@ -573,4 +675,81 @@ kubectl describe service workpress
 
 ```
 kops delete cluster basit-k8s-demo.k8s.local --yes
+```
+
+
+# __Possible Solutions for deployment.__
+  * Use kubectl command line to create a deployment, service and scale it.
+  * Writing a deployment.yaml file, use kubectl apply, & use kubectl expose to expose a service.
+  * Writing a deployment.yaml file & a service.yaml file and use kubectl apply on both.
+  * Use a kubernetes manager like helm to handle the work for you.
+
+# __Install Minikube to configure Single Node Cluster within a Virtual machine.__
+
+Because using VM, Install a Hypervisor which is supported by Minikube.
+```
+yum -y install qemu-kvm libvirt libvirt-daemon-kvm
+```
+```
+systemctl start libvirtd
+```
+```
+systemctl enable libvirtd
+```
+```
+yum install -y wget
+```
+```
+wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -O minikube
+wget https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
+chmod 755 minikube docker-machine-driver-kvm2
+mv minikube docker-machine-driver-kvm2 /usr/local/bin/
+export PATH=$PATH:/usr/local/bin
+minikube version
+To start minikube
+minikube start --vm-driver kvm2
+```
+```
+show the status
+```
+```
+minikube status
+```
+```
+minikube service list
+```
+```
+minikube docker-env
+```
+```
+kubectl get nodes
+```
+### __To see the VM that minikube is running.__
+```
+virsh list
+```
+### __To get access to the VM.__
+```
+minikube ssh
+
+hostname
+docker ps
+exit
+```
+### __Deploy Grafana for monitoring.__
+```
+minikube addons enable haeapster
+```
+```
+kubectl get pods -n=kube-system
+```
+```
+minikube addons open heapster
+```
+*__Note:__* user and password is admin.
+
+```
+minikube stop
+minikube delete
+virsh list --all
 ```
