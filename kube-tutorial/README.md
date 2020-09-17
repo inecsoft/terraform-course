@@ -252,9 +252,9 @@ kubeadm init --apiserver-advertise-address $(hostname -i)
   
   - For [--apiserver-advertise-address] option, specify the IP address Kubernetes API server listens.
   - For [--pod-network-cidr] option, specify network which Pod Network uses.
-  - There are some plugins for Pod Network. (refer to details below) https://kubernetes.io/docs/concepts/cluster-administration/networking/ 
-  
-  In this example, select Flannel. For Flannel, specify [--pod-network-cidr=10.244.0.0/16] to let Pod Network work normally.
+  - There are some plugins for Pod Network.
+   (refer to details below) https://kubernetes.io/docs/concepts/cluster-administration/networking/
+   - In this example, select Flannel. For Flannel, specify [--pod-network-cidr=10.244.0.0/16] to let Pod Network work normally.
 
 ### __Calico pod network uses 192.168.0.0/16 and Flannel pod network uses 10.244.0.0/16__
 
@@ -262,6 +262,27 @@ kubeadm init --apiserver-advertise-address $(hostname -i)
 kubeadm init --apiserver-advertise-address=`hostname -i` --pod-network-cidr=10.244.0.0/16
 ```
 When this completes (it'll take anywhere from 30 seconds to 5 minutes), the output should include the joining command for your nodes.
+
+<div align="left">
+   <img src="images/kube-installed.JPG" width="700" />
+</div>
+
+Run the kubeadm join on the nodes to add them to the cluster as shown above.
+
+# __Configuring Kubernetes__
+Before Kubernetes can be used, we must take care of a bit of configuration.
+Issue the following three commands (to create a new .kube configuration directory,
+copy the necessary configuration file, and give the file the proper ownership):
+*__Note:__* You should run these command as a regular user.
+
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+```
+vim ~/.kube/config
+```
 
 # __Managing pods and Containers__
 
