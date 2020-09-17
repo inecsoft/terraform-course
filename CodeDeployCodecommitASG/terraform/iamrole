@@ -1,0 +1,228 @@
+resource "aws_iam_role" "aws-codestar-service-role" {
+    name               = "aws-codestar-service-role"
+    path               = "/service-role/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codestar.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForAmazonCodeGuruReviewer" {
+    name               = "AWSServiceRoleForAmazonCodeGuruReviewer"
+    path               = "/aws-service-role/codeguru-reviewer.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codeguru-reviewer.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForConfig" {
+    name               = "AWSServiceRoleForConfig"
+    path               = "/aws-service-role/config.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "config.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForEC2Spot" {
+    name               = "AWSServiceRoleForEC2Spot"
+    path               = "/aws-service-role/spot.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "spot.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForECS" {
+    name               = "AWSServiceRoleForECS"
+    path               = "/aws-service-role/ecs.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ecs.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForRDS" {
+    name               = "AWSServiceRoleForRDS"
+    path               = "/aws-service-role/rds.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "rds.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForSupport" {
+    name               = "AWSServiceRoleForSupport"
+    path               = "/aws-service-role/support.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "support.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "AWSServiceRoleForTrustedAdvisor" {
+    name               = "AWSServiceRoleForTrustedAdvisor"
+    path               = "/aws-service-role/trustedadvisor.amazonaws.com/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "trustedadvisor.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "claudia-executor" {
+    name               = "claudia-executor"
+    path               = "/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "HelloWorldFunction-role-xdb0rmp0" {
+    name               = "HelloWorldFunction-role-xdb0rmp0"
+    path               = "/service-role/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "rds-proxy-role-1599670884918" {
+    name               = "rds-proxy-role-1599670884918"
+    path               = "/service-role/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "rds.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role" "sam-app-HelloWorldFunctionRole-102YF7CVS4E03" {
+    name               = "sam-app-HelloWorldFunctionRole-102YF7CVS4E03"
+    path               = "/"
+    assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+

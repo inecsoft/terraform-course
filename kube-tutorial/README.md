@@ -108,16 +108,16 @@ EOF
 ```
 yum install -y yum-utils device-mapper-persistent-data lvm2
 ```
-__Next, add the Docker-ce repository with the command:__
+### __Next, add the Docker-ce repository with the command:__
 ```
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 ```
-__Install Docker-ce with the command:__
+### __Install Docker-ce with the command:__
 ```
 yum list docker-ce --showduplicates
 yum install -y docker-ce-18.06.1.ce-3.el7
 ```
-__or run the following as not root user.__
+### __or run the following as not root user.__
 
 ```
 wget -qO- https://get.docker.com/ | bash
@@ -128,7 +128,7 @@ __If you would like to use Docker as a non-root user, you should now consider ad
 ```
 sudo usermod -aG docker your-user
 ```
-__If the docker version is not supported by kubernetes you can.__
+### __If the docker version is not supported by kubernetes you can.__
 
 ```
 yum downgrade -y docker-ce
@@ -150,6 +150,16 @@ docker info
 ```
 rm -rf /var/lib/docker
 ```
+
+# __Viewing log messages__
+-----------------------------------------------------------------
+| Command                      |    Description                 |
+------------------------------    -----------------------------
+| journalctl                   | Show all collected log messages| 
+| journalctl -u docker.service | See network service messages   |
+| journalctl -f                | Follow messages as they appear |
+| journalctl -k                | Show only kernel messages      |
+-----------------------------------------------------------------
 
 # __Managing pods and Containers__
 
@@ -313,7 +323,7 @@ contact the NodePort service, from outside the cluster, by requesting <NodeIP>:<
   * The DNS entry managed by CoreDNS will just be a CNAME to a provided record  
   * No port, no IP address, no nothing else is allocated  
 
-### __5. Display information about the Service:__
+# __5. Display information about the Service:__
 
 ```
 kubectl get services my-service
