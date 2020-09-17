@@ -504,6 +504,7 @@ kubectl apply -f workpress-deployment.yaml
 ```
 
 ### __Check the WordPress service and the loadbalance address provided by LBS.__
+
 ```
 kubectl describe service workpress
 ```
@@ -533,7 +534,7 @@ kops create cluster basit-k8s-demo.k8s.local --zones us-west-2a --yes
 ```
 kops validate cluster
 ```
-###__Deploy the services in the cluster__
+### __Deploy the services in the cluster__
 ```
 kubectl apply -f mysql-deployment.yaml
 ```
