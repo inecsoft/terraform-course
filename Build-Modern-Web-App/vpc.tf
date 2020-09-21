@@ -12,7 +12,13 @@ module "vpc" {
   private_subnets = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
   public_subnets  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 
+ 
+  # VPC endpoint for DynamoDB
+  enable_dynamodb_endpoint = true
+
   enable_nat_gateway     = true
+  # this tutorial need two nat gateways, one per subnet
+  
   single_nat_gateway     = true
   one_nat_gateway_per_az = false
 
@@ -28,14 +34,43 @@ module "vpc" {
   #  create_flow_log_cloudwatch_log_group = true
   #  create_flow_log_cloudwatch_iam_role  = true
 
-  tags = {
+ 
+tags = {
     "Name" = "${local.default_name}"
   }
 
-  intra_subnet_tags = {
-    "Name" = "${local.default_name}-subnets"
+  public_subnet_tags = {
+    "Name" = "${local.default_name}-net-public"
+  }
 
+  private_subnet_tags = {
+    "Name" = "${local.default_name}-net-private"
   }
 }
 
+#-------------------------------------------------------------------
+# VPC
+output "vpc_id" {
+  description = "The ID of the VPC"
+  value       = module.vpc.vpc_id
+}
+
+# Subnets
+output "private_subnets" {
+  description = "List of IDs of private subnets"
+  value       = module.vpc.private_subnets
+}
+
+output "public_subnets" {
+  description = "List of IDs of public subnets"
+  value       = module.vpc.public_subnets
+}
+output "vpc_endpoint_dynamodb_id" {
+  description = "The ID of VPC endpoint for DynamoDB"
+  value       = module.vpc.vpc_endpoint_dynamodb_id
+}
+output "vpc_endpoint_dynamodb_pl_id" {
+  description = "The prefix list for the DynamoDB VPC endpoint."
+  value       = module.vpc.vpc_endpoint_dynamodb_pl_id
+}
 #-------------------------------------------------------------------

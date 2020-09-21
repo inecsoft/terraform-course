@@ -806,9 +806,60 @@ kubectl delete -f ./pod.json
 kubectl delete horizontalpodautoscalers.autoscaling test-ngnix
 ```
 
+# __Deploying a self-hosted registry__
+
+* ### __Create the registry service:__
+```
+kubectl create deployment registry --image=registry:2
+```
+
+* ### __Expose the registry service to a service type NodePort:__
+```
+kubectl expose deploy/registry --port=5000 --type=NodePort
+```
+
+* ### __View the service details:__
+```
+kubectl describe svc/registry
+```
+
+* ### __Get the port number programmatically:__
+```
+NODEPORT=$(kubectl get svc/registry -o json| jq.spec.ports[0].nodePort)
+export REGISTRY=127.0.0.1:$NODEPORT
+curl localhost:$NODEPORT
+```
+### __Test the registry by pushing an image into the registry:__
+```
+docker pull busybox
+```
+```
+docker tag busybox $REGISTRY/busybox
+```
+```
+docker push $REGISTRY/busybox
+```
+* ### __View the repositories currently held in our registry:__
+```
+curl $REGISTRY/v2/_catalog
+```
+
+Deploy the NGINX container to the cluster
+It's now time to deploy the NGINX container. From the master node, issue the command:
+sudo kubectl create deployment nginx --image=nginx
+Next we make the NGINX container available to the network with the command:
+sudo kubectl create service nodeport nginx --tcp=80:80
+Issue the command kubectl get svc to see your NGINX listing (as well as the assigned port, given by Kubernetes )
+```
+kubectl get svc
+```
 
 # __Setting up High Availability with kops__
 ### __Export your environment variables:__
+```
+aws s3api create-bucket --bucket basit-k8s-demo-bucket --region us-west-2 \
+ --create-bucket-configuration LoactionConstraint=us-west-2
+```
 
 ```
 export KOPS_SATATE_STORE=s3://basit-k8s-demo-bucket
@@ -985,4 +1036,17 @@ minikube addons open heapster
 minikube stop
 minikube delete
 virsh list --all
+```
+
+# ___How to upgrade kubernetes__
+
+### __Now, you can easily check to see if your system can handle an upgrade by entering:__
+```
+kubeadm upgrade plan
+```
+
+### __After checking to see how an upgrade will affect your cluster, you can apply the upgrade by typing:__
+
+```
+kubeadm upgrade apply v1.13.2
 ```
