@@ -876,21 +876,25 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   # any PV name
-  name: nsf-pv-1
-  labels:
-    type: local
+  name: nsf-pv
 spec:
   capacity:
     # storage size
     storage: 20Gi
   accessModes:
-    # ReadWriteMany(RWfrom multi nodes)
+    # ReadWriteMany(RW from multi nodes)
     # ReadWriteOnce(RW from a node)
     # ReadOnlyMany (R from multi nodes)
-    - ReadWriteOnce
-  hostPath:
-    path: /tmp/data/pv-1
----
+    - ReadWriteMany
+  persistenVolumeReclaimPolicy:
+    # retain even if pods terminate
+    Retain
+  nfs: 
+    # NFS server's definition
+    path: /var/lib/nfs-share
+    server: 10.0.0.30
+    readOnly: false
+
 ```
 ```
 kubectl create -f nfs-pv.yml
@@ -902,12 +906,97 @@ kubectl get pv
 ```
 vim nfs-pvc.yml
 ```
-
+```
+--- 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  # any PVC name
+  name: nsf-pvc
+spec:
+  accessModes:
+    # ReadWriteMany(RW from multi nodes)
+    # ReadWriteOnce(RW from a node)
+    # ReadOnlyMany (R from multi nodes)
+    - ReadWriteMany
+  resources:
+    requests:
+      # storage size to use
+      storage: 1Gi
+    
+``` 
 
 ```
 kubectl create -f nfs-pvc.yml
 ```
+```
+kubectl get pvc
+```
+```bash
+vim nginx-nfs.yml
+```
 
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  # any Pod name
+  name: nginx-nfs
+  labels:
+    name: nginx-nfs
+spec:
+  containers:
+   - name: nginx-nfs
+     image: fedora/nginx
+     ports:
+       - name: web
+       containerPort: 80
+  volumes:
+   - name: nfs-share
+     persistentVolumeClaim:
+       # PVC name you created
+       claimName: nfs-pvc
+
+```
+```
+kubectl create -f nginx-nfs.yml
+```
+
+### __Running NFS service on Swarm Mode__
+```
+docker service create --mount type=volume,volume-opt=o=addr=<source-host which is master node>, \
+volume-opt=device=:<NFS directory>,volume-opt=type=nfs,source=<volume name>, \
+target=/<insideContainer> --replicas 3 --name <service-name> dockerimage <command>
+```
+
+*__Reference:__* https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+
+
+# __Deployment with Yaml file__
+## __Labels & Selectors__
+
+### __Install git for this tutorial__
+```
+yum install -y git
+```
+```
+git clone https://github.com/LevelUpEducation/kubernetes-demo.git
+```
+
+*__Note:__* Node selector is a property on a deployment that uses labels and selectors to chose which nodes the master decides to run a given pod on.
+
+example:
+```
+kubectl get nodes
+```
+### __Set a label to a specific node__
+```
+kubectl label node <node name> storage=ssd
+```
+### ___Update / apply changes__
+```
+kubectl apply -f ./tomcat-deployment.yaml
+```
 
 # __DNS as Service Discovery in Kubernetes__
 ```
@@ -921,6 +1010,7 @@ kubectl apply -f wordpress-deployment.yaml
 ```
 kubectl autoscale deploy wordpress --cpu-percent=50 --min=1 --max=5
 ```
+
 ### __Create a load for the service__
 ```
 kubectl run -it load-generator --image=busybox /bin/sh
@@ -978,6 +1068,7 @@ aws
 aws configure
 ```
 search for the best region and press enter.
+
 ### __Create a bucket using the command line:__
 ```
 aws s3api create-bucket --bucket basit-k8s-demo-bucket --region us-west-2 \
