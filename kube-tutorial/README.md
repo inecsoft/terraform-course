@@ -959,9 +959,7 @@ spec:
     requests:
       storage: 20Gi
 ```
-|          |            |
-|          |            |
-|----------|------------|
+
 ```
 kubectl create -f nfs-pvc.yml
 ```
@@ -987,6 +985,10 @@ spec:
      ports:
        - name: web
        containerPort: 80
+     volumeMounts:
+       - name: nfs-share
+         # mount point in container
+         mountPath: /usr/share/nginx/html
   volumes:
    - name: nfs-share
      persistentVolumeClaim:
@@ -1034,10 +1036,17 @@ kubectl label node <node name> storage=ssd
 kubectl apply -f ./tomcat-deployment.yaml
 ```
 
+<div align="left">
+   <img src="images/lable-selector.JPG" width="700" />
+</div>
+
 # __DNS as Service Discovery in Kubernetes__
 ```
 <my-service-name>.<my-namespace>.svc.cluster.local
+
 ```
+
+
 
 # __Auto Scaling__
 ```
@@ -1068,11 +1077,11 @@ kubectl delete horizontalpodautoscalers.autoscaling wordpress
 
 # __Install the AWS Command Line Interface in a Virtual Environment__
 
-1. ### __Install virtualenv with pip.__
+### __1. Install virtualenv with pip.__
 ```
 pip install --uservirtualenv
 ```
-2. ### __Create a virtual environment.__
+### __2. Create a virtual environment.__
 ```
 virtualenv ~/cli-ve
 ```
@@ -1083,15 +1092,15 @@ python3 --version
 ```
 virtualenv -p /usr/bin/python3.4 ~/cli-ve
 ```
-3. ### __Activate the virtual environment.__
+### __3. Activate the virtual environment.__
 ```
 source ~/cli-ve/bin/activate
 ```
-4. ### __Install the AWS CLI.__
+### __4. Install the AWS CLI.__
 ```
 pip install --upgrade awscli
 ```
-5. ### __Verify that the AWS CLI is installed correctly.__
+### __5. Verify that the AWS CLI is installed correctly.__
 ```
 aws --version
 ```
