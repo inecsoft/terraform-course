@@ -571,8 +571,7 @@ kubectl create <resource>
   * Can't pass command-line arguments to deployments.
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples
-/application/nginx-app.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml
 ```
 Or
 ```
@@ -840,26 +839,154 @@ docker tag busybox $REGISTRY/busybox
 docker push $REGISTRY/busybox
 ```
 * ### __View the repositories currently held in our registry:__
+
 ```
 curl $REGISTRY/v2/_catalog
 ```
 
-Deploy the NGINX container to the cluster
-It's now time to deploy the NGINX container. From the master node, issue the command:
+# __Deploy the NGINX container to the cluster__
+### __It's now time to deploy the NGINX container. From the master node, issue the command:__
+```
 sudo kubectl create deployment nginx --image=nginx
-Next we make the NGINX container available to the network with the command:
+```
+### __Next we make the NGINX container available to the network with the command:__
+```
 sudo kubectl create service nodeport nginx --tcp=80:80
-Issue the command kubectl get svc to see your NGINX listing (as well as the assigned port, given by Kubernetes )
+```
+
+*__Note:__* Issue the command kubectl get svc to see your NGINX listing (as well as the assigned port, given by Kubernetes )
+
 ```
 kubectl get svc
 ```
+<div align="left">
+   <img src="images/kubectl-get-svc.JPG" width="700" />
+</div>
 
-# __Setting up High Availability with kops__
-### __Export your environment variables:__
+# __Use Persistent Storage in Kubernetes Cluster__
+### __Define PV (Persistent Volume) object and PVC (Persistent Volume Claim) object on Master Node__
+
+### __Create PV definition__
+```
+vim nfs-pv.yml
+```
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  # any PV name
+  name: nsf-pv-1
+  labels:
+    type: local
+spec:
+  capacity:
+    # storage size
+    storage: 20Gi
+  accessModes:
+    # ReadWriteMany(RWfrom multi nodes)
+    # ReadWriteOnce(RW from a node)
+    # ReadOnlyMany (R from multi nodes)
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/data/pv-1
+```
+
+```
+```
+kubectl create -f nfs-pv.yml
+```
+```
+kubectl get pv
+```
+### __Create PVC definition__
+```
+vim nfs-pvc.yml
+```
+```
+kubectl create -f nfs-pvc.yml
+```
+
+
+# __DNS as Service Discovery in Kubernetes__
+```
+<my-service-name>.<my-namespace>.svc.cluster.local
+```
+
+# __Auto Scaling__
+```
+kubectl apply -f wordpress-deployment.yaml
+```
+```
+kubectl autoscale deploy wordpress --cpu-percent=50 --min=1 --max=5
+```
+### __Create a load for the service__
+```
+kubectl run -it load-generator --image=busybox /bin/sh
+```
+
+```bash
+while true; do wget -q -O- http://wordpress.default.svc.cluster.local; done
+```
+### __Check the status of the autoscale__
+```
+kubectl get hpa
+```
+
+### __Delete the autoscale deployment__
+```
+kubectl delete horizontalpodautoscalers.autoscaling wordpress
+```
+
+
+# __Install the AWS Command Line Interface in a Virtual Environment__
+
+1. ### __Install virtualenv with pip.__
+```
+pip install --uservirtualenv
+```
+2. ### __Create a virtual environment.__
+```
+virtualenv ~/cli-ve
+```
+*__Note:__* You can use the -p option to use a Python executable other than the default.
+```
+python3 --version
+```
+```
+virtualenv -p /usr/bin/python3.4 ~/cli-ve
+```
+3. ### __Activate the virtual environment.__
+```
+source ~/cli-ve/bin/activate
+```
+4. ### __Install the AWS CLI.__
+```
+pip install --upgrade awscli
+```
+5. ### __Verify that the AWS CLI is installed correctly.__
+```
+aws --version
+```
+
+# __Create an AWS S3 bucket as a state store__
+```
+aws
+```
+```
+aws configure
+```
+search for the best region and press enter.
+### __Create a bucket using the command line:__
 ```
 aws s3api create-bucket --bucket basit-k8s-demo-bucket --region us-west-2 \
  --create-bucket-configuration LoactionConstraint=us-west-2
 ```
+
+# __Create your access key in AWS.__
+sign in the AWS Dashboard and click on your name at the top:
+
+# __Setting up High Availability with kops__
+### __Export your environment variables:__
 
 ```
 export KOPS_SATATE_STORE=s3://basit-k8s-demo-bucket
