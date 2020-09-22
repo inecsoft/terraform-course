@@ -897,7 +897,7 @@ spec: |
     readOnly: false |
 
 ```
-| ivan  | 1  |
+
 |---|---|
 | pedro   | 2  |
 |   |   |
