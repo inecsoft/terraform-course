@@ -870,7 +870,6 @@ kubectl get svc
 ```bash
 vim nfs-pv.yml
 ```
-```
 
 --- |
 apiVersion: v1 |
@@ -896,7 +895,7 @@ spec: |
     server: 10.0.0.30 |
     readOnly: false |
 |-------------------------------------------- | ----------------------------------------- |
-```
+
 | ivan asdfasdfadsasfasdfasdddddddaasddddddddddddddddddddddddddddd gasgas | 1  |
 |---|---|
 
@@ -1209,17 +1208,30 @@ yum install -y wget
 ```
 ```
 wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -O minikube
+```
+```
 wget https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
+```
+```
 chmod 755 minikube docker-machine-driver-kvm2
+```
+```
 mv minikube docker-machine-driver-kvm2 /usr/local/bin/
+```
+```
 export PATH=$PATH:/usr/local/bin
+```
+```
 minikube version
-To start minikube
+```
+
+### __To start minikube__
+```
 minikube start --vm-driver kvm2
 ```
-```
-show the status
-```
+
+### __show the status__
+
 ```
 minikube status
 ```
@@ -1239,7 +1251,8 @@ virsh list
 ### __To get access to the VM.__
 ```
 minikube ssh
-
+```
+```
 hostname
 docker ps
 exit
