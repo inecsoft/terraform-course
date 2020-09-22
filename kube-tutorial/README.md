@@ -1040,13 +1040,89 @@ kubectl apply -f ./tomcat-deployment.yaml
    <img src="images/lable-selector.JPG" width="700" />
 </div>
 
+# __Health & Checks__
+### __update / apply changes__
+```
+kubectl apply -f ./tomcat-deployment.yaml
+```
+### __Check for livenessProbe & readinessProbe__
+```
+kubectl describe deploment tomcat-deployment
+```
+## __RedinessProbe:__
+   Determines when a pod is ready(after starting and loaded what it needs internally in the image and is ready to take request form external service).
+
+## __LivelinessProbe:__
+   Determines when the pod is Healthy or unhealthy after it becomes ready.
+
+<div align="left">
+   <img src="images/redinessprobe.JPG" width="700" />
+</div>
+
+# __Secret__
+### __Create a secret password__
+```
+kubectl create secret generic mysql-pass --from-literal=password=AMuchBetterWayToStoreAPassword
+```
+### __Check the secret was created__
+```
+kubectl get secrets
+```
+
+### __Update the deployment with the secret__
+
+<div align="left">
+   <img src="images/secret.JPG" width="700" />
+</div>
+
+```
+kubectl apply -f mysql-deployment.yaml
+```
+```
+kubectl apply -f wordpress-deployment.yaml
+```
+```
+kubectl describe deployments wordpress
+```
+
+# __Namespaces and resources quotas__
+### __Create a namespace__
+```
+kubectl create namespace cpu-limited-tomcat
+```
+```
+kubectl get namespaces
+```
+### __Create the resource quota__
+```
+kubectl create -f cpu-limits.yaml -n cpu-limited-tomcat
+```
+
+*__Note:__* 400m is 40 %cpu usage
+
+### __Check the Resource Quota was created__
+```
+kubectl get ResourceQuota -n cpu-limited-tomcat -o yaml
+```
+### __Create tomcat deployment on the new namespace__
+```
+kubectl -n cpu-limited-tomcat apply -f tomcat-deployment.yaml
+```
+<div align="left">
+   <img src="images/cpu-quotas.JPG" width="700" />
+</div>
+
+*__Note:__* This quota means that each replica consumes 200m, so 3 replicas consume 60%cpu.
+
+### __Check status of the deployment__
+```
+kubectl describe deploy -n cpu-limited-tomcat
+```
 # __DNS as Service Discovery in Kubernetes__
 ```
 <my-service-name>.<my-namespace>.svc.cluster.local
 
 ```
-
-
 
 # __Auto Scaling__
 ```
