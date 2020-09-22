@@ -1405,3 +1405,11 @@ kubeadm upgrade plan
 ```
 kubeadm upgrade apply v1.13.2
 ```
+
+*__Reference:__*
+
+```
+https://kubernetes.io/docs/tutorials/stateless-application/expose-external-ip-address/
+
+https://github.com/LevelUpEducation/kubernetes-demo
+```
