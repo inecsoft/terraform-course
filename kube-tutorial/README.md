@@ -867,10 +867,10 @@ kubectl get svc
 ### __Define PV (Persistent Volume) object and PVC (Persistent Volume Claim) object on Master Node__
 
 ### __Create PV definition__
-```
+```bash
 vim nfs-pv.yml
 ```
----
+---yml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -1165,7 +1165,7 @@ minikube delete
 virsh list --all
 ```
 
-# ___How to upgrade kubernetes__
+# __How to upgrade kubernetes__
 
 ### __Now, you can easily check to see if your system can handle an upgrade by entering:__
 ```
