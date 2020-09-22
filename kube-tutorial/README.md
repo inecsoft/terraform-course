@@ -1056,7 +1056,7 @@ kubectl describe deploment tomcat-deployment
    Determines when the pod is Healthy or unhealthy after it becomes ready.
 
 <div align="left">
-   <img src="images/redinessprobe.JPG" width="700" />
+   <img src="images/redinessprobe.JPG" width="500" />
 </div>
 
 # __Secret__
@@ -1109,7 +1109,7 @@ kubectl get ResourceQuota -n cpu-limited-tomcat -o yaml
 kubectl -n cpu-limited-tomcat apply -f tomcat-deployment.yaml
 ```
 <div align="left">
-   <img src="images/cpu-quotas.JPG" width="700" />
+   <img src="images/cpu-quotas.JPG" width="500" />
 </div>
 
 *__Note:__* This quota means that each replica consumes 200m, so 3 replicas consume 60%cpu.
