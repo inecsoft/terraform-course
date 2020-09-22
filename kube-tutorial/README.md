@@ -870,7 +870,8 @@ kubectl get svc
 ```bash
 vim nfs-pv.yml
 ```
----yml
+```
+--- 
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -889,8 +890,7 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: /tmp/data/pv-1
-```
-
+---
 ```
 ```
 kubectl create -f nfs-pv.yml
@@ -902,6 +902,8 @@ kubectl get pv
 ```
 vim nfs-pvc.yml
 ```
+
+
 ```
 kubectl create -f nfs-pvc.yml
 ```
