@@ -896,7 +896,20 @@ spec: |
     readOnly: false |
 |-------------------------------------------- | ----------------------------------------- |
 
-| ivan asdfasdfadsasfasdfasdddddddaasddddddddddddddddddddddddddddd gasgas | 1  |
+| ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-2
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/data/pv-2 | 1  |
 |---|---|
 
 ```
