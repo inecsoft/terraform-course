@@ -871,32 +871,34 @@ kubectl get svc
 vim nfs-pv.yml
 ```
 
---- |
-apiVersion: v1 |
-kind: PersistentVolume |
-metadata: |
-  # any PV name |
-  name: nsf-pv |
-spec: |
-  capacity: |
-    # storage size |
-    storage: 20Gi |
-  accessModes: |
-    # ReadWriteMany(RW from multi nodes) |
-    # ReadWriteOnce(RW from a node) |
-    # ReadOnlyMany (R from multi nodes) |
-    - ReadWriteMany |
-  persistenVolumeReclaimPolicy: |
-    # retain even if pods terminate |
-    Retain |
-  nfs: |
-    # NFS server's definition |
-    path: /var/lib/nfs-share |
-    server: 10.0.0.30 |
-    readOnly: false |
-|-------------------------------------------- | ----------------------------------------- |
+```
+--- 
+apiVersion: v1 
+kind: PersistentVolume 
+metadata: 
+  # any PV name 
+  name: nsf-pv 
+spec: 
+  capacity: 
+    # storage size 
+    storage: 20Gi 
+  accessModes: 
+    # ReadWriteMany(RW from multi nodes) 
+    # ReadWriteOnce(RW from a node) 
+    # ReadOnlyMany (R from multi nodes) 
+    - ReadWriteMany 
+  persistenVolumeReclaimPolicy: 
+    # retain even if pods terminate 
+    Retain 
+  nfs: 
+    # NFS server's definition 
+    path: /var/lib/nfs-share 
+    server: 10.0.0.30 
+    readOnly: false 
 
-| ---
+```
+```
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -909,8 +911,9 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /tmp/data/pv-2 | 1  |
-|---|---|
+    path: /tmp/data/pv-2
+
+```
 
 ```
 kubectl create -f nfs-pv.yml
@@ -941,7 +944,24 @@ spec:
       storage: 1Gi
     
 ``` 
-
+```
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pv-claim
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+```
+|          |            |
+|          |            |
+|----------|------------|
 ```
 kubectl create -f nfs-pvc.yml
 ```
