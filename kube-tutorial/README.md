@@ -870,7 +870,7 @@ kubectl get svc
 ```bash
 vim nfs-pv.yml
 ```
-
+```
 -------------------------------------------- | -----------------------------------------
 --- |
 apiVersion: v1 |
@@ -896,7 +896,11 @@ spec: |
     server: 10.0.0.30 |
     readOnly: false |
 
-
+```
+| ivan  | 1  |
+|---|---|
+| pedro   | 2  |
+|   |   |
 ```
 kubectl create -f nfs-pv.yml
 ```
