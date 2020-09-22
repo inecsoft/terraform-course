@@ -871,7 +871,7 @@ kubectl get svc
 vim nfs-pv.yml
 ```
 ```
--------------------------------------------- | -----------------------------------------
+
 --- |
 apiVersion: v1 |
 kind: PersistentVolume |
@@ -895,12 +895,11 @@ spec: |
     path: /var/lib/nfs-share |
     server: 10.0.0.30 |
     readOnly: false |
-
+|-------------------------------------------- | ----------------------------------------- |
 ```
-
+| ivan asdfasdfadsasfasdfasdddddddaasddddddddddddddddddddddddddddd gasgas | 1  |
 |---|---|
-| pedro   | 2  |
-|   |   |
+
 ```
 kubectl create -f nfs-pv.yml
 ```
