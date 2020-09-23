@@ -3,7 +3,7 @@ cd code
 zip ../code.zip main.js
 cd ..
 
-app_version=`date "+%y%m%d%H%M"`
+app_version=`date "+%y%m%d%H%M%S"`
 
 terraform apply -var="app_version=$app_version" -target=aws_s3_bucket.inecsoft-serverless -auto-approve
 
