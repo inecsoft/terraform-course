@@ -14,6 +14,9 @@ module "vpc" {
 
  
   # VPC endpoint for DynamoDB
+  # If a container needs to access DynamoDB this
+  # allows a container in the private subnet to talk to DynamoDB directly
+  # without needing to go via the NAT gateway.
   enable_dynamodb_endpoint = true
 
   enable_nat_gateway     = true
