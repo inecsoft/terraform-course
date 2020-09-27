@@ -28,13 +28,20 @@ module "vpc" {
   #  create_flow_log_cloudwatch_log_group = true
   #  create_flow_log_cloudwatch_iam_role  = true
 
-  tags = {
-    "Name" = "${local.default_name}"
+ tags = {
+    "Name" = "${local.default_name}-vpc"
   }
 
-  intra_subnet_tags = {
-    "Name" = "${local.default_name}-subnets"
+  # elasticache_subnet_tags = {
+  #   "Name" = "${local.default_name}-net-cache"
+  # }
 
+  public_subnet_tags = {
+    "Name" = "${local.default_name}-net-public"
+  }
+
+  private_subnet_tags = {
+    "Name" = "${local.default_name}-net-private"
   }
 }
 
