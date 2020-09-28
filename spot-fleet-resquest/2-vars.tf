@@ -42,6 +42,6 @@ data "aws_caller_identity" "current" {}
 # like locals, resource attribute, map() built-in, etc.
 #---------------------------------------------------------
 variable "instance_type"{
-  default = "t2.nano"
+  default = "t2.micro"
 }
 #------------------------------------------------------------------------
