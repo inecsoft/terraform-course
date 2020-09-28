@@ -335,6 +335,8 @@ kubeadm reset
 ```
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommen
 ded/kubernetes-dashboard.yaml
+```
+
 ### __Create a service account called dashboard in namespace default__
 ```
 kubectl create serviceaccount dashboard -n default
@@ -342,7 +344,7 @@ kubectl create serviceaccount dashboard -n default
 ```
 kubectl create clusterrolebinding dashboard-admin -n default --clusterrole=cluster-admin
 --serviceaccount=default:dashboard
-
+```
 ### __Get a token to authenticate on the Dashboard:__
 
 ```
