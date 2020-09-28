@@ -447,7 +447,7 @@ kube/config proxy --port 8050 --address='192.168.85.129'
 ```
 curl 192.168.85.129:8050
 ```
-*__Note:__* You may encounter <h3>Unauthorized</h3>.
+*__Note:__* You may encounter '<h3>Unauthorized</h3>'.
 
 ### __If you need to kill the process__
 ```
