@@ -1,0 +1,169 @@
+#---------------------------------------------------------------------------------------------------------
+resource "aws_launch_configuration" "lc" {
+  name                        = "${local.default_name}-${random_pet.this.id}-lc"
+  #image_id                    = "${lookup(var.AMIS, var.AWS_REGION)}"
+  image_id                    = data.aws_ami.amazon_linux.id
+  instance_type               = var.instance_type
+  key_name                    = aws_key_pair.codecommit-key.key_name
+  associate_public_ip_address = true
+  enable_monitoring           = false
+  ebs_optimized               = false
+
+  #Spot Instances
+  #two simple rules:
+  # 1. Spot pools have separete prices and changes less frequently.
+  # 2. Amazon EC2 will give you a 2 minute warnning when we need the capacity back.
+
+  #spot_price                  = "0.001"
+
+  user_data               = data.template_file.script.rendered
+  #change the security group to private by using different file
+  security_groups         = [aws_security_group.ssh_security_group.id, aws_security_group.http_security_group.id]
+  #iam_instance_profile    = "${aws_iam_role.EC2InstanceRole.name}"
+  iam_instance_profile    = aws_iam_instance_profile.EC2InstanceRoleProfile.name
+  
+  root_block_device {
+    delete_on_termination = true
+    encrypted             = false
+    iops                  = 100
+    volume_size           = 10
+    volume_type           = "gp2"
+  }
+
+  lifecycle {
+    create_before_destroy = true 
+  }
+}
+#---------------------------------------------------------------------------------------------------------
+#if you add count it will deploy an autoscaler per AZ
+#---------------------------------------------------------------------------------------------------------
+resource "aws_autoscaling_group" "asg" {
+  #count = 3 
+  desired_capacity          = 1
+  health_check_grace_period = 0
+  health_check_type         = "EC2"
+  launch_configuration      = aws_launch_configuration.lc.name
+  max_size                  = 4
+  min_size                  = 1
+  default_cooldown          = 300
+  enabled_metrics           = []
+  load_balancers            = []
+  name                      = "${local.default_name}-asg"
+  #name                      = "performance-${count.index+1}"
+  vpc_zone_identifier       =  module.vpc.public_subnets
+  #vpc_zone_identifier       = ["${element(aws_subnet.my_vpc_subnet_public[*].id, count.index)}"]
+  #availability_zones        = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+
+  #wait_for_elb_capacity  =  1 
+
+  lifecycle {
+    create_before_destroy = true
+  }   
+
+  tag  {
+    key =  "Name"
+    value =  "${local.default_name}-asg-performance-instance"
+    #value =  "asg-performance-instance-${count.index+1}"
+    propagate_at_launch =  true 
+  }
+
+  tag {
+    key                 = "${local.default_name}-CodePipeline"
+    value               = "${local.default_name}-CodePipeline"
+    propagate_at_launch = true 
+  }
+
+}
+#---------------------------------------------------------------------------------------------------------
+#Provides a Target Group resource for use with Load Balancer resources.
+#---------------------------------------------------------------------------------------------------------
+resource "aws_lb_target_group" "tg" {
+  name                               = "${local.default_name}-tg"
+  deregistration_delay               = 300
+  lambda_multi_value_headers_enabled = false
+  load_balancing_algorithm_type      = "round_robin"
+  port                               = 80
+  protocol                           = "HTTP"
+  proxy_protocol_v2                  = false
+  slow_start                         = 0
+  target_type                        = "instance"
+
+
+  vpc_id                             = module.vpc.vpc_id
+  
+  health_check {
+    enabled             = true
+    healthy_threshold   = 5
+    interval            = 30
+    matcher             = "200"
+    path                = "/"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = 5
+    unhealthy_threshold = 2
+  }
+
+  stickiness {
+    cookie_duration = 86400
+    enabled         = false
+    type            = "lb_cookie"
+  }
+
+  tags = {
+    Name = "${local.default_name}-tg"
+  }
+}
+#---------------------------------------------------------------------------------------------------------
+resource "aws_autoscaling_attachment" "tg-asg-attachment" {
+  autoscaling_group_name = aws_autoscaling_group.asg.id
+  alb_target_group_arn   = aws_lb_target_group.tg.arn
+}
+#---------------------------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------
+resource "aws_efs_file_system" "efs" {
+  creation_token   = "EFS Shared Data"
+  #performance_mode = "generalPurpose"
+  performance_mode = "maxIO"
+
+  #The throughput, measured in MiB/s, that you want to provision
+  #for the file system. Only applicable with throughput_mode set to
+  #provisioned
+ 
+  provisioned_throughput_in_mibps = 200 
+  throughput_mode = "provisioned"
+
+  tags = {
+    Name = "${local.default_name}-EFS-Shared-Data"
+  }
+}
+#-------------------------------------------------------
+output "efs-id" {
+  value = aws_efs_file_system.efs.id
+}
+#-----------------------------------------------------------------------
+resource "aws_efs_mount_target" "efs" {
+  count = 3
+  file_system_id  = aws_efs_file_system.efs.id
+  subnet_id       = element(module.vpc.public_subnets, count.index)
+  security_groups = [ aws_security_group.ingress-efs.id ]
+}
+#-----------------------------------------------------------------------
+data "template_file" "script" {
+  template = file("script.tpl")
+  vars = {
+    efs_id = aws_efs_file_system.efs.id
+  }
+}
+#-----------------------------------------------------------------------
+# data "aws_instances" "asg-collecttion" {
+#   instance_tags = {
+#     "${local.default_name}-CodePipeline"    = "${local.default_name}-CodePipeline"
+#   }
+#   instance_state_names = ["running", "pending"]
+# }
+#-------------------------------------------------------
+# output "ipaddress" {
+#   value = data.aws_instances.asg-collecttion.public_ips
+# }
+#--------------------------------------------------------
