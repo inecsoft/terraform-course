@@ -9,7 +9,7 @@ resource "azurerm_resource_group" "nsgs" {
 }
 #---------------------------------------------------------------------------------------------
 resource "azurerm_network_security_group" "resource_group_default" {
-   name = "${local.default_name}-sg"
+   name                 = "${local.default_name}-sg"
    resource_group_name  = azurerm_resource_group.nsgs.name
    location             = azurerm_resource_group.nsgs.location
 
@@ -47,7 +47,6 @@ resource "azurerm_network_security_rule" "AllowHTTP" {
     source_port_range           = "*"
     source_address_prefix       = "*"
 }
-
 #---------------------------------------------------------------------------------------------
 resource "azurerm_network_security_rule" "AllowHTTPS" {
     name = "${local.default_name}-AllowHTTPS"
@@ -121,7 +120,7 @@ resource "azurerm_network_security_group" "nic_windows" {
    resource_group_name  = azurerm_resource_group.nsgs.name
    location             = azurerm_resource_group.nsgs.location
    
-    security_rule {
+   security_rule {
         name                       = "RDP"
         priority                   = 100
         direction                  = "Inbound"
@@ -131,7 +130,7 @@ resource "azurerm_network_security_group" "nic_windows" {
         destination_port_range     = 3389
         source_address_prefix      = "*"
         destination_address_prefix = "*"
-  }
+    }
 
   tags                 = {
     Name = "${local.default_name}-NIC_Windows"

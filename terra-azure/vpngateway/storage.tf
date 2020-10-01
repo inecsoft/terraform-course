@@ -1,6 +1,6 @@
 #--------------------------------------------------------------------------------------------
 resource "azurerm_storage_account" "storage" {
-  name                     = "${terraform.workspace}storage"
+  name                     = "${terraform.workspace}storageinecsoft"
   location                 = azurerm_resource_group.core.location
   resource_group_name      = azurerm_resource_group.core.name
   account_tier             = "Standard"
@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "storage" {
 #  network_rules {
 #    default_action             = "Deny"
 #    ip_rules                   = ["100.0.0.1"]
-#    virtual_network_subnet_ids = [azurerm_subnet.sub-net-database.id]
+#    virtual_network_subnet_ids = [azurerm_subnet.dev.id]
 #  }
 
   blob_properties {

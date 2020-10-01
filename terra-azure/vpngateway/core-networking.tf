@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "core" {
     location    = var.loc
 
     tags        = {
-        Name = "${local.default_name}-core-rg"
+      Name = "${local.default_name}-core-rg"
     }
 
 }
@@ -14,18 +14,17 @@ resource "azurerm_public_ip" "vpnGatewayPublicIp" {
   location            = azurerm_resource_group.core.location
   resource_group_name = azurerm_resource_group.core.name
     
-  #public_ip_address_allocation = "dynamic"
-
   allocation_method   = "Static"
+  #allocation_method   = "Dynamic"
   sku                 = "Standard"
 
   tags                = {
-    Name = "${local.default_name}-vpnGatewayPublicIp"
+     Name = "${local.default_name}-vpnGatewayPublicIp"
   }
 }
 #---------------------------------------------------------------------------------------------
 resource "azurerm_virtual_network" "core" {
-   name                 = "${local.default_name}-v-net"
+   name                 = "${local.default_name}-vnet"
    location             = azurerm_resource_group.core.location
    resource_group_name  = azurerm_resource_group.core.name
    
@@ -34,7 +33,7 @@ resource "azurerm_virtual_network" "core" {
    dns_servers          = [ "1.1.1.1", "1.0.0.1" ]
 
    tags                 = {
-        Name = "${local.default_name}-vnet"
+      Name = "${local.default_name}-vnet"
    }
 }
 #---------------------------------------------------------------------------------------------
@@ -62,26 +61,31 @@ resource "azurerm_subnet" "dev" {
   address_prefixes      = ["10.0.2.0/24"]
 }
 #---------------------------------------------------------------------------------------------
-resource "azurerm_virtual_network_gateway" "vpnGateway" {
-   name                = "${local.default_name}-vpnGateway"
-   location            = azurerm_resource_group.core.location
-   resource_group_name = azurerm_resource_group.core.name
+# resource "azurerm_virtual_network_gateway" "vpnGateway" {
+#    name                = "${local.default_name}-vpnGateway"
+#    location            = azurerm_resource_group.core.location
+#    resource_group_name = azurerm_resource_group.core.name
 
-   type                = "Vpn"
-   vpn_type            = "RouteBased"
+#    type                = "Vpn"
+#    vpn_type            = "RouteBased"
 
-   sku                 = "Basic"
-   enable_bgp          = true
+#    active_active       = false
+#    enable_bgp          = true
+#    sku                 = "Basic"
 
-   ip_configuration {
-      name                            = "${local.default_name}-vpnGwConfig"
-      public_ip_address_id            = azurerm_public_ip.vpnGatewayPublicIp.id
-      private_ip_address_allocation   = "Dynamic"
-      subnet_id                       = azurerm_subnet.GatewaySubnet.id
-   }
+#    ip_configuration {
+#       name                            = "${local.default_name}-vpnGwConfig"
+#       public_ip_address_id            = azurerm_public_ip.vpnGatewayPublicIp.id
+#       private_ip_address_allocation   = "Dynamic"
+#       subnet_id                       = azurerm_subnet.GatewaySubnet.id
+#    }
 
-   tags    = {
-      Name = "${local.default_name}-vpnGateway"
-   }
-}
-#---------------------------------------------------------------------------------------------
+#    tags    = {
+#       Name = "${local.default_name}-vpnGateway"
+#    }
+# }
+# #---------------------------------------------------------------------------------------------
+# output "virtual_network_gateway_id" {
+#   value = azurerm_virtual_network_gateway.vpnGateway.id
+# }
+# #---------------------------------------------------------------------------------------------
