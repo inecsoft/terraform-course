@@ -2,7 +2,7 @@
 # ELB
 ######
 module "elb" {
-  source = "../../"
+  source = "terraform-aws-modules/elb/aws"
 
   name = "elb-example"
 
