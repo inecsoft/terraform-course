@@ -1,0 +1,9 @@
+terraform {
+   backend "s3" {
+      #bucket  = "inecsoft.co.uk"
+      bucket  = "gitlab-state-bucket"
+      key     = "terraform/state"
+      region  = "eu-west-1"
+  }
+}
+
