@@ -83,7 +83,7 @@ if [ -e /srv/gitlab/config/gitlab.rb ]; then
   fi
 fi
 
-sudo docker restart gitlab
+#sudo docker restart gitlab
 #troubleshoot 
 #sudo docker logs -f gitlab
 

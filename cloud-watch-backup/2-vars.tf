@@ -39,6 +39,7 @@ data "aws_availability_zones" "azs" {}
 #-------------------------------------------------------------------
 data "aws_iam_account_alias" "current" {}
 #-------------------------------------------------------------------
+data "aws_caller_identity" "current" {}
 #---------------------------------------------------------
 # The map here can come from other supported configurations
 # like locals, resource attribute, map() built-in, etc.

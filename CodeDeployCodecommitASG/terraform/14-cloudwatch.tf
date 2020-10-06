@@ -3,7 +3,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch-pipeline" {
   name              = "/aws/lambda/pipeline"
   retention_in_days = 14
   
-  #kms_key_id        = aws_kms_key.artifacts..arn
+  #kms_key_id        = aws_kms_key.artifacts.arn
   
   tags              = {
     Name =  "${local.default_name}-pipeline"

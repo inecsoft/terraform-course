@@ -38,6 +38,30 @@ git remote add origin git@github.com:inecsoft/terraform-course.git
 
 git push -u origin master
 
+
+### __Review your work__
+
+* List commit history of current branch. -n count limits list to last n commits.
+```
+git log [-n count]
+```
+* An overview with reference labels and history graph. One commit per line.
+```
+git log --oneline --graph --decorate
+```
+* List commits that are present on the current branch and not merged into ref. A ref can be a branch name or a tag name.
+```
+git log ref..
+```
+* List commit that are present on ref and not merged into current branch.
+```
+git log ..ref
+```
+* List operations (e.g. checkouts or commits) made on local repository
+```
+git reflog 
+```
+
 ### __To remove file from remote repo__
 git checkout master
 

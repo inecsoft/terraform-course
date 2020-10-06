@@ -1,10 +1,15 @@
 #-----------------------------------------------------------------------------------------------------
 
 data "template_file" "userdata" {
-   template = "${file("scripts/userdata.sh")}"
-   vars = {
-       DEVICE = "${var.INSTANCE_DEVICE_NAME}"
-       EXT_DEVICE = "${var.EXT_INSTANCE_DEVICE_NAME}"
+  template = "${file("scripts/userdata.sh")}"
+  vars = {
+    DEVICE         = "${var.INSTANCE_DEVICE_NAME}"
+    EXT_DEVICE     = "${var.EXT_INSTANCE_DEVICE_NAME}"
+    HOSTNAME       = "${var.zone}"
+    SMTP_DOMAIN    = "${var.zone}"
+    SMTP_ADDRESS   = "${var.zone}"
+    SMTP_USER_NAME = "${var.zone}"
+    SMTP_PASSWORD  = "${var.zone}"
   }
 }
 #-------------------------------------------------------------------------

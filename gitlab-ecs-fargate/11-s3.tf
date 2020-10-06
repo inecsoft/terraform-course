@@ -1,20 +1,20 @@
 #-----------------------------------------------------------------------
 resource "aws_s3_bucket" "state-bucket" {
-    bucket = "gitlab-state-bucket"
-    acl    = "private"
-    force_destroy = true
+  bucket = "gitlab-state-bucket"
+  acl    = "private"
+  force_destroy = true
 
-    lifecycle {
+  lifecycle {
 
-        # Any Terraform plan that includes a destroy of this resource will
-        # result in an error message.
-        #
-        prevent_destroy = false
-    }
+    # Any Terraform plan that includes a destroy of this resource will
+    # result in an error message.
+    #
+    prevent_destroy = false
+  }
 
-    tags = {
-       Name  = "${local.default_name}-state-bucket"
-    }
+  tags = {
+    Name  = "${local.default_name}-state-bucket"
+  }
 }
 #-----------------------------------------------------------------------
 
