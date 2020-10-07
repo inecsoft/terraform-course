@@ -65,4 +65,13 @@ sudo docker run --detach \
   gitlab/gitlab-ce:latest
 ```
 
+### __creating fargate cluster__
+```
+aws ecs create-cluster --cluster-name fargate-cluster
+aws ecs list-task-definitions
+
+aws ecs register-task-definition --generate-cli-skeleton
+``` 
+***
+project not finished 
 ***
