@@ -49,5 +49,20 @@ sudo docker exec -t gitlab-rake gitlab:backup:create
 ```
 cd /srv/gitlab/data/backups
 ```
+### __Gitlab Upgrade version__
+```
+sudo docker stop gitlab
+sudo docke rm gitlab
+sudo docker pull gitlab/gitlab-ce:latest
+sudo docker run --detach \
+  --hostname gitlab.example.org \
+  --publish 443:443 --publish 80:80 --publish 22:22 \
+  --name gitlab \
+  --restart always \
+  --volume /srv/gitlab/config:/etc/gitlab \
+  --volume /srv/gitlab/logs:/var/log/gitlab \
+  --volume /srv/gitlab/data:/var/opt/gitlab \
+  gitlab/gitlab-ce:latest
+```
 
 ***
