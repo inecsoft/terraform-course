@@ -1321,7 +1321,7 @@ kops delete cluster basit-k8s-demo.k8s.local --yes
 |     (Master Node)    |          (Compute Node)      |          (Compute Node)      |
 |     (Infra Node)     |                              |                              |
 |     (Compute Node)   |                              |                              |
-|----------------------|------------------------------|------------------------------|   
+
 
 ***
 ### __1. On All Nodes, Create a user for installation to be used in Ansible and also grant root privileges__
@@ -1436,6 +1436,79 @@ oc get nodes
 ### __Show state with labels__
 ```
 oc get nodes --show-labels=true
+```
+
+### __5. Upgrade the cluster__
+
+*__Note:__* Follow steps 1 to 3 then.
+
+```
+vim  /etc/ansible/hosts
+# add new lines with the following
+[OSEv3:children]
+masters
+nodes
+new_masters
+
+[new_masters]
+ctl2.inecsoft.co.uk openshift_node_group_name='node-config-master'
+```
+
+
+#### __Run Scaleup Cluster Playbook__
+```
+ansible-playbook --become-user origin /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+ansible-playbook --become-user origin /usr/share/ansible/openshift-ansible/playbooks/openshift-master/scaleup.yml
+```
+### __Show status__
+```
+oc get nodes --show-labels=true
+```
+```
+vim  /etc/ansible/hosts
+# add new lines with the following
+[OSEv3:children]
+masters
+nodes
+
+
+[masters]
+ctl1.inecsoft.co.uk openshift_node_group_name='node-config-master'
+ctl2.inecsoft.co.uk openshift_node_group_name='node-config-master'
+```
+
+### __Run Scaleout Node Playbook__
+```
+vim  /etc/ansible/hosts
+# add new lines with the following
+[OSEv3:children]
+masters
+nodes
+new_nodes
+
+[new_nodes]
+node03.inecsoft.co.uk openshift_node_group_name='node-config-infra'
+```
+```
+ansible-playbook --become-user origin /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+ansible-playbook --become-user origin /usr/share/ansible/openshift-ansible/playbooks/openshift-node/scaleup.yml
+```
+### __Show status__
+```
+oc get nodes --show-labels=true
+```
+```
+vim  /etc/ansible/hosts
+# add new lines with the following
+[OSEv3:children]
+masters
+nodes
+
+
+[nodes]
+node01.inecsoft.co.uk openshift_node_group_name='node-config-compute'
+node02.inecsoft.co.uk openshift_node_group_name='node-config-compute'
+node03.inecsoft.co.uk openshift_node_group_name='node-config-infra'
 ```
 
 ***
