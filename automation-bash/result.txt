@@ -1,0 +1,21 @@
++ for i in {1..10}
++ echo 1
++ for i in {1..10}
++ echo 2
++ for i in {1..10}
++ echo 3
++ for i in {1..10}
++ echo 4
++ for i in {1..10}
++ echo 5
++ for i in {1..10}
++ echo 6
++ for i in {1..10}
++ echo 7
++ for i in {1..10}
++ echo 8
++ for i in {1..10}
++ echo 9
++ for i in {1..10}
++ echo 10
++ set +x

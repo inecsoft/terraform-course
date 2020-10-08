@@ -105,14 +105,14 @@ resource "aws_launch_template" "lt" {
     #vpc_security_group_ids  = module.vpc.public_subnets
 
     block_device_mappings {
-        device_name = "/dev/xvda"
+      device_name = "/dev/xvda"
 
-        ebs {
-            delete_on_termination = "true"
-            iops                  = 0
-            volume_size           = 10
-            volume_type           = "gp2"
-        }
+      ebs {
+        delete_on_termination = "true"
+        iops                  = 0
+        volume_size           = 10
+        volume_type           = "gp2"
+      }
     }
 
     iam_instance_profile {
@@ -122,22 +122,22 @@ resource "aws_launch_template" "lt" {
     instance_initiated_shutdown_behavior = "terminate"
 
     instance_market_options {
-       market_type  = "spot"
-       spot_options  {
-          #Specify a Spot block of up to 360 minutes (6 hours) to prevent Spot Instance interruptions. Valid only for one-time requests. The valid values are 60, 120, 180, 240, 300, or 360 minutes. If you do not specify a value, your Spot Instance can be interrupted.
-          block_duration_minutes  = 360
-          #hibernate, stop, or terminate. (Default: terminate)
-          instance_interruption_behavior =  "hibernate"
-          #The maximum hourly price you're willing to pay for the Spot Instances.
-          max_price = 0.4
-          #The Spot Instance request type. Can be one-time, or persistent
-          #persistent is not applicable for ec2 auto scaling
-          spot_instance_type =  "one-time"
-       }
+      market_type  = "spot"
+      spot_options  {
+        #Specify a Spot block of up to 360 minutes (6 hours) to prevent Spot Instance interruptions. Valid only for one-time requests. The valid values are 60, 120, 180, 240, 300, or 360 minutes. If you do not specify a value, your Spot Instance can be interrupted.
+        block_duration_minutes  = 360
+        #hibernate, stop, or terminate. (Default: terminate)
+        instance_interruption_behavior =  "hibernate"
+        #The maximum hourly price you're willing to pay for the Spot Instances.
+        max_price = 0.4
+        #The Spot Instance request type. Can be one-time, or persistent
+        #persistent is not applicable for ec2 auto scaling
+        spot_instance_type =  "one-time"
+      }
     }
 
     monitoring {
-        enabled = false
+      enabled = false
     }
     
     #When a network interface is provided, the security groups must be a part of it.
@@ -156,7 +156,7 @@ resource "aws_launch_template" "lt" {
 
     #A map of tags to assign to the launch template.
     tags  = {
-        Name  = "${local.default_name}-lt"
+      Name  = "${local.default_name}-lt"
     }
 }
 #---------------------------------------------------------------------------------------------------------
