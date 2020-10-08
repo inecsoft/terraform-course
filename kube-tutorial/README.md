@@ -1313,18 +1313,18 @@ kops delete cluster basit-k8s-demo.k8s.local --yes
 
 ***
 
------------+-----------------------------+-----------------------------+------------
-           |10.0.1.10                    |10.0.1.11                    |10.0.1.11
-+----------+-----------+      +----------+-------------+      +----------+-------------+
-|[ctrl1.inecsoft.co.uk]|      |[node01.inecsoft.co.uk] |      |[node01.inecsoft.co.uk] |
-|     (Master Node)    |      |    (Compute Node)      |      |    (Compute Node)      |
-|     (Infra Node)     |      |                        |      |                        |
-|     (Compute Node)   |      |                        |      |                        |
-+----------------------+      +------------------------+      +------------------------+
+--------------------------------------------------------------------------------------
+|           10.0.1.10  |                  10.0.1.11   |                 10.0.1.11    |
+|----------------------|------------------------------|------------------------------|
+|[ctrl1.inecsoft.co.uk]|      [node01.inecsoft.co.uk] |      [node01.inecsoft.co.uk] |
+|     (Master Node)    |          (Compute Node)      |          (Compute Node)      |
+|     (Infra Node)     |                              |                              |
+|     (Compute Node)   |                              |                              |
+|----------------------|------------------------------|------------------------------|      
 ***
 # __Install OpenShift Origin__
 
-1. ### __On All Nodes, Create a user for installation to be used in Ansible and also grant root privileges__
+### __1. On All Nodes, Create a user for installation to be used in Ansible and also grant root privileges__
 ```
 useradd origin
 ```
@@ -1339,7 +1339,7 @@ firewall-cmd --add-service=ssh --permanent
 firewall-cmd --reload
 ```
 
-2. ### __On All Nodes, install OpenShift Origin 3.11 repository and Docker and packages needed__
+### __2. On All Nodes, install OpenShift Origin 3.11 repository and Docker and packages needed__
 ```
 yum -y install centos-release-openshift-origin311 centos-release-ansible-27
 yum -y install ansible openshift-ansible docker git pyOpenSSL
@@ -1347,7 +1347,7 @@ systemctl enable --now docker
 ```
 ***
 
-3. ### __On Master Node, login with a user created above and set SSH keypair with no pass-phrase__
+### __3. On Master Node, login with a user created above and set SSH keypair with no pass-phrase__
 ```
 ssh-keygen -q -N ""
 ```
@@ -1378,7 +1378,7 @@ ssh-copy-id node01
 ssh-copy-id node02
 ssh-copy-id ctl1
 ```
-4. ### __On Master Node, login with a user created above and run Ansible Playbook for setting up OpenShift Cluster.__
+### __4. On Master Node, login with a user created above and run Ansible Playbook for setting up OpenShift Cluster.__
 ```
 cat >> /etc/ansible/hosts <<EOL
 
