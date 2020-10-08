@@ -1311,19 +1311,19 @@ kops delete cluster basit-k8s-demo.k8s.local --yes
   * Writing a deployment.yaml file & a service.yaml file and use kubectl apply on both.
   * Use a kubernetes manager like helm to handle the work for you.
 
-***
 
-|           10.0.1.10  |                  10.0.1.11   |                 10.0.1.11    |
+***
+# __Install OpenShift Origin__
+
+|           10.0.1.10  |                  10.0.1.11   |                 10.0.1.12    |
 |----------------------|------------------------------|------------------------------|
 |[ctrl1.inecsoft.co.uk]|      [node01.inecsoft.co.uk] |      [node01.inecsoft.co.uk] |
 |     (Master Node)    |          (Compute Node)      |          (Compute Node)      |
 |     (Infra Node)     |                              |                              |
 |     (Compute Node)   |                              |                              |
-|----------------------|------------------------------|------------------------------|      
+|----------------------|------------------------------|------------------------------|   
 
 ***
-# __Install OpenShift Origin__
-
 ### __1. On All Nodes, Create a user for installation to be used in Ansible and also grant root privileges__
 ```
 useradd origin
@@ -1343,6 +1343,8 @@ firewall-cmd --reload
 ```
 yum -y install centos-release-openshift-origin311 centos-release-ansible-27
 yum -y install ansible openshift-ansible docker git pyOpenSSL
+```
+```
 systemctl enable --now docker
 ```
 ***
@@ -1436,7 +1438,7 @@ oc get nodes
 oc get nodes --show-labels=true
 ```
 
-
+***
 # __Install Minikube to configure Single Node Cluster within a Virtual machine.__
 
 Because using VM, Install a Hypervisor which is supported by Minikube.
