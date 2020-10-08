@@ -1311,6 +1311,132 @@ kops delete cluster basit-k8s-demo.k8s.local --yes
   * Writing a deployment.yaml file & a service.yaml file and use kubectl apply on both.
   * Use a kubernetes manager like helm to handle the work for you.
 
+***
+
+-----------+-----------------------------+-----------------------------+------------
+           |10.0.1.10                    |10.0.1.11                    |10.0.1.11
++----------+-----------+      +----------+-------------+      +----------+-------------+
+|[ctrl1.inecsoft.co.uk]|      |[node01.inecsoft.co.uk] |      |[node01.inecsoft.co.uk] |
+|     (Master Node)    |      |    (Compute Node)      |      |    (Compute Node)      |
+|     (Infra Node)     |      |                        |      |                        |
+|     (Compute Node)   |      |                        |      |                        |
++----------------------+      +------------------------+      +------------------------+
+***
+# __Install OpenShift Origin__
+
+1. ### __On All Nodes, Create a user for installation to be used in Ansible and also grant root privileges__
+```
+useradd origin
+```
+```
+echo -e 'Defaults:origin !requiretty\norigin ALL = (root) NOPASSWD:ALL' | tee /etc/sudoers.d/openshift
+```
+```
+chmod 440 /etc/sudoers.d/openshift
+```
+```
+firewall-cmd --add-service=ssh --permanent
+firewall-cmd --reload
+```
+
+2. ### __On All Nodes, install OpenShift Origin 3.11 repository and Docker and packages needed__
+```
+yum -y install centos-release-openshift-origin311 centos-release-ansible-27
+yum -y install ansible openshift-ansible docker git pyOpenSSL
+systemctl enable --now docker
+```
+***
+
+3. ### __On Master Node, login with a user created above and set SSH keypair with no pass-phrase__
+```
+ssh-keygen -q -N ""
+```
+
+#### __Create a config in each node__
+```
+cat >> ~/.ssh/config <<EOL
+
+Host ctrl
+    Hostname ctrl.inecsoft.co.uk
+    User origin
+Host node01
+    Hostname node01.inecsoft.co.uk
+    User origin
+Host node02
+    Hostname node02.inecsoft.co.uk
+    User origin
+EOL    
+```
+```
+chmod 600 ~/.ssh/config
+```
+
+### __Transfer public-key to other nodes__
+
+```
+ssh-copy-id node01
+ssh-copy-id node02
+ssh-copy-id ctl1
+```
+4. ### __On Master Node, login with a user created above and run Ansible Playbook for setting up OpenShift Cluster.__
+```
+cat >> /etc/ansible/hosts <<EOL
+
+# add follows to the end
+[OSEv3:children]
+masters
+nodes
+etcd
+
+[OSEv3:vars]
+# admin user created in previous section
+ansible_ssh_user=origin
+ansible_become=true
+openshift_deployment_type=origin
+
+# use HTPasswd for authentication
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+# define default sub-domain for Master node
+openshift_master_default_subdomain=apps.inecsoft.co.uk
+# allow unencrypted connection within cluster
+openshift_docker_insecure_registries=172.30.0.0/16
+
+[masters]
+ctrl.inecsoft.co.uk openshift_schedulable=true containerized=false
+
+[etcd]
+ctrl.inecsoft.co.uk
+
+[nodes]
+# defined values for [openshift_node_group_name] in the file below
+# [/usr/share/ansible/openshift-ansible/roles/openshift_facts/defaults/main.yml]
+ctrl.inecsoft.co.uk openshift_node_group_name='node-config-master-infra'
+node01.inecsoft.co.uk openshift_node_group_name='node-config-compute'
+node02.inecsoft.co.uk openshift_node_group_name='node-config-compute'
+
+EOF
+```
+
+#### __Prerequisites Playbook__
+```
+ansible-playbook --become-user origin /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+```
+#### __Deploy Cluster Playbook__
+```
+ansible-playbook --become-user origin /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+```
+
+### __Show state__
+```
+oc get nodes
+```
+
+### __Show state with labels__
+```
+oc get nodes --show-labels=true
+```
+
+
 # __Install Minikube to configure Single Node Cluster within a Virtual machine.__
 
 Because using VM, Install a Hypervisor which is supported by Minikube.
