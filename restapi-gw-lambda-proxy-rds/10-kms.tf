@@ -32,7 +32,7 @@ resource "aws_kms_key" "kms-key" {
             "Resource": "*",
             "Condition": {
                 "StringEquals": {
-                    "kms:CallerAccount": "${data.aws_iam_account_alias.current}",
+                    "kms:CallerAccount": "${data.aws_caller_identity.current.account_id}",
                     "kms:ViaService": "secretsmanager.${var.AWS_REGION}.amazonaws.com"
                 }
             }
@@ -41,7 +41,7 @@ resource "aws_kms_key" "kms-key" {
             "Sid": "Allow direct access to key metadata to the account",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::${data.aws_iam_account_alias.current}:root"
+                "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
             },
             "Action": [
                 "kms:Describe*",
@@ -56,6 +56,7 @@ resource "aws_kms_key" "kms-key" {
   POLICY
 
 }
+#------------------------------------------------------------------------------
 resource "aws_kms_alias" "kms-key-alias" {
   name          = "alias/rdsproxysecrectmanager"
   target_key_id = aws_kms_key.kms-key.key_id

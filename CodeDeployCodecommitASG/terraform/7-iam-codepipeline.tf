@@ -36,7 +36,7 @@ resource "aws_iam_policy" "CodePipelineServiceRole-policy" {
   name        = "${local.default_name}-AWSCodePipelineServiceRole-policy"
   path        = "/service-role/"
   description = "Policy used in trust relationship with CodePipeline"
-    policy      = <<-POLICY
+  policy      = <<-POLICY
 { 
   "Version": "2012-10-17",
   "Statement": [
