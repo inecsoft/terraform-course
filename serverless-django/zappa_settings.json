@@ -1,0 +1,24 @@
+{
+    "dev": {
+        "aws_region": "eu-west-1",
+        "django_settings": "inecsoft.inecsoft.settings",
+        "profile_name": "zappa",
+        "project_name": "code",
+        "runtime": "python3.6",
+        "s3_bucket": "default-serverless-bucket-zappa",
+        "timeout_seconds": 900,
+        "manage_roles": false,
+        "role_name": "default-serverless-role-zappa",
+        "role_arn": "arn:aws:iam::895352585421:role/default-serverless-role-zappa",
+        "vpc_config" : {
+            "SubnetIds": [   "subnet-08f5d1aea02062a75",
+                "subnet-0cca9cbc53ca80e56",
+                "subnet-054c0dff904b4f033"],
+            "SecurityGroupIds": [ "sg-092acc32e030467d4" ]
+        },
+        "environment_variables": {
+            "DATABASE_URL": "psql://user:pass@rbd_url:5432/db_names"
+        }
+        
+    }
+}

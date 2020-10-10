@@ -28,7 +28,7 @@ resource "aws_security_group" "proxy-sg" {
   }
 
   tags = {
-    Name = "${local.default_name}-allow-mysql"
+    Name = "${local.default_name}-allow-proxy-sg"
   }
 }
 
@@ -97,3 +97,9 @@ resource "aws_security_group" "host-bastion-sg" {
     Name = "${local.default_name}-allow-ssh-sg"
   }
 }
+#-------------------------------------------------------------------------------------
+output "proxy-sg-id" {
+  description = "security group id for lambda zappa"
+  value       = aws_security_group.proxy-sg.id
+}
+#-------------------------------------------------------------------------------------

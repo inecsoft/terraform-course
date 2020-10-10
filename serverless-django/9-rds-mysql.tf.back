@@ -15,10 +15,10 @@ module "db" {
 
   #kms_key_id        = aws_kms_key.kms-key.id
   #db name
-  name     = var.credentials.dbname
-  username = var.credentials.username
-  password = var.credentials.password
-  port     = var.credentials.port
+  name     = var.credentials-mysql.dbname
+  username = var.credentials-mysql.username
+  password = random_password.password.result            # password
+  port     = var.credentials-mysql.port
 
   vpc_security_group_ids = [aws_security_group.allow-db-access.id]
 
@@ -76,7 +76,7 @@ module "db" {
   ]
 
   tags = {
-      Name = "${local.default_name}"
+    Name = "${local.default_name}-mysql-db"
   }
 }
 #--------------------------------------------------------------------------------

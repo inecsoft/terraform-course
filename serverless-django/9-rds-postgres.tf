@@ -27,11 +27,12 @@ resource "aws_db_instance" "postgresdb" {
   engine_version            = "11.5"
   instance_class            = "db.t2.micro" # use micro if you want to use the free tier
   identifier                = "postgresdb"
-  name                      = var.RDS_DB_NAME           # database name
-  username                  = var.RDS_USERNAME          # username
-  password                  = random_password.password.result
-  #password                  = var.RDS_PASSWORD          # password
-
+  
+  name                      = var.credentials-postgres.dbname            # database name      
+  username                  = var.credentials-postgres.username          # username
+  password                  = random_password.password.result            # password
+  port                      = var.credentials-postgres.port
+  
   db_subnet_group_name      = aws_db_subnet_group.postgresdb-subnet.name
   parameter_group_name      = aws_db_parameter_group.postgresdb-parameters.name
   multi_az                  = "false" # set to true to have high availability: 2 instances synchronized with each other
@@ -44,12 +45,12 @@ resource "aws_db_instance" "postgresdb" {
   #storage_encrypted = true
   # arn:aws:kms:<region>:<accountID>:key/<key-id>
 
-  backup_retention_period   = 30                                          # how long you're going to keep your backups
+  backup_retention_period   = 30                                           # how long you're going to keep your backups
   #availability_zone         = aws_subnet.main-private-1.availability_zone # prefered AZ
 
   copy_tags_to_snapshot = true  
 
-  # final snapshot when executing terraform destroy
+  #final snapshot when executing terraform destroy
   #final_snapshot_identifier = "postgresdb-final-snapshot"     
   skip_final_snapshot = true 
   
@@ -75,4 +76,13 @@ resource "aws_db_instance" "postgresdb" {
   }
 }
 #---------------------------------------------------------------------------------
-
+output "RDS-Postgres-endpoint" {
+  description   = "RDS-Postgres-endpoint"
+  value         = aws_db_instance.postgresdb.endpoint
+}
+#---------------------------------------------------------------------------------
+output "RDS-Postgres-password" {
+  description   = "RDS-Postgres-password"
+  value         = random_password.password.result
+}
+#---------------------------------------------------------------------------------

@@ -83,6 +83,35 @@ echo $?
   * burp
   * sqlmap
   * SSLScan and SSLyze
+
+***
+### __DevSecOps for Automated security testing__
+  * Guntlt + Aracni
+
+
+```
+docker pull gauntlt/gauntlt
+```
+### __Run the test__
+```
+docker run -t --rm=true -v $(pwd):/working -w /working gauntlt/gauntlt ./xss.attack
+```
+
+***
+### __Open Source SAST Options__
+
+
+|  Language / framework   | Scanning tool  |
+|-------------------------|----------------|
+| C/C++                   | Flawfinder  |
+|                         |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
 ***
 ### __DevOps Audit Defense Toolkit__
 
