@@ -2,19 +2,21 @@
 resource "aws_api_gateway_rest_api" "rest-api" {
   name             = "${local.default_name}-restapi"
   description      = "Terraform Serverless Application"
-  #AUTHORIZER or HEADER
-  api_key_source   = "HEADER"
-  minimum_compression_size = -1
+  # #AUTHORIZER or HEADER
+  # api_key_source   = "HEADER"
+  # minimum_compression_size = -1
 
-  endpoint_configuration {
-      types            = [
-          "EDGE",
-      ]
-     
-  #vpc_endpoint_ids = [module.vpc.vpc_id]
+  # endpoint_configuration {
+  #   types = [
+  #     "EDGE",
+  #   ]
+  # #VPCEndpoints can only be specified with PRIVATE apis.   
+  # #vpc_endpoint_ids = [module.vpc.vpc_id]
+  # }
 
+  tags   = {
+    Name = "${local.default_name}-restapi"
   }
-  tags                     = {}
 }
 #-----------------------------------------------------------------------------
 #In order to test the created API you will need to access its test URL
@@ -29,7 +31,8 @@ resource "aws_api_gateway_rest_api" "rest-api" {
 resource "aws_api_gateway_resource" "restapi-resource" {
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
   parent_id   = aws_api_gateway_rest_api.rest-api.root_resource_id
-  path_part   = "/"
+  #path_part   = "/"
+  path_part   = "{proxy+}"
 }
 #----------------------------------------------------------------------------------------
 #Each method on an API gateway resource has an integration which specifies where incoming requests are routed
@@ -38,7 +41,8 @@ resource "aws_api_gateway_resource" "restapi-resource" {
 resource "aws_api_gateway_method" "restapi-method-request" {
   rest_api_id   = aws_api_gateway_rest_api.rest-api.id
   resource_id   = aws_api_gateway_resource.restapi-resource.id
-  http_method   = "GET"
+  #http_method   = "GET"
+  http_method   = "ANY"
   authorization = "NONE"
 }
 #----------------------------------------------------------------------------------------
@@ -77,15 +81,22 @@ resource "aws_api_gateway_integration" "lambda_root" {
 }
 
 resource "aws_api_gateway_deployment" "stage" {
+  depends_on = [
+    aws_api_gateway_integration.lambda,
+    aws_api_gateway_integration.lambda_root
+  ]
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
   stage_name  = "Stage"
 }
 
 resource "aws_api_gateway_deployment" "prod" {
+  depends_on = [
+    aws_api_gateway_integration.lambda,
+    aws_api_gateway_integration.lambda_root
+  ]
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
   stage_name  = "Prod"
 }
-
 #----------------------------------------------------------------------------------------
 #By default any two AWS services have no access to one another, until access is explicitly granted.
 #For Lambda functions, access is granted using the aws_lambda_permission resource
@@ -99,6 +110,14 @@ resource "aws_lambda_permission" "apigw" {
   # The "/*/*" portion grants access from any method on any resource
   # within the API Gateway REST API.
   source_arn = "${aws_api_gateway_rest_api.rest-api.execution_arn}/*/*"
+  #source_arn = "${aws_api_gateway_rest_api.rest-api.execution_arn}/*/${aws_api_gateway_method.restapi-method-request.http_method}${aws_api_gateway_resource.restapi-resource.path}"
 }
-
+#----------------------------------------------------------------------------------------
+output "base_url-stage" {
+  value = aws_api_gateway_deployment.stage.invoke_url
+}
+#----------------------------------------------------------------------------------------
+output "base_url-prod" {
+  value = aws_api_gateway_deployment.prod.invoke_url
+}
 #----------------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------------------------
 resource "aws_security_group" "proxy-sg" {
   vpc_id      = module.vpc.vpc_id
-  name        = "allow-proxy-sg"
+  name        = "${local.default_name}-allow-proxy-sg"
   description = "security group that allows traffic from the app to the proxy and all egress traffic"
 
   egress {
@@ -32,7 +32,7 @@ resource "aws_security_group" "proxy-sg" {
 #-------------------------------------------------------------------------------------
 resource "aws_security_group" "allow-mysql" {
   vpc_id      = module.vpc.vpc_id
-  name        = "allow-mysql"
+  name        = "${local.default_name}-allow-mysql"
   description = "allow-mysql from the proxy to the db"
 
   ingress {
@@ -60,7 +60,7 @@ resource "aws_security_group" "allow-mysql" {
 #-------------------------------------------------------------------------------------
 resource "aws_security_group" "host-bastion-sg" {
   vpc_id      = module.vpc.vpc_id
-  name        = "allow-ssh-sg"
+  name        = "${local.default_name}-allow-ssh-sg"
   description = "security group that allows ssh and all egress traffic"
 
   egress {
@@ -81,3 +81,4 @@ resource "aws_security_group" "host-bastion-sg" {
     Name = "${local.default_name}-allow-ssh"
   }
 }
+#-------------------------------------------------------------------------------------

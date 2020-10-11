@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/app/app.csproj": {}
+    "/home/devop/terraform/tutorial/docker_dotnet2_project/app/app.csproj": {}
   },
   "projects": {
-    "/app/app.csproj": {
+    "/home/devop/terraform/tutorial/docker_dotnet2_project/app/app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/app/app.csproj",
+        "projectUniqueName": "/home/devop/terraform/tutorial/docker_dotnet2_project/app/app.csproj",
         "projectName": "app",
-        "projectPath": "/app/app.csproj",
-        "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/app/obj/",
+        "projectPath": "/home/devop/terraform/tutorial/docker_dotnet2_project/app/app.csproj",
+        "packagesPath": "/home/devop/.nuget/packages/",
+        "outputPath": "/home/devop/terraform/tutorial/docker_dotnet2_project/app/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/root/.nuget/NuGet/NuGet.Config"
+          "/home/devop/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.1"
@@ -50,21 +47,28 @@
               "target": "Package",
               "version": "[2.1.2, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[2.1.14, )"
+              "version": "[1.1.2, )"
             },
             "Microsoft.NETCore.App": {
+              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/3.1.107/RuntimeIdentifierGraph.json"
         }
       }
     }

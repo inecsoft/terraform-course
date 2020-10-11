@@ -40,4 +40,11 @@ function update_terraform {
     fi
 }
 
-update_terraform 
+read -ep "Do you want to upgrade terraform to latest version: ${versions[1]}`echo -e '\n' If you want to procced Enter: yes '\n'` " approve
+
+if [[ $approve == "yes" ]]; then
+   update_terraform 
+else
+   echo "The current version installed is: ${versions[0]}"
+
+fi

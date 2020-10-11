@@ -12,7 +12,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "lambda"))}"
+  default_name = join("-", list(terraform.workspace, "lambda"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
@@ -21,7 +21,7 @@ variable "PATH_TO_PRIVATE_KEY" {
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-    default = "lambda.pub"
+  default = "lambda.pub"
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
@@ -29,13 +29,13 @@ resource "random_pet" "this" {
 }
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "eu-west-1"
-
+  default = "eu-west-1"
 }
 #-------------------------------------------------------------------
 data "aws_availability_zones" "azs" {}
 #-------------------------------------------------------------------
 data "aws_iam_account_alias" "current" {}
+data "aws_caller_identity" "current" {}
 #-------------------------------------------------------------------
 #---------------------------------------------------------
 # The map here can come from other supported configurations
@@ -55,6 +55,22 @@ variable "credentials" {
   type = map(string)
 }
 #---------------------------------------------------------
-variable "app_version" {
+variable "app_versions" {
+  default = "20200923161420"
 }
-#---------------------------------------------------------
+#----------------------------------------------------------------------------
+resource "random_password" "password" {
+  length = 20 
+  special = true
+  override_special = "_%@"
+}
+#----------------------------------------------------------------------------
+resource "random_string" "random" {
+  length = 2
+  special = false 
+}
+#----------------------------------------------------------------------------
+locals {
+  app_version = formatdate("YYYYMMDDHHmmss", timestamp())
+}
+#----------------------------------------------------------------------------

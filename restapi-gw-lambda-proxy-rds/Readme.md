@@ -27,3 +27,19 @@
        Finally, please   review the pricing details for RDS Proxy.  
 
 ***
+```
+aws rds describe-db-proxies --query '*[*].{DBProxyName:DBProxyName,Endpoint:Endpoint}'
+mysql -h the-proxy.proxy-demo.us-east-1.rds.amazonaws.com -u admin_user -p
+Enter password:
+...
+
+mysql> select @@aurora_server_id;
++--------------------+
+| @@aurora_server_id |
++--------------------+
+| instance-9814      |
++--------------------+
+1 row in set (0.01 sec)
+```
+
+***
