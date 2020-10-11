@@ -110,8 +110,7 @@ signalsciences.com
 | JavaScript  | ESLint  |
 | .NET  |  Security Code Scan |
 | Node.js  | NodeJsScan   |
-| PHP  | 	Phan,	Phpcs-security-audit
-  |
+| PHP  | 	Phan,	Phpcs-security-audit  |
 | Python  |  bandit |
 | Ruby / Ruby on Rails  | brakeman  |
 | Scala             | Scala	find-sec-bugs |
