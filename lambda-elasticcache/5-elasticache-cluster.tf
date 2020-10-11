@@ -7,7 +7,7 @@ resource "aws_elasticache_cluster" "elasticache" {
   cluster_id           = "${local.default_name}-elasticache"
   engine               = "memcached"
   node_type            = "cache.t2.micro"
-  num_cache_nodes      = count.index
+  num_cache_nodes      = count.index + 1
   parameter_group_name = "default.memcached1.5"
   port                 = 11211
   maintenance_window   = "sun:05:00-sun:09:00"

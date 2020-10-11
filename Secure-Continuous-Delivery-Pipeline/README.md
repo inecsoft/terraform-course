@@ -96,7 +96,8 @@ docker pull gauntlt/gauntlt
 ```
 docker run -t --rm=true -v $(pwd):/working -w /working gauntlt/gauntlt ./xss.attack
 ```
-
+***
+signalsciences.com
 ***
 ### __Open Source SAST Options__
 
@@ -104,14 +105,17 @@ docker run -t --rm=true -v $(pwd):/working -w /working gauntlt/gauntlt ./xss.att
 |  Language / framework   | Scanning tool  |
 |-------------------------|----------------|
 | C/C++                   | Flawfinder  |
-|                         |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
+| Go                        | Go	Gosec
+|Java   |  find-sec-bugs |
+| JavaScript  | ESLint  |
+| .NET  |  Security Code Scan |
+| Node.js  | NodeJsScan   |
+| PHP  | 	Phan,	Phpcs-security-audit
+  |
+| Python  |  bandit |
+| Ruby / Ruby on Rails  | brakeman  |
+| Scala             | Scala	find-sec-bugs |
+
 ***
 ### __DevOps Audit Defense Toolkit__
 
