@@ -7,6 +7,8 @@
 # describe-db-proxy-targets
 # register-db-proxy-targets
 #-------------------------------------------------------------------------------------------
+#allow only private subnet only when creating. subjected.
+#-------------------------------------------------------------------------------------------
 resource "aws_db_proxy" "proxy" {
   name                   = "${local.default_name}-lambdaproxy"
   debug_logging          = true
@@ -33,6 +35,7 @@ resource "aws_db_proxy" "proxy" {
 }
 #-------------------------------------------------------------------------------------------
 #the 2 following resources are not supported by aws provider or terrafrom version
+#but the default target can be edit to set the db and lambda can attached resources too.
 #-------------------------------------------------------------------------------------------
 # resource "aws_db_proxy_default_target_group" "default-target-group" {
 #   db_proxy_name = aws_db_proxy.proxy.name

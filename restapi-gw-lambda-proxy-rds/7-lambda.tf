@@ -25,7 +25,8 @@ resource "aws_lambda_function" "lambda-function" {
                     "host",  module.db.this_db_instance_endpoint,
                     "port", var.credentials.port,
                     "dbname", var.credentials.dbname,
-                    "dbInstanceIdentifier", var.credentials.dbInstanceIdentifier
+                    "dbInstanceIdentifier", var.credentials.dbInstanceIdentifier,
+                    "region", var.AWS_REGION
                 )     
   }
 
@@ -33,7 +34,7 @@ resource "aws_lambda_function" "lambda-function" {
   
   vpc_config {
     subnet_ids         = module.vpc.public_subnets
-    security_group_ids = [aws_security_group.proxy-sg.id]
+    security_group_ids = [aws_security_group.lambda-sg.id]
   }
   
   tags = {
@@ -120,7 +121,13 @@ resource "aws_iam_policy" "lambda-role-policy" {
 }
 EOF
 }
-
+#----------------------------------------------------------------------------------------
+# resource "aws_lambda_alias" "lambda-alias" {
+#   name             = "${local.default_name}-lambda-function-proxy-alias"
+#   description      = "alias for lambda function"
+#   function_name    = aws_lambda_function.lambda-function.function_name
+#   function_version = "$LATEST"
+# }
 #----------------------------------------------------------------------------------------
 #arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
 # #----------------------------------------------------------------------------------------

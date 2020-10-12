@@ -1,7 +1,61 @@
+# #----------------------------------------------------------------------------------------
+# data archive_file lambda {
+#   type        = "zip"
+#   #source_file = "code/app.py"
+#   source_dir = "code" 
+#   output_path = "code.zip"
+# }
+# #----------------------------------------------------------------------------------------
+# resource "aws_lambda_function" "lambda-function" {
+#   function_name = var.FUNCTION_NAME 
+
+#   # The bucket name as created earlier with "aws s3api create-bucket"
+#   s3_bucket = aws_s3_bucket.s3-lambda-content-bucket.id
+#   #s3_key    = "${formatdate("YYYYMMDDHHmmss", timestamp())}/code.zip"
+#   s3_key    = "${local.app_version}/code.zip"
+
+#   # "main" is the filename within the zip file (main.js) and "handler"
+#   # is the name of the property under which the handler function was
+#   # exported in that file.
+#   handler = "main.handler"
+#   runtime = "nodejs10.x"
+
+#   role = aws_iam_role.lambda_exec.arn
+  
+#   depends_on = [aws_s3_bucket_object.s3-lambda-content-bucket-object]
+
+#   tags = {
+#     Name = "${local.default_name}-function"
+#   }
+# }
+# #----------------------------------------------------------------------------------------
+# # IAM role which dictates what other AWS services the Lambda function
+# # may access.
+# #----------------------------------------------------------------------------------------
+# resource "aws_iam_role" "lambda_exec" {
+#   name = "lambda-function-role"
+
+#   assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Action": "sts:AssumeRole",
+#       "Principal": {
+#         "Service": "lambda.amazonaws.com"
+#       },
+#       "Effect": "Allow",
+#       "Sid": ""
+#     }
+#   ]
+# }
+# EOF
+# }
 #-----------------------------------------------------------------------------
 resource "aws_api_gateway_rest_api" "rest-api" {
-  name             = "${local.default_name}-restapi"
-  description      = "Terraform Serverless Application"
+  name        = "${local.default_name}-RestApi"
+  description = "Terraform Serverless Application Example"
+  
   # #AUTHORIZER or HEADER
   # api_key_source   = "HEADER"
   # minimum_compression_size = -1
@@ -21,27 +75,35 @@ resource "aws_api_gateway_rest_api" "rest-api" {
 #-----------------------------------------------------------------------------
 #In order to test the created API you will need to access its test URL
 #-----------------------------------------------------------------------------
-#output "base_url" {
-#  value = "${aws_api_gateway_deployment.rest-api.invoke_url}"
-#}
+output "rest-api-base_url-test" {
+  value = aws_api_gateway_deployment.api-deployment-test.invoke_url
+}
 #-----------------------------------------------------------------------------
+
+output "rest-api-base_url-prod" {
+  value = aws_api_gateway_deployment.api-deployment-prod.invoke_url
+}
+
 #----------------------------------------------------------------------------------------
 #All incoming requests to API Gateway must match with a configured resource and
 #method in order to be handled.
-resource "aws_api_gateway_resource" "restapi-resource" {
+
+#The special path_part value "{proxy+}" activates proxy behavior,
+#which means that this resource will match any request path.
+#this means that all incoming requests will match this resource.
+#----------------------------------------------------------------------------------------
+resource "aws_api_gateway_resource" "proxy" {
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
   parent_id   = aws_api_gateway_rest_api.rest-api.root_resource_id
-  #path_part   = "/"
   path_part   = "{proxy+}"
 }
 #----------------------------------------------------------------------------------------
 #Each method on an API gateway resource has an integration which specifies where incoming requests are routed
 #that requests to this method should be sent to the Lambda function
 #----------------------------------------------------------------------------------------
-resource "aws_api_gateway_method" "restapi-method-request" {
+resource "aws_api_gateway_method" "proxy" {
   rest_api_id   = aws_api_gateway_rest_api.rest-api.id
-  resource_id   = aws_api_gateway_resource.restapi-resource.id
-  #http_method   = "GET"
+  resource_id   = aws_api_gateway_resource.proxy.id
   http_method   = "ANY"
   authorization = "NONE"
 }
@@ -51,8 +113,8 @@ resource "aws_api_gateway_method" "restapi-method-request" {
 #----------------------------------------------------------------------------------------
 resource "aws_api_gateway_integration" "lambda" {
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
-  resource_id = aws_api_gateway_method.restapi-method-request.resource_id
-  http_method = aws_api_gateway_method.restapi-method-request.http_method
+  resource_id = aws_api_gateway_method.proxy.resource_id
+  http_method = aws_api_gateway_method.proxy.http_method
 
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
@@ -79,23 +141,27 @@ resource "aws_api_gateway_integration" "lambda_root" {
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.lambda-function.invoke_arn
 }
-
-resource "aws_api_gateway_deployment" "stage" {
+#----------------------------------------------------------------------------------------
+#you need to create an API Gateway "deployment" in order to activate the configuration
+#and expose the API at a URL that can be used for testing:
+#----------------------------------------------------------------------------------------
+resource "aws_api_gateway_deployment" "api-deployment-test" {
   depends_on = [
     aws_api_gateway_integration.lambda,
     aws_api_gateway_integration.lambda_root
   ]
+
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
-  stage_name  = "Stage"
+  stage_name  = "test"
 }
-
-resource "aws_api_gateway_deployment" "prod" {
+resource "aws_api_gateway_deployment" "api-deployment-prod" {
   depends_on = [
     aws_api_gateway_integration.lambda,
     aws_api_gateway_integration.lambda_root
   ]
+
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
-  stage_name  = "Prod"
+  stage_name  = "prod"
 }
 #----------------------------------------------------------------------------------------
 #By default any two AWS services have no access to one another, until access is explicitly granted.
@@ -110,14 +176,8 @@ resource "aws_lambda_permission" "apigw" {
   # The "/*/*" portion grants access from any method on any resource
   # within the API Gateway REST API.
   source_arn = "${aws_api_gateway_rest_api.rest-api.execution_arn}/*/*"
-  #source_arn = "${aws_api_gateway_rest_api.rest-api.execution_arn}/*/${aws_api_gateway_method.restapi-method-request.http_method}${aws_api_gateway_resource.restapi-resource.path}"
 }
 #----------------------------------------------------------------------------------------
-output "base_url-stage" {
-  value = aws_api_gateway_deployment.stage.invoke_url
-}
+
 #----------------------------------------------------------------------------------------
-output "base_url-prod" {
-  value = aws_api_gateway_deployment.prod.invoke_url
-}
-#----------------------------------------------------------------------------------------
+

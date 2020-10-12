@@ -8,22 +8,22 @@ data archive_file lambda {
 
 #----------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "s3-bucket" {
-    bucket = "${local.default_name}-bucket-content"
-    acl    = "private"
-    #force destroy for not prouction env
-    force_destroy = true
+  bucket = "${local.default_name}-bucket-content"
+  acl    = "private"
+  #force destroy for not prouction env
+  force_destroy = true
 
-    versioning {
-      enabled = true
-    }
+  versioning {
+    enabled = true
+  }
 
-    object_lock_configuration {
-      object_lock_enabled = "Enabled"
-    }
+  object_lock_configuration {
+    object_lock_enabled = "Enabled"
+  }
 
-    tags = {
-       Name = "${local.default_name}-s3-content-bucket"
-    }
+  tags = {
+      Name = "${local.default_name}-s3-content-bucket"
+  }
 }
 #-----------------------------------------------------------------------
 output "bucket-name" {
@@ -53,5 +53,15 @@ resource "aws_s3_bucket_object" "s3-lambda-content-bucket-object" {
     Name = "${local.default_name}-s3-content-bucket-object"
   }
 
+}
+#-----------------------------------------------------------------------
+output "object-etag" {
+  description = "etag of the uploaded object"
+  value       = aws_s3_bucket_object.s3-lambda-content-bucket-object.etag
+}
+#-----------------------------------------------------------------------
+output "object-version_id" {
+  description = "A unique version ID value for the object, if bucket versioning is enabled."
+  value       = aws_s3_bucket_object.s3-lambda-content-bucket-object.version_id
 }
 #-----------------------------------------------------------------------

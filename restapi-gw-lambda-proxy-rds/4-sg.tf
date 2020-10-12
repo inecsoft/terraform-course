@@ -1,10 +1,10 @@
 #-------------------------------------------------------------------------------------
 #connections need to be allowed to the proxy from the app.
 #-------------------------------------------------------------------------------------
-resource "aws_security_group" "proxy-sg" {
+resource "aws_security_group" "lambda-sg" {
   vpc_id      = module.vpc.vpc_id
-  name        = "${local.default_name}-allow-proxy-sg"
-  description = "security group that allows traffic from the app to the proxy and all egress traffic"
+  name        = "${local.default_name}-allow-lambda-sg"
+  description = "security group that allows traffic from the app lambda and all egress traffic"
 
   egress {
     from_port   = 0
@@ -14,14 +14,41 @@ resource "aws_security_group" "proxy-sg" {
   }
 
   ingress {
-    from_port   = 3306
-    to_port     = 3306
+    from_port   = 0
+    to_port     = 0
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Name = "${local.default_name}-allow-mysql"
+    Name = "${local.default_name}-lambda-sg"
+  }
+}
+#-------------------------------------------------------------------------------------
+#connections need to be allowed to the proxy from the app.
+#-------------------------------------------------------------------------------------
+resource "aws_security_group" "proxy-sg" {
+  vpc_id      = module.vpc.vpc_id
+  name        = "${local.default_name}-allow-proxy-sg"
+  description = "security group that allows traffic from the app lambda,host bastion and rds to the proxy and all egress traffic"
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = var.credentials.port
+    to_port     = var.credentials.port
+    protocol    = "tcp"
+    security_groups = [ aws_security_group.lambda-sg.id, aws_security_group.host-bastion-sg.id ]
+    #cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${local.default_name}-proxy-sg"
   }
 }
 
@@ -36,8 +63,8 @@ resource "aws_security_group" "allow-mysql" {
   description = "allow-mysql from the proxy to the db"
 
   ingress {
-    from_port       = 3306
-    to_port         = 3306
+    from_port       = var.credentials.port
+    to_port         = var.credentials.port
     protocol        = "tcp"
     security_groups = [aws_security_group.proxy-sg.id, aws_security_group.host-bastion-sg.id] # allowing access from our example instance
   }
@@ -74,7 +101,7 @@ resource "aws_security_group" "host-bastion-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [local.workstation-external-cidr]
   }
 
   tags = {

@@ -19,7 +19,7 @@ resource "aws_kms_key" "kms-key" {
 }
 #------------------------------------------------------------------------------
 resource "aws_kms_alias" "kms-key-alias" {
-  name          = "alias/rdsproxysecrectmanager"
+  name          = "alias/rdsproxysecrectmanager-${random_string.random.result}"
   target_key_id = aws_kms_key.kms-key.key_id
 }
 #------------------------------------------------------------------------------

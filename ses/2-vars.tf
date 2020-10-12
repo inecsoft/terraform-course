@@ -1,8 +1,12 @@
+#-------------------------------------------------------------------
+variable "AWS_REGION" {
+  default = "eu-west-1"
+}
 #--------------------------------------------------------------------------------------
 data "http" "workstation-external-ip" {
   url = "http://ipv4.icanhazip.com"
 }
-
+#--------------------------------------------------------------------------------------
 locals {
   workstation-external-cidr = "${chomp(data.http.workstation-external-ip.body)}/32"
 }
@@ -12,24 +16,20 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = join("-", list(terraform.workspace, "lambda"))
+  default_name = "${join("-", list(terraform.workspace, "codedeployasg"))}"
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
 variable "PATH_TO_PRIVATE_KEY" {
-  default = "lambda"
+  default = "codedeploycodecommitasg"
 }
-
+#--------------------------------------------------------------------------------------
 variable "PATH_TO_PUBLIC_KEY" {
-  default = "lambda.pub"
+  default = "codedeploycodecommitasg.pub"
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
   length = 2
-}
-#-------------------------------------------------------------------
-variable "AWS_REGION" {
-  default = "eu-west-1"
 }
 #-------------------------------------------------------------------
 data "aws_availability_zones" "azs" {}
@@ -41,38 +41,12 @@ data "aws_caller_identity" "current" {}
 # The map here can come from other supported configurations
 # like locals, resource attribute, map() built-in, etc.
 #---------------------------------------------------------
-variable "credentials" {
-  default = {
-    username = "admin"
-    password = "admin123"
-    engine   = "mysql"
-    host     = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
-    port     = 3306
-    dbname   = "proxydb"
-    dbInstanceIdentifier = "dbproxy"
-  }
-
-  type = map(string)
+variable "domain" {
+  default = "email.inecsoft.co.uk"
 }
-#---------------------------------------------------------
-variable "app_versions" {
-  default = "20200923161420"
+#------------------------------------------------------------------------
+variable "profile" {
+  description = "the profile for the aws credential for the project"
+  default = "default"
 }
-#----------------------------------------------------------------------------
-resource "random_password" "password" {
-  length = 16
-  special = true
-  override_special = "_%@\""
-  #override_special = "%\"@_"
-}
-#echo random_password.password.result | terraform console
-#----------------------------------------------------------------------------
-resource "random_string" "random" {
-  length = 2
-  special = false 
-}
-#----------------------------------------------------------------------------
-locals {
-  app_version = formatdate("YYYYMMDDHHmmss", timestamp())
-}
-#----------------------------------------------------------------------------
+#------------------------------------------------------------------------

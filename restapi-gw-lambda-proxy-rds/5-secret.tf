@@ -38,7 +38,7 @@ resource "aws_secretsmanager_secret_version" "proxy-secret-version" {
                     
 }
 #--------------------------------------------------------------------------------
-output "secret_version" {
+output "secret_version-password" {
   value = jsondecode(aws_secretsmanager_secret_version.proxy-secret-version.secret_string)["password"]
 }
 #---------------------------------------------------------
