@@ -104,16 +104,16 @@ signalsciences.com
 
 |  Language / framework   | Scanning tool  |
 |-------------------------|----------------|
-| C/C++                   | Flawfinder  |
-| Go                        | Go	Gosec
-|Java   |  find-sec-bugs |
-| JavaScript  | ESLint  |
-| .NET  |  Security Code Scan |
-| Node.js  | NodeJsScan   |
-| PHP  | 	Phan,	Phpcs-security-audit  |
-| Python  |  bandit |
-| Ruby / Ruby on Rails  | brakeman  |
-| Scala             | Scala	find-sec-bugs |
+| C/C++                   | Flawfinder     |
+| Go                      | Go	Gosec      |
+|Java                     |  find-sec-bugs |
+| JavaScript              |  ESLint        |
+| .NET                    | Security Code Scan |
+| Node.js                 | NodeJsScan    |
+| PHP                     | Phan,	Phpcs-security-audit  |
+| Python                  |  bandit       |
+| Ruby / Ruby on Rails    | brakeman      |
+| Scala                   | Scala	find-sec-bugs |
 
 ***
 ### __DevOps Audit Defense Toolkit__
