@@ -1,0 +1,11 @@
+#Protection: inchoratech.com
+resource "aws_shield_protection" "suluq_shield_protection" {
+  name         = "suluq_shield_protection"
+  resource_arn = "arn:aws:route53:::hostedzone/ZMJ42EAN5RJQI"
+}
+
+#Protection: inchorashare.com
+resource "aws_shield_protection" "suluq_shield_protection" {
+  name         = "suluq_shield_protection"
+  resource_arn = "arn:aws:route53:::hostedzone/Z2MG18IQ6D92KC"
+}

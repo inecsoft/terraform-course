@@ -1,0 +1,27 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  pre_tasks:
+    - name: install python2
+      raw: sudo yum -y install python2 python36 wget
+  tasks:
+    - name: installing packages updated
+      yum: update_cache=yes
+    - name: Installing required packages
+      yum: name={{item}} state=present
+      with_items:
+       - git
+    users:
+  - default
+ - name: alexharley
+    gecos: alexharley
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: wheel
+    ssh_import_id: None
+    lock_passwd: true
+    ssh_authorized_keys:
+      -  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDq3Ko/+hle6uJB7XvMVLlLH4Vu1tR0lEh6Whe3mit/GNhTWLnNUWZYNOZTMrLYl/03lZK46G8DI/vTwNoZTSKX9T5UbqyWLnsN2GfUFgyIKQUiLl6DOWJN0bZY338Q4nP4EUdoRV3BaC54sfwQM79lc50iW714L9eEU3qU2BqDHBgT9jyIJ4zuTk1+AqOjoHMqCnYtch3UCCDpnwbR1AGCTHUQF8JjM5gI4OGwdQWDJSiMB3GMgK0ENQ+jMmox0DtX3Hu4oXqvG2qtYA6knMHaw7lOWvKfnORf+428jXSgywZ5mzSfZDUdErOhTCXQEHtjtXKr1L8K70P5wXy9Eb5VIhvDAboM6opiiaQ+CEU5bVVBSYqm8trmacxmm2UW7DA5qSjQ7TwclGAj+G/iugVs6w6p19RMfZexmWO7l/SoQ3/4pSr5HLkkiPSQ+1hC6pB1rP2zF3ZiJXw3++1yUfAu1kAIkXOdxCD2oX51pQodO3POgxngkDGcp7NYCSK8gUrOYSWRR37V7eYa4ELJYQswQaM23qiZ1iFktb4wMMbV6zXJMwVVCX7f3Kg2RwQdUzn1yt7s7/qn0sVawzlvclSpBpXnrz8AFmcWaGASREk2fCX+5xNUyOuToCc7LVUGtVKArSvxQ2TOvZ2wLeRCuFufMfZxkk/lFu6Fet4tnVQcvQ== ivanpedro@ivanpedro-XPS-13-7390
+      
+       
