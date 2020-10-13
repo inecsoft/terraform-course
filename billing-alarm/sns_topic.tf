@@ -5,8 +5,8 @@ resource "aws_sns_topic" "sns_alert_topic" {
     http_success_feedback_sample_rate        = 0
     lambda_success_feedback_sample_rate      = 0
     policy                                   = data.aws_iam_policy_document.sns-topic-policy.json
-    delivery_policy                          = <<EOF
-    {
+    delivery_policy                          = <<-EOF
+{
   "http": {
     "defaultHealthyRetryPolicy": {
       "minDelayTarget": 20,
@@ -52,14 +52,14 @@ data "aws_iam_policy_document" "sns-topic-policy" {
         "SNS:Receive"
       ]
       resources = [ 
-         aws_cloudwatch_metric_alarm.cloudwatch-metric-alarm.arn
+         "arn:aws:sns:${var.AWS_REGION}:${data.aws_caller_identity.current.id}:${local.default_name}-billing-alarm-notification",
       ]
 
       condition {
         test = "StringEquals" 
         variable = "AWS:SourceOwner"
        
-        values = [ data.aws_caller_identity.current.id ]
+        values = [ "${data.aws_caller_identity.current.id}"]
         
       }
     }
@@ -74,4 +74,3 @@ resource "aws_sns_topic_subscription" "sns-topic" {
   raw_message_delivery = false 
 }
 #-------------------------------------------------------------------------------
-
