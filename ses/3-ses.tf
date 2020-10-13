@@ -63,3 +63,38 @@ resource "aws_ses_email_identity" "ses-email-identity" {
   email = "ivanpedrouk@gmail.com"
 }
 #------------------------------------------------------------------------------------------
+resource "aws_ses_identity_notification_topic" "identity-notification-topic" {
+  topic_arn                = aws_sns_topic.sns-topic.arn
+  notification_type        = "Bounce"
+  identity                 = aws_ses_domain_identity.ses-domain-identity.domain 
+  include_original_headers = true
+}
+#------------------------------------------------------------------------------------------
+# data "aws_iam_policy_document" "policy-doc" {
+#   statement {
+#     actions   = ["SES:SendEmail", "SES:SendRawEmail"]
+#     resources = [aws_ses_domain_identity.ses-domain-identity.arn]
+
+#     principals {
+#       identifiers = ["*"]
+#       type        = "AWS"
+#     }
+#   }
+# }
+# #------------------------------------------------------------------------------------------
+# resource "aws_ses_identity_policy" "ses-identity-policy" {
+#   identity = aws_ses_domain_identity.ses-domain-identity.arn
+#   name     = "user-${random_uuid.uuid.result}"
+#   policy   = data.aws_iam_policy_document.policy-doc.json
+# }
+#------------------------------------------------------------------------------------------
+output "uuid" {
+  description = "generator of uuid"
+  value       = random_uuid.uuid.result
+}
+#------------------------------------------------------------------------------------------
+output "interger" {
+  description = "generator of interger"
+  value       = random_integer.interger.result
+}
+#------------------------------------------------------------------------------------------

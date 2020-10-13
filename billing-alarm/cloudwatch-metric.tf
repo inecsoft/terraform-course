@@ -1,10 +1,10 @@
 #-----------------------------------------------------------------------------------------------------------------------
-resource "aws_cloudwatch_metric_alarm" "account_billing_alarm_to_new_sns" {
+resource "aws_cloudwatch_metric_alarm" "cloudwatch-metric-alarm" {
     depends_on = [aws_sns_topic.sns_alert_topic]
     alarm_name                = "${local.default_name}-alarm"
     actions_enabled           = true
-    alarm_actions             = [
-        "${aws_sns_topic.sns_alert_topic.arn}",
+    alarm_actions             = [ 
+        aws_sns_topic.sns_alert_topic.arn
     ]
     alarm_description         = "the threshold of $10  has been reached."
     comparison_operator       = "GreaterThanOrEqualToThreshold"
@@ -23,7 +23,7 @@ resource "aws_cloudwatch_metric_alarm" "account_billing_alarm_to_new_sns" {
     treat_missing_data        = "missing"
 
     tags                      = {
-       Name =  "${local.default_name}-alarm"
+       Name =  "${local.default_name}-cloudwathc-alarm"
     }
 }
 #-------------------------------------------------------------------------------------------------------------------------

@@ -54,7 +54,7 @@ nslookup -type=TXT _amazonses.cloud.inecsoft.co.uk
 
 ### __Verify your email address with SES__
   * Email address
-
+  * Set email address, confirm and Test the email
 ***
 ### __Send Email through amazon SES with SMTP__
 #### __SMTP Connections__
@@ -63,5 +63,27 @@ nslookup -type=TXT _amazonses.cloud.inecsoft.co.uk
   * Encryption
   * Username and password
 
-  In SMPT settings set create my smtp credentials.
+  In SMTP settings set create my smtp credentials.
+   * An IAM user for SMTP authentication with Amazon SES
+   * Get User credentials
+
+***
+### __WP Mail SMTP__
+  __Settings__
+
+  * From Email: info@inecsoft.co.uk
+    - Force from email
+  * From Name: Inecsoft
+  * Mailer: Other SMTP
+  * SMTP Host: email-smtp.eu-west-1.amazonaws.com
+  * port: 587
+  * Encryption: TLS
+  * Authentication: On
+  * SMTP Username:  
+  * SMTP Password: 
+  
+
+***
+### __SES for Cloud Watch__
+
 ***

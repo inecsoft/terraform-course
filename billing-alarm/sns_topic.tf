@@ -52,14 +52,14 @@ data "aws_iam_policy_document" "sns-topic-policy" {
         "SNS:Receive"
       ]
       resources = [ 
-         "arn:aws:sns:${var.AWS_REGION}:${data.aws_caller_identity.current.id}:${local.default_name}-billing-alarm-notification",
+         aws_cloudwatch_metric_alarm.cloudwatch-metric-alarm.arn
       ]
 
       condition {
         test = "StringEquals" 
         variable = "AWS:SourceOwner"
        
-        values = [ "${data.aws_caller_identity.current.id}"]
+        values = [ data.aws_caller_identity.current.id ]
         
       }
     }

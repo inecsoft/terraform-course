@@ -50,3 +50,19 @@ variable "profile" {
   default = "default"
 }
 #------------------------------------------------------------------------
+locals {
+  user-id = formatdate("YYYYMMDDHHmmss", timestamp())
+}
+#------------------------------------------------------------------------
+resource "random_uuid" "uuid" {}
+#------------------------------------------------------------------------
+resource "random_integer" "interger" {
+  min     = 4
+  max     = 7
+}
+#------------------------------------------------------------------------
+variable "currency" {
+  description = "Short notation for currency type (e.g. USD, CAD, EUR)"
+  default     = "USD"
+}
+#-------------------------------------------------------------------
