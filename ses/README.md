@@ -39,10 +39,10 @@ nslookup -type=TXT _amazonses.cloud.inecsoft.co.uk
 
 ***
 
-<<<<<<< HEAD
 ### __Verify your email address with SES__
   * Email address
   * Set email address, confirm and Test the email
+
 ***
 ### __Send Email through amazon SES with SMTP__
 #### __SMTP Connections__
@@ -72,8 +72,17 @@ nslookup -type=TXT _amazonses.cloud.inecsoft.co.uk
   
 
 ***
-### __SES for Cloud Watch__
+### __SES for Cloud Watch and SNS-topic__
+  * Set cloud watch alarm to send you emails if you send more than 100 mails in a day.
+  * Bounce rate below 10%
+  * Complaint rate below 1/10th of a percent.
 
-=======
->>>>>>> parent of 1a04887... project needs tunning to be completed issues in SG config maybe
+***
+### __SES bounce__
+  * You need to know which email addresses on your email list are causing your bounce and complaint rates to go up, because you need to quickly remove them from your email list before you try sending email to them again, which would further decrease your sender reputation and then you would risk probation. this is done with aws_ses_identity_notification_topic. if you do not find this extra info useful turn it off.
+
+  * Email feedback forwarding is not need to be sent to us. set is to desable.
+
+  __note:__ test sending an email to bounce@simulator.amazonses.com
+
 ***

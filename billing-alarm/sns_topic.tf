@@ -52,14 +52,14 @@ data "aws_iam_policy_document" "sns-topic-policy" {
         "SNS:Receive"
       ]
       resources = [ 
-         "arn:aws:sns:${var.AWS_REGION}:${data.aws_caller_identity.current.id}:${local.default_name}-billing-alarm-notification",
+         "arn:aws:sns:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:${local.default_name}-billing-alarm-notification",
       ]
 
       condition {
         test = "StringEquals" 
         variable = "AWS:SourceOwner"
        
-        values = [ "${data.aws_caller_identity.current.id}"]
+        values = [ "${data.aws_caller_identity.current.account_id}"]
         
       }
     }
@@ -70,7 +70,7 @@ resource "aws_sns_topic_subscription" "sns-topic" {
   topic_arn = aws_sns_topic.sns_alert_topic.arn
   confirmation_timeout_in_minutes = 5
   protocol  = "sms"
-  endpoint  = "057008525550"
+  endpoint  = "+447518527690"
   raw_message_delivery = false 
 }
 #-------------------------------------------------------------------------------
