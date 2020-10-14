@@ -1,0 +1,66 @@
+{
+  "notificationType": "Bounce",
+  "bounce": {
+    "bounceType": "Permanent",
+    "bounceSubType": "General",
+    "bouncedRecipients": [
+      {
+        "emailAddress": "bounce@simulator.amazonses.com",
+        "action": "failed",
+        "status": "5.1.1",
+        "diagnosticCode": "smtp; 550 5.1.1 user unknown"
+      }
+    ],
+    "timestamp": "2020-10-14T18:03:29.736Z",
+    "feedbackId": "0102017528480416-f65722ab-e311-4ed4-8b7d-5266601a43c4-000000",
+    "remoteMtaIp": "3.221.113.54",
+    "reportingMTA": "dsn; a4-13.smtp-out.eu-west-1.amazonses.com"
+  },
+  "mail": {
+    "timestamp": "2020-10-14T18:03:29.000Z",
+    "source": "info@email.inecsoft.co.uk",
+    "sourceArn": "arn:aws:ses:eu-west-1:895352585421:identity/email.inecsoft.co.uk",
+    "sourceIp": "54.240.197.105",
+    "sendingAccountId": "895352585421",
+    "messageId": "01020175284800e3-1ce30b0e-7d51-4a0e-8f5d-eeba965cd147-000000",
+    "destination": [
+      "bounce@simulator.amazonses.com"
+    ],
+    "headersTruncated": false,
+    "headers": [
+      {
+        "name": "From",
+        "value": "info@email.inecsoft.co.uk"
+      },
+      {
+        "name": "To",
+        "value": "bounce@simulator.amazonses.com"
+      },
+      {
+        "name": "Subject",
+        "value": "bounce from info bounce@simulator.amazonses.com"
+      },
+      {
+        "name": "MIME-Version",
+        "value": "1.0"
+      },
+      {
+        "name": "Content-Type",
+        "value": "text/plain; charset=UTF-8"
+      },
+      {
+        "name": "Content-Transfer-Encoding",
+        "value": "7bit"
+      }
+    ],
+    "commonHeaders": {
+      "from": [
+        "info@email.inecsoft.co.uk"
+      ],
+      "to": [
+        "bounce@simulator.amazonses.com"
+      ],
+      "subject": "bounce from info bounce@simulator.amazonses.com"
+    }
+  }
+}

@@ -59,9 +59,10 @@ resource "aws_cloudwatch_metric_alarm" "cwm-alarm-ses-complaint-rate" {
     }
 }
 #-------------------------------------------------------------------------------------------------------------------------
-
+# the cloud watch log have to be the same name of the lambda resouce
+#-------------------------------------------------------------------------------------------------------------------------
 resource "aws_cloudwatch_log_group" "cw-ses-log-group" {
-  name = "/aws/lambda/${local.default_name}-ses-remove-emails"
+  name = "/aws/lambda/${local.default_name}-lambda-ses-bounce-handler"
 
   tags = {
     Name = "${local.default_name}-ses-log-group"
@@ -69,8 +70,8 @@ resource "aws_cloudwatch_log_group" "cw-ses-log-group" {
 }
 #-------------------------------------------------------------------------------------------------------------------------
 
-resource "aws_cloudwatch_log_stream" "cw-ses-log-group-stream" {
-  name           = "{local.default_name}-ses-remove-emails-stream"
-  log_group_name = aws_cloudwatch_log_group.cw-ses-log-group.name
-}
-#-------------------------------------------------------------------------------------------------------------------------
+# resource "aws_cloudwatch_log_stream" "cw-ses-log-group-stream" {
+#   name           = "${local.default_name}-ses-remove-emails-stream"
+#   log_group_name = aws_cloudwatch_log_group.cw-ses-log-group.name
+# }
+# #-------------------------------------------------------------------------------------------------------------------------

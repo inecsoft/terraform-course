@@ -1,0 +1,66 @@
+{
+  "notificationType": "Bounce",
+  "bounce": {
+    "bounceType": "Permanent",
+    "bounceSubType": "General",
+    "bouncedRecipients": [
+      {
+        "emailAddress": "bounce@simulator.amazonses.com",
+        "action": "failed",
+        "status": "5.1.1",
+        "diagnosticCode": "smtp; 550 5.1.1 user unknown"
+      }
+    ],
+    "timestamp": "2020-10-14T17:07:39.630Z",
+    "feedbackId": "010201752814e5b9-86f00612-a2f2-4649-9847-9443786fc402-000000",
+    "remoteMtaIp": "3.221.113.54",
+    "reportingMTA": "dsn; a4-22.smtp-out.eu-west-1.amazonses.com"
+  },
+  "mail": {
+    "timestamp": "2020-10-14T17:07:38.000Z",
+    "source": "ivanpedrouk@gmail.com",
+    "sourceArn": "arn:aws:ses:eu-west-1:895352585421:identity/ivanpedrouk@gmail.com",
+    "sourceIp": "54.240.197.61",
+    "sendingAccountId": "895352585421",
+    "messageId": "010201752814e165-b2d58f46-1657-4d06-9969-71accaab80a2-000000",
+    "destination": [
+      "bounce@simulator.amazonses.com"
+    ],
+    "headersTruncated": false,
+    "headers": [
+      {
+        "name": "From",
+        "value": "ivanpedrouk@gmail.com"
+      },
+      {
+        "name": "To",
+        "value": "bounce@simulator.amazonses.com"
+      },
+      {
+        "name": "Subject",
+        "value": "bouce"
+      },
+      {
+        "name": "MIME-Version",
+        "value": "1.0"
+      },
+      {
+        "name": "Content-Type",
+        "value": "text/plain; charset=UTF-8"
+      },
+      {
+        "name": "Content-Transfer-Encoding",
+        "value": "7bit"
+      }
+    ],
+    "commonHeaders": {
+      "from": [
+        "ivanpedrouk@gmail.com"
+      ],
+      "to": [
+        "bounce@simulator.amazonses.com"
+      ],
+      "subject": "bouce"
+    }
+  }
+}

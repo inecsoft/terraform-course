@@ -51,6 +51,15 @@ resource "aws_sns_topic_subscription" "sns-topic-subscription-ses-sns" {
   raw_message_delivery = false 
 }
 #-------------------------------------------------------------------------------
+resource "aws_sns_topic_subscription" "sns-topic-subscription-ses-lambda" {
+  #provider  = "aws.sns"
+  topic_arn = aws_sns_topic.sns-topic-ses-notification.arn
+  confirmation_timeout_in_minutes = 5
+  protocol  = "lambda"
+  endpoint  = aws_lambda_function.lambda-function.arn
+  raw_message_delivery = false 
+}
+#-------------------------------------------------------------------------------
 #emil protocol is not supported by sns subscription only [application http https lambda sms sqs]
 #-------------------------------------------------------------------------------
 # resource "aws_sns_topic_subscription" "sns-topic-subscription-ses-email" {

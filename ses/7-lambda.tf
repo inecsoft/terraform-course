@@ -9,7 +9,7 @@ resource "aws_lambda_function" "lambda-function" {
   # "main" is the filename within the zip file (main.js) and "handler"
   # is the name of the property under which the handler function was
   # exported in that file.
-  handler = "main.handler"
+  handler = "index.handler"
   runtime = "nodejs12.x"
 
   role = aws_iam_role.lambda_exec.arn
@@ -142,7 +142,7 @@ POLICY
 #----------------------------------------------------------------------------------------
 #arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
 # #----------------------------------------------------------------------------------------
-# resource "aws_lambda_permission" "lambda_permission" {
+# resource "aws_lambda_permission" "lambda_permission-api" {
 #   statement_id  = "AllowAPIGatewayInvoke"
 #   action        = "lambda:InvokeFunction"
 #   function_name = aws_lambda_function.lambda-function.function_name
@@ -153,3 +153,11 @@ POLICY
 #   source_arn = "${aws_api_gateway_rest_api.rest-ap.execution_arn}/*/*/*"
 # }
 # #----------------------------------------------------------------------------------------
+resource "aws_lambda_permission" "lambda_permission-sns" {
+  statement_id  = "AllowExecutionFromSNS"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda-function.function_name
+  principal     = "sns.amazonaws.com"
+  source_arn    = aws_sns_topic.sns-topic-ses-notification.arn
+}
+#----------------------------------------------------------------------------------------

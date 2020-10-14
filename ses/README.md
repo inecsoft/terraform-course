@@ -1,23 +1,22 @@
 ***
 
-
 <div align="center">
-    <h1 style="text-align:center;">Amazon SES</h1>
-    <img src="images/ses.JPG" width="700" />
+  <h1 style="text-align:center;">Amazon SES</h1>
+  <img src="images/ses.JPG" width="700"/>
 </div>
 
 
 ***
 <div align="center">
-    <h1 style="text-align:center;">SES Records</h1>
-    <img src="images/records.JPG" width="700" />
+  <h1 style="text-align:center;">SES Records</h1>
+  <img src="images/records.JPG" width="700"/>
 </div>
 
 ***
 ### __DKIM records__
 
 <div align="center">
-    <img src="images/private-public-key.JPG" width="700" />
+  <img src="images/private-public-key.JPG" width="700" />
 </div>
 
   * DKIM stands for DomainKeys Identified Mail and it is a spam prevention technique where your outgoing email server signs your emails so that the receiving email servers can verify that you were really the sender.
@@ -55,6 +54,10 @@ nslookup -type=TXT _amazonses.cloud.inecsoft.co.uk
    * An IAM user for SMTP authentication with Amazon SES
    * Get User credentials
 
+<div align="center">
+  <img src="images/user-ses-smpt.JPG" width="700" />
+</div>
+
 ***
 ### __WP Mail SMTP__
   __Settings__
@@ -83,13 +86,17 @@ nslookup -type=TXT _amazonses.cloud.inecsoft.co.uk
 
   * Email feedback forwarding is not need to be sent to us. set is to desable.
 
-  __note:__ test sending an email to bounce@simulator.amazonses.com
+  __note:__ test by sending an email to bounce@simulator.amazonses.com
 
 ***
 ### __Hard vs Soft bounces in SES__
 
 * SMTP Error 250 : requested mail action okay completed
 * SMTP Error 550 : mailbox unavailable
+
+```
+cat rawmessage.txt | jq  '.' | tee bouncemessagereceived.txt
+```
 
 If you believe that the email address is good use "Suppression List Removal"
 
@@ -101,4 +108,7 @@ If you believe that the email address is good use "Suppression List Removal"
 | Supperessed           |  Content rejected      |
 |                       |  Attachment rejected   |
 
+***
+
+### __Lambda and SNS__
 ***
