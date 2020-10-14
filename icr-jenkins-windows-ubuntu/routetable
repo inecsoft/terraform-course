@@ -1,0 +1,65 @@
+resource "aws_route_table" "rtb-8ab9e9ec" {
+    vpc_id     = "vpc-971f0cf0"
+
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = "igw-8bba71ec"
+    }
+
+    tags {
+    }
+}
+
+resource "aws_route_table" "rtb-252f8a40" {
+    vpc_id     = "vpc-34a07151"
+
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = "igw-10f90675"
+    }
+
+    tags {
+    }
+}
+
+resource "aws_route_table" "project_vpc" {
+    vpc_id     = "vpc-0b5a6d60704034455"
+
+    route {
+        cidr_block = "0.0.0.0/0"
+    }
+
+    tags {
+        "Environment" = "dev"
+        "Name" = "project_vpc"
+    }
+}
+
+resource "aws_route_table" "rtb-a0aca9c7" {
+    vpc_id     = "vpc-0171dc66"
+
+    tags {
+    }
+}
+
+resource "aws_route_table" "rtb-01e925e2dd36da257" {
+    vpc_id     = "vpc-0b5a6d60704034455"
+
+    tags {
+    }
+}
+
+resource "aws_route_table" "project_vpc" {
+    vpc_id     = "vpc-0b5a6d60704034455"
+
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = "igw-04acd7eeeb01a9c8f"
+    }
+
+    tags {
+        "Name" = "project_vpc"
+        "Environment" = "dev"
+    }
+}
+
