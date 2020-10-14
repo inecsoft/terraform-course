@@ -66,3 +66,7 @@ variable "currency" {
   default     = "USD"
 }
 #-------------------------------------------------------------------
+locals {
+  app_version = formatdate("YYYYMMDDHHmmss", timestamp())
+}
+#-------------------------------------------------------------------

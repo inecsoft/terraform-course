@@ -86,3 +86,19 @@ nslookup -type=TXT _amazonses.cloud.inecsoft.co.uk
   __note:__ test sending an email to bounce@simulator.amazonses.com
 
 ***
+### __Hard vs Soft bounces in SES__
+
+* SMTP Error 250 : requested mail action okay completed
+* SMTP Error 550 : mailbox unavailable
+
+If you believe that the email address is good use "Suppression List Removal"
+
+| Permanent             |  Transient             |
+|-----------------------|------------------------|
+| Hard bounce           |  Soft bounce           |
+| General               |  Mail box full         |
+| No email              |  Message too large     |
+| Supperessed           |  Content rejected      |
+|                       |  Attachment rejected   |
+
+***

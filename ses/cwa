@@ -1,0 +1,35 @@
+
+
+resource "aws_cloudwatch_metric_alarm" "TargetTracking-spot-fleet-request" {
+    alarm_name          = "TargetTracking-spot-fleet-request"
+    comparison_operator = "GreaterThanThreshold"
+    evaluation_periods  = "3"
+    metric_name         = "CPUUtilization"
+    namespace           = "AWS/EC2Spot"
+    period              = "60"
+    statistic           = "Average"
+    threshold           = "50.0"
+    alarm_description   = "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:eu-west-1:895352585421:scalingPolicy:7fcf0e84-29cb-45de-8114-397dc1a258b5:resource/ec2/spot-fleet-request/sfr-407cb44e-d8c2-47dc-a24c-41cd1ac6dbb2:policyName/Scale fleet to target."
+    alarm_actions       = ["arn:aws:autoscaling:eu-west-1:895352585421:scalingPolicy:7fcf0e84-29cb-45de-8114-397dc1a258b5:resource/ec2/spot-fleet-request/sfr-407cb44e-d8c2-47dc-a24c-41cd1ac6dbb2:policyName/Scale fleet to target"]
+    dimensions {
+        FleetRequestId = "sfr-407cb44e-d8c2-47dc-a24c-41cd1ac6dbb2"
+    }
+}
+
+resource "aws_cloudwatch_metric_alarm" "TargetTracking-spot-fleet-request" {
+    alarm_name          = "TargetTracking-spot-fleet-request"
+    comparison_operator = "LessThanThreshold"
+    evaluation_periods  = "15"
+    metric_name         = "CPUUtilization"
+    namespace           = "AWS/EC2Spot"
+    period              = "60"
+    statistic           = "Average"
+    threshold           = "45.0"
+    alarm_description   = "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:eu-west-1:895352585421:scalingPolicy:7fcf0e84-29cb-45de-8114-397dc1a258b5:resource/ec2/spot-fleet-request/sfr-407cb44e-d8c2-47dc-a24c-41cd1ac6dbb2:policyName/Scale fleet to target."
+    alarm_actions       = ["arn:aws:autoscaling:eu-west-1:895352585421:scalingPolicy:7fcf0e84-29cb-45de-8114-397dc1a258b5:resource/ec2/spot-fleet-request/sfr-407cb44e-d8c2-47dc-a24c-41cd1ac6dbb2:policyName/Scale fleet to target"]
+    dimensions {
+        FleetRequestId = "sfr-407cb44e-d8c2-47dc-a24c-41cd1ac6dbb2"
+    }
+}
+
+
