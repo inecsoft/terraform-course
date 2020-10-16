@@ -43,6 +43,15 @@ resource "aws_iam_policy" "rds-proxy-policy" {
       "Resource": ["${aws_secretsmanager_secret.proxy-secret.arn}"]
     },
     {
+      "Sid": "VisualEditor1",
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetRandomPassword",
+        "secretsmanager:ListSecrets"
+      ],
+      "Resource": "*"
+    },
+    {
       "Sid": "DecryptSecretValue",
       "Action": [
         "kms:Decrypt"

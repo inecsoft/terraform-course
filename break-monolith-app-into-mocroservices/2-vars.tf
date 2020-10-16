@@ -21,11 +21,11 @@ locals {
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
 variable "PATH_TO_PRIVATE_KEY" {
-  default = "codedeploycodecommitasg"
+  default = "containers"
 }
 #--------------------------------------------------------------------------------------
 variable "PATH_TO_PUBLIC_KEY" {
-  default = "codedeploycodecommitasg.pub"
+  default = "containers.pub"
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
@@ -49,3 +49,26 @@ variable "profile" {
   default = "cmrs"
 }
 #------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+resource "random_password" "password" {
+  length = 16
+  special = true
+  override_special = "_%@\""
+  #override_special = "%\"@_"
+}
+#echo random_password.password.result | terraform console
+#----------------------------------------------------------------------------
+resource "random_string" "random" {
+  length = 2
+  special = false 
+}
+#----------------------------------------------------------------------------
+locals {
+  app_version = formatdate("YYYYMMDDHHmmss", timestamp())
+}
+#----------------------------------------------------------------------------
+resource "random_integer" "integer" {
+  min     = 4
+  max     = 6
+}
+#----------------------------------------------------------------------------

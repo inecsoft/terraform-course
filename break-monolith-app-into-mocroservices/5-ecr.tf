@@ -1,19 +1,29 @@
 #-------------------------------------------------------------------
-resource "aws_ecr_repository" "foo" {
-  name                 =  "${local.default_name}-ecr"
-  image_tag_mutability = "MUTABLE"
+resource "aws_ecr_repository" "ecr-repository" {
+    name                 = "${local.default_name}-ecr"
+    
+    image_tag_mutability = "IMMUTABLE"
+    
 
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-  
+    encryption_configuration {
+        encryption_type = "KMS"
+        kms_key         = aws_kms_key.kms-key.id
+    }
 
-  encryption_type = "KMS"
-  kms_key = 
+    image_scanning_configuration {
+        scan_on_push = true
+    }
 
-  
-  tags = {
-    Name = "${local.default_name}-ecr"
-  }
+    timeouts {}
+   
+    tags = {
+       Name = "${local.default_name}-ecr"
+    }
 }
+#-------------------------------------------------------------------
+output "ecr-repository-url" {
+  description = "ecr-repository-url to access the repo"
+  value       = aws_ecr_repository.ecr-repository.repository_url
+}
+
 #-------------------------------------------------------------------
