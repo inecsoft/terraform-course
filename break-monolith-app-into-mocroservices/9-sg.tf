@@ -6,8 +6,10 @@ resource "aws_security_group" "sg-web" {
 
   # HTTP access from anywhere
   ingress {
-    from_port   = 80
-    to_port     = 80
+    # from_port   = 80
+    # to_port     = 80
+    from_port   = 31000
+    to_port     = 61000
     protocol    = "tcp"
     #cidr_blocks = ["0.0.0.0/0"]
     #stop the server to be exposed to the internet on port 80
@@ -67,7 +69,7 @@ resource "aws_security_group" "lb-sg" {
     Name = "${local.default_name}-lb-sg"
   }
 }
-#------------------------------------------------------------#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------
 
 #// security.tf
 resource "aws_security_group" "ingress-efs" {

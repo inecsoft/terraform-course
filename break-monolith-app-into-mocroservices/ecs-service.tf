@@ -23,7 +23,7 @@ resource "aws_ecs_service" "ecs-service" {
     }
 
     load_balancer {
-        container_name   = "${local.default_name}-alb"
+        container_name   = "${local.default_name}-ecr"
         container_port   = 3000
         target_group_arn = aws_lb_target_group.alb_target_group.arn
     }

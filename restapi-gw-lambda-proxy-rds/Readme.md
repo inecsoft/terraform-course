@@ -9,7 +9,11 @@
 <div align="center">
     <img src="images/rds-proxy.JPG" width="700" />
 </div>
+***
 
+<div align="center">
+    <img src="images/options.JPG" width="700" />
+</div>
 
 ***
 ### __Workshop on Rest Api Gateway, lambda, proxy and RDS__
