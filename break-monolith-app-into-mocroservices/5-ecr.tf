@@ -26,3 +26,40 @@ output "ecr-repository-url" {
   value       = aws_ecr_repository.ecr-repository.repository_url
 }
 #-------------------------------------------------------------------
+resource "aws_ecr_lifecycle_policy" "ec-lifecycle-policy" {
+  repository = aws_ecr_repository.ecr-repository.name
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Policy on untagged image expires images older than 15 days",
+            "selection": {
+                "tagStatus": "untagged",
+                "countType": "sinceImagePushed",
+                "countUnit": "days",
+                "countNumber": 15
+            },
+            "action": {
+                "type": "expire"
+            }
+        },
+        {
+            "rulePriority": 2,
+            "description": "Policy on tagged image keep last 10 images",
+            "selection": {
+                "tagStatus": "tagged",
+                "tagPrefixList": ["v"],
+                "countType": "imageCountMoreThan",
+                "countNumber": 10
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
+#-------------------------------------------------------------------

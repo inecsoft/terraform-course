@@ -559,6 +559,31 @@ kubectl explain namespaces
 
 # __1. Deploys new container with replication equal 2, using nginx image and open port 80 in the cluster:__
 
+Replication controller and Replica set ensures that pods are available at all times.
+the differences between the two is that first uses equlity-based selector and the other set-based.
+
+|  Equality-based      |  Set-based                                                     |
+|----------------------|----------------------------------------------------------------|
+|  operators           |  opertors                                                      |
+|  =  ==  !=           |  in notin   exists                                             |
+|  selector:           |  selector:                                                     |
+|    env: prod         |    matchExpressions:                                           |
+|     tier: frontend   |     - {key:env, operator: in, values: [prod, qa]}              |
+|                      |     - {key:tier, operator: Notin, values: [frontend, backend]} |
+
+ * for Replication Controller
+```
+kubectl get po -l env=prod
+```
+  * for replica set
+```
+kubectl get po -l 'env in (prod)'
+```
+
+<div align="centre">
+  <img src="images/replicaset.JPG" width="700" />
+</div>
+
 ```
 kubectl run test-nginx --image=nginx --replicas=2 --port=80
 ```
@@ -617,6 +642,10 @@ kubectl rollout undo deploy test-nginx
 
 ```
 kubectl get replicasets
+```
+or 
+```
+kubectl get rs test-nginx -o wide
 ```
 ```
 kubectl describe replicasets
