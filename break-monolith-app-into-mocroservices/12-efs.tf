@@ -27,6 +27,7 @@ data "template_file" "script" {
   template = "${file("scripts/script.tpl")}"
     vars = {
       efs_id = "${aws_efs_file_system.efs.id}"
+      cluster_name = "{local.default_name}-ecs"
   }
 }
 #-----------------------------------------------------------------------

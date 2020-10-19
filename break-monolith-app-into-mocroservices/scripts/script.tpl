@@ -1,11 +1,15 @@
 #!/bin/bash
-sudo apt-get -y update
-sudo apt-get -y install nginx
+sudo yum -y update
+
 
 sleep 5m
 sudo su - root
+yum install -y aws-cfn-bootstrap 
+echo "ECS_CLUSTER=${cluster_name}" >> /etc/ecs/ecs.config
+start ecs
+
 # Install AWS EFS Utilities
-apt-get install -y amazon-efs-utils
+yum install -y amazon-efs-utils
 # Mount EFS
 mkdir /efs
 efs_id="${efs_id}"

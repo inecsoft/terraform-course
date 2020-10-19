@@ -63,7 +63,12 @@ resource "aws_iam_policy" "CodePipelineServiceRole-policy" {
         "codecommit:GetBranch",
         "codecommit:GetCommit",
         "codecommit:GetUploadArchiveStatus",
-        "codecommit:UploadArchive"
+        "codecommit:UploadArchive",
+        "codecommit:Get*",
+        "codecommit:BatchGet*",
+        "codecommit:Describe*",
+        "codecommit:BatchDescribe*",
+        "codecommit:GitPull"
       ],
       "Resource": "*",
       "Effect": "Allow"

@@ -25,5 +25,4 @@ output "ecr-repository-url" {
   description = "ecr-repository-url to access the repo"
   value       = aws_ecr_repository.ecr-repository.repository_url
 }
-
 #-------------------------------------------------------------------

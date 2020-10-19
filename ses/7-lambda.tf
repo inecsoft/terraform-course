@@ -84,12 +84,11 @@ resource "aws_iam_policy_attachment" "lambda-role-policy-attach-2" {
   policy_arn = aws_iam_policy.lambda-role-policy-SESExecution.arn
 }
 #----------------------------------------------------------------------------------------
-
 resource "aws_iam_policy" "lambda-role-policy-basicexecution" {
-    name        = "${local.default_name}-role-policy-basicexecution"
-    path        = "/service-role/"
-    description = ""
-    policy      = <<POLICY
+  name        = "${local.default_name}-role-policy-basicexecution"
+  path        = "/service-role/"
+  description = ""
+  policy      = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -114,10 +113,10 @@ POLICY
 }
 #----------------------------------------------------------------------------------------
 resource "aws_iam_policy" "lambda-role-policy-SESExecution" {
-    name        = "${local.default_name}-role-policy-SESExecution"
-    path        = "/service-role/"
-    description = ""
-    policy      = <<POLICY
+  name        = "${local.default_name}-role-policy-SESExecution"
+  path        = "/service-role/"
+  description = ""
+  policy      = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -159,5 +158,31 @@ resource "aws_lambda_permission" "lambda_permission-sns" {
   function_name = aws_lambda_function.lambda-function.function_name
   principal     = "sns.amazonaws.com"
   source_arn    = aws_sns_topic.sns-topic-ses-notification.arn
+}
+#----------------------------------------------------------------------------------------
+resource "aws_iam_policy" "lambda-role-policy-snsExecution" {
+  name        = "${local.default_name}-role-policy-snsExecution"
+  path        = "/service-role/"
+  description = ""
+  policy      = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": "sns:Publish",
+          "Resource": "${aws_sns_topic.sns-topic-ses-notification.arn}"
+        }
+    ]
+}
+POLICY
+}
+#----------------------------------------------------------------------------------------
+resource "aws_iam_policy_attachment" "lambda-role-policy-attach-sns" {
+  name       = "${local.default_name}-role-policy-attachment-sns"
+  users      = []
+  roles      = [ aws_iam_role.lambda_exec.name ]
+  groups     = []
+  policy_arn = aws_iam_policy.lambda-role-policy-snsExecution.arn
 }
 #----------------------------------------------------------------------------------------

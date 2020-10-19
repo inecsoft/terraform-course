@@ -7,8 +7,8 @@
 #Subnets
 #Auto Scaling group with Linux AMI
 #-------------------------------------------------------------------------
-resource "aws_ecs_cluster" "ecs-cluster-fargate" {
-    name = "${local.default_name}-ecs-cluster-fargate"
+resource "aws_ecs_cluster" "ecs-cluster-ec2" {
+    name = "${local.default_name}-ecs-cluster-ec2"
 
 #     capacity_providers = [
 #         "FARGATE",
@@ -33,7 +33,7 @@ resource "aws_ecs_cluster" "ecs-cluster-fargate" {
     }
 
     tags = {
-      Name = "${local.default_name}-ecs-cluster-fargate"
+      Name = "${local.default_name}-ecs-cluster-ec2"
     }
 }
 #-------------------------------------------------------------------------
