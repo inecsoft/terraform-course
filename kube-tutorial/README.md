@@ -367,8 +367,7 @@ kubectl -n kube-system edit service kubernetes-dashboard
 
 ### __Kubernetes API server is exposed and accessible from outside you can directly access dashboard at:__
 ```
-https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboar
-d:/proxy/
+https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 ```
 ### __How to get the service account in yaml format:__
 
@@ -513,6 +512,17 @@ kubectl get all
 ```
 
 # __What are these different things?__
+
+|                  Kind                 |    apiVersion                      |
+|---------------------------------------|------------------------------------|
+|     Pod                               |     v1                             |
+|     Replication Controller            |     V1                             |
+|     Service                           |     v1                             |
+|     ReplicaSet                        |     apps/v1                        |
+|     Deployment                        |     apps/v1                        |
+|     DaemonSet                         |     app/v1                         |
+|     Job                               |     batch/v1                       |
+
   - A deployment is a high-level construct
     * Allows scaling, rolling updates, rollbacks.
     * Multiple deployments can be used together to implement a canary deployment.
@@ -521,7 +531,7 @@ kubectl get all
     * Makes sure that a given number of identical pods are running.
     * Allows scaling.
     * Rarely used directly.
-  - A replication controller is the (deprecated) predecessor of a replica set
+  - A Replication Controller is the (deprecated) predecessor of a Replica Set
 
 ### __Verify if nodes were created:__
 
@@ -532,7 +542,7 @@ kubectl get nodes -o=wide
 ### __Verify if pods were created:__
 
 <div align="centre">
-  <img src="images/pod-lifcycle.JPG" width="700" />
+  <img src="images/pod-lifecycle.JPG" width="700" />
 </div>
 
 ```
@@ -560,11 +570,9 @@ kubectl get service -o wide --all-namespaces
 ```
 kubectl explain namespaces
 ```
-
-# __1. Deploys new container with replication equal 2, using nginx image and open port 80 in the cluster:__
-
+### __Replication Controller vs Replica Set__
 Replication controller and Replica set ensures that pods are available at all times.
-the differences between the two is that first uses equlity-based selector and the other set-based.
+The differences between the two is that Replication Controller uses equlity-based selector and the other set-based.
 
 |  Equality-based      |  Set-based                                                     |
 |----------------------|----------------------------------------------------------------|
@@ -575,11 +583,11 @@ the differences between the two is that first uses equlity-based selector and th
 |     tier: frontend   |     - {key:env, operator: in, values: [prod, qa]}              |
 |                      |     - {key:tier, operator: Notin, values: [frontend, backend]} |
 
- * for Replication Controller
+ * For Replication Controller
 ```
 kubectl get po -l env=prod
 ```
-  * for replica set
+  * For replica set
 ```
 kubectl get po -l 'env in (prod)'
 ```
@@ -587,6 +595,8 @@ kubectl get po -l 'env in (prod)'
 <div align="centre">
   <img src="images/replicaset.JPG" width="700" />
 </div>
+
+# __1. Deploys new container with replication equal 2, using nginx image and open port 80 in the cluster:__
 
 ```
 kubectl run test-nginx --image=nginx --replicas=2 --port=80
