@@ -539,7 +539,7 @@ kubectl get all
 kubectl get nodes -o=wide
 ```
 
-### __Verify if pods were created:__
+### __Verify if pods were created; understanding pods life cycle:__
 
 <div align="centre">
   <img src="images/pod-lifecycle.JPG" width="700" />
@@ -549,7 +549,7 @@ kubectl get nodes -o=wide
 kubectl get pods -o wide --all-namespaces
 ```
 
-### __verify the system namespace:__
+### __Verify the system namespace:__
 
 ```
 kubectl -n kube-system get pods -o wide
@@ -587,7 +587,7 @@ The differences between the two is that Replication Controller uses equlity-base
 ```
 kubectl get po -l env=prod
 ```
-  * For replica set
+  * For Replica Set
 ```
 kubectl get po -l 'env in (prod)'
 ```
