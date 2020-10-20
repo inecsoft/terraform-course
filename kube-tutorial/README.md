@@ -666,6 +666,12 @@ kubectl describe replicasets
 ```
 
 # __4. Create a Service object that exposes the deployment to the outside world:__
+### __Deployment Types:__
+  * Recreate
+  * RollingUpdate (Ramped or incremental) (default)
+  * Canary
+  * Blue / Green
+
 ```
 kubectl expose <type name> <identifier/name> [--port=external port] [--target-port=container-port][--type=service-type]
 ``` 
