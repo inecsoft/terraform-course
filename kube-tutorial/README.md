@@ -531,6 +531,10 @@ kubectl get nodes -o=wide
 
 ### __Verify if pods were created:__
 
+<div align="centre">
+  <img src="images/pod-lifcycle.JPG" width="700" />
+</div>
+
 ```
 kubectl get pods -o wide --all-namespaces
 ```
