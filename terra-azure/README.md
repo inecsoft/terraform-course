@@ -38,12 +38,12 @@ _*Note:*_ After login set your project it works fine.
 
 * ### __Set up Terraform access to Azure__  
  
-  __1. Get a list of subscription ID and tenant ID values:__ 
+  __1. Get a list of subscription ID and tenant ID values:__  
 ```
 az account list
 az account list --query "[].{name:name, subscriptionId:id, tenantId:tenantId}"
 SUBSCRIPTION_ID=`az account list | grep id | awk -F '"' '{print $4}'`
-```
+```  
   __2. To use a selected subscription, set the subscription for this session with__  
 ```
 az account set --subscription="${SUBSCRIPTION_ID}"
