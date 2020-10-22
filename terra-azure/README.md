@@ -7,12 +7,12 @@
 ***
 
 * #### __Install Azure CLI with yum__
-  1. _Import the Microsoft repository key._
+  __1. Import the Microsoft repository key.__
     
 ``` bash
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 ```  
-  2. _Create local azure-cli repository information._  
+  __2. Create local azure-cli repository information.__  
 ``` bash
 sudo sh -c 'echo -e "[azure-cli]
 name=Azure CLI
@@ -21,7 +21,7 @@ enabled=1
 gpgcheck=1
 gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'
 ```  
-  3. _Install with the yum install command._  
+  __3. Install with the yum install command.__
   
 ``` bash
 sudo yum install azure-cli -y  
