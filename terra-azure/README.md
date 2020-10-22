@@ -2,6 +2,8 @@
 
 <div align="center">
   <h1>Terraform for Azure</h1>
+  <img src="images/az-certifications.JPG" width="700" />
+
 </div>
 
 ***
