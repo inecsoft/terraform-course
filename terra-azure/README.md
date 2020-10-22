@@ -35,7 +35,7 @@ az account show
 _*Note:*_ After login set your project it works fine.  
 
 * ### __Set up Terraform access to Azure__
-  1. __Get a list of subscription ID and tenant ID values:__ 
+  10. __Get a list of subscription ID and tenant ID values:__ 
 ```
 az account list
 az account list --query "[].{name:name, subscriptionId:id, tenantId:tenantId}"
