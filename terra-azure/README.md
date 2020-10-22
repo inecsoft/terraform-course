@@ -7,6 +7,7 @@
 ***
 
 * #### __Install Azure CLI with yum__  
+
   1. _Import the Microsoft repository key._
     
 ``` bash
