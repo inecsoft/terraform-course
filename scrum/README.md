@@ -2,12 +2,14 @@
 
 <div align="center">
    <h1>SCRUM FRAMEWORK</h1>
-   <img src="images/1-scrumroles.JPG" width="700" />
+   <p>
+   Scrum is an agile framework within which people con address complex adaptive problems, while productively and creatively delivering products of the highest possible value
+   </p>
 </div>
 
 ***
 <div align="center">
-   <h1>SCRUM Sumary</h1>
+   <h1>SCRUM Summary</h1>
 </div>
    
    - It is an iterative, incremental framework
@@ -22,6 +24,12 @@
    - End or the sprint, review with stakeholders
    - FreedBacks are taken and incorporated into the sprint
    - End of sprint, fully tested product is formed as per customer requirests
+
+***
+
+<div align="center">
+   <img src="images/1-scrumroles.JPG" width="700" />
+</div>
 
 ***
 
