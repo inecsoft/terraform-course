@@ -8,7 +8,8 @@
 ***
 <div align="center">
    <h1>SCRUM Sumary</h1>
-   <p style="text-align:center;">
+</div>
+   
    - It is an iterative, incremental framework
     Sprints:
         * cycles of work developed
@@ -22,60 +23,80 @@
    - FreedBacks are taken and incorporated into the sprint
    - End of sprint, fully tested product is formed as per customer requirests
 
-   </p>
-</div>
-
 ***
+
 <div align="center">
    <img src="images/2-productbacklog.JPG" width="700" />
 </div>
 
 ***
+
 <div align="center">
    <img src="images/3-team.JPG" width="700" />
 </div>
+
 ***
 <div align="center">
    <img src="images/4-sprint.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/5-tasks-from-team.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/6-nochanges.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/7-daily-15min-meetup.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/8-burndown.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/9-scrum-master.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/10-shipproduct.JPG" width="700" />
 </div>
+
 ***
 <div align="center">
    <img src="images/11-reviewwithcustomer.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/12-restrospective-review.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/12-restrospective-review.JPG" width="700" />
 </div>
+
 ***
+
 <div align="center">
    <img src="images/12-restrospective-review.JPG" width="700" />
 </div>
+
 ***
