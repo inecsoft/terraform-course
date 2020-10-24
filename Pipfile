@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+boto3 = "*"
+troposphere = {extras = ["policy"], version = "*"}
 
 [requires]
 python_version = "3.8"
