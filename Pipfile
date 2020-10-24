@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 boto3 = "*"
 troposphere = {extras = ["policy"], version = "*"}
+pylint = "*"
 
 [requires]
 python_version = "3.8"
