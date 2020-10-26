@@ -1,0 +1,108 @@
+Resources:
+  AttachGatewaydev:
+    Properties:
+      InternetGatewayId: !Ref 'InternetGatewaydev'
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::VPCGatewayAttachment
+  ElasticIp:
+    Type: AWS::EC2::EIP
+  InstanceSecurityGroup:
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - CidrIp: '0.0.0.0/0'
+          FromPort: '22'
+          IpProtocol: tcp
+          ToPort: '22'
+        - CidrIp: '0.0.0.0/0'
+          FromPort: '80'
+          IpProtocol: tcp
+          ToPort: '80'
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::SecurityGroup
+  InternetGatewaydev:
+    Properties:
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: InternetGateway-dev
+    Type: AWS::EC2::InternetGateway
+  PublicRouteTabledev:
+    Properties:
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: PublicRouteTable-dev
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::RouteTable
+  PublicRoutedev:
+    DependsOn: AttachGateway
+    Properties:
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref 'InternetGateway'
+      RouteTableId: !Ref 'PublicRouteTabledev'
+    Type: AWS::EC2::Route
+  PublicSubnet1dev:
+    Properties:
+      CidrBlock: 10.0.1.0/24
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: PublicSubnet-1-dev
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  PublicSubnet2dev:
+    Properties:
+      CidrBlock: 10.0.2.0/24
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: PublicSubnet-2-dev
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  PublicSubnet3dev:
+    Properties:
+      CidrBlock: 10.0.3.0/24
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: PublicSubnet-3-dev
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  SubnetRouteTableAssociation1dev:
+    Properties:
+      RouteTableId: !Ref 'PublicRouteTabledev'
+      SubnetId: !Ref 'PublicSubnet1dev'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  SubnetRouteTableAssociation2dev:
+    Properties:
+      RouteTableId: !Ref 'PublicRouteTabledev'
+      SubnetId: !Ref 'PublicSubnet2dev'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  SubnetRouteTableAssociation3dev:
+    Properties:
+      RouteTableId: !Ref 'PublicRouteTabledev'
+      SubnetId: !Ref 'PublicSubnet3dev'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  VPC:
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: VPC-dev
+    Type: AWS::EC2::VPC
+  devEc2:
+    Properties:
+      ImageId: ami-a7a242da
+      InstanceType: t2.nano
+      Tags:
+        - Key: Name
+          Value: devEc2
+    Type: AWS::EC2::Instance
