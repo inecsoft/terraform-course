@@ -24,6 +24,7 @@ resource "aws_iot_topic_rule" "iot-topic-rule" {
 # Output arn of iot thing(s) 
 #--------------------------------------------------------------------------------------
 # Get the aws iot endpoint to print out for reference
+#Valid values: iot:CredentialProvider, iot:Data, iot:Data-ATS, iot:Job
 #--------------------------------------------------------------------------------------
 data "aws_iot_endpoint" "endpoint" {
   endpoint_type = "iot:Data-ATS"
