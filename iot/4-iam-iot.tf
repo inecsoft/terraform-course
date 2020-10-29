@@ -28,6 +28,27 @@ resource "aws_iot_policy" "iot-policy" {
 EOF
 }
 #--------------------------------------------------------------------------------------
+# resource "aws_iot_policy" "iot-policy" {
+#   name = "${local.default_name}-iot-policy"
+
+#   policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Effect": "Allow",
+#       "Action": [
+#         "iot:*"
+#       ],
+#       "Resource": [
+#          "*"
+#       ]
+#     }
+#   ]
+# }
+# EOF
+# }
+#--------------------------------------------------------------------------------------
 # Attach policy generated above to the aws iot thing(s)
 #--------------------------------------------------------------------------------------
 resource "aws_iot_policy_attachment" "iot-policy-attach" {
