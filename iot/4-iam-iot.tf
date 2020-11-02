@@ -1,9 +1,10 @@
 #--------------------------------------------------------------------------------------
 # A policy for the iot thing that allowes  beam inbound
+#https://docs.aws.amazon.com/iot/latest/developerguide/device-shadow-mqtt.html?icmpid=docs_iot_console
+#"Resource": "arn:aws:iot:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/$aws/things/thingName/shadow/get""
 #--------------------------------------------------------------------------------------
 resource "aws_iot_policy" "iot-policy" {
   name = "${local.default_name}-iot-policy"
-
   policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -11,43 +12,17 @@ resource "aws_iot_policy" "iot-policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "iot:Connect",
-        "iot:Subscribe"
+        "iot:*"
       ],
-      "Resource": "arn:aws:iot:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "iot:Publish"
-      ],
-      "Resource": "arn:aws:iot:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/beam"
+      "Resource": [
+        "arn:aws:iot:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
+      ]
     }
   ]
 }
 EOF
-}
-#--------------------------------------------------------------------------------------
-# resource "aws_iot_policy" "iot-policy" {
-#   name = "${local.default_name}-iot-policy"
 
-#   policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Action": [
-#         "iot:*"
-#       ],
-#       "Resource": [
-#          "*"
-#       ]
-#     }
-#   ]
-# }
-# EOF
-# }
+}
 #--------------------------------------------------------------------------------------
 # Attach policy generated above to the aws iot thing(s)
 #--------------------------------------------------------------------------------------
