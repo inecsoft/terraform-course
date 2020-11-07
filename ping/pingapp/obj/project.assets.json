@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/devop/terraform/ping/pingapp/pingapp.csproj",
+      "projectUniqueName": "/home/devop/terraform/tutorial/ping/pingapp/pingapp.csproj",
       "projectName": "pingapp",
-      "projectPath": "/home/devop/terraform/ping/pingapp/pingapp.csproj",
+      "projectPath": "/home/devop/terraform/tutorial/ping/pingapp/pingapp.csproj",
       "packagesPath": "/home/devop/.nuget/packages/",
-      "outputPath": "/home/devop/terraform/ping/pingapp/obj/",
+      "outputPath": "/home/devop/terraform/tutorial/ping/pingapp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/devop/.nuget/NuGet/NuGet.Config"
@@ -56,7 +56,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/3.1.105/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/3.1.107/RuntimeIdentifierGraph.json"
       }
     }
   }

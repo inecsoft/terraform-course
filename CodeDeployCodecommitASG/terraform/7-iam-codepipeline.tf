@@ -70,7 +70,7 @@ resource "aws_iam_policy" "CodePipelineServiceRole-policy" {
         "codecommit:BatchDescribe*",
         "codecommit:GitPull"
       ],
-      "Resource": "*",
+      "Resource": "${aws_codecommit_repository.codecommit-repo.arn}",
       "Effect": "Allow"
     },
     {
@@ -217,7 +217,10 @@ resource "aws_iam_policy" "CodePipelineServiceRole-policy" {
       "Action": [
         "s3:GetObject",
         "s3:CreateBucket",
-        "s3:PutBucketPolicy"
+        "s3:PutBucketPolicy",
+        "s3:PutObject",
+        "s3:GetObjectVersion",
+        "s3:GetBucketVersioning"
       ],
       "Resource": [
         "${aws_s3_bucket.codepipeline-bucket.arn}",

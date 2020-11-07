@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/devop/terraform/dotnet-project/EFGetStarted/EFGetStarted.csproj": {}
+    "/home/devop/terraform/tutorial/dotnet-project/EFGetStarted/EFGetStarted.csproj": {}
   },
   "projects": {
-    "/home/devop/terraform/dotnet-project/EFGetStarted/EFGetStarted.csproj": {
+    "/home/devop/terraform/tutorial/dotnet-project/EFGetStarted/EFGetStarted.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/devop/terraform/dotnet-project/EFGetStarted/EFGetStarted.csproj",
+        "projectUniqueName": "/home/devop/terraform/tutorial/dotnet-project/EFGetStarted/EFGetStarted.csproj",
         "projectName": "EFGetStarted",
-        "projectPath": "/home/devop/terraform/dotnet-project/EFGetStarted/EFGetStarted.csproj",
+        "projectPath": "/home/devop/terraform/tutorial/dotnet-project/EFGetStarted/EFGetStarted.csproj",
         "packagesPath": "/home/devop/.nuget/packages/",
-        "outputPath": "/home/devop/terraform/dotnet-project/EFGetStarted/obj/",
+        "outputPath": "/home/devop/terraform/tutorial/dotnet-project/EFGetStarted/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/devop/.nuget/NuGet/NuGet.Config"
@@ -80,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/3.1.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/3.1.107/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -26,4 +26,5 @@ git push -u origin master
 
 ***
 *_REF:_* https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-simple-codecommit.html
+https://github.com/aws-samples/aws-ecs-cicd-terraform
 ***

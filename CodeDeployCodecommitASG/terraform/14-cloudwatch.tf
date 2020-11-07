@@ -15,7 +15,10 @@ resource "aws_cloudwatch_log_group" "cloudwatch-pipeline" {
 resource "aws_cloudwatch_event_rule" "cwe-rule-pipeline" {
   name        = "${local.default_name}-cwe-rule-pipeline"
   description = "Amazon CloudWatch Events rule to automatically start your pipeline when a change occurs in the AWS CodeCommit source repository and branch. Deleting this may prevent changes from being detected in that pipeline"
-
+  
+  role_arn      = aws_iam_role.cloudwatch-event-pipeline-role.arn
+  is_enabled    = true
+  
   event_pattern = <<EOF
 {
   "source": [
@@ -41,6 +44,7 @@ resource "aws_cloudwatch_event_rule" "cwe-rule-pipeline" {
   }
 }
 EOF
+
   tags  = {
     Name  =  "${local.default_name}-cwe-rule-pipeline"
   }
