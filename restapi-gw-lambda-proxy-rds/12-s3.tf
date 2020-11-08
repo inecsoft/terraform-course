@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "s3-bucket" {
   }
 
   tags = {
-      Name = "${local.default_name}-s3-content-bucket"
+    Name = "${local.default_name}-s3-content-bucket"
   }
 }
 #-----------------------------------------------------------------------

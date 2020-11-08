@@ -5,9 +5,11 @@ import sys
 import socket
 import elasticache_auto_discovery
 from pymemcache.client.hash import HashClient
+import os
 
 #elasticache settings
-elasticache_config_endpoint = "cachetest.emvpcq.cfg.use1.cache.amazonaws.com:11211"
+elasticache_config_endpoint = os.environ['elasticache_config_endpoint']
+#elasticache_config_endpoint = "cachetest.emvpcq.cfg.use1.cache.amazonaws.com:11211"
 nodes = elasticache_auto_discovery.discover(elasticache_config_endpoint)
 nodes = map(lambda x: (x[1], int(x[2])), nodes)
 memcache_client = HashClient(nodes)
