@@ -37,7 +37,10 @@ resource "aws_iam_policy" "rds-proxy-policy" {
     {
       "Sid": "GetSecretValue",
       "Action": [
-        "secretsmanager:GetSecretValue"
+        "secretsmanager:GetResourcePolicy",
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:ListSecretVersionIds"
       ],
       "Effect": "Allow",
       "Resource": ["${aws_secretsmanager_secret.proxy-secret.arn}"]
