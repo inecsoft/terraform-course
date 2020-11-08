@@ -17,7 +17,11 @@ resource "aws_iam_policy" "iam-role-policy" {
       "Sid": "VisualEditor0",
       "Effect": "Allow",
       "Action": [
-        "kms:Decrypt"
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
       ],
       "Resource": [
         "${aws_kms_key.kms-key.arn}"
@@ -32,18 +36,15 @@ resource "aws_iam_policy" "iam-role-policy" {
       "Resource": "arn:aws:s3:::*"
     },
     {
-      "Effect": "Allow",
-      "Action": ["s3:ListBucket"],
-      "Resource": ["${aws_s3_bucket.s3-bucket-mount.arn}"]
-    },
-    {
       "Action": [
         "s3:PutObject",
         "s3:GetObject",
-        "s3:DeleteObject"
+        "s3:DeleteObject",
+        "s3:ListBucket"
       ],
       "Effect": "Allow",
       "Resource": [
+        "${aws_s3_bucket.s3-bucket-mount.arn}",
         "${aws_s3_bucket.s3-bucket-mount.arn}/*"
       ]
     }

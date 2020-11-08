@@ -31,14 +31,26 @@ echo $S3FS_MOUNTING_ROLE >> test.txt
 #Now create a directory or provide the path of an existing directory and mount S3bucket in it
 sudo mkdir -p /var/$DEVICE_FS
 
-#Now mount the s3 bucket using IAM role enter following command
-s3fs $S3FS_BUCKET_NAME /var/$DEVICE_FS -o iam_role="$S3FS_MOUNTING_ROLE" -o url="https://s3-$AWS_REGION.amazonaws.com" -o endpoint=$AWS_REGION -o allow_other -o use_cache=/tmp $S3FS_BUCKET_NAME /var/$DEVICE_FS -o dbglevel=info -f -o curldbg
-
+#Now mount the s3 bucket using IAM role and debugging mode enter following command
 #s3fs  default-vpc-s3-mount-ec2-s3-bucket-mount /var/default-vpc-s3-mount-ec2-s3-bucket-mount -o use_cache=/tmp -o allow_other -o iam_role="default-vpc-s3-mount-ec2-iam-ec2-role" -o url="https://s3-eu-west-1.amazonaws.com" -o endpoint=eu-west-1 -o dbglevel=info -f -o curldbg
+
+#Now mount the s3 bucket using IAM role enter following command
+sudo s3fs $S3FS_BUCKET_NAME /var/$DEVICE_FS -o iam_role="$S3FS_MOUNTING_ROLE" -o url="https://s3-$AWS_REGION.amazonaws.com" -o endpoint=$AWS_REGION -o allow_other -o use_cache=/tmp $S3FS_BUCKET_NAME /var/$DEVICE_FS -o dbglevel=info -f -o curldbg &
 
 # # Edit fstab so s3fs automatically loads on reboot
 echo $S3FS_BUCKET_NAME /var/$S3FS_BUCKET_NAME fuse.s3fs _netdev,allow_other,use_cache=/tmp,iam_role=$S3FS_MOUNTING_ROLE,endpoint=$AWS_REGION,url="https://s3-$AWS_REGION.amazonaws.com" 0 0 >> /etc/fstab
 
+#Update the mounting points
+sudo mount -a
+
+#unmount the s3 bucket
+#umount /var/default-vpc-s3-mount-ec2-s3-bucket-mount
+
+#check if the s3 bucket is mounted
+df -h
+
 # install docker
-curl https://get.docker.com | bash
+sudo yum install docker -y
+sudo systemctl restart docker
+
 
