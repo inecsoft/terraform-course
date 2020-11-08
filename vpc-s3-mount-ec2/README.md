@@ -20,7 +20,7 @@ Private EC2 instance with connectivity to Amazon S3 using a Gateway VPC Endpoint
 ```
 aws s3 ls
 
-s3fs  default-vpc-s3-mount-ec2-s3-bucket-mount /var/default-vpc-s3-mount-ec2-s3-bucket-mount -o use_cache=/tmp -o allow_other -o iam_role="default-vpc-s3-mount-ec2-iam-ec2-role" -o url="https://s3-eu-west-1.amazonaws.com" -o endpoint=eu-west-1 -o dbglevel=info -f -o curldbg
+sudo s3fs  default-vpc-s3-mount-ec2-s3-bucket-mount /var/default-vpc-s3-mount-ec2-s3-bucket-mount -o use_cache=/tmp -o allow_other -o iam_role="default-vpc-s3-mount-ec2-iam-ec2-role" -o url="https://s3-eu-west-1.amazonaws.com" -o endpoint=eu-west-1 -o dbglevel=info -f -o curldbg
 
 df -h
 ```
@@ -29,6 +29,12 @@ df -h
 
 ```
 s3fs            256T     0  256T   0% /var/default-vpc-s3-mount-ec2-s3-bucket-mount
+```
+### __Make the mounting point permanent after reboot__
+```
+echo $S3FS_BUCKET_NAME /var/$S3FS_BUCKET_NAME fuse.s3fs _netdev,allow_other,use_cache=/tmp,iam_role=$S3FS_MOUNTING_ROLE,endpoint=$AWS_REGION,url="https://s3-$AWS_REGION.amazonaws.com" 0 0 >> /etc/fstab
+
+sudo mount -a
 ```
 ### __Test download S3 kms-encrypted objects__
 ```
