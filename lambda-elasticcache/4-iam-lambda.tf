@@ -45,27 +45,22 @@ resource "aws_iam_policy" "lambda_logging" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "PolicyName": "ec2",
-      "PolicyDocument": {
-        "Statement": [{
-          "Effect": "Allow",
-          "Action": [
-            "ec2:CreateNetworkInterface",
-            "ec2:DescribeNetworkInterfaces",
-            "ec2:DeleteNetworkInterface"
-          ],
-          "Resource": "*"
-        }]
-      }
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DeleteNetworkInterface"
+      ],
+      "Resource": "*"
     },
     {
+      "Effect": "Allow",
       "Action": [
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "arn:aws:logs:*:*:*",
-      "Effect": "Allow"
+      "Resource": "arn:aws:logs:*:*:*"
     }
   ]
 }
