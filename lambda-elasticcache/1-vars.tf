@@ -24,7 +24,7 @@ variable "FUNCTION_NAME" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "lambda"))}"
+  default_name = join("-", list(terraform.workspace, "lambda"))
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
@@ -44,3 +44,4 @@ data "aws_iam_account_alias" "current" {}
 locals {
   app_version = formatdate("YYYYMMDDHHmmss", timestamp())
 }
+#---------------------------------------------------------

@@ -18,7 +18,7 @@ resource "aws_lambda_function" "lambda-function" {
   
   environment {
     variables = {
-      elasticache_config_endpoint  = "${aws_elasticache_cluster.elasticache.configuration_endpoint}"
+      elasticache_config_endpoint  = aws_elasticache_cluster.elasticache.configuration_endpoint
     }
   }
 
