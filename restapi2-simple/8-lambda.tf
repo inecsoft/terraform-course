@@ -1,27 +1,27 @@
 #----------------------------------------------------------------------------------------
 data archive_file lambda {
-  for_each = toset(var.lambda-name)
   type        = "zip"
-  #source_file = "connect/app.py"
-  source_dir = "todos/[each.key]"
-  output_path = "${each.key}.zip"
+  #source_file = "code/app.py"
+  source_dir = "code" 
+  output_path = "code.zip"
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function" {
-  for_each      = toset(var.lambda-name)
-  function_name = "${local.default_name}-lambda-api-${each.key}"
+  function_name = "${local.default_name}-lambda-api"
     
-  s3_bucket = aws_s3_bucket.s3-lambda-content-bucket[each.key].id
+  s3_bucket     = aws_s3_bucket.s3-lambda-content-bucket.id
   
-  s3_key        = "${local.app_version}/${each.key}.zip"
-  handler       = "todos/${each.key}.${each.key}"
+  s3_key        = "${local.app_version}/code.zip"
+  handler       =  "app.handler"
+  timeout       = 3 
   runtime       = "python3.6"
 
-  role = aws_iam_role.lambda-exec.arn
+  role          = aws_iam_role.lambda-exec.arn
   
   environment {
     variables = {
-      dynamodb_table_id  = aws_dynamodb_table.dynamodb-table.id
+      #dynamodb_table_id  = aws_dynamodb_table.dynamodb-table.id
+      dynamodb_table_id   = module.dynamodb_table.this_dynamodb_table_id
     }
   }
 
@@ -99,10 +99,14 @@ resource "aws_iam_policy" "iam-lambda-logging" {
         "dynamodb:PutItem",
         "dynamodb:Scan",
         "dynamodb:UpdateItem",
-        "dynamodb:*",
-        "dax:*"
+        "dynamodb:Query",
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:*"
+        
+        
       ],
-      "Resource": "*"
+      "Resource": "${module.dynamodb_table.this_dynamodb_table_arn}"
     },
     {
       "Effect": "Allow",
@@ -131,10 +135,9 @@ EOF
 #For Lambda functions, access is granted using the aws_lambda_permission resource
 #----------------------------------------------------------------------------------------
 resource "aws_lambda_permission" "apigw" {
-  for_each      = toset(var.lambda-name)
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda-function[each.key].function_name
+  function_name = aws_lambda_function.lambda-function.function_name
   principal     = "apigateway.amazonaws.com"
 
   # The "/*/*" portion grants access from any method on any resource
