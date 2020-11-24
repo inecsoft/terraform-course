@@ -21,14 +21,14 @@ exports.handler = function(event, context, callback) {
     }
 };
 
-# {
-#   "operation":"create",
-#   "tableName":"myDB",
-#   "payload":{
-#       "Item":{
-#           "id":"1",
-#           "name":"John Cena",
-#           "profession":"Wrestler"
-#        }
-#    }
-# }
+// {
+//    "operation":"create",
+//    "tableName":"myDB",
+//    "payload":{
+//        "Item":{
+//            "id":"1",
+//            "name":"John Cena",
+//            "profession":"Wrestler"
+//         }
+//     }
+// }

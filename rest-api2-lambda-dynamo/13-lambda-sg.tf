@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------------------------------
-resource "aws_security_group" "sg-lambda" {
+resource "aws_security_group" "lambda-sg" {
   name        = "${local.default_name}-sg-lambda-allow-http"
   description = "Allow http and https inbound traffic"
   vpc_id      = module.vpc.vpc_id

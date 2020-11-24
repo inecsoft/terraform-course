@@ -1,12 +1,8 @@
-#-------------------------------------------------------------------
-variable "AWS_REGION" {
-  default = "eu-west-1"
-}
 #--------------------------------------------------------------------------------------
 data "http" "workstation-external-ip" {
   url = "http://ipv4.icanhazip.com"
 }
-#--------------------------------------------------------------------------------------
+
 locals {
   workstation-external-cidr = "${chomp(data.http.workstation-external-ip.body)}/32"
 }
@@ -16,22 +12,32 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = join("-", list(terraform.workspace, "restapi-lambda-dynamodb"))
+  default_name = join("-", list(terraform.workspace, "lambda"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
 variable "PATH_TO_PRIVATE_KEY" {
-  default = "restapi-lambda-dynamodb"
+  default = "lambda"
 }
-#--------------------------------------------------------------------------------------
+
 variable "PATH_TO_PUBLIC_KEY" {
-  default = "restapi-lambda-dynamodb.pub"
+  default = "lambda.pub"
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
   length = 2
 }
 #-------------------------------------------------------------------
+variable "AWS_REGION" {
+  default = "eu-west-1"
+}
+#-------------------------------------------------------------------
+variable "profile" {
+  type        = string
+  description = "this is the aws profile for the project"
+  default     = "default"
+}
+#----------------------------------------------------------------------------
 data "aws_availability_zones" "azs" {}
 #-------------------------------------------------------------------
 data "aws_iam_account_alias" "current" {}
@@ -41,18 +47,22 @@ data "aws_caller_identity" "current" {}
 # The map here can come from other supported configurations
 # like locals, resource attribute, map() built-in, etc.
 #---------------------------------------------------------
-variable "instance_type"{
-  default = "t2.micro"
+variable "credentials" {
+  default = {
+    username = "admin"
+    password = "admin123"
+    engine   = "mysql"
+    host     = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
+    port     = 3306
+    dbname   = "proxydb"
+    dbInstanceIdentifier = "dbproxy"
+  }
+
+  type = map(string)
 }
-#------------------------------------------------------------------------
-variable "profile" {
-  default = "default"
-}
-#------------------------------------------------------------------------
-variable "zone" {
-  type = string
-  description = "describe sub-domain for api"
-  default = "api.inecsoft.co.uk"
+#---------------------------------------------------------
+variable "app_versions" {
+  default = "20200923161420"
 }
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
@@ -77,22 +87,19 @@ resource "random_integer" "integer" {
   max     = 6
 }
 #----------------------------------------------------------------------------
-variable "lambda-name" {
-  type    = list(string)
-  default = [
-    "create"
-    ]
+variable "zone" {
+  type = string
+  description = "describe sub-domain for api"
+  default = "api.inecsoft.co.uk"
 }
-
-#----------------------------------------------------------------------------------------
-# variable "lambda-name" {
-#   type    = list(string)
-#   default = [
-#     "create",
-#     "list",
-#     "get",
-#     "update",
-#     "delete"
-#   ]
-# }
-#----------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+variable "stage_name" {
+  default = "dev"
+  type    = string
+}
+#----------------------------------------------------------------------------
+variable "lambda_function_name" {
+  default = "lambda-function-proxy"
+  type    = string
+}
+#----------------------------------------------------------------------------
