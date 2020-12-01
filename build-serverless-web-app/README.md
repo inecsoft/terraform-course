@@ -31,4 +31,21 @@ git push -u origin master
 ```
 ssh -v git-codecommit.eu-west-1.amazonaws.com
 ```
+### __Install amplify__
+```
+npm install -g @aws-amplify/cli
+```
+### __Initialise project__
+```
+amplify init
+```
+### __List the env__
+```
+amplify env list
+```
+
+### __Delete project__
+```
+amplify delete --force
+```
 ***
