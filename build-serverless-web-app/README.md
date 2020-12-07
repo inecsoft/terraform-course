@@ -2,6 +2,7 @@
  <div align="center">
     <img src="images/sampleapp.JPG" width="700" />
 </div>
+
 ***
 
 1- Install git
@@ -19,6 +20,20 @@ IdentityFile ~/.ssh/Your-Private-Key-File-Name-Here
 cd default-serverless-web-app-repo
 aws s3 cp s3://wildrydes-us-east-1/WebApplication/1_StaticWebHosting/website ./ --recursive
 ```
+or 
+
+```
+npx create-react-app amplifyapp
+cd amplifyapp
+npm start
+
+git add .
+git commit -am "first commit"
+git remote add origin ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/default-serverless-web-app-repo
+git push --set-upstream origin master
+
+```
+
 ```
 git add .
 ```
@@ -43,9 +58,25 @@ amplify init
 ```
 amplify env list
 ```
-
+### __Add api gateway__
+```
+amplify add api
+```
+### ____
+```
+amplify hosting add
+```
+### __Lunch the app__
+```
+amplify publish
+```
+### __Deploy locally__
+```
+amplify serve
+```
 ### __Delete project__
 ```
 amplify delete --force
 ```
+
 ***
