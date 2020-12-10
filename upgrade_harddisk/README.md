@@ -29,7 +29,11 @@ fdisk /dev/sda1
 
 11. __To avoid a reboot:__
 ```
-partprobe /partx
+partprobe /dev/sda3
+
+or
+
+partx -a /dev/sda3
 ```
 
 12. __Creates a physical volume:__
@@ -63,7 +67,7 @@ vgextend cl /dev/sda3
   <img src="images/vgextend.JPG" width="700" />
 </div>
 
-16. pvscan
+16. __The original /dev/sda2 partition and the newly created physical volume /dev/sda3__
 
 <div align="left">
   <img src="images/pvscan.JPG" width="700" />
