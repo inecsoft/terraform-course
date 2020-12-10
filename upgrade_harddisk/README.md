@@ -1,6 +1,7 @@
 ***
 
 <div align="center">
+  <h1>Upgrade Hardisk in Virtual Box</h1>
   <img src="images/virtualmediamanager.JPG" width="700" />
 </div>
 
