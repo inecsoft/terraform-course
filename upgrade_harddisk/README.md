@@ -7,7 +7,6 @@
 ***
 ### __The instance must be one of the following:__
 
-```
 1. Shutdown the VM
 2. Right click the VM and select Edit Settings
 3. Select the hard disk you would like to extend
