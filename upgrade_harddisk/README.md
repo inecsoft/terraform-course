@@ -5,6 +5,7 @@
 </div>
 
 ***
+
 ### __The instance must be one of the following:__
 
 1. Shutdown the VM
