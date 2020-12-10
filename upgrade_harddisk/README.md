@@ -23,7 +23,7 @@
 fdisk /dev/sda1
 ```
 
-<div align="center">
+<div align="left">
   <img src="images/2-fdisk.JPG" width="700" />
 </div>
 
@@ -37,7 +37,7 @@ partprobe /partx
 pvcreate  /dev/sda3
 ```
 
-<div align="center">
+<div align="left">
   <img src="images/pvcreate.JPG" width="700" />
 </div>
 
@@ -46,12 +46,12 @@ pvcreate  /dev/sda3
 pvdisplay
 ```
 
-<div align="center">
+<div align="left">
   <img src="images/pvdisplay.JPG" width="700" />
 </div>
 
 14. __Provides lots of information on the volume group:__
-<div align="center">
+<div align="left">
   <img src="images/pvdisplay.JPG" width="700" />
 </div>
 
@@ -59,13 +59,13 @@ pvdisplay
 ```
 vgextend cl /dev/sda3
 ```
-<div align="center">
+<div align="left">
   <img src="images/vgextend.JPG" width="700" />
 </div>
 
 16. pvscan
 
-<div align="center">
+<div align="left">
   <img src="images/pvscan.JPG" width="700" />
 </div>
 
@@ -74,7 +74,7 @@ vgextend cl /dev/sda3
 lvdisplay 
 ```
 
-<div align="center">
+<div align="left">
   <img src="images/lvdisplay.JPG" width="700" />
 </div>
 
@@ -83,7 +83,7 @@ lvdisplay
 lvextend /dev/cl/root /dev/sda3
 ```
 
-<div align="center">
+<div align="left">
   <img src="images/pvscan.JPG" width="700" />
 </div>
 
@@ -92,7 +92,7 @@ lvextend /dev/cl/root /dev/sda3
 xfs_growfs /dev/cl/root
 ```
 
-<div align="center">
+<div align="left">
   <img src="images/xfs_growfs.JPG" width="700" />
 </div>
 
@@ -105,7 +105,7 @@ resize2fs /dev/cl/root
 ```
 df -h
 ```
-<div align="center">
+<div align="left">
   <img src="images/diskspaceincreased.JPG" width="700" />
 </div>
 
