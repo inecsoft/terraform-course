@@ -56,7 +56,7 @@ resource  "aws_instance" "proxy" {
  
 
   tags = {
-     Name = "${local.default_name}-proxy-host"
+    Name = "${local.default_name}-proxy-host"
   }
 
 }
@@ -78,8 +78,6 @@ output "proxy-IPAddress" {
 
 data "template_file" "proxy-init" {
   template = file("scripts/proxy-init.tpl")
-  }
-
 }
 
 data "template_file" "proxy" {
