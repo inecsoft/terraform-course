@@ -9,4 +9,4 @@ echo "Checking nvm command was installed"
 command -v nvm
 
 echo install nodejs version v12.18.3
-nvm install v12.18.3
+nvm install "v12.18.3"
