@@ -636,6 +636,16 @@ kubectl rollout status deployment <deployment-name>
 ```
 kubectl set image deployment/<deployment-name> container-name=image-name:version
 ```
+
+### __Get the current image tag of the prod pod__
+```
+kubectl get po -n namespace `kubectl get po -n namespace | grep pod-name-search | gawk -F ' ' '{ print $1 }'` -o yaml | grep image 
+```
+### __Set the image of a deployment or upgrade the deployment with automatic rollback in case of failing:__
+```
+kubectl -n namespace set image deployment/deployment-name image:tag --record
+```
+
 ### __View the history of a rollout, including previous revisions:__
 
 ```

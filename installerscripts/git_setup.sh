@@ -8,14 +8,18 @@ git config --global credential.helper "store --file ~/.gitcredential" &&
 
 git config --global core.editor "vim"
 
-cat << EOF >> ~/.bashrc
+cat << EOF >> ~/.bash_profile
 
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 export PS1="\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ "
+EOF
+
+cat << EOF >> ~/.bashrc
 export GIT_EDITOR=vim
 EOF
 
 source ~/.bashrc
- 
+source ~/.bash_profile
+
