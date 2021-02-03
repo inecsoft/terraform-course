@@ -646,6 +646,10 @@ kubectl get po -n namespace `kubectl get po -n namespace | grep pod-name-search 
 kubectl -n namespace set image deployment/deployment-name image:tag --record
 ```
 
+### __Watch the rollout and wait for 5 mins before declaring an issue:__
+```
+kubectl rollout status --watch=true --timeout=300s -n classy deployment deployment-name
+```
 ### __View the history of a rollout, including previous revisions:__
 
 ```
