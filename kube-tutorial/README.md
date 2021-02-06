@@ -648,7 +648,7 @@ kubectl -n namespace set image deployment/deployment-name image:tag --record
 
 ### __Watch the rollout and wait for 5 mins before declaring an issue:__
 ```
-kubectl rollout status --watch=true --timeout=300s -n classy deployment deployment-name
+kubectl -n namespace rollout status deployment deployment-name --watch=true --timeout=300s 
 ```
 ### __View the history of a rollout, including previous revisions:__
 
@@ -778,7 +778,7 @@ kubectl get no -o yaml
 ```
 kubectl get pods --output=wide
 ```
-# __8. Use the external IP address (LoadBalancer Ingress) to access the test-ngnxapplication:__
+# __8. Use the external IP address (LoadBalancer Ingress) to access the test-nginx application:__
 
 *__Note:__* Obtain the IP address that was allocated for our service, programmatically:
 ```

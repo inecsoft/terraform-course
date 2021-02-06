@@ -22,7 +22,7 @@ resource "aws_lb" "codepipeline" {
     Name    = "${local.default_name}-alb"
   }
 }
-
+#----------------------------------------------------------------------------------
 output "aws_lb_arn" {
   description = "The ID and ARN of the ALB we created."
   value       = "${aws_lb.codepipeline.arn}"
@@ -74,7 +74,7 @@ resource "aws_lb_target_group" "blue" {
      Name =  "${local.default_name}-blue-tg"
   } 
 }
-
+#----------------------------------------------------------------------------------
 output "aws_lb_target-blue_group_id" {
   value = "${aws_lb_target_group.blue.id}"
 }
@@ -118,7 +118,7 @@ resource "aws_lb_target_group" "green" {
      Name =  "${local.default_name}-green-tg"
   } 
 }
-
+#----------------------------------------------------------------------------------
 output "aws_lb_target-green_group_id" {
   value = "${aws_lb_target_group.green.id}"
 }
@@ -149,7 +149,7 @@ resource "aws_lb_listener" "codepipeline-80" {
     }
   }
 }
-
+#----------------------------------------------------------------------------------
 resource "aws_lb_listener" "codepipeline-443" {
   load_balancer_arn = "${aws_lb.codepipeline.arn}"
   port              = "443"

@@ -1,24 +1,24 @@
 #-------------------------------------------------------------------
 resource "aws_ecr_repository" "ecr-repository" {
-    name                 = "${local.default_name}-ecr"
-    
-    image_tag_mutability = "IMMUTABLE"
-    
+  name = "${local.default_name}-ecr-repository"
 
-    encryption_configuration {
-        encryption_type = "KMS"
-        kms_key         = aws_kms_key.kms-key.id
-    }
+  image_tag_mutability = "IMMUTABLE"
 
-    image_scanning_configuration {
-        scan_on_push = true
-    }
 
-    timeouts {}
-   
-    tags = {
-       Name = "${local.default_name}-ecr"
-    }
+  encryption_configuration {
+    encryption_type = "KMS"
+    kms_key         = aws_kms_key.kms-key.id
+  }
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
+  timeouts {}
+
+  tags = {
+    Name = "${local.default_name}-ecr-repository"
+  }
 }
 #-------------------------------------------------------------------
 output "ecr-repository-url" {
@@ -26,7 +26,7 @@ output "ecr-repository-url" {
   value       = aws_ecr_repository.ecr-repository.repository_url
 }
 #-------------------------------------------------------------------
-resource "aws_ecr_lifecycle_policy" "ec-lifecycle-policy" {
+resource "aws_ecr_lifecycle_policy" "ecr-lifecycle-policy" {
   repository = aws_ecr_repository.ecr-repository.name
 
   policy = <<EOF
