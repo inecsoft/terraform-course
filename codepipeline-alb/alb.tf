@@ -4,7 +4,7 @@ resource "aws_lb" "codepipeline" {
   subnets         =  module.vpc.public_subnets
   security_groups = ["${aws_security_group.codepipeline-lb-sg.id}"]
   internal        = false
-
+  load_balancer_type = application
   ip_address_type    = "ipv4"
 
   enable_deletion_protection = false

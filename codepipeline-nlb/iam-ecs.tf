@@ -38,7 +38,9 @@ resource "aws_iam_role_policy" "ecs-task-execution-role" {
         "logs:CreateLogStream",
         "logs:PutLogEvents",
         "ssm:GetParameters",
-        "ssm:GetParameter"
+        "ssm:GetParameter",
+        "secretsmanager:GetSecretValue", 
+        "kms:Decrypt"
       ],
       "Resource": "*"
     }

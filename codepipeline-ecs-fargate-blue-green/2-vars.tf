@@ -45,3 +45,44 @@ variable "instance_type" {
   default = "t2.micro"
 }
 #------------------------------------------------------------------------
+#---------------------------------------------------------
+# The map here can come from other supported configurations
+# like locals, resource attribute, map() built-in, etc.
+#---------------------------------------------------------
+variable "credentials" {
+  default = {
+    username = "admin"
+    password = "admin123"
+    engine   = "mysql"
+    host     = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
+    port     = 3306
+    dbname   = "proxydb"
+    dbInstanceIdentifier = "dbproxy"
+  }
+
+  type = map(string)
+}
+#----------------------------------------------------------------------------
+resource "random_password" "password" {
+  length = 20 
+  special = true
+  #override_special = "_@\/ "
+}
+#----------------------------------------------------------------------------
+resource "random_string" "random" {
+  length = 3
+  special = false 
+}
+#----------------------------------------------------------------------------
+variable "MYSQL_USER" {
+      default = "codepipeline"
+}
+#----------------------------------------------------------------------------
+variable "MYSQL_PASSWORD" {
+     default = "JO3a2NIXapLl0zG76AE41o2e4jdqB66oinmegVPL1y5bRvo=" 
+}
+#----------------------------------------------------------------------------
+variable "MYSQL_DATABASE" {
+      default = "codepipeline"
+}
+#----------------------------------------------------------------------------

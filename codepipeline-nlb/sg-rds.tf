@@ -13,7 +13,7 @@ resource "aws_security_group" "allow-mariadb" {
     protocol        = "tcp"
     #security_groups = [aws_security_group.example-instance.id] # allowing access from our example instance
     security_groups = [aws_security_group.ecs-codepipeline.id] # allowing access from our example instance
-
+    # cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
     from_port   = 0

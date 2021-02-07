@@ -12,7 +12,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "secret"))}"
+  default_name = join("-", list(terraform.workspace, "secret"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
@@ -51,6 +51,7 @@ variable "credentials" {
     port     = 3306
     dbname   = "proxydb"
     dbInstanceIdentifier = "dbproxy"
+    
   }
 
   type = map(string)

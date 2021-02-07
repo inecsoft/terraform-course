@@ -1,10 +1,11 @@
 #-------------------------------------------------------------------------------------------------
 resource "aws_ecs_task_definition" "ecs-task-definition" {
-  family             = "${local.default_name}-ecs-task-definition"
+  family             = "${local.default_name}-ecr-repository"
   execution_role_arn = aws_iam_role.iam-role-ecs-task-execution-role.arn
   task_role_arn      = aws_iam_role.iam-role-ecs-task-role.arn
   cpu                = 256
   memory             = 512
+  #you must choose ip as the target type. tasks that use the awsvpc network mode are associated with an elastic network interface.
   network_mode       = "awsvpc"
   requires_compatibilities = [
     "FARGATE"
@@ -15,7 +16,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
   {
     "essential": true,
     "image": "${aws_ecr_repository.ecr-repository.repository_url}",
-    "name": "demo",
+    "name": "${local.default_name}-ecr-repository",
     "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
@@ -24,7 +25,12 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
                "awslogs-stream-prefix": "ecs"
             }
      },
-     "secrets": [],
+     "secrets": [
+        {
+          "name": "DATABASE_PASSWORD",
+          "valueFrom": "arn:aws:ssm:us-east-1:awsExampleAccountID:parameter/awsExampleParameter"
+        }
+      ],
      "environment": [],
      "healthCheck": {
        "command": [ "CMD-SHELL", "curl -f http://localhost:3000/ || exit 1" ],
@@ -58,14 +64,14 @@ resource "aws_ecs_service" "ecs-service" {
   }
 #to be more secure use vpc.private_subnets and nat gateway
   network_configuration {
-    subnets          = slice(module.vpc.public_subnets, 1, 2)
+    subnets          = slice(module.vpc.public_subnets, 0, 3)
     security_groups  = [aws_security_group.sg-ecs.id]
     assign_public_ip = true
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.lb-target-group-blue.id
-    container_name   = "demo"
+    container_name   = "${local.default_name}-ecr-repository"
     container_port   = "3000"
   }
   lifecycle {
@@ -79,9 +85,9 @@ resource "aws_ecs_service" "ecs-service" {
 # security group
 #-------------------------------------------------------------------------------------------------
 resource "aws_security_group" "sg-ecs" {
-  name        = "${local.default_name}-sg-ECS"
+  name        = "${local.default_name}-sg-ecs"
   vpc_id      = module.vpc.vpc_id
-  description = "ECS demo"
+  description = "ECS security group"
 
   ingress {
     from_port   = 3000
@@ -103,6 +109,10 @@ resource "aws_security_group" "sg-ecs" {
 # logs
 #-------------------------------------------------------------------------------------------------
 resource "aws_cloudwatch_log_group" "cloudwatch-log-group" {
-  name = "${local.default_name}-cloudwatch-log-group"
+  name = "${local.default_name}-ecr-repository"
+
+  tags = {
+    Name = "${local.default_name}-ecr-repository"
+  }
 }
 #-------------------------------------------------------------------------------------------------

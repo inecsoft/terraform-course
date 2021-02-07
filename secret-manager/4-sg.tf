@@ -39,7 +39,14 @@ resource "aws_security_group" "allow-mysql" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.proxy-sg.id, aws_security_group.host-bastion-sg.id] # allowing access from our example instance
+    security_groups = [ aws_security_group.proxy-sg.id, aws_security_group.host-bastion-sg.id ] # allowing access from our example instance
+  }
+  
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    cidr_blocks = [ local.workstation-external-cidr ]# allowing access from our example instance
   }
 
   egress {
@@ -81,3 +88,4 @@ resource "aws_security_group" "host-bastion-sg" {
     Name = "${local.default_name}-allow-ssh"
   }
 }
+#-------------------------------------------------------------------------------------
