@@ -69,10 +69,10 @@ resource "random_password" "password" {
   #override_special = "_@\/ "
 }
 #----------------------------------------------------------------------------
-resource "random_string" "random" {
-  length = 3
-  special = false 
-}
+# resource "random_string" "random" {
+#   length = 3
+#   special = false 
+# }
 #----------------------------------------------------------------------------
 variable "MYSQL_USER" {
       default = "codepipeline"

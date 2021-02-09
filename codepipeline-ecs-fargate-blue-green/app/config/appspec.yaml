@@ -6,5 +6,5 @@ Resources:
         # <TASK_DEFINITION> will be replaced by codedeploy when the pipeline runs
         TaskDefinition: "<TASK_DEFINITION>"
         LoadBalancerInfo: 
-          ContainerName: demo
+          ContainerName: ${local.default_name}-ecr-repository"
           ContainerPort: 3000

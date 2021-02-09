@@ -78,7 +78,7 @@ resource "aws_iam_policy" "iam-policy-secretmanager" {
   name   = "${local.default_name}-iam-policy-secretmanager"
   path   = "/"
   policy = <<EOF
-  {
+{
   "Version": "2012-10-17",
   "Statement": [
     {

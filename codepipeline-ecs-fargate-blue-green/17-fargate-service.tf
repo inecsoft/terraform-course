@@ -1,4 +1,12 @@
 #-------------------------------------------------------------------------------------------------
+#https://aws.amazon.com/premiumsupport/knowledge-center/ecs-data-security-container-task/
+    #  "environment": [
+    #     {"name": "MYSQL_HOST", "value": "${module.db.this_db_instance_endpoint}"},
+    #     {"name": "MYSQL_USER", "value": "${var.MYSQL_USER}"},
+    #     {"name": "MYSQL_ROOT_PASSWORD", "value": "${var.MYSQL_PASSWORD}"},
+    #     {"name": "MYSQL_DATABASE", "value": "${var.MYSQL_DATABASE}
+    #  ],
+#-------------------------------------------------------------------------------------------------
 resource "aws_ecs_task_definition" "ecs-task-definition" {
   family             = "${local.default_name}-ecr-repository"
   execution_role_arn = aws_iam_role.iam-role-ecs-task-execution-role.arn
@@ -28,10 +36,11 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
      "secrets": [
         {
           "name": "DATABASE_PASSWORD",
-          "valueFrom": "arn:aws:ssm:us-east-1:awsExampleAccountID:parameter/awsExampleParameter"
+          "valueFrom": "arn:aws:ssm:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:parameter/DATABASE_PASSWORD"
         }
       ],
-     "environment": [],
+     "environment": [
+     ],
      "healthCheck": {
        "command": [ "CMD-SHELL", "curl -f http://localhost:3000/ || exit 1" ],
        "interval": 30,
