@@ -5,11 +5,11 @@ locals {
       for keyvalues in parameters.parameters:
         {
           "name" = "${parameters.prefix}/${keyvalues.name}"
-          "type" =  parameters.type
+          "type" =  keyvalues.type
           "value" = keyvalues.value
         }
-      ]
-    ])
+    ]
+  ])
 }
 
 resource "aws_ssm_parameter" "parameter" {
