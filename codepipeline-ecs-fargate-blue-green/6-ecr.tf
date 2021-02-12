@@ -1,8 +1,8 @@
 #-------------------------------------------------------------------
 resource "aws_ecr_repository" "ecr-repository" {
   name = "${local.default_name}-ecr-repository"
-
-  image_tag_mutability = "IMMUTABLE"
+  # "MUTABLE" or IMMUTABLE
+  image_tag_mutability = "MUTABLE"
 
 
   encryption_configuration {

@@ -39,7 +39,11 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
           "valueFrom": "arn:aws:ssm:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:parameter/DATABASE_PASSWORD"
         }
       ],
-     "environment": [
+      "environment": [
+        {"name": "MYSQL_HOST", "value": "${var.credentials.host}"},
+        {"name": "MYSQL_USER", "value": "${var.MYSQL_USER}"},
+        {"name": "MYSQL_ROOT_PASSWORD", "value": "${var.MYSQL_PASSWORD}"},
+        {"name": "MYSQL_DATABASE", "value": "${var.MYSQL_DATABASE}"}
      ],
      "healthCheck": {
        "command": [ "CMD-SHELL", "curl -f http://localhost:3000/ || exit 1" ],
@@ -118,7 +122,7 @@ resource "aws_security_group" "sg-ecs" {
 # logs
 #-------------------------------------------------------------------------------------------------
 resource "aws_cloudwatch_log_group" "cloudwatch-log-group" {
-  name = "${local.default_name}-ecr-repository"
+  name = "/aws/codebuild/${local.default_name}-ecr-repository"
 
   tags = {
     Name = "${local.default_name}-ecr-repository"
