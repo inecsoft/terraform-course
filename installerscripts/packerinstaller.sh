@@ -1,6 +1,23 @@
-PACKER_ZIP_FILE=packer_1.4.5_linux_amd64.zip
-PACKER=https://releases.hashicorp.com/packer/1.4.5
+#!/bin/bash
+
+version=1.4.5
+PACKER_ZIP_FILE=packer_${version}_linux_amd64.zip
+PACKER=https://releases.hashicorp.com/packer/${version}
 PACKER_BIN=packer
+
+if [ ! -f $(which wget)  ];then
+        echo "wget is installed"
+    else
+       sudo apt install -y wget
+       echo "wget commad is was installed"
+fi
+
+if [ ! -f $(which unzip)  ];then
+        echo "unzip is installed"
+    else
+       sudo apt install -y wget
+       echo "unzip commad is was installed"
+fi
 
 function install_packer {
     if [ -z $(which $PACKER_BIN) ]
