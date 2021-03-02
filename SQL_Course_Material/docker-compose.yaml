@@ -1,0 +1,50 @@
+version: '3.4'
+services:
+  # web:
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: ["bee", "run"]
+  #   ports:
+  #     - "8080:8080"
+  #   links:
+  #     - mysql-db
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_USER: root
+  #     MYSQL_ROOT_HOST: goblog
+  #     MYSQL_DATABASE: 
+  #     MYSQL_PASSWORD:
+  #docker exec -it 661625e018b4 bash
+  # mysql -u root -p"$MYSQL_ROOT_PASSWORD
+  #docker exec -it sql_course_material_mysql-db-course_1 bash
+
+  mysql-db-course:
+    image: mysql:8
+    hostname: mysql-db-course
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_ROOT_HOST: 
+      MYSQL_DATABASE: goblog
+      MYSQL_PASSWORD:
+    volumes:
+      - ./data/.:/var/lib/mysql:rw
+      - ./data_init/create-databases.sql:/docker-entrypoint-initdb.d/create-databases.sql
+    cpus: 1
+    cpu_percent: 100
+    mem_limit: 300m
+    mem_reservation: 100m
+    # deploy:
+    # resources:
+    # limits:
+    # #A strict upper limit to the amount of memory made available to a container.
+    #   memory: 300m
+    # reservations:
+    # #set as the bare minimum amount of memory that an application needs to run properly
+    #   memory: 100m
+
+
