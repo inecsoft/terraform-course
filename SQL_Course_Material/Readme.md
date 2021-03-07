@@ -69,7 +69,7 @@ from customers
 -- where customer_id = 1
 order by first_name;
 ```
-### __How to create an alias with AS__
+### __How to use create an alias with AS__
 ```
 SELECT 
     last_name,
@@ -79,12 +79,12 @@ SELECT
 FROM customers
 ORDER BY first_name;
 ```
-### __How to DISTINCT statement__
+### __How to use DISTINCT Operator__
 ```
 SELECT DISTINCT state 
 FROM sql_store.customers;
 ```
-### __How to WHERE statement AND & OR OPERATORS__
+### __How to use WHERE Clause AND & OR OPERATORS__
 ```
 select * 
 from customers
@@ -99,7 +99,7 @@ where birth_date > '1990-01-01' or
     points > 1000 and state = 'VA';
 ```
 
-### __How to WHERE statement AND & NOT OPERATORS__
+### __How to use WHERE Clause AND & NOT OPERATORS__
 ```
 select * 
 from customers
@@ -112,7 +112,7 @@ from customers
 where birth_date <= '1990-01-01'
     and points <= 1000;
 ```
-### __How to use the IN, not IN vs OR statement__
+### __How to use the IN, not IN vs OR Operator__
 ```
 select *
 from customers
@@ -128,13 +128,13 @@ select *
 from customers
 where state not IN ('VA', 'FL', 'GA');
 ```
-### __How to use Between statement__
+### __How to use Between Operator__
 ```
 select *
 from customers
 where birth_date between '1990-1-1' and '2000-1-1'; 
 ```
-### __How to use LIKE statement__
+### __How to use LIKE Operator__
 ```
 select *
 from customers
@@ -157,7 +157,7 @@ where phone LIKE '%9';
 
 ```
 
-### __How to use REGEXP statement__
+### __How to use REGEXP Operator__
 ```
 select *
 from customers
@@ -169,6 +169,110 @@ select *
 from customers
 where last_name regexp 'field$|mac|^rose';
 -- match end with field or mac or start with rose
+-- ^ beginning
+-- $ end
+-- | logical or
+-- [abcd] match any sigle char
+-- [a-z] range
+```
+```
+use sql_store;
+-- select customer whose first name is ELKA or AMBUR
+select *
+from customers
+where first_name regexp 'elka|ambur';
+
+-- last name end with EY or ON
+select *
+from customers
+where last_name regexp 'ey$|on$';
+
+-- lastname start with my or contains se
+select *
+from customers
+where last_name regexp '^my|se';
+
+-- last name contains b followed by r or u
+select *
+from customers
+where last_name regexp 'b[ru]';
+```
+### __How to use IS NULL & IS NOT NULL Operator__
+```
+select *
+from customers
+where phone is null;
+```
+### __How to use ORDER BY & DESC Operator__
+```
+-- sort in descending order the items based on an alias
+select * , quantity * unit_price as total_price
+from order_items
+where order_id = 2
+order by total_price DESC;
+```
+### __How to use LIMIT Operator__
+```
+use sql_store;
+
+-- get the top 3 loyal customers with valid phone numbers
+select * 
+from customers
+where phone is not null
+order by points desc
+limit 3;
+```
+### __How to use INNER JOINS__
+```
+use sql_store;
+
+-- how to join colums from multiple tables with alias
+select order_id, o.customer_id, first_name, last_name 
+from orders o 
+join customers c
+    on o.customer_id = c.customer_id
+```
+
+```
+use sql_store;
+-- select order_id, product_id, quantity,unit_price from order_items table and join with products table
+select order_id, p.product_id, quantity, oi.unit_price
+from order_items oi
+join products p
+on oi.order_id = p.product_id;
+
+### __How to join multiple tables__
+use sql_store;
+
+select 
+  o.order_id,
+  o.order_date,
+  c.first_name,
+  c.last_name,
+  os.name as status
+from orders o 
+join customers c
+  on o.customer_id = c.customer_id
+join order_statuses os
+  on o.status = os.order_status_id;
+
+use sql_invoicing;
+select * from payments;
+select * from clients;
+
+-- select date, invoice_id, amount, name of customer and phone, payment method and join payment, client and payment_methods tables
+select
+  p.date,
+  p.invoice_id,
+  p.amount,
+  c.name,
+  c.phone,
+  pm.name
+from payments p 
+join clients c
+    on p.client_id = c.client_id
+join payment_methods pm
+    on p.payment_method = pm.payment_method_id;
 ```
 
 ***
