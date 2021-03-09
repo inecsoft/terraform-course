@@ -274,6 +274,36 @@ join clients c
 join payment_methods pm
     on p.payment_method = pm.payment_method_id;
 ```
+### __How to use Compound JOIN Conditions__
+```
+use sql_store;
+
+select * from order_items;
+SELECT * FROM order_item_notes;
+
+select * 
+from order_items oi
+join order_item_notes oin
+   on oi.order_id = oin.order_id
+   and oi.product_id = oin.product_id; 
+```
+
+### __How to use LERF & RIGHT JOIN Conditions__
+```
+use sql_store;
+
+select * from orders;
+select * from customers;
+
+select
+   c.customer_id,
+   c.first_name,
+   o.order_id
+from orders o
+right join customers c
+   on o.order_id = c.customer_id 
+order by c.customer_id;
+```
 
 ***
 ### __Local Port Forwarding__
