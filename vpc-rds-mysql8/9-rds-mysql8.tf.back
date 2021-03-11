@@ -1,0 +1,151 @@
+module "db" {
+  source = "terraform-aws-modules/rds/aws"
+  version = "2.25.0"  
+  #source = "../../terraform-aws-rds"
+
+
+  identifier = var.credentials.dbInstanceIdentifier
+
+  # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
+  engine                = "mysql"
+  engine_version        = "8.0.20"
+  instance_class        = "db.t3.micro"
+  allocated_storage     = 100
+  max_allocated_storage = 200
+  apply_immediately     = false
+
+  storage_encrypted = false
+  storage_type      = "gp2"
+  #iops             = 1000
+
+  #arn value of kms_key_id, DB Instance class db.t2.micro does not support encryption at rest
+  # kms_key_id        = aws_kms_key.kms-key.arn
+  # storage_encrypted = true
+  
+  # Database Deletion Protection
+  deletion_protection = false
+
+  multi_az = true
+
+  #db name
+  name              = var.credentials.dbname
+  username          = var.credentials.username
+  #password         = var.credentials.password
+  password          = random_password.password.result
+  port              = var.credentials.port
+  #password lenght less 41 char
+  #password = data.vault_generic_secret.terraform.data["${local.default_name}-vault-password"]
+
+  vpc_security_group_ids = [aws_security_group.allow-mysql.id]
+
+  maintenance_window = "Tue:01:55-Tue:02:55"
+  backup_window      = "03:00-05:00"
+
+  # disable backups to create DB faster
+  backup_retention_period = 10
+
+  # DB subnet group
+  #subnet_ids = data.aws_subnet_ids.private-subnet-ids.ids
+  # subnet_ids = "${local.default_name}" == "staging" ? [ data.aws_subnet_ids.private-staging-subnet-ids.ids ] : [ data.aws_subnet_ids.private-prod-subnet-ids.ids ]
+  subnet_ids =  module.vpc.private_subnets 
+
+  # DB parameter group
+  #family = "mysql5.7"
+  family = "mysql8.0"
+
+  # DB option group
+  ###option_group_name = "default:mysql-8-0"
+  #major_engine_version = "5.7"
+  major_engine_version = "8.0"
+
+  # Snapshot name upon DB deletion
+  #final_snapshot_identifier = "${local.default_name}-db"
+  
+  #monitoring
+  # enabled_cloudwatch_logs_exports = ["audit", "general", "error", "slowquery"]
+  enabled_cloudwatch_logs_exports = ["general", "error", "slowquery"]
+
+  #create_monitoring_role  = true
+  #monitoring_role_name    = "${local.default_name}-db-monitoring-role"
+
+  #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-rds-dbparametergroup.html
+  create_db_parameter_group = false
+  parameter_group_name = "default.mysql8.0"#"${local.default_name}-db-mysql8"
+  create_db_option_group = false
+  option_group_name = "default:mysql-8-0"#"${local.default_name}-db-mysql8"
+  # parameters = [
+  #   {
+  #     name  = "character_set_client"
+  #     value = "utf8"
+  #   },
+  #   {
+  #     name  = "character_set_server"
+  #     value = "utf8"
+  #   }
+
+  # ]
+    #aws rds describe-db-parameters     --db-parameter-group-name default.mysql8.0
+    #db tunning
+    # {
+    #   name  = "sql_mode"
+    #   value = "IGNORE_SPACE"
+    # },
+    # {
+    #   name  = "max_allowed_packet"
+    #   value = "1024"
+    # },
+    # {
+    #   name  = "innodb_buffer_pool_size"
+    #   value = "{DBInstanceClassMemory*3/4}"
+    # }
+  
+  #only for mysql5.7
+  # options = [
+  #   {
+  #     option_name = "MARIADB_AUDIT_PLUGIN"
+
+  #     option_settings = [
+  #       {
+  #         name  = "SERVER_AUDIT_EVENTS"
+  #         value = "CONNECT"
+  #       },
+  #       {
+  #         name  = "SERVER_AUDIT_FILE_ROTATIONS"
+  #         value = "37"
+  #       },
+  #     ]
+  #   },
+  # ]
+
+  tags = {
+    Owner       = "inecsoft"
+    Environment = local.default_name
+    Name        = "${local.default_name}-db-master"
+  }
+}
+#------------------------------------------------------------------------------------------------
+#data
+#------------------------------------------------------------------------------------------------
+# data "aws_subnet_ids" "rds-private-subnet-ids" {
+#   vpc_id = data.aws_vpc.target.id
+
+#   filter {
+#     name   = "tag:Subnet"
+#     values = ["${local.default_name}-vpc-rds"] # insert values here
+#   }
+# }
+
+# data "aws_security_group" "rds-security-group-bastion-in-id" {
+#   vpc_id = data.aws_vpc.target.id
+
+#   filter {
+#     name   = "tag:Name"
+#     values = ["${local.default_name}-peering-sg"] # insert values here
+#   }
+# }
+
+#------------------------------------------------------------------------------------------------
+output "db-endpoint" {
+  value = module.db.this_db_instance_endpoint
+}
+#------------------------------------------------------------------------------------------------
