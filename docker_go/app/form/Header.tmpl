@@ -1,0 +1,10 @@
+{{ define "Header" }}
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Golang Mysql Curd Example</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <h1>Golang Mysql Curd Example</h1>   
+{{ end }}
