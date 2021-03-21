@@ -323,4 +323,20 @@ select @@innodb_buffer_pool_instances;
 
 ```
 
+### __Fault injection Queries__
+
+  * __Fig Instance Crash__
+
+```
+ALTER SYSTEM CRASH [ INSTANCE | DISPATCHER | NODE ];
+```
+
+  * __Fig Replica Failure__
+
+```
+ALTER SYSTEM SIMULATE "percentage of failure" PERCENT READ REPLICA FAILURE
+  [ TO ALL | TO "replica name" ]
+  FOR INTERVAL "quantity" { YEAR | QUARTER | MONTH | WEEK | DAY | HOUR | MINUTE | SECOND };
+```
+
 ***
