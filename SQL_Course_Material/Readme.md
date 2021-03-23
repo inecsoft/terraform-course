@@ -322,7 +322,7 @@ left join shippers sh
 join order_statuses os
    on o.status = os.order_status_id;
 ```
-### __How to use USING clause__
+### __How to use USING Clause__
 ```
 from orders o
 join customers c
