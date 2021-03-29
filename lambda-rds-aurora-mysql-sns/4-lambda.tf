@@ -44,7 +44,7 @@ resource "aws_lambda_function" "lambda-function" {
 # IAM role which dictates what other AWS services the Lambda function
 # may access.
 #----------------------------------------------------------------------------------------
-resource "aws_lambda_function_event_invoke_config" "example" {
+resource "aws_lambda_function_event_invoke_config" "lambda-function-event-invoke-config" {
   function_name = aws_lambda_function.lambda-function.arn
 
   destination_config {
