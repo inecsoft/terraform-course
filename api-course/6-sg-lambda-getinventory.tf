@@ -1,6 +1,6 @@
 #--------------------------------------------------------------------------------------------
-resource "aws_security_group" "security-group-lambda" {
-  name        = "${local.default_name}-lambda-sg"
+resource "aws_security_group" "security-group-lambda-getinventory" {
+  name        = "${local.default_name}-security-group-lambda-getinventory"
   description = "Allow https inbound traffic"
   vpc_id      = module.vpc.vpc_id
 
@@ -37,7 +37,7 @@ resource "aws_security_group" "security-group-lambda" {
   }
 
   tags = {
-    Name = "${local.default_name}-lambda-sg"
+    Name = "${local.default_name}-security-group-lambda-getinventory"
   }
 }
 #--------------------------------------------------------------------------------------------

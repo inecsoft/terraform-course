@@ -3,8 +3,8 @@
 # may access.
 #----------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------
-resource "aws_iam_role" "lambda_exec" {
-  name = "${local.default_name}-rds-lambda-function-role"
+resource "aws_iam_role" "iam-role-lambda-getorderstatus" {
+  name = "${local.default_name}-iam-role-lambda-getorderstatus"
 
   assume_role_policy = <<EOF
 {
@@ -23,15 +23,15 @@ resource "aws_iam_role" "lambda_exec" {
 EOF
 }
 #---------------------------------------------------------------------
-resource "aws_iam_policy_attachment" "iam-role-policy-attach-vpc" {
-  name       = "${local.default_name}-cache-lambda-function-role-attachment"
+resource "aws_iam_policy_attachment" "iam-role-policy-attach-vpc-getorderstatus" {
+  name       = "${local.default_name}-lambda-getorderstatus-function-role-attachment"
   users      = []
-  roles      = [aws_iam_role.lambda_exec.name]
+  roles      = [aws_iam_role.iam-role-lambda-getorderstatus.name]
   groups     = []
-  policy_arn = data.aws_iam_policy.iam-policy-vpc.arn
+  policy_arn = data.aws_iam_policy.iam-policy-vpc-getorderstatus.arn
 }
 #---------------------------------------------------------------------
-data "aws_iam_policy" "iam-policy-vpc" {
+data "aws_iam_policy" "iam-policy-vpc-getorderstatus" {
   arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 #--------------------------------------------------------------------------------------

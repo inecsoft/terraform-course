@@ -8,7 +8,7 @@ locals {
 }
 #----------------------------------------------------------------------------
 variable "AWS_REGION" {
-  default = "eu-west-1"
+  default = "eu-west-2"
 }
 #----------------------------------------------------------------------------------------
 #In order to allow easy switching between versions you can define 
@@ -49,5 +49,22 @@ locals {
 variable "phone_number" {
   type = string
   default = "+447518527690"
+} 
+#---------------------------------------------------------
+variable "api_name" {
+  type = string
+  default = "ACME-Shoes-rest-api"
+} 
+#---------------------------------------------------------
+variable "enable_alarms" {
+  type = string
+  default = "1"
+} 
+#---------------------------------------------------------
+data "aws_caller_identity" "current" {}
+#---------------------------------------------------------
+variable "stage_name" {
+  type = string
+  default = "dev"
 } 
 #---------------------------------------------------------
