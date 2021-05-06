@@ -666,6 +666,10 @@ kubectl describe deployments test-nginx
 ```
 kubectl rollout undo deploy test-nginx
 ```
+### __Restart the deployment__
+```
+kubectl -n drone rollout restart deployment <deployment-name>
+```
 # __3. Display information about your ReplicaSet objects:__
 
 ```
