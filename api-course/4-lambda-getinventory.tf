@@ -14,16 +14,17 @@ resource "aws_lambda_function" "lambda-function-getinventory" {
   # is the name of the property under which the handler function was
   # exported in that file.
   handler     = "index.handler"
-  runtime     = "nodejs10.x"
+  runtime     = "nodejs12.x"
   memory_size = 256
+  timeout     = 3
   
-  environment {
-    variables = {
-      env  = "dev"
-    }
-  }
+  # environment {
+  #   variables = {
+  #     env  = "dev"
+  #   }
+  # }
 
-  role = aws_iam_role.iam-orle-lambda-getinventory.arn
+  role = aws_iam_role.iam-role-lambda-getinventory.arn
 
   vpc_config {
     # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
@@ -49,7 +50,9 @@ resource "aws_lambda_permission" "lambda-function-getinventory-permission-from-a
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda-function-getinventory.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.rest-api-acme-shoes.arn}/*/${aws_api_gateway_method.api-gateway-method-shoes.http_method}${aws_api_gateway_resource.api-gateway-resource-shoes.path}"
+  source_arn    = "${aws_api_gateway_rest_api.rest-api-acme-shoes.execution_arn}/*/${aws_api_gateway_method.api-gateway-method-shoes.http_method}${aws_api_gateway_resource.api-gateway-resource-shoes.path}"
+  # source_arn    = "${aws_api_gateway_rest_api.rest-api-acme-shoes.arn}/*"
   # qualifier     = aws_lambda_alias.test_alias.name
 }
 #----------------------------------------------------------------------------------------
+#arn:aws:execute-api:${var.AWS_REGION}:${data.aws_caller_identity.current.id}:gic0tz3ss6

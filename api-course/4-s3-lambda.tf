@@ -54,7 +54,7 @@ resource "aws_s3_bucket_object" "s3-bucket-object-getinventory" {
 }
 #--------------------------------------------------------------------------------
 resource "aws_s3_bucket_object" "s3-bucket-object-getorderstatus" {
-  key          = "${local.app_version}/getinventory.zip"
+  key          = "${local.app_version}/getorderstatus.zip"
   bucket       = aws_s3_bucket.s3-lambda-content-bucket.id
   #content     = "web/index.html"
   #source      = "web/index.html"
