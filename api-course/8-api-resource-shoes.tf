@@ -54,6 +54,7 @@ resource "aws_api_gateway_integration" "api-gateway-integration-shoes" {
   integration_http_method  = "POST"
   timeout_milliseconds     = 29000
   type                     = "AWS_PROXY"
+  #content_handling         = "CONVERT_TO_TEXT"
   uri                      = aws_lambda_function.lambda-function-getinventory.invoke_arn
 }
 #------------------------------------------------------------------------------------------------------------
@@ -89,7 +90,7 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
   http_method = aws_api_gateway_method.api-gateway-method-shoes.http_method
   status_code = aws_api_gateway_method_response.api-gateway-method-response-200-shoes.status_code
 
-  content_handling = "CONVERT_TO_TEXT"
+  #content_handling = "CONVERT_TO_TEXT"
   
   response_parameters = {
     "method.response.header.Cache-Control"               = "'no-cache, no-store, must-revalidate'"

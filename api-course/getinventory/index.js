@@ -1,10 +1,11 @@
 var faker = require('faker');
 
-exports.handler = function(event, context){
-  // return an array of 10 items in inventory
+exports.handler = (event, context, callback) => {
+    // return an array of 10 items in inventory
   // include product name, color, description
   // size, and price
   var inventory = [];
+
   for (var i = 0; i < 10; i++){
     var myShoe = getMyShoe();
     var item = {};
@@ -14,9 +15,25 @@ exports.handler = function(event, context){
     item.size = getShoeSize();
     item.price = getShoePrice();
     inventory.push(item);
-  }
+  };
+
   context.succeed(inventory);
-}
+
+  var response = {
+    "statusCode": 200,
+    "headers": {
+      'Content-Type': 'application/json'
+    },
+    "body": JSON.stringify(inventory),
+    "isBase64Encoded": false
+  };
+
+  console.log("request:", JSON.stringify(event));
+  console.log("response:", response);
+  console.log("context:", JSON.stringify(context));
+  
+  callback(null, response);
+};
 
 function getMyShoe() {
   var shoeType = [
