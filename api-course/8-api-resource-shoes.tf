@@ -104,7 +104,9 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
     "method.response.header.Access-Control-Allow-Origin" = "'*'"
   }
 
-  response_templates = {}
+  response_templates  = {
+    "application/json" = "Empty"
+  }
 
 }
 #-----------------------------------------------------------------------------

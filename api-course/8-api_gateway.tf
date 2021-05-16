@@ -16,71 +16,74 @@ resource "aws_api_gateway_rest_api" "rest-api-acme-shoes" {
   }
 }
 # #------------------------------------------------------------------------------------------------------------
-# resource "aws_api_gateway_domain_name" "api-gateway-domain-name" {
-#   domain_name              = "${local.default_name}-${var.api_name}.transport-for-greater-manchester.com"
-#   regional_certificate_arn = aws_acm_certificate_validation.acm-certificate-validation.certificate_arn
-#   #TLS_1_0 and TLS_1_2
-#   security_policy          = "TLS_1_2"
+resource "aws_api_gateway_domain_name" "api-gateway-domain-name" {
+  domain_name              = "${local.default_name}-${var.api_name}.transport-for-greater-manchester.com"
+  regional_certificate_arn = aws_acm_certificate_validation.acm-certificate-validation.certificate_arn
+  #TLS_1_0 and TLS_1_2
+  security_policy          = "TLS_1_2"
 
-#   #EDGE or REGIONAL
-#   endpoint_configuration {
-#     types = ["REGIONAL"]
-#   }
+  #EDGE or REGIONAL
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
 
-#   tags = {
-#     Name = "${local.default_name}-api-gateway-domain-name"
-#   }
-# }
+  tags = {
+    Name = "${local.default_name}-api-gateway-domain-name"
+  }
+}
 # #------------------------------------------------------------------------------------------------------------
-# data "aws_route53_zone" "route53-zone-selected" {
-#   name = "transport-for-greater-manchester.com"
-# }
+data "aws_route53_zone" "route53-zone-selected" {
+  name = "transport-for-greater-manchester.com"
+}
 # #------------------------------------------------------------------------------------------------------------
-# resource "aws_route53_record" "route53-record" {
-#   allow_overwrite   = true
-#   name              = aws_api_gateway_domain_name.api-gateway-domain-name.domain_name
-#   type              = "A"
-#   zone_id           = data.aws_route53_zone.route53-zone-selected.zone_id
+resource "aws_route53_record" "route53-record" {
+  allow_overwrite   = true
+  name              = aws_api_gateway_domain_name.api-gateway-domain-name.domain_name
+  type              = "A"
+  zone_id           = data.aws_route53_zone.route53-zone-selected.zone_id
 
-#   alias {
-#     evaluate_target_health = true
-#     name                   = aws_api_gateway_domain_name.api-gateway-domain-name.cloudfront_domain_name
-#     zone_id                = aws_api_gateway_domain_name.api-gateway-domain-name.cloudfront_zone_id
-#   }
-# }
+  alias {
+    evaluate_target_health = true
+    name                   = aws_api_gateway_domain_name.api-gateway-domain-name.cloudfront_domain_name
+    zone_id                = aws_api_gateway_domain_name.api-gateway-domain-name.cloudfront_zone_id
+  }
+}
 #------------------------------------------------------------------------------------------------------------
-# resource "aws_api_gateway_base_path_mapping" "api-gateway-base-path-mapping" {
-#   api_id      = aws_api_gateway_rest_api.rest-api-acme-shoes.id
-#   stage_name  = aws_api_gateway_stage.api-gateway-stage-dev.stage_name
-#   domain_name = aws_api_gateway_domain_name.api-gateway-domain-name.domain_name
-# }
+resource "aws_api_gateway_base_path_mapping" "api-gateway-base-path-mapping" {
+  api_id      = aws_api_gateway_rest_api.rest-api-acme-shoes.id
+  stage_name  = aws_api_gateway_stage.api-gateway-stage-dev.stage_name
+  domain_name = aws_api_gateway_domain_name.api-gateway-domain-name.domain_name
+}
 #-----------------------------------------------------------------------------
 resource "aws_api_gateway_deployment" "api-gateway-deployment" {
   rest_api_id = aws_api_gateway_rest_api.rest-api-acme-shoes.id
 
-  triggers = {
+  # triggers = {
 
-    redeployment = sha1(jsonencode([
-      aws_api_gateway_resource.api-gateway-resource-shoes.id,
-      aws_api_gateway_method.api-gateway-method-shoes.id,
-      aws_api_gateway_integration.api-gateway-integration-shoes.id,
-      aws_api_gateway_resource.api-gateway-resource-order.id,
-      aws_api_gateway_method.api-gateway-method-order.id,
-      aws_api_gateway_integration.api-gateway-integration-order.id,
-      aws_api_gateway_resource.api-gateway-resource-order-id.id,
-      aws_api_gateway_method.api-gateway-method-order-id.id,
-      aws_api_gateway_integration.api-gateway-integration-order-id.id,
-      aws_api_gateway_resource.api-gateway-resource-ping.id,
-      aws_api_gateway_method.api-gateway-method-ping.http_method,
-      aws_api_gateway_integration.api-gateway-integration-ping.id,
-    ]))
-  }
-
-  # variables = {
-  #   overide_api    = var.overide_api
-  #   root_api       = filebase64sha256("${path.module}/root.tf")
-  #   shoes_api = filebase64sha256("${path.module}/shoes.tf")
+  #   redeployment = sha1(jsonencode([
+  #     aws_api_gateway_resource.api-gateway-resource-shoes.id,
+  #     aws_api_gateway_method.api-gateway-method-shoes.id,
+  #     aws_api_gateway_integration.api-gateway-integration-shoes.id,
+  #     aws_api_gateway_resource.api-gateway-resource-order.id,
+  #     aws_api_gateway_method.api-gateway-method-order.id,
+  #     aws_api_gateway_integration.api-gateway-integration-order.id,
+  #     aws_api_gateway_resource.api-gateway-resource-order-id.id,
+  #     aws_api_gateway_method.api-gateway-method-order-id.id,
+  #     aws_api_gateway_integration.api-gateway-integration-order-id.id,
+  #     aws_api_gateway_resource.api-gateway-resource-ping.id,
+  #     aws_api_gateway_method.api-gateway-method-ping.http_method,
+  #     aws_api_gateway_integration.api-gateway-integration-ping.id,
+  #   ]))
   # }
+
+  variables = {
+    # overide_api    = var.overide_api
+    # root_api       = filebase64sha256("${path.module}/root.tf")
+    api_gateway        = filebase64sha256("8-api_gateway.tf")
+    api-resource-order = filebase64sha256("8-api-resource-order.tf")
+    api-resource-ping  = filebase64sha256("8-api-resource-ping.tf")
+    api-resource-shoes = filebase64sha256("8-api-resource-shoes.tf")
+  }
   
   lifecycle {
     create_before_destroy = true
