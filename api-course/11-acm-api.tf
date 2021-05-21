@@ -1,8 +1,8 @@
 # #-----------------------------------------------------------------------------
 resource "aws_acm_certificate" "acm-certificate" {
-  domain_name       = "${local.default_name}-${var.api_name}.transport-for-greater-manchester.com"
+  domain_name       = "${local.default_name}.transport-for-greater-manchester.com"
   validation_method = "DNS"
-  subject_alternative_names = ["*.${local.default_name}-${var.api_name}.transport-for-greater-manchester.com"]
+  subject_alternative_names = ["*.${local.default_name}.transport-for-greater-manchester.com"]
   lifecycle {
     create_before_destroy = true
   }

@@ -53,9 +53,14 @@ resource "aws_api_gateway_integration" "api-gateway-integration-shoes" {
   http_method              = aws_api_gateway_method.api-gateway-method-shoes.http_method
   integration_http_method  = "POST"
   timeout_milliseconds     = 29000
-  type                     = "AWS_PROXY"
-  #content_handling         = "CONVERT_TO_TEXT"
+  type                     = "AWS"
+  cache_key_parameters     = [] 
+  content_handling         = "CONVERT_TO_TEXT"
+  passthrough_behavior     = "WHEN_NO_MATCH"
+
   uri                      = aws_lambda_function.lambda-function-getinventory.invoke_arn
+  request_parameters       = {} 
+  request_templates        = {}
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_method_response" "api-gateway-method-response-200-shoes" {
@@ -93,19 +98,19 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
   #content_handling = "CONVERT_TO_TEXT"
   
   response_parameters = {
-    "method.response.header.Cache-Control"               = "'no-cache, no-store, must-revalidate'"
-    "method.response.header.Pragma"                      = "'no-cache'"
-    "method.response.header.X-Content-Type-Options"      = "'nosniff'"
-    "method.response.header.X-XSS-Protection"            = "'1; mode=block'"
-    "method.response.header.Strict-Transport-Security"   = "'max-age=63072000; includeSubDomains; preload'"
-    "method.response.header.X-Frame-Options"             = "'DENY'"
-    "method.response.header.Content-Security-Policy"     = "'default-src 'none'; frame-ancestors 'none''"
-    "method.response.header.Referrer-Policy"             = "'no-referrer'"
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    # "method.response.header.Cache-Control"               = "'no-cache, no-store, must-revalidate'"
+    # "method.response.header.Pragma"                      = "'no-cache'"
+    # "method.response.header.X-Content-Type-Options"      = "'nosniff'"
+    # "method.response.header.X-XSS-Protection"            = "'1; mode=block'"
+    # "method.response.header.Strict-Transport-Security"   = "'max-age=63072000; includeSubDomains; preload'"
+    # "method.response.header.X-Frame-Options"             = "'DENY'"
+    # "method.response.header.Content-Security-Policy"     = "'default-src 'none'; frame-ancestors 'none''"
+    # "method.response.header.Referrer-Policy"             = "'no-referrer'"
+    # "method.response.header.Access-Control-Allow-Origin" = "'*'"
   }
 
   response_templates  = {
-    "application/json" = "Empty"
+    "application/json" = ""
   }
 
 }

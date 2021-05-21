@@ -81,7 +81,12 @@ resource "aws_api_gateway_integration" "api-gateway-integration-order" {
   resource_id              = aws_api_gateway_resource.api-gateway-resource-order.id
   http_method              = aws_api_gateway_method.api-gateway-method-order.http_method
   integration_http_method  = "POST"
-  type                     = "AWS_PROXY"
+  type                     = "AWS"
+  content_handling         = "CONVERT_TO_TEXT" 
+  passthrough_behavior     = "WHEN_NO_MATCH"
+  cache_key_parameters     = [] 
+  request_parameters       = {}
+  request_templates        = {}
   uri                      = aws_lambda_function.lambda-function-getorderstatus.invoke_arn
 }
 #------------------------------------------------------------------------------------------------------------
@@ -110,11 +115,14 @@ resource "aws_api_gateway_integration" "api-gateway-integration-order-id" {
   resource_id              = aws_api_gateway_resource.api-gateway-resource-order-id.id
   http_method              = aws_api_gateway_method.api-gateway-method-order-id.http_method
   integration_http_method  = "POST"
-  type                     = "AWS_PROXY"
+  type                     = "AWS"
   uri                      = aws_lambda_function.lambda-function-getorderstatus.invoke_arn
-
+  cache_key_parameters    = [] 
+  content_handling        = "CONVERT_TO_TEXT"
+  passthrough_behavior    = "WHEN_NO_MATCH"
+  request_parameters      = {} 
   request_templates = {
-    "application/json"  = "{ 'orderId': $input.params('id')}"
+    # "application/json"  = "{ 'orderId': $input.params('id')}"
   }
 }
 #------------------------------------------------------------------------------------------------------------
@@ -164,17 +172,18 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
   # }
   
   response_parameters = {
-    "method.response.header.X-Some-Header" = "'method.response.header.X-Some-Other-Header'",
+    # "method.response.header.X-Some-Header" = "'method.response.header.X-Some-Other-Header'",
   }
 
   response_templates = {
-    "application/xml" = <<EOF
-#set($inputRoot = $input.path('$'))
-<?xml version="1.0" encoding="UTF-8"?>
-<message>
-    $inputRoot.body
-</message>
-EOF
+    "application/json" = ""
+#     "application/xml" = <<EOF
+# #set($inputRoot = $input.path('$'))
+# <?xml version="1.0" encoding="UTF-8"?>
+# <message>
+#     $inputRoot.body
+# </message>
+# EOF
 }
 
   rest_api_id = aws_api_gateway_rest_api.rest-api-acme-shoes.id
@@ -186,17 +195,18 @@ EOF
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_integration_response" "api-gateway-integration-response-order-id" {
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
-    "method.response.header.Access-Control-Allow-Methods" = "'GET,POST'",
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-  }
-
-  response_templates = {}
-
   rest_api_id = aws_api_gateway_rest_api.rest-api-acme-shoes.id
   resource_id = aws_api_gateway_resource.api-gateway-resource-order-id.id
   http_method = aws_api_gateway_method.api-gateway-method-order-id.http_method
   status_code = aws_api_gateway_method_response.api-gateway-method-response-200-order-id.status_code
+  response_parameters = {
+    # "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+    # "method.response.header.Access-Control-Allow-Methods" = "'GET,POST'",
+    # "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
+  response_templates  = {
+    "application/json" = ""
+  }
+
 }
 #-----------------------------------------------------------------------------

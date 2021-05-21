@@ -17,7 +17,7 @@ resource "aws_api_gateway_rest_api" "rest-api-acme-shoes" {
 }
 # #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_domain_name" "api-gateway-domain-name" {
-  domain_name              = "${local.default_name}-${var.api_name}.transport-for-greater-manchester.com"
+  domain_name              = "${local.default_name}.transport-for-greater-manchester.com"
   regional_certificate_arn = aws_acm_certificate_validation.acm-certificate-validation.certificate_arn
   #TLS_1_0 and TLS_1_2
   security_policy          = "TLS_1_2"
@@ -44,8 +44,8 @@ resource "aws_route53_record" "route53-record" {
 
   alias {
     evaluate_target_health = true
-    name                   = aws_api_gateway_domain_name.api-gateway-domain-name.cloudfront_domain_name
-    zone_id                = aws_api_gateway_domain_name.api-gateway-domain-name.cloudfront_zone_id
+    name                   = aws_api_gateway_domain_name.api-gateway-domain-name.regional_domain_name
+    zone_id                = aws_api_gateway_domain_name.api-gateway-domain-name.regional_zone_id
   }
 }
 #------------------------------------------------------------------------------------------------------------
