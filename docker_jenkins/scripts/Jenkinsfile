@@ -1,0 +1,56 @@
+#!/usr/bin/env groovy
+
+pipeline{
+    agent any 
+    environment{
+        NEW_VERSION = "${TAG_NAME}"
+        SERVER_CREDENTAILS = credentials('server_credential')
+    }
+    stages{
+        stage("CHECKOUT"){
+            steps{
+                echo "========executing Checkout stage========"
+            }
+
+        }
+        stage("BUILD"){
+            steps{
+                echo "========executing Build stage========"
+                echo $NEW_VERSION
+            }
+
+        }
+
+        stage("TEST"){
+            when{
+                expression {
+                    GIT_BRANCH == "staging" || GIT_BRANCH == "dev"
+                }
+            }
+            steps{
+                echo "========executing Test stage========"
+                echo "testing new version ${NEW_VARSION}"
+            }
+
+        }
+
+        stage("DEPLOY"){
+            steps{
+                echo "========executing Deploy stage========"
+            }
+
+        }
+    }
+
+}
+
+// pipeline {
+//     agent { docker { image 'golang' } }
+//     stages {
+//         stage('build') {
+//             steps {
+//                 sh 'go version'
+//             }
+//         }
+//     }
+// }

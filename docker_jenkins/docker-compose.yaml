@@ -1,0 +1,38 @@
+version: '3.4'
+services:
+  jenkins:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    # image: jenkinsci/blueocean:latest
+    privileged: true
+    user: root
+    hostname: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+
+    volumes:
+      - ./data:/var/jenkins_home
+      - ./scripts:/var/jenkins_home/init.groovy.d
+      #- ./scripts/executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
+
+    # cpus: 1
+    # cpu_percent: 100
+    # mem_limit: 512m
+    # mem_reservation: 100m
+    # deploy:
+    # resources:
+    # limits:
+    # #A strict upper limit to the amount of memory made available to a container.
+    #   memory: 300m
+    # reservations:
+    # #set as the bare minimum amount of memory that an application needs to run properly
+    #   memory: 100m
+
+
+#docker run -d --name jenkins -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+#mount volumen
+#docker run -d -v "data:/var/jenkins_home" --name jenkins -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+# Get the initial admin password
+# docker exec docker_jenkins_jenkins_1 cat /var/jenkins_home/secrets/initialAdminPassword
