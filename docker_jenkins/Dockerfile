@@ -5,6 +5,8 @@ ARG go_version=1.16.5
 RUN /usr/local/bin/install-plugins.sh matrix-auth ansicolor greenballs build-pipeline-plugin git-parameter workflow-basic-steps pipeline-model-definition pipeline-stage-view
 # Plugins for pipelines and connectors
 RUN /usr/local/bin/install-plugins.sh build-timeout build-pipeline-plugin simple-theme-plugin job-dsl docker-plugin slack timestamper ws-cleanup Office-365-Connector 
+# AWS plugins
+RUN /usr/local/bin/install-plugins.sh aws-codepipeline aws-global-configuration aws-lambda amazon-ecs
 # Pluhins for automation tools and K8S
 RUN /usr/local/bin/install-plugins.sh kubernetes groovy golang credentials aws-credentials configuration-as-code configuration-as-code-groovy hashicorp-vault-plugin
 #Jenkins OS level package dependancies
@@ -14,6 +16,12 @@ RUN apk add jq groff zip
 #RUN curl -s get.sdkman.io | bash
 #RUN source "/root/.sdkman/bin/sdkman-init.sh"
 #RUN sdk install groovy
+#install aws cli and cleanup
+RUN cd /tmp 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
+RUN rm -rf aws awscliv2.zip
 WORKDIR /tmp/
 RUN wget https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-sdk-${groovy_version}.zip
 RUN unzip -d /usr/local/ apache-groovy-sdk-${groovy_version}.zip
