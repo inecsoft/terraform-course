@@ -184,13 +184,13 @@ git push
 
 ### __Working with local version of the module__
 
-module "staging_vpc" {  
-    #tag to be uppded to 1.4.20 once prod migration is complete"  
-    source = "../../terraform-modules/template"
-    #source                   = "github.com/inecsoft/terraform-modules.git//template?ref=branchname"
+module "staging_vpc" {  
+    #tag to be uppded to 1.4.20 once prod migration is complete"  
+    source = "../../terraform-modules/template"
+    #source                   = "github.com/inecsoft/terraform-modules.git//template?ref=branchname"
 
 ```
-terraform get --update terraform plan
+terraform get --update terraform plan
 terraform apply -lock-timeout=120m
 ```
 ***
@@ -204,14 +204,14 @@ pre-commit --version
 ```
 vim ~/.pre-commit-config.yaml
 repos:
-- repo: git://github.com/antonbabenko/pre-commit-terraform
-  rev: v1.45.0
-  hooks:
-    - id: terraform_fmt
-    - id: terraform_validate
-    - id: terraform_tflint
-    #- id: terraform_tfsec
-    - id: terraform_docs
+- repo: git://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.45.0
+  hooks:
+    - id: terraform_fmt
+    - id: terraform_validate
+    - id: terraform_tflint
+    #- id: terraform_tfsec
+    - id: terraform_docs
 ```
 
 ```
