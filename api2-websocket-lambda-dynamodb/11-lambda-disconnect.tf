@@ -1,24 +1,24 @@
-data archive_file lambda-disconnect {
-  type        = "zip"
+data "archive_file" "lambda-disconnect" {
+  type = "zip"
   #source_file = "connect/app.py"
-  source_dir = "disconnect"
+  source_dir  = "disconnect"
   output_path = "disconnect.zip"
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function-disconnect" {
   function_name = "${local.default_name}-lambda-api-disconnect"
-    
+
   s3_bucket = aws_s3_bucket.s3-lambda-content-bucket-disconnect.id
-  
-  s3_key        = "${local.app_version}/disconnect.zip"
-  handler       = "disconnect.lambda_handler"
-  runtime       = "python3.8"
+
+  s3_key  = "${local.app_version}/disconnect.zip"
+  handler = "disconnect.lambda_handler"
+  runtime = "python3.8"
 
   role = aws_iam_role.lambda-exec-disconnect.arn
-  
+
   environment {
     variables = {
-      dynamodb_table_id  = aws_dynamodb_table.dynamodb-table.id
+      dynamodb_table_id = aws_dynamodb_table.dynamodb-table.id
     }
   }
 
@@ -26,7 +26,7 @@ resource "aws_lambda_function" "lambda-function-disconnect" {
 
   vpc_config {
     # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
-    subnet_ids         = module.vpc.public_subnets 
+    subnet_ids         = module.vpc.public_subnets
     security_group_ids = [aws_security_group.sg-lambda.id]
   }
 
@@ -70,9 +70,9 @@ data "aws_iam_policy" "iam-role-policy-lambda-disconnect-vpc" {
 resource "aws_iam_policy_attachment" "iam-role-policy-lambda-disconnect-attach" {
   name       = "${local.default_name}-iam-role-policy-lambda-disconnect-attach"
   users      = []
-  roles      = [ aws_iam_role.lambda-exec-disconnect.name ]
+  roles      = [aws_iam_role.lambda-exec-disconnect.name]
   groups     = []
-  policy_arn =  aws_iam_policy.iam-lambda-disconnect-logging.arn 
+  policy_arn = aws_iam_policy.iam-lambda-disconnect-logging.arn
 }
 #----------------------------------------------------------------------------------------
 resource "aws_iam_policy" "iam-lambda-disconnect-logging" {
@@ -124,10 +124,10 @@ resource "aws_lambda_permission" "apigw-disconnect" {
 resource "aws_s3_bucket" "s3-lambda-content-bucket-disconnect" {
   bucket = "${local.default_name}-lambda-content-bucket-disconnect"
   acl    = "private"
-  
+
   #force destroy for not prouction env
   force_destroy = true
-  
+
   versioning {
     enabled = true
   }
@@ -144,7 +144,7 @@ resource "aws_s3_bucket" "s3-lambda-content-bucket-disconnect" {
 #-----------------------------------------------------------------------
 output "bucket-name-disconnect" {
   #for_each = toset(var.lambda-name)
-  value =  aws_s3_bucket.s3-lambda-content-bucket-disconnect.id
+  value = aws_s3_bucket.s3-lambda-content-bucket-disconnect.id
 }
 #-----------------------------------------------------------------------
 #echo 'formatdate("YYYYMMDDHHmmss", timestamp())'| terraform console
@@ -156,7 +156,7 @@ resource "aws_s3_bucket_object" "s3-lambda-content-bucket-object-disconnect" {
   #source = "web/index.html"
   source       = data.archive_file.lambda-disconnect.output_path
   content_type = "application/zip"
- 
+
   #Encrypting with KMS Key
   #kms_key_id = aws_kms_key.key.arn
 

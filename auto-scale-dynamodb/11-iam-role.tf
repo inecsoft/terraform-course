@@ -21,7 +21,7 @@ POLICY
 resource "aws_iam_policy" "iam-role-policy-dynamodb" {
   name        = "${local.default_name}-iam-role-policy-dynamodb"
   description = "iam-role-policy-dynamodb"
-  policy = <<EOF
+  policy      = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -56,7 +56,7 @@ EOF
 resource "aws_iam_policy_attachment" "iam-role-policy-dynamodb-attach" {
   name       = "${local.default_name}-iam-role-policy-dynamodb-attach"
   users      = []
-  roles      = [ aws_iam_role.iam-role-dynamodb.name ]
+  roles      = [aws_iam_role.iam-role-dynamodb.name]
   groups     = []
   policy_arn = aws_iam_policy.iam-role-policy-dynamodb.arn
 }

@@ -12,11 +12,11 @@ resource "aws_apigatewayv2_api" "apigatewayv2-api" {
 #-------------------------------------------------------------------------------------------------------------------
 #[for i in toset([ 1,2,3 ]) : format("$%s",i)]
 resource "aws_apigatewayv2_route" "apigatewayv2-route-connect" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "$connect"
-  authorization_type  = "CUSTOM"
-  authorizer_id       = aws_apigatewayv2_authorizer.apigatewayv2-authorizer.id
-  target              = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration-connect.id}"
+  api_id             = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key          = "$connect"
+  authorization_type = "CUSTOM"
+  authorizer_id      = aws_apigatewayv2_authorizer.apigatewayv2-authorizer.id
+  target             = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration-connect.id}"
 }
 #-------------------------------------------------------------------
 # resource "aws_apigatewayv2_route" "apigatewayv2-route-auth" {
@@ -30,88 +30,88 @@ resource "aws_apigatewayv2_route" "apigatewayv2-route-connect" {
 
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_route" "apigatewayv2-route-disconnect" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "$disconnect"
-  authorization_type  = "NONE"
-  target              = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration-disconnect.id}"
+  api_id             = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key          = "$disconnect"
+  authorization_type = "NONE"
+  target             = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration-disconnect.id}"
 }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_route" "apigatewayv2-route-default" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "$default"
-  authorization_type  = "NONE"
-  target              = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration-default.id}"
+  api_id             = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key          = "$default"
+  authorization_type = "NONE"
+  target             = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration-default.id}"
 }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_route" "apigatewayv2-route-get" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "get"
-  authorization_type  = "NONE"
-  target              = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration-auth.id}"
+  api_id             = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key          = "get"
+  authorization_type = "NONE"
+  target             = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration-auth.id}"
 }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_integration" "apigatewayv2-integration-connect" {
-  api_id                    = aws_apigatewayv2_api.apigatewayv2-api.id
-  description               = "Lambda integration with api websocket"
-  integration_type          = "AWS_PROXY"
-  
+  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
+  description      = "Lambda integration with api websocket"
+  integration_type = "AWS_PROXY"
+
   #The type of the network connection to the integration endpoint.
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
-  
-  integration_method        = "POST"
+
+  integration_method = "POST"
   #The URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXY
-  integration_uri           = aws_lambda_function.lambda-function-connect.invoke_arn
-  passthrough_behavior      = "WHEN_NO_MATCH"
-  timeout_milliseconds      = 29000
+  integration_uri      = aws_lambda_function.lambda-function-connect.invoke_arn
+  passthrough_behavior = "WHEN_NO_MATCH"
+  timeout_milliseconds = 29000
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_apigatewayv2_integration" "apigatewayv2-integration-disconnect" {
-  api_id                    = aws_apigatewayv2_api.apigatewayv2-api.id
-  description               = "Lambda integration with api websocket"
-  integration_type          = "AWS_PROXY"
-  
+  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
+  description      = "Lambda integration with api websocket"
+  integration_type = "AWS_PROXY"
+
   #The type of the network connection to the integration endpoint.
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
-  
-  integration_method        = "POST"
+
+  integration_method = "POST"
   #The URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXY
-  integration_uri           = aws_lambda_function.lambda-function-disconnect.invoke_arn
-  passthrough_behavior      = "WHEN_NO_MATCH"
-  timeout_milliseconds      = 29000
+  integration_uri      = aws_lambda_function.lambda-function-disconnect.invoke_arn
+  passthrough_behavior = "WHEN_NO_MATCH"
+  timeout_milliseconds = 29000
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_apigatewayv2_integration" "apigatewayv2-integration-default" {
-  api_id                    = aws_apigatewayv2_api.apigatewayv2-api.id
-  description               = "Lambda integration with api websocket"
-  integration_type          = "AWS_PROXY"
-  
+  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
+  description      = "Lambda integration with api websocket"
+  integration_type = "AWS_PROXY"
+
   #The type of the network connection to the integration endpoint.
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
-  
-  integration_method        = "POST"
+
+  integration_method = "POST"
   #The URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXY
-  integration_uri           = aws_lambda_function.lambda-function-default.invoke_arn
-  passthrough_behavior      = "WHEN_NO_MATCH"
-  timeout_milliseconds      = 29000
+  integration_uri      = aws_lambda_function.lambda-function-default.invoke_arn
+  passthrough_behavior = "WHEN_NO_MATCH"
+  timeout_milliseconds = 29000
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_apigatewayv2_integration" "apigatewayv2-integration-auth" {
-  api_id                    = aws_apigatewayv2_api.apigatewayv2-api.id
-  description               = "Lambda integration with api websocket"
-  integration_type          = "AWS_PROXY"
-  
+  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
+  description      = "Lambda integration with api websocket"
+  integration_type = "AWS_PROXY"
+
   #The type of the network connection to the integration endpoint.
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
-  
-  integration_method        = "POST"
+
+  integration_method = "POST"
   #The URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXY
-  integration_uri           = aws_lambda_function.lambda-function-auth.invoke_arn
-  passthrough_behavior      = "WHEN_NO_MATCH"
-  timeout_milliseconds      = 29000
+  integration_uri      = aws_lambda_function.lambda-function-auth.invoke_arn
+  passthrough_behavior = "WHEN_NO_MATCH"
+  timeout_milliseconds = 29000
 }
 #-------------------------------------------------------------------------------------------------------------------
 #There are two types of Lambda authorizers:
@@ -130,26 +130,26 @@ resource "aws_apigatewayv2_authorizer" "apigatewayv2-authorizer" {
   identity_sources = ["route.request.header.Auth"]
 
   #identity_sources = ["method.request.header.Authorization"]
-  
+
 }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_stage" "apigatewayv2-stage-test" {
-  name   = "test"
-  api_id = aws_apigatewayv2_api.apigatewayv2-api.id
+  name        = "test"
+  api_id      = aws_apigatewayv2_api.apigatewayv2-api.id
   description = "stage for test"
-  
+
   tags = {
-    Name =  "${local.default_name}-test-stage"
+    Name = "${local.default_name}-test-stage"
   }
 }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_stage" "apigatewayv2-stage-prod" {
-  name   = "prod"
-  api_id = aws_apigatewayv2_api.apigatewayv2-api.id
+  name        = "prod"
+  api_id      = aws_apigatewayv2_api.apigatewayv2-api.id
   description = "stage for production"
-  
+
   tags = {
-    Name =  "${local.default_name}-prod-stage"
+    Name = "${local.default_name}-prod-stage"
   }
 }
 #-------------------------------------------------------------------
@@ -179,7 +179,7 @@ resource "aws_apigatewayv2_deployment" "apigatewayv2-deployment-get" {
 #-------------------------------------------------------------------
 output "api-endpoint" {
   description = "The URI of the API"
-  value       = aws_apigatewayv2_api.apigatewayv2-api.api_endpoint 
+  value       = aws_apigatewayv2_api.apigatewayv2-api.api_endpoint
 }
 #-------------------------------------------------------------------
 output "api-endpoint-stage-test-invoke-url" {

@@ -20,7 +20,7 @@ resource "aws_security_group" "dynamodb-sg" {
     }
 
     tags {
-        Name = = "${local.default_name}-dynamodb-sg"
+        Name = "${local.default_name}-dynamodb-sg"
     }
 }
 #-------------------------------------------------------------------

@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "s3-bucket-dynamodb-backup" {
   }
 
   tags = {
-    Name        = "${local.default_name}-s3-bucket-dynamodb-backup"
+    Name = "${local.default_name}-s3-bucket-dynamodb-backup"
   }
 }
 #-------------------------------------------------------------------------------------------
