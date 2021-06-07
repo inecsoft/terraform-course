@@ -194,3 +194,27 @@ terraform get --update terraform plan
 terraform apply -lock-timeout=120m
 ```
 ***
+### __Precommit tool__
+```
+curl https://pre-commit.com/install-local.py | python -
+export PATH=$PATH:~/bin
+source ~/.bashrc 
+pre-commit --version
+```
+```
+vim ~/.pre-commit-config.yaml
+repos:
+- repo: git://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.45.0
+  hooks:
+    - id: terraform_fmt
+    - id: terraform_validate
+    - id: terraform_tflint
+    #- id: terraform_tfsec
+    - id: terraform_docs
+```
+
+```
+pre-commit install
+```
+***
