@@ -213,7 +213,7 @@ repos:
     #- id: terraform_tfsec
     - id: terraform_docs
 ```
-
+### __Install the git hook scripts__
 ```
 pre-commit install
 ```

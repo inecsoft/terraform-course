@@ -21,3 +21,14 @@ wget https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-g
 unzip -d /usr/local/ apache-groovy-sdk-${groovy_version}.zip
 echo "export GROOVY_HOME=/usr/local/groovy-${groovy_version}" >>~/.bashrc
 echo "export PATH=$PATH:$GROOVY_HOME/bin" >>~/.bashrc
+
+***
+git@github.com:inecsoft/Jenkins-shared-libs.git
+#!/usr/bin/env groovy
+
+@Library('Jenkins-shared-libs')_
+
+terraformPipeline {
+   environments = ['dev', 'staging', 'prod']
+}
+***

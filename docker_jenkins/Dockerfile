@@ -1,6 +1,7 @@
 FROM jenkinsci/blueocean:latest AS base
 ARG groovy_version=3.0.8
 ARG go_version=1.16.5
+ARG apache_maven_version=3.8.1
 # Plugins for better UX (not mandatory)
 RUN /usr/local/bin/install-plugins.sh matrix-auth ansicolor greenballs build-pipeline-plugin git-parameter workflow-basic-steps pipeline-model-definition pipeline-stage-view
 # Plugins for pipelines and connectors
@@ -27,10 +28,21 @@ RUN wget https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apac
 RUN unzip -d /usr/local/ apache-groovy-sdk-${groovy_version}.zip
 ENV GROOVY_HOME /usr/local/groovy-${groovy_version}
 ENV PATH $PATH:$GROOVY_HOME/bin/
+RUN rm -rf apache-groovy-sdk-${groovy_version}.zip
+
+#go installation
 RUN wget https://golang.org/dl/go${go_version}.linux-amd64.tar.gz
-RUN rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.5.linux-amd64.tar.gz
+RUN rm -rf /usr/local/go && tar -C /usr/local -xzf go${go_version}.linux-amd64.tar.gz
 ENV GO_HOME /usr/local/go/bin
 ENV PATH $PATH:$GO_HOME
+RUN rm -rf go${go_version}.linux-amd64.tar.gz
+
+#maven installation
+RUN wget https://www.mirrorservice.org/sites/ftp.apache.org/maven/maven-3/${apache_maven_version}/binaries/apache-maven-${apache_maven_version}-bin.tar.gz
+RUN rm -rf /usr/local/apache-maven-${apache_maven_version} && tar -C /usr/local -xzf apache-maven-${apache_maven_version}-bin.tar.gz
+ENV MAVEN_HOME /usr/local/apache-maven-${apache_maven_version}/bin
+ENV PATH $PATH:$MAVEN_HOME
+RUN rm -rf apache-maven-${apache_maven_version}-bin.tar.gz
 
 FROM base
 WORKDIR /var/jenkins_home
