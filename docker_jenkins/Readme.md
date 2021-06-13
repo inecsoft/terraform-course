@@ -23,6 +23,12 @@ echo "export GROOVY_HOME=/usr/local/groovy-${groovy_version}" >>~/.bashrc
 echo "export PATH=$PATH:$GROOVY_HOME/bin" >>~/.bashrc
 
 ***
+### __Build the image__
+```
+docker-compose up --build -d
+```
+
+***
 git@github.com:inecsoft/Jenkins-shared-libs.git
 #!/usr/bin/env groovy
 
