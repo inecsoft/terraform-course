@@ -1069,7 +1069,7 @@ spec:
 kubectl create -f nginx-nfs.yml
 ```
 ### __Expanding live disk in aws__
-  #### __How to find the volumes used in elk with the namespace
+  #### __How to find the volumes used in elk with the namespace__
   ```
   kubectl -n elk get pvc kubectl -n elk describe pv pvc-01654715-bd5c-4e01-9e9a-7534a5fcad6d
   ```
@@ -1083,7 +1083,8 @@ kubectl create -f nginx-nfs.yml
   ```
   #### __How to find if the volume was updated__
   ```
-  kubectl -n elk describe pod elk-elasticsearch-data-1 kubectl -n elk get pv | grep data-elk-elasticsearch-data 
+  kubectl -n elk describe pod elk-elasticsearch-data-1
+  kubectl -n elk get pv | grep data-elk-elasticsearch-data 
   ```
   #### __How to access the container__
   ```
