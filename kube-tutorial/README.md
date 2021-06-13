@@ -1068,7 +1068,28 @@ spec:
 ```
 kubectl create -f nginx-nfs.yml
 ```
-
+### __Expanding live disk in aws__
+  #### __How to find the volumes used in elk with the namespace
+  ```
+  kubectl -n elk get pvc kubectl -n elk describe pv pvc-01654715-bd5c-4e01-9e9a-7534a5fcad6d
+  ```
+  #### __How to find out if you could update the storage automatically look for allowVolumeExpansion= true__ 
+  ```
+  kubectl get sc ebs-gp2-plain-ext-sc -o yaml
+  ```
+  #### __How to resize the volume in yellow is highlighted an example below__
+  ```
+  kubectl -n elk edit pvc data-elk-elasticsearch-data-1
+  ```
+  #### __How to find if the volume was updated__
+  ```
+  kubectl -n elk describe pod elk-elasticsearch-data-1 kubectl -n elk get pv | grep data-elk-elasticsearch-data 
+  ```
+  #### __How to access the container__
+  ```
+  kubectl -n elk get podkubectl -n elk exec -it elk-elasticsearch-data-0 -- sh
+  df -h
+  ```
 ### __Running NFS service on Swarm Mode__
 ```
 docker service create --mount type=volume,volume-opt=o=addr=<source-host which is master node>, \
