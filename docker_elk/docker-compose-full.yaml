@@ -1,0 +1,127 @@
+version: '3.4'
+
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    container_name: es01
+    dns:
+      - es01
+      - localhost
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ELASTIC_PASSWORD=changeme123"
+      - MAX_MAP_COUNT=262144
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elk01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elastic
+
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    container_name: es02
+    dns:
+      - es02
+      - localhost
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ELASTIC_PASSWORD=changeme123"
+      - MAX_MAP_COUNT=262144
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elk02:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    container_name: kibana
+    # privileged: true
+    # user: root
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200"]'
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - elastic
+
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:7.13.2
+  #   container_name: logstash
+  #   # privileged: true
+  #   # user: root
+  #   ports:
+  #     - "5044:5044"
+  #     - "5000:5000/tcp"
+  #     - "5000:5000/udp"
+  #     - "9600:9600"
+  #   environment:
+  #     ELASTICSEARCH_URL: http://es01:9200
+  #     ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200"]'
+  #     LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+  #   depends_on:
+  #     - es01
+  #     - es02
+  #   volumes:
+  #     - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+  #     - ./logstash/pipeline:/usr/share/logstash/pipeline
+  #   networks:
+  #     - elastic
+
+
+volumes:
+  elk01:
+    driver: local
+  elk02:
+    driver: local
+  kibana:
+    driver: local
+  logstash:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge
+
+    # cpus: 1
+    # cpu_percent: 100
+    # mem_limit: 512m
+    # mem_reservation: 100m
+    # deploy:
+    # resources:
+    # limits:
+    # #A strict upper limit to the amount of memory made available to a container.
+    #   memory: 300m
+    # reservations:
+    # #set as the bare minimum amount of memory that an application needs to run properly
+    #   memory: 100m
+
+
+#docker run -d --name jenkins -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+#mount volumen
+#docker run -d -v "data:/var/jenkins_home" --name jenkins -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+# Get the initial admin password
+# docker exec docker_jenkins_jenkins_1 cat /var/jenkins_home/secrets/initialAdminPassword
+

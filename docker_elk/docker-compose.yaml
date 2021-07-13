@@ -1,0 +1,140 @@
+version: '3.4'
+
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    container_name: es01
+    dns:
+      - es01
+      - localhost
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ELASTICSEARCH_USERNAME=elastic"
+      - "ELASTICSEARCH_PASSWORD=changeme123"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elk01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    container_name: es02
+    dns:
+      - es02
+      - localhost
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ELASTICSEARCH_USERNAME=elastic"
+      - "ELASTICSEARCH_PASSWORD=changeme123"
+    # command: su -c "metricbeat modules enable elasticsearch-xpack"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elk02:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    container_name: kibana
+    dns:
+      - kibana
+      - localhost
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200"]'
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - elastic
+    
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.13.2
+    container_name: logstash
+    dns:
+      - logstash
+      - localhost
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200"]'
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - es01
+      - es02
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    networks:
+      - elastic
+
+  metricbeat:
+    # image: docker.elastic.co/beats/metricbeat:7.13.2
+    build: 
+      context: .
+      dockerfile: ./metricbeat/Dockerfile
+    container_name: metricbeat
+    dns:
+      - metricbeat
+      - es01
+      - es02
+      - localhost
+    ports:
+      - 5066
+    environment:
+      - setup.kibana.host=["es01:9200", "kibana:5601"]
+      - output.elasticsearch.hosts=["es01:9200"]
+      - ELASTICSEARCH_URL=http://es01:9200
+      - ELASTICSEARCH_HOSTS=["http://es01:9200","http://es02:9200"]
+      - LS_JAVA_OPTS="-Xmx256m -Xms256m"
+    depends_on:
+      - es01
+      - es02
+    # user: root
+    volumes:
+      # - ./metricbeat/config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - "/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro"
+      - "/proc:/hostfs/proc:ro"
+      - "/:/hostfs:ro"
+    networks:
+      - elastic
+
+volumes:
+  elk01:
+    driver: local
+  elk02:
+    driver: local
+  kibana:
+    driver: local
+  logstash:
+    driver: local
+  metricbeat:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge
