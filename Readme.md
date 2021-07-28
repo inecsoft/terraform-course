@@ -219,7 +219,7 @@ pre-commit install
 ```
 ### __Run hooks__
 ```
-pre-commit run
+pre-commit run -a
 ```
 
 ***
