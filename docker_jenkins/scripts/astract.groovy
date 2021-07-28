@@ -1,4 +1,4 @@
-#!/usr/local/groovy-3.0.8/bin/groovy
+#!/home/inecsoft/.sdkman/candidates/groovy/current/bin/groovy
 
 abstract class User{
     String lastName;

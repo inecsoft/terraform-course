@@ -78,6 +78,11 @@ echo $?
   * twistlock
  
 ***
+### __What is SAST and DAST__
+SAST and DAST are application security testing methodologies used to find security vulnerabilities that can make an application susceptible to attack. Static application security testing (SAST) is a white box method of testing. It examines the code to find software flaws and weaknesses such as SQL injection and others listed in the OWASP Top 10. Dynamic application security testing (DAST) is a black box testing method that examines an application as it’s running to find vulnerabilities that an attacker could exploit.
+SAST should be performed early and often against all files containing source code. DAST should be performed on a running application in an environment similar to production. So the best approach is to include both SAST and DAST in your application security testing program.
+
+***
 ### __DAST tools__
   * zap
   * burp
