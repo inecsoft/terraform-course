@@ -217,4 +217,9 @@ repos:
 ```
 pre-commit install
 ```
+### __Run hooks__
+```
+pre-commit run
+```
+
 ***
