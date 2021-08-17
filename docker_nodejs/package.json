@@ -1,0 +1,13 @@
+{
+  "name": "docker_nodejs",
+  "version": "1.0.0",
+  "description": "docker app sample",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "author": "",
+  "license": "ISC"
+}
