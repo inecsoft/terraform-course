@@ -126,15 +126,15 @@ resource "aws_route_table_association" "main-public-3-a" {
 # VPC setup for NAT
 #---------------------------------------------------------------------------
 resource "aws_route_table" "main_route_table_private" {
-    vpc_id = "${aws_vpc.main.id}"
-    route {
-        cidr_block = "0.0.0.0/0"
-        nat_gateway_id = "${aws_nat_gateway.nat_gw.id}"
-    }
+  vpc_id = aws_vpc.main.id
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw.id
+  }
 
-    tags = {
-        Name = "my_vpc_route_table_nat_private"
-    }
+  tags = {
+    Name = "my_vpc_route_table_nat_private"
+  }
 }
 #---------------------------------------------------------------
 #create the route table association for the nat gw on the vpc and the private subnets

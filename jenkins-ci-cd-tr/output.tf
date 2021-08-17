@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------
 output "YourIPRange" {
- value  = local.workstation-external-cidr 
+  value = local.workstation-external-cidr
 }
 #-----------------------------------------------------------------
 output "account_id" {

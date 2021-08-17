@@ -51,12 +51,12 @@ variable "instance_type" {
 #---------------------------------------------------------
 variable "credentials" {
   default = {
-    username = "admin"
-    password = "admin123"
-    engine   = "mysql"
-    host     = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
-    port     = 3306
-    dbname   = "proxydb"
+    username             = "admin"
+    password             = "admin123"
+    engine               = "mysql"
+    host                 = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
+    port                 = 3306
+    dbname               = "proxydb"
     dbInstanceIdentifier = "dbproxy"
   }
 
@@ -64,7 +64,7 @@ variable "credentials" {
 }
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length = 20 
+  length  = 20
   special = true
   #override_special = "_@\/ "
 }
@@ -81,15 +81,15 @@ resource "random_string" "random" {
 # }
 #----------------------------------------------------------------------------
 variable "MYSQL_USER" {
-      default = "codepipeline"
+  default = "codepipeline"
 }
 #----------------------------------------------------------------------------
 variable "MYSQL_PASSWORD" {
-     default = "JO3a2NIXapLl0zG76AE41o2e4jdqB66oinmegVPL1y5bRvo=" 
+  default = "JO3a2NIXapLl0zG76AE41o2e4jdqB66oinmegVPL1y5bRvo="
 }
 #----------------------------------------------------------------------------
 variable "MYSQL_DATABASE" {
-      default = "codepipeline"
+  default = "codepipeline"
 }
 #----------------------------------------------------------------------------
 variable "environment" {

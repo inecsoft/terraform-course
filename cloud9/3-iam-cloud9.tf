@@ -19,9 +19,9 @@ resource "aws_cloud9_environment_ec2" "cloud9-environment-ec2" {
   name          = "${local.default_name}-cloud9-team-colaboration"
   description   = "Testing the cloud9 shared environment"
   #echo 'slice(["a", "b", "c", "d"], 0, 1)' | terraform console
-  subnet_id     = slice(data.aws_subnet_ids.subnet-ids.ids, 0, 1)
+  subnet_id = slice(data.aws_subnet_ids.subnet-ids.ids, 0, 1)
 
-  tags          = {
+  tags = {
     Name = "${local.default_name}-cloud9-team-colaboration"
   }
 }

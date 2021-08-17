@@ -24,39 +24,39 @@ resource "aws_iot_thing_principal_attachment" "iot-principal-attach" {
 # Output certificate to /cert/{iot-name} folder
 #--------------------------------------------------------------------------------------
 resource "local_file" "iot-cert-pem" {
-  for_each    = toset(var.iot-name)
-  
-  file_permission      = "0744"
-  content     = aws_iot_certificate.iot-cert[each.key].certificate_pem
-  filename    = "${path.module}/certs/${each.key}/${each.key}.pem.crt"
+  for_each = toset(var.iot-name)
+
+  file_permission = "0744"
+  content         = aws_iot_certificate.iot-cert[each.key].certificate_pem
+  filename        = "${path.module}/certs/${each.key}/${each.key}.pem.crt"
 }
 #--------------------------------------------------------------------------------------
 # Output private key to /cert/{iot-name} folder
 #--------------------------------------------------------------------------------------
 resource "local_file" "iot-private-key" {
-  for_each    = toset(var.iot-name)
-  
-  file_permission      = "0744"
-  content     = aws_iot_certificate.iot-cert[each.key].private_key
-  filename    = "${path.module}/certs/${each.key}/${each.key}.private.key"
+  for_each = toset(var.iot-name)
+
+  file_permission = "0744"
+  content         = aws_iot_certificate.iot-cert[each.key].private_key
+  filename        = "${path.module}/certs/${each.key}/${each.key}.private.key"
 }
 #--------------------------------------------------------------------------------------
 # Output public key to /cert/{iot-name} folder
 #--------------------------------------------------------------------------------------
 resource "local_file" "iot-public-key" {
-  for_each    = toset(var.iot-name)
-  
-  file_permission      = "0644"
-  content     = aws_iot_certificate.iot-cert[each.key].public_key
-  filename    = "${path.module}/certs/${each.key}/${each.key}.public.key"
+  for_each = toset(var.iot-name)
+
+  file_permission = "0644"
+  content         = aws_iot_certificate.iot-cert[each.key].public_key
+  filename        = "${path.module}/certs/${each.key}/${each.key}.public.key"
 }
 #--------------------------------------------------------------------------------------
 resource "local_file" "iot-startup" {
-  depends_on = [ data.aws_iot_endpoint.endpoint ]
-  for_each    = toset(var.iot-name)
-  
-  file_permission      = "0711"
-  content     = <<EOF
+  depends_on = [data.aws_iot_endpoint.endpoint]
+  for_each   = toset(var.iot-name)
+
+  file_permission = "0711"
+  content         = <<EOF
 # stop script on error
 set -e
 
@@ -90,6 +90,6 @@ printf "\nRunning pub/sub sample application...\n"
 python aws-iot-device-sdk-python/samples/basicPubSub/basicPubSub.py -e "${data.aws_iot_endpoint.endpoint.endpoint_address}" -r root-CA.crt -c "${each.key}.pem.crt" -k "${each.key}.private.key"
 EOF
 
-  filename    = "${path.module}/certs/${each.key}/${each.key}.iot-startup.sh"
+  filename = "${path.module}/certs/${each.key}/${each.key}.iot-startup.sh"
 }
 #--------------------------------------------------------------------------------------

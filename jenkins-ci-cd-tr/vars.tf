@@ -40,7 +40,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "project"))}"
+  default_name = join("-", list(terraform.workspace, "project"))
 }
 #-------------------------------------------------------------------
 variable "ses_bucket" {
@@ -67,8 +67,8 @@ variable "github_organization" {
 data "aws_caller_identity" "current" {}
 #-------------------------------------------------------------------
 data "aws_route53_zone" "zone" {
-  name         = "mycmrs.com."
- # private_zone = true
+  name = "mycmrs.com."
+  # private_zone = true
 }
 #-------------------------------------------------------------------
 

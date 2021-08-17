@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "inecsoft"))}"
+  default_name = join("-", list(terraform.workspace, "inecsoft"))
 }
 #-------------------------------------------------------------------
 variable "admin-user" {

@@ -1,9 +1,9 @@
 resource "aws_kms_key" "suluq-kms-db" {
   description             = "KMS key kms-db"
   deletion_window_in_days = 30
-  is_enabled              = true 
-  enable_key_rotation     = true 
-  
+  is_enabled              = true
+  enable_key_rotation     = true
+
   policy = <<EOF
   {
     "Id": "key-consolepolicy-3",
@@ -102,9 +102,9 @@ EOF
 
 resource "aws_kms_alias" "suluq-kms-db" {
   name          = "alias/suluq-kms-db"
-  target_key_id = "${aws_kms_key.suluq-kms-db.key_id}"
+  target_key_id = aws_kms_key.suluq-kms-db.key_id
 }
 
 output "suluq-kms-db-id" {
-  value = "${aws_kms_key.suluq-kms-db.key_id}"
+  value = aws_kms_key.suluq-kms-db.key_id
 }

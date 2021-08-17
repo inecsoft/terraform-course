@@ -1,18 +1,18 @@
 #----------------------------------------------------------------------------------------
-data archive_file lambda {
-  type        = "zip"
+data "archive_file" "lambda" {
+  type = "zip"
   #source_file = "code/app.py"
-  source_dir = "code" 
+  source_dir  = "code"
   output_path = "code.zip"
 }
 #----------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function" {
-  function_name = var.FUNCTION_NAME 
+  function_name = var.FUNCTION_NAME
 
   # The bucket name as created earlier with "aws s3api create-bucket"
   s3_bucket = aws_s3_bucket.s3-lambda-content-bucket.id
   #s3_key    = "${formatdate("YYYYMMDDHHmmss", timestamp())}/code.zip"
-  s3_key    = "${local.app_version}/code.zip"
+  s3_key = "${local.app_version}/code.zip"
 
   # "main" is the filename within the zip file (main.js) and "handler"
   # is the name of the property under which the handler function was
@@ -21,7 +21,7 @@ resource "aws_lambda_function" "lambda-function" {
   runtime = "nodejs10.x"
 
   role = aws_iam_role.lambda_exec.arn
-  
+
   depends_on = [aws_s3_bucket_object.s3-lambda-content-bucket-object]
 
   tags = {

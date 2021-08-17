@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------------
 resource "aws_sns_topic" "snsNotificationTopic" {
-  name            = "${terraform.workspace}-snsNotificationTopic"
-  display_name    = "${terraform.workspace}-snsNotificationTopic"
+  name         = "${terraform.workspace}-snsNotificationTopic"
+  display_name = "${terraform.workspace}-snsNotificationTopic"
 
   tags = {
     Name = "${terraform.workspace}"
@@ -9,8 +9,8 @@ resource "aws_sns_topic" "snsNotificationTopic" {
 }
 #-------------------------------------------------------------------------------------
 resource "aws_sns_topic_policy" "snsNotificationTopic-Policy" {
-  arn =  aws_sns_topic.snsNotificationTopic.arn
-  policy          = <<POLICY
+  arn    = aws_sns_topic.snsNotificationTopic.arn
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "__default_policy_ID",
@@ -46,13 +46,13 @@ POLICY
 #-------------------------------------------------------------------------------------
 resource "aws_sns_topic_subscription" "sns-topic" {
   #provider  = "aws.sns"
-  topic_arn = aws_sns_topic.snsNotificationTopic.arn
+  topic_arn                       = aws_sns_topic.snsNotificationTopic.arn
   confirmation_timeout_in_minutes = 5
   #not supported
   #protocol  = "email"
-  protocol  = "sms"
-  endpoint  = "+447518527690"
-  raw_message_delivery = false 
+  protocol             = "sms"
+  endpoint             = "+447518527690"
+  raw_message_delivery = false
 }
 #-------------------------------------------------------------------------------
 output "sns-topic" {

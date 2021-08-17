@@ -10,7 +10,7 @@ data "template_file" "jenkins-init" {
 data "template_file" "codedeploy" {
   template = file("scripts/codedeploy.tpl")
   vars = {
-      AWS_Region = var.AWS_REGION
+    AWS_Region = var.AWS_REGION
   }
 }
 #----------------------------------------------------------------------
@@ -30,7 +30,7 @@ data "template_cloudinit_config" "cloudinit-jenkins" {
     filename     = "jenkins-cloudinit.tpl"
     content_type = "text/cloud-config"
     #content      = data.template_file.cmrs-nginx.rendered
-    content      =  file("scripts/jenkins-cloudinit.tpl")
+    content = file("scripts/jenkins-cloudinit.tpl")
   }
 
 }

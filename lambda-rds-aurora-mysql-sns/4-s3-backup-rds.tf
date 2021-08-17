@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------------------
-data archive_file s3-backup-rds {
+data "archive_file" "s3-backup-rds" {
   type        = "zip"
   source_file = "data/aurora_new_order_trigger_create.sql"
   #source_dir = "data" 
@@ -19,7 +19,7 @@ resource "aws_s3_bucket" "s3-backup-rds" {
 }
 #-------------------------------------------------------------------------------------------------------
 output "s3-backup-rds-name" {
-  value =  aws_s3_bucket.s3-backup-rds.id
+  value = aws_s3_bucket.s3-backup-rds.id
 }
 #-------------------------------------------------------------------------------------------------------
 #echo 'formatdate("YYYYMMDDHHmmss", timestamp())'| terraform console
@@ -29,9 +29,9 @@ resource "aws_s3_bucket_object" "s3-backup-rds-object" {
   bucket = aws_s3_bucket.s3-backup-rds.id
   #content    = "web/index.html"
   #source = "web/index.html"
-  source  = data.archive_file.s3-backup-rds.output_path
+  source       = data.archive_file.s3-backup-rds.output_path
   content_type = "application/zip"
- 
+
   #Encrypting with KMS Key
   #kms_key_id = aws_kms_key.key.arn
 
@@ -46,7 +46,7 @@ resource "aws_s3_bucket_object" "s3-backup-rds-object" {
 #-------------------------------------------------------------------------------------------------------
 data "aws_iam_policy_document" "iam-policy-doc-rdsToS3" {
   statement {
-    sid = "rdsToS3"
+    sid    = "rdsToS3"
     effect = "Allow"
     actions = [
       "s3:PutObject",
@@ -95,7 +95,7 @@ resource "aws_iam_role" "s3_import" {
   assume_role_policy    = data.aws_iam_policy_document.s3_import_assume.json
   force_detach_policies = true
 
-   tags = {
+  tags = {
     Name = "${local.default_name}-s3-content-bucket-object"
   }
 }

@@ -4,27 +4,27 @@
 #---------------------------------------------------------------------------------------------------------
 resource "aws_autoscaling_group" "asg" {
   #count = 3 
-  depends_on = [aws_launch_template.lt]
+  depends_on                = [aws_launch_template.lt]
   name                      = "${local.default_name}-asg"
   desired_capacity          = 1
   health_check_grace_period = 300
   #"EC2" or "ELB"
-  health_check_type         = "EC2"
+  health_check_type = "EC2"
   #launch_configuration      = aws_launch_configuration.lc.name
-  max_size                  = 4
-  min_size                  = 1
-  default_cooldown          = 300
-  enabled_metrics           = []
-  load_balancers            = []
-  
-  vpc_zone_identifier       =  module.vpc.public_subnets
+  max_size         = 4
+  min_size         = 1
+  default_cooldown = 300
+  enabled_metrics  = []
+  load_balancers   = []
 
-  force_delete              = true
+  vpc_zone_identifier = module.vpc.public_subnets
+
+  force_delete = true
   #wait_for_elb_capacity  =  1 
 
   lifecycle {
     create_before_destroy = true
-  }   
+  }
 
   mixed_instances_policy {
     launch_template {
@@ -47,121 +47,121 @@ resource "aws_autoscaling_group" "asg" {
     instances_distribution {
       on_demand_allocation_strategy = "prioritized"
       #How to allocate capacity across the Spot pools. Valid values: lowest-price, capacity-optimized.
-      spot_allocation_strategy      = "lowest-price"
-      spot_instance_pools           = 2
-      on_demand_base_capacity       = 0
+      spot_allocation_strategy = "lowest-price"
+      spot_instance_pools      = 2
+      on_demand_base_capacity  = 0
       #on-demand vs spot
       on_demand_percentage_above_base_capacity = 60
       #spot_max_price               = 0.5
     }
   }
 
-  tag  {
-    key =  "Name"
-    value =  "${local.default_name}-asg-performance-instance"
+  tag {
+    key   = "Name"
+    value = "${local.default_name}-asg-performance-instance"
     #value =  "asg-performance-instance-${count.index+1}"
-    propagate_at_launch =  true 
+    propagate_at_launch = true
   }
 
   tag {
     key                 = "${local.default_name}-CodePipeline"
     value               = "${local.default_name}-CodePipeline"
-    propagate_at_launch = true 
+    propagate_at_launch = true
   }
 }
 #---------------------------------------------------------------------------------------------------------
 resource "aws_autoscaling_policy" "asgp" {
-  name                   = "${local.default_name}-asgp"
-  scaling_adjustment     = 7
+  name               = "${local.default_name}-asgp"
+  scaling_adjustment = 7
   #ChangeInCapacity, ExactCapacity, and PercentChangeInCapacity
-  adjustment_type        = "PercentChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.asg.name
+  adjustment_type           = "PercentChangeInCapacity"
+  cooldown                  = 300
+  autoscaling_group_name    = aws_autoscaling_group.asg.name
   estimated_instance_warmup = 300
 }
 
 #---------------------------------------------------------------------------------------------------------
 # aws_launch_template.lt:
 resource "aws_launch_template" "lt" {
-    name                    = "${local.default_name}-lt"
+  name = "${local.default_name}-lt"
 
-    default_version         = 1
-    disable_api_termination = false
-    ebs_optimized           = "false"
-    
-    image_id                = data.aws_ami.amazon_linux.id
-    instance_type           = var.instance_type
-    key_name                = aws_key_pair.codecommit-key.key_name
+  default_version         = 1
+  disable_api_termination = false
+  ebs_optimized           = "false"
 
-    #a number is required
-    #latest_version          = "$Latest"
-    
-    vpc_security_group_ids    = [aws_security_group.ssh_security_group.id, aws_security_group.http_security_group.id]
-    
-    #user_data               = filebase64(data.template_file.script.rendered)
-    user_data               = filebase64("script.tpl")
+  image_id      = data.aws_ami.amazon_linux.id
+  instance_type = var.instance_type
+  key_name      = aws_key_pair.codecommit-key.key_name
 
-    #conflicts with security_group_names
-    #vpc_security_group_ids  = module.vpc.public_subnets
+  #a number is required
+  #latest_version          = "$Latest"
 
-    block_device_mappings {
-      device_name = "/dev/xvda"
+  vpc_security_group_ids = [aws_security_group.ssh_security_group.id, aws_security_group.http_security_group.id]
 
-      ebs {
-        delete_on_termination = "true"
-        iops                  = 0
-        volume_size           = 10
-        volume_type           = "gp2"
-      }
+  #user_data               = filebase64(data.template_file.script.rendered)
+  user_data = filebase64("script.tpl")
+
+  #conflicts with security_group_names
+  #vpc_security_group_ids  = module.vpc.public_subnets
+
+  block_device_mappings {
+    device_name = "/dev/xvda"
+
+    ebs {
+      delete_on_termination = "true"
+      iops                  = 0
+      volume_size           = 10
+      volume_type           = "gp2"
     }
+  }
 
-    iam_instance_profile {
-      name = aws_iam_instance_profile.EC2InstanceRoleProfile.name
+  iam_instance_profile {
+    name = aws_iam_instance_profile.EC2InstanceRoleProfile.name
+  }
+
+  instance_initiated_shutdown_behavior = "terminate"
+
+  instance_market_options {
+    market_type = "spot"
+    spot_options {
+      #Specify a Spot block of up to 360 minutes (6 hours) to prevent Spot Instance interruptions. Valid only for one-time requests. The valid values are 60, 120, 180, 240, 300, or 360 minutes. If you do not specify a value, your Spot Instance can be interrupted.
+      block_duration_minutes = 360
+      #hibernate, stop, or terminate. (Default: terminate)
+      instance_interruption_behavior = "hibernate"
+      #The maximum hourly price you're willing to pay for the Spot Instances.
+      max_price = 0.4
+      #The Spot Instance request type. Can be one-time, or persistent
+      #persistent is not applicable for ec2 auto scaling
+      spot_instance_type = "one-time"
     }
+  }
 
-    instance_initiated_shutdown_behavior = "terminate"
+  monitoring {
+    enabled = false
+  }
 
-    instance_market_options {
-      market_type  = "spot"
-      spot_options  {
-        #Specify a Spot block of up to 360 minutes (6 hours) to prevent Spot Instance interruptions. Valid only for one-time requests. The valid values are 60, 120, 180, 240, 300, or 360 minutes. If you do not specify a value, your Spot Instance can be interrupted.
-        block_duration_minutes  = 360
-        #hibernate, stop, or terminate. (Default: terminate)
-        instance_interruption_behavior =  "hibernate"
-        #The maximum hourly price you're willing to pay for the Spot Instances.
-        max_price = 0.4
-        #The Spot Instance request type. Can be one-time, or persistent
-        #persistent is not applicable for ec2 auto scaling
-        spot_instance_type =  "one-time"
-      }
-    }
+  #When a network interface is provided, the security groups must be a part of it.
+  # network_interfaces {
+  #    associate_public_ip_address = true
+  # }
 
-    monitoring {
-      enabled = false
-    }
-    
-    #When a network interface is provided, the security groups must be a part of it.
-    # network_interfaces {
-    #    associate_public_ip_address = true
-    # }
-   
-    #The tags to apply to the resources during launch   
-    # tag_specifications = {
-    #     resource_type = "instance"
+  #The tags to apply to the resources during launch   
+  # tag_specifications = {
+  #     resource_type = "instance"
 
-    #     tags = {
-    #         Name = "test"
-    #     }
-    # }
+  #     tags = {
+  #         Name = "test"
+  #     }
+  # }
 
-    #A map of tags to assign to the launch template.
-    tags  = {
-      Name  = "${local.default_name}-lt"
-    }
+  #A map of tags to assign to the launch template.
+  tags = {
+    Name = "${local.default_name}-lt"
+  }
 }
 #---------------------------------------------------------------------------------------------------------
 
-  #---------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------
 #Provides a Target Group resource for use with Load Balancer resources.
 #---------------------------------------------------------------------------------------------------------
 resource "aws_lb_target_group" "tg" {
@@ -176,8 +176,8 @@ resource "aws_lb_target_group" "tg" {
   target_type                        = "instance"
 
 
-  vpc_id                             = module.vpc.vpc_id
-  
+  vpc_id = module.vpc.vpc_id
+
   health_check {
     enabled             = true
     healthy_threshold   = 5
@@ -209,16 +209,16 @@ resource "aws_autoscaling_attachment" "tg-asg-attachment" {
 
 #-----------------------------------------------------------------------
 resource "aws_efs_file_system" "efs" {
-  creation_token   = "EFS Shared Data"
+  creation_token = "EFS Shared Data"
   #performance_mode = "generalPurpose"
   performance_mode = "maxIO"
 
   #The throughput, measured in MiB/s, that you want to provision
   #for the file system. Only applicable with throughput_mode set to
   #provisioned
- 
-  provisioned_throughput_in_mibps = 200 
-  throughput_mode = "provisioned"
+
+  provisioned_throughput_in_mibps = 200
+  throughput_mode                 = "provisioned"
 
   tags = {
     Name = "${local.default_name}-EFS-Shared-Data"
@@ -230,10 +230,10 @@ output "efs-id" {
 }
 #-----------------------------------------------------------------------
 resource "aws_efs_mount_target" "efs" {
-  count = 3
+  count           = 3
   file_system_id  = aws_efs_file_system.efs.id
   subnet_id       = element(module.vpc.public_subnets, count.index)
-  security_groups = [ aws_security_group.ingress-efs.id ]
+  security_groups = [aws_security_group.ingress-efs.id]
 }
 #-----------------------------------------------------------------------
 data "template_file" "script" {

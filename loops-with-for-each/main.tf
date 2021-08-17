@@ -57,8 +57,8 @@ resource "aws_autoscaling_group" "example" {
 
 resource "aws_launch_configuration" "example" {
   # Ubuntu Server 18.04 LTS (HVM), SSD Volume Type in us-east-2
-  image_id        = "ami-0c55b159cbfafe1f0"
-  instance_type   = "t2.micro"
+  image_id      = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
 
   # Whenever using a launch configuration with an auto scaling group, you must set create_before_destroy = true.
   # https://www.terraform.io/docs/providers/aws/r/launch_configuration.html

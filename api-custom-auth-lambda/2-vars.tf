@@ -41,7 +41,7 @@ data "aws_caller_identity" "current" {}
 # The map here can come from other supported configurations
 # like locals, resource attribute, map() built-in, etc.
 #---------------------------------------------------------
-variable "instance_type"{
+variable "instance_type" {
   default = "t2.micro"
 }
 #------------------------------------------------------------------------
@@ -50,22 +50,22 @@ variable "profile" {
 }
 #------------------------------------------------------------------------
 variable "zone" {
-  type = string
+  type        = string
   description = "describe sub-domain for api"
-  default = "api.inecsoft.co.uk"
+  default     = "api.inecsoft.co.uk"
 }
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "_%@\""
   #override_special = "%\"@_"
 }
 #echo random_password.password.result | terraform console
 #----------------------------------------------------------------------------
 resource "random_string" "random" {
-  length = 2
-  special = false 
+  length  = 2
+  special = false
 }
 #----------------------------------------------------------------------------
 locals {
@@ -73,17 +73,17 @@ locals {
 }
 #----------------------------------------------------------------------------
 resource "random_integer" "integer" {
-  min     = 4
-  max     = 6
+  min = 4
+  max = 6
 }
 #----------------------------------------------------------------------------
 variable "lambda-name" {
-  type    = list(string)
+  type = list(string)
   default = [
     "connect",
     "disconnect",
     "default"
-    ]
+  ]
 }
 
 #----------------------------------------------------------------------------------------

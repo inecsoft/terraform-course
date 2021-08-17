@@ -1,10 +1,10 @@
 variable "AWS_REGION" {
- default = "eu-west-1"
+  default = "eu-west-1"
 }
 
 #-------------------------------------------------------------------
 variable "env" {}
-variable  "domain" {
+variable "domain" {
   default = "roadtohealth.inchoratech.com"
 }
 variable "sub-domain" {
@@ -22,26 +22,26 @@ variable "dev-db-instance-type" {
 }
 #-------------------------------------------------------------------
 variable "AMIS-UBUNTU" {
-    type = "map"
-    default = {
+  type = map(string)
+  default = {
     eu-west-1 = "ami-02df9ea15c1778c9c"
   }
 }
 
 variable "AMIS-AMAZON" {
-    type = "map"
-    default = {
-       eu-west-1 = "ami-01f14919ba412de34"
+  type = map(string)
+  default = {
+    eu-west-1 = "ami-01f14919ba412de34"
   }
 }
 variable "AMIS-REDHAT" {
-    type = "map"
-    default = {
-       eu-west-1 = "ami-04facb3ed127a2eb6"
+  type = map(string)
+  default = {
+    eu-west-1 = "ami-04facb3ed127a2eb6"
   }
 }
 variable "AMIS-WIN" {
-  type = "map"
+  type = map(string)
   default = {
     eu-west-1 = "ami-00f8336af4b6b40bf"
   }
@@ -53,11 +53,11 @@ variable "PATH_TO_PRIVATE_KEY" {
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-    default = "suluq.pub"
+  default = "suluq.pub"
 }
-    
+
 #-------------------------------------------------------------------
-variable "instance_type"{
+variable "instance_type" {
   default = "t2.micro"
 }
 #-------------------------------------------------------------------
@@ -141,17 +141,17 @@ data "aws_ami" "redhat" {
 #----------------------------------------------------------------------------
 variable "redhat-user" {
   default = "ec2-user"
-  
+
 }
 
 variable "ubuntu-user" {
   default = "ubuntu"
-  
+
 }
 
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "suluq"))}"
+  default_name = join("-", list(terraform.workspace, "suluq"))
 }
 #-------------------------------------------------------------------
 

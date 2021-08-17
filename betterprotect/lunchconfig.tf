@@ -1,6 +1,6 @@
 resource "aws_launch_configuration" "ecs_launch_configuration" {
   name                 = "ecs-launch-configuration"
-  image_id             = "${lookup(var.ECS_AMIS, AWS_REGION)}"
+  image_id             = lookup(var.ECS_AMIS, AWS_REGION)
   instance_type        = "t2.micro"
   iam_instance_profile = aws_iam_instance_profile.betterproject-ecs_instance_profile.id
 
@@ -16,7 +16,7 @@ resource "aws_launch_configuration" "ecs_launch_configuration" {
 
   security_groups             = [aws_security_group.ecs_security_group.id]
   associate_public_ip_address = "true"
-  key_name                    = "${aws_key_pair.betterproject.key_pair_name}"
+  key_name                    = aws_key_pair.betterproject.key_pair_name
   user_data                   = <<EOF
                                   #!/bin/bash
 				  echo ECS_CLUSTER=${var.ecs_cluster} >> /etc/ecs/ecs.config

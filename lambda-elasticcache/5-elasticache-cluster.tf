@@ -4,22 +4,22 @@
 #----------------------------------------------------------------
 resource "aws_elasticache_cluster" "elasticache" {
   #count = 1
-  cluster_id           = "${local.default_name}-elasticache"
-  engine               = "memcached"
-  node_type            = "cache.t2.micro"
+  cluster_id = "${local.default_name}-elasticache"
+  engine     = "memcached"
+  node_type  = "cache.t2.micro"
   #num_cache_nodes      = count.index + 1
   num_cache_nodes      = 1
   parameter_group_name = "default.memcached1.6"
   port                 = 11211
   maintenance_window   = "sun:05:00-sun:09:00"
-  
-  subnet_group_name    = module.vpc.elasticache_subnet_group_name 
-  
-  security_group_ids   = [ aws_security_group.allow_mencache.id ]
-  
+
+  subnet_group_name = module.vpc.elasticache_subnet_group_name
+
+  security_group_ids = [aws_security_group.allow_mencache.id]
+
   #Must specify the same number of preferred availability zones as requested number of nodes.
   #preferred_availability_zones =  slice(data.aws_availability_zones.azs.names, 0, count.index)
-  preferred_availability_zones =  slice(data.aws_availability_zones.azs.names, 0, 1)
+  preferred_availability_zones = slice(data.aws_availability_zones.azs.names, 0, 1)
 
   tags = {
     "Name" = "${local.default_name}-elasticache"
@@ -33,6 +33,6 @@ output "DNS-name-cache-cluster" {
 #---------------------------------------------------------------
 output "configuration-endpoint-elasticache-cluster" {
   description = "(Memcached only) The configuration endpoint to allow host discovery."
-  value       = aws_elasticache_cluster.elasticache.configuration_endpoint 
+  value       = aws_elasticache_cluster.elasticache.configuration_endpoint
 }
 #---------------------------------------------------------------

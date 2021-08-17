@@ -11,31 +11,31 @@ resource "aws_codedeploy_app" "codedeploy-app" {
 #s3://aws-codedeploy-eu-west-1/samples/latest/SampleApp_Linux.zip
 #----------------------------------------------------------------------
 resource "aws_codedeploy_deployment_group" "CodeDeploymentGroup" {
-    app_name               = aws_codedeploy_app.codedeploy-app.name
-    autoscaling_groups     = [ aws_autoscaling_group.autoscaling.name ]
-    deployment_config_name = "CodeDeployDefault.OneAtATime"
-    deployment_group_name  = "${local.default_name}-CodeDeploymentGroup"
-    service_role_arn       = aws_iam_role.CodeDeployTrustRole.arn
+  app_name               = aws_codedeploy_app.codedeploy-app.name
+  autoscaling_groups     = [aws_autoscaling_group.autoscaling.name]
+  deployment_config_name = "CodeDeployDefault.OneAtATime"
+  deployment_group_name  = "${local.default_name}-CodeDeploymentGroup"
+  service_role_arn       = aws_iam_role.CodeDeployTrustRole.arn
 
-    deployment_style {
-        deployment_option = "WITH_TRAFFIC_CONTROL"
-        deployment_type   = "IN_PLACE"
-    }
+  deployment_style {
+    deployment_option = "WITH_TRAFFIC_CONTROL"
+    deployment_type   = "IN_PLACE"
+  }
 
-#    ec2_tag_set {
-#        ec2_tag_filter {
-#            key   = "Name"
-#            type  = "KEY_AND_VALUE"
-##            value = "CodePipelineDemo"
-#        }
-#    }
-#
-#    load_balancer_info {
-#
-#        target_group_info {
-#            name = "targetgroupcodedeploy"
-#        }
-#    }
+  #    ec2_tag_set {
+  #        ec2_tag_filter {
+  #            key   = "Name"
+  #            type  = "KEY_AND_VALUE"
+  ##            value = "CodePipelineDemo"
+  #        }
+  #    }
+  #
+  #    load_balancer_info {
+  #
+  #        target_group_info {
+  #            name = "targetgroupcodedeploy"
+  #        }
+  #    }
 }
 #----------------------------------------------------------------------
 #terraform import aws_codedeploy_app.CodeDeployConfig deployment-config-name

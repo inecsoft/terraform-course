@@ -2,11 +2,11 @@
 # DB
 #####
 module "db" {
-  source = "terraform-aws-modules/rds/aws"
+  source  = "terraform-aws-modules/rds/aws"
   version = "~> 2.0"
   #server name
   identifier = var.credentials.dbInstanceIdentifier
- 
+
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine            = var.credentials.engine
   engine_version    = "5.7.19"
@@ -83,8 +83,8 @@ module "db" {
 }
 #--------------------------------------------------------------------------------
 output "mysql-db-endpoint" {
-  description =  "mysql proxy endpoint"
-  value = module.db.this_db_instance_endpoint
+  description = "mysql proxy endpoint"
+  value       = module.db.this_db_instance_endpoint
 }
 #--------------------------------------------------------------------------------
 output "this_db_instance_id" {

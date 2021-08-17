@@ -30,11 +30,11 @@ module "elb" {
 
   name = "elb-example"
 
-  subnets         = data.aws_subnet_ids.all.ids
-  security_groups = [data.aws_security_group.default.id]
-  internal        = false
+  subnets                   = data.aws_subnet_ids.all.ids
+  security_groups           = [data.aws_security_group.default.id]
+  internal                  = false
   cross_zone_load_balancing = true
-  
+
 
   listener = [
     {
@@ -48,18 +48,18 @@ module "elb" {
       instance_protocol = "HTTP"
       lb_port           = "8080"
       lb_protocol       = "HTTP"
-#      ssl_certificate_id = module.acm.this_acm_certificate_arn
+      #      ssl_certificate_id = module.acm.this_acm_certificate_arn
     },
   ]
 
   health_check = {
-      target              = "HTTP:80/"
-      interval            = "30"
-      healthy_threshold   = "2"
-      unhealthy_threshold = "2"
-      timeout             = "5"
-    }
-  
+    target              = "HTTP:80/"
+    interval            = "30"
+    healthy_threshold   = "2"
+    unhealthy_threshold = "2"
+    timeout             = "5"
+  }
+
 
   // Uncomment this section and set correct bucket name to enable access logging
   //  access_logs = [

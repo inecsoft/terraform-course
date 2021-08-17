@@ -1,11 +1,11 @@
 #-------------------------------------------------------------------------------------------------
 #https://aws.amazon.com/premiumsupport/knowledge-center/ecs-data-security-container-task/
-    #  "environment": [
-    #     {"name": "MYSQL_HOST", "value": "${module.db.this_db_instance_endpoint}"},
-    #     {"name": "MYSQL_USER", "value": "${var.MYSQL_USER}"},
-    #     {"name": "MYSQL_ROOT_PASSWORD", "value": "${var.MYSQL_PASSWORD}"},
-    #     {"name": "MYSQL_DATABASE", "value": "${var.MYSQL_DATABASE}
-    #  ],
+#  "environment": [
+#     {"name": "MYSQL_HOST", "value": "${module.db.this_db_instance_endpoint}"},
+#     {"name": "MYSQL_USER", "value": "${var.MYSQL_USER}"},
+#     {"name": "MYSQL_ROOT_PASSWORD", "value": "${var.MYSQL_PASSWORD}"},
+#     {"name": "MYSQL_DATABASE", "value": "${var.MYSQL_DATABASE}
+#  ],
 #-------------------------------------------------------------------------------------------------
 resource "aws_ecs_task_definition" "ecs-task-definition" {
   family             = "${local.default_name}-ecr-repository"
@@ -14,7 +14,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
   cpu                = 256
   memory             = 512
   #you must choose ip as the target type. tasks that use the awsvpc network mode are associated with an elastic network interface.
-  network_mode       = "awsvpc"
+  network_mode = "awsvpc"
   requires_compatibilities = [
     "FARGATE"
   ]
@@ -75,7 +75,7 @@ resource "aws_ecs_service" "ecs-service" {
   deployment_controller {
     type = "CODE_DEPLOY"
   }
-#to be more secure use vpc.private_subnets and nat gateway
+  #to be more secure use vpc.private_subnets and nat gateway
   network_configuration {
     subnets          = slice(module.vpc.public_subnets, 0, 3)
     security_groups  = [aws_security_group.sg-ecs.id]

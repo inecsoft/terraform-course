@@ -4,7 +4,7 @@ variable "parameters" {
     parameters = list(object({
       name  = string
       value = string
-      type  = string  
+      type  = string
     }))
   }))
   default = []

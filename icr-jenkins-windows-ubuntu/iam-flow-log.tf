@@ -21,7 +21,7 @@ EOF
 #-----------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy" "project_vpc_flowlogPolicy" {
   name = "project_vpc_flowlogPolicy"
-  role = "${aws_iam_role.project_vpc_flowlogRole.id}"
+  role = aws_iam_role.project_vpc_flowlogRole.id
 
   policy = <<EOF
 {

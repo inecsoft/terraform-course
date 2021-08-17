@@ -22,7 +22,7 @@ resource "github_repository_webhook" "github-repository-webhook" {
     content_type = "json"
     insecure_ssl = true
     # secret       = local.webhook_secret
-    secret       = data.aws_ssm_parameter.ssm-parameter-webhook-access-token.value
+    secret = data.aws_ssm_parameter.ssm-parameter-webhook-access-token.value
     #secret       = jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["WEBHOOK_ACCESS_TOKEN"]
   }
 
@@ -41,7 +41,7 @@ resource "aws_codepipeline_webhook" "codepipeline-webhook" {
 
   authentication_configuration {
     #secret_token = local.webhook_secret
-    secret_token       = data.aws_ssm_parameter.ssm-parameter-webhook-access-token.value
+    secret_token = data.aws_ssm_parameter.ssm-parameter-webhook-access-token.value
     #secret_token = jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["WEBHOOK_ACCESS_TOKEN"]
   }
 
@@ -56,7 +56,7 @@ resource "github_repository" "git-devops-go" {
   description = "Repository for public terraform code using in Otus DevOps course"
   #private     = true
   #public or private
-  visibility  = "private"
+  visibility = "private"
 }
 #--------------------------------------------------------------------------------
 # resource "github_repository_webhook" "webhook" {

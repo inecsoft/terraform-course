@@ -7,9 +7,9 @@ resource "aws_lambda_function" "lambda-function-getorderstatus" {
   s3_bucket = aws_s3_bucket.s3-lambda-content-bucket.id
   s3_key    = "${local.app_version}/getorderstatus.zip"
   #s3_key    = "${var.app_version}/code.zip"
-   
-  depends_on = [ aws_s3_bucket_object.s3-bucket-object-getorderstatus ]
-  
+
+  depends_on = [aws_s3_bucket_object.s3-bucket-object-getorderstatus]
+
   # "main" is the filename within the zip file (main.js) and "handler"
   # is the name of the property under which the handler function was
   # exported in that file.
@@ -17,7 +17,7 @@ resource "aws_lambda_function" "lambda-function-getorderstatus" {
   runtime     = "nodejs12.x"
   memory_size = 256
   timeout     = 3
-  
+
   # environment {
   #   variables = {
   #     env  = "dev"
@@ -29,7 +29,7 @@ resource "aws_lambda_function" "lambda-function-getorderstatus" {
   vpc_config {
     # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
     subnet_ids         = module.vpc.public_subnets
-    security_group_ids = [ aws_security_group.security-group-lambda-getorderstatus.id ]
+    security_group_ids = [aws_security_group.security-group-lambda-getorderstatus.id]
   }
 
   # depends_on = [

@@ -25,7 +25,7 @@ resource "aws_iam_role" "iam-role-api-gw-cw" {
 #----------------------------------------------------------------------------------------------
 data "aws_iam_policy_document" "iam-policy-doc-role-api-gw-cw" {
   statement {
-    sid = "${var.stage_name}IamPolicyDocRoleApGgwCw"
+    sid    = "${var.stage_name}IamPolicyDocRoleApGgwCw"
     effect = "Allow"
     actions = [
       "logs:PutLogEvents",
@@ -44,8 +44,8 @@ data "aws_iam_policy_document" "iam-policy-doc-role-api-gw-cw" {
 }
 #----------------------------------------------------------------------------------------------
 resource "aws_iam_policy" "iam-policy-role-api-gw-cw" {
-  name = "${local.default_name}-iam-policy-role-api-gw-cw"
-  path = "/"
+  name   = "${local.default_name}-iam-policy-role-api-gw-cw"
+  path   = "/"
   policy = data.aws_iam_policy_document.iam-policy-doc-role-api-gw-cw.json
 }
 #----------------------------------------------------------------------------------------------

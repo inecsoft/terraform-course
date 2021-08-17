@@ -5,12 +5,12 @@
 #you need your workload spot ready
 #--------------------------------------------------------------------------------------------------
 resource "aws_iam_user" "user" {
-  name = "${local.default_name}-user-jenkins"
-  path = "/"
+  name          = "${local.default_name}-user-jenkins"
+  path          = "/"
   force_destroy = true
-   
+
   tags = {
-    Name  = "${local.default_name}-user-jenkins"
+    Name = "${local.default_name}-user-jenkins"
   }
 }
 #----------------------------------------------------------------------------------------------------

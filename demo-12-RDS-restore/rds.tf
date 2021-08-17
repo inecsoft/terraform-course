@@ -16,30 +16,30 @@ resource "aws_db_parameter_group" "postgresdb-parameters" {
   family      = "postgres11"
   description = "postgresDB parameter group"
 
-#  parameter {
-#    name  = "max_allowed_packet"
-#    value = "16777216"
-#  }
+  #  parameter {
+  #    name  = "max_allowed_packet"
+  #    value = "16777216"
+  #  }
 }
 
 #---------------------------------------------------------------------------
 # Get latest snapshot from production DB
 #---------------------------------------------------------------------------
 data "aws_db_snapshot" "db_snapshot" {
-    most_recent = true
-    db_instance_identifier = "db-prod"
+  most_recent            = true
+  db_instance_identifier = "db-prod"
 }
 #---------------------------------------------------------------------------
 # Create new staging DB
 #---------------------------------------------------------------------------
 resource "aws_db_instance" "db_prod_restored" {
-  instance_class       = "db.t2.micro"
-  identifier           = var.RDS_DB_IDENTIFIER
-  username             = var.RDS_USERNAME
-  password             = var.RDS_PASSWORD
-  db_subnet_group_name = "${aws_db_subnet_group.postgresdb-subnet.id}"
-  snapshot_identifier  = "${data.aws_db_snapshot.db_snapshot.id}"
+  instance_class         = "db.t2.micro"
+  identifier             = var.RDS_DB_IDENTIFIER
+  username               = var.RDS_USERNAME
+  password               = var.RDS_PASSWORD
+  db_subnet_group_name   = aws_db_subnet_group.postgresdb-subnet.id
+  snapshot_identifier    = data.aws_db_snapshot.db_snapshot.id
   vpc_security_group_ids = ["${aws_security_group.allow-postgresdb.id}"]
-  skip_final_snapshot = true
+  skip_final_snapshot    = true
 }
 #---------------------------------------------------------------------------

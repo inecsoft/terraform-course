@@ -1,9 +1,9 @@
 variable "AWS_REGION" {
- default = "eu-west-1"
+  default = "eu-west-1"
 }
 
 #-------------------------------------------------------------------
 
-variable  "domain" {
+variable "domain" {
   default = "suluq.co.uk"
 }

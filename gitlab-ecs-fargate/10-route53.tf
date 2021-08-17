@@ -17,7 +17,7 @@ resource "aws_route53_zone" "zone" {
 #   name    = var.zone
 #   type    = "NS"
 #   ttl     = "30"
-  
+
 #   records = [
 #     aws_route53_zone.zone.name_servers[0],
 #     aws_route53_zone.zone.name_servers[1],
@@ -27,12 +27,12 @@ resource "aws_route53_zone" "zone" {
 # }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_route53_record" "www" {
-  depends_on = [ aws_eip.eip ]
-  zone_id = aws_route53_zone.zone.zone_id
-  name    = var.zone
-  type    = "A"
-  ttl     = "300"
-  records = [ aws_eip.eip.public_ip ]
+  depends_on = [aws_eip.eip]
+  zone_id    = aws_route53_zone.zone.zone_id
+  name       = var.zone
+  type       = "A"
+  ttl        = "300"
+  records    = [aws_eip.eip.public_ip]
 
 }
 #-------------------------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ resource "aws_route53_record" "www" {
 #   tags = {
 #     Name = "${local.default_name}-zone-cert"
 #   }
- 
+
 #   lifecycle {
 #     create_before_destroy = true
 #   }

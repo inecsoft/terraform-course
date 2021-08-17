@@ -23,7 +23,7 @@ variable "FUNCTION_NAME" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "lambda"))}"
+  default_name = join("-", list(terraform.workspace, "lambda"))
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
@@ -32,5 +32,5 @@ resource "random_pet" "this" {
 #-------------------------------------------------------------------
 
 variable "app_versions" {
-    default = "20200923161420"
+  default = "20200923161420"
 }

@@ -22,12 +22,12 @@ POLICY
 
 resource "aws_iam_role_policy_attachment" "demo-cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role = aws_iam_role.demo-cluster.name
+  role       = aws_iam_role.demo-cluster.name
 }
 #-------------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy_attachment" "demo-cluster-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role = aws_iam_role.demo-cluster.name
+  role       = aws_iam_role.demo-cluster.name
 }
 #-------------------------------------------------------------------------------------------------
 # If no loadbalancer was ever created in this region, then this following role is necessary

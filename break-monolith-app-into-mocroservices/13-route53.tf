@@ -7,7 +7,7 @@ variable "domain" {
 }
 #------------------------------------------------------------------------------------------
 data "aws_route53_zone" "main-zone" {
-  name         = "inecsoft.co.uk"
+  name = "inecsoft.co.uk"
   #private_zone = true
 
 }
@@ -15,9 +15,9 @@ data "aws_route53_zone" "main-zone" {
 #invalid value for domain (cannot end with a period)
 #------------------------------------------------------------------------------------------
 resource "aws_route53_zone" "cloud-zone" {
-  name = var.domain
-  comment = "zone sub domain for ecs"
-  force_destroy  = true
+  name          = var.domain
+  comment       = "zone sub domain for ecs"
+  force_destroy = true
 
   tags = {
     Name = "${local.default_name}-cloud-zone"

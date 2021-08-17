@@ -1,19 +1,19 @@
 #-----------------------------------------------------------------------------------------------------------------
 resource "aws_instance" "project_vpc-win" {
-  ami = "${lookup(var.AMIS-WIN, var.AWS_REGION)}"
+  ami           = lookup(var.AMIS-WIN, var.AWS_REGION)
   instance_type = "m5.large"
 
   # the VPC subnet$
-  subnet_id = element(module.vpc.public_subnets,0)
+  subnet_id = element(module.vpc.public_subnets, 0)
 
   security_groups = ["${aws_security_group.project_vpc_sg_win.id}"]
 
   key_name = aws_key_pair.project.key_name
 
-  root_block_device     {
-      volume_size = "40"
-      volume_type = "gp2"
-      delete_on_termination = true
+  root_block_device {
+    volume_size           = "40"
+    volume_type           = "gp2"
+    delete_on_termination = true
   }
 
   user_data = <<EOF
@@ -95,17 +95,17 @@ PowerShell Install-Postgres -User "postgres" -Password "${var.INSTANCE_USERNAME}
 EOF
 
 
-tags = {
-   Name = "Windown instance"
+  tags = {
+    Name = "Windown instance"
   }
 }
 #-----------------------------------------------------------------------------------------------------------------
 output "windows-ipaddress-public" {
-  value = "${aws_instance.project_vpc-win.public_ip}"
-  
+  value = aws_instance.project_vpc-win.public_ip
+
 }
 output "windows-ipaddress-private" {
-  value = "${aws_instance.project_vpc-win.private_ip}"
-  
+  value = aws_instance.project_vpc-win.private_ip
+
 }
 #-----------------------------------------------------------------------------------------------------------------

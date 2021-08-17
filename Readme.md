@@ -190,7 +190,9 @@ module "staging_vpc" {
     #source                   = "github.com/inecsoft/terraform-modules.git//template?ref=branchname"
 
 ```
-terraform get --update terraform plan
+terraform get --update
+terraform init
+terraform plan
 terraform apply -lock-timeout=120m
 ```
 ***

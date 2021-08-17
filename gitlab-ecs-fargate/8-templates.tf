@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------------------------------------
 
 data "template_file" "userdata" {
-  template = "${file("scripts/userdata.sh")}"
+  template = file("scripts/userdata.sh")
   vars = {
     DEVICE         = "${var.INSTANCE_DEVICE_NAME}"
     EXT_DEVICE     = "${var.EXT_INSTANCE_DEVICE_NAME}"

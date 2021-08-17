@@ -1,25 +1,25 @@
 #-------------------------------------------------------------------------------------------------------------------
-data archive_file lambda-connect {
-  type        = "zip"
+data "archive_file" "lambda-connect" {
+  type = "zip"
   #source_file = "connect/app.py"
-  source_dir = "connect"
+  source_dir  = "connect"
   output_path = "connect.zip"
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function-connect" {
   function_name = "${local.default_name}-lambda-api-connect"
-    
+
   s3_bucket = aws_s3_bucket.s3-lambda-content-bucket-connect.id
-  
-  s3_key        = "${local.app_version}/connect.zip"
-  handler       = "connect.lambda_handler"
-  runtime       = "python3.8"
+
+  s3_key  = "${local.app_version}/connect.zip"
+  handler = "connect.lambda_handler"
+  runtime = "python3.8"
 
   role = aws_iam_role.lambda-exec-connect.arn
-  
+
   environment {
     variables = {
-      dynamodb_table_id  = aws_dynamodb_table.dynamodb-table.id
+      dynamodb_table_id = aws_dynamodb_table.dynamodb-table.id
     }
   }
 
@@ -27,7 +27,7 @@ resource "aws_lambda_function" "lambda-function-connect" {
 
   vpc_config {
     # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
-    subnet_ids         = module.vpc.public_subnets 
+    subnet_ids         = module.vpc.public_subnets
     security_group_ids = [aws_security_group.sg-lambda.id]
   }
 
@@ -37,8 +37,8 @@ resource "aws_lambda_function" "lambda-function-connect" {
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_apigatewayv2_integration" "apigatewayv2-integration-connect" {
-  api_id                    = aws_apigatewayv2_api.apigatewayv2-api.id
-  integration_type          = "AWS"
+  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
+  integration_type = "AWS"
 
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
@@ -83,9 +83,9 @@ data "aws_iam_policy" "iam-role-policy-lambda-connect-vpc" {
 resource "aws_iam_policy_attachment" "iam-role-policy-lambda-connect-attach" {
   name       = "${local.default_name}-iam-role-policy-lambda-connect-attach"
   users      = []
-  roles      = [ aws_iam_role.lambda-exec-connect.name ]
+  roles      = [aws_iam_role.lambda-exec-connect.name]
   groups     = []
-  policy_arn =  aws_iam_policy.iam-lambda-connect-logging.arn 
+  policy_arn = aws_iam_policy.iam-lambda-connect-logging.arn
 }
 #----------------------------------------------------------------------------------------
 resource "aws_iam_policy" "iam-lambda-connect-logging" {
@@ -137,10 +137,10 @@ resource "aws_lambda_permission" "apigw-connect" {
 resource "aws_s3_bucket" "s3-lambda-content-bucket-connect" {
   bucket = "${local.default_name}-lambda-content-bucket-connect"
   acl    = "private"
-  
+
   #force destroy for not prouction env
   force_destroy = true
-  
+
   versioning {
     enabled = true
   }
@@ -157,7 +157,7 @@ resource "aws_s3_bucket" "s3-lambda-content-bucket-connect" {
 #-----------------------------------------------------------------------
 output "bucket-name-connect" {
   #for_each = toset(var.lambda-name)
-  value =  aws_s3_bucket.s3-lambda-content-bucket-connect.id
+  value = aws_s3_bucket.s3-lambda-content-bucket-connect.id
 }
 #-----------------------------------------------------------------------
 #echo 'formatdate("YYYYMMDDHHmmss", timestamp())'| terraform console
@@ -169,7 +169,7 @@ resource "aws_s3_bucket_object" "s3-lambda-content-bucket-object-connect" {
   #source = "web/index.html"
   source       = data.archive_file.lambda-connect.output_path
   content_type = "application/zip"
- 
+
   #Encrypting with KMS Key
   #kms_key_id = aws_kms_key.key.arn
 

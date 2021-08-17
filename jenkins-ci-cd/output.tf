@@ -1,3 +1,3 @@
 output "YourIPRange" {
- value  = local.workstation-external-cidr 
+  value = local.workstation-external-cidr
 }

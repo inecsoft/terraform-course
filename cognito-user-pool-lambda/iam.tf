@@ -47,7 +47,7 @@ POLICY
 #-------------------------------------------------------------------------------
 resource "aws_iam_role_policy" "main" {
   name = "role-policy-cognito-idp"
-  role = "${aws_iam_role.cidp.id}"
+  role = aws_iam_role.cidp.id
 
   policy = <<EOF
 {

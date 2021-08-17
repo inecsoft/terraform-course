@@ -54,6 +54,6 @@ output "ami-ubuntu-id" {
 #-------------------------------------------------------------------
 output "ami-ubuntu-name" {
   description = "description of ami ubuntu "
-  value       = data.aws_ami.ubuntu.name 
+  value       = data.aws_ami.ubuntu.name
 }
 #-------------------------------------------------------------------

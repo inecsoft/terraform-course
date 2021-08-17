@@ -1,6 +1,6 @@
 #--------------------------------------------------------------------------
 resource "aws_iam_role" "role-zappa" {
-  name = "${local.default_name}-role-zappa"
+  name        = "${local.default_name}-role-zappa"
   description = "Role policy for project serverless zappa django"
 
   assume_role_policy = <<-EOF

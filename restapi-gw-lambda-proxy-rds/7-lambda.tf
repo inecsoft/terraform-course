@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function" {
-  function_name = "${local.default_name}-lambda-function-proxy" 
+  function_name = "${local.default_name}-lambda-function-proxy"
 
   # The bucket name as created earlier with "aws s3api create-bucket"
   s3_bucket = aws_s3_bucket.s3-bucket.id
@@ -20,27 +20,27 @@ resource "aws_lambda_function" "lambda-function" {
 
   environment {
     variables = map("username", var.credentials.username,
-                    "password", random_password.password.result,
-                    "engine", var.credentials.engine,
-                    "host",  module.db.this_db_instance_endpoint,
-                    "port", var.credentials.port,
-                    "dbname", var.credentials.dbname,
-                    "dbInstanceIdentifier", var.credentials.dbInstanceIdentifier,
-                    "region", var.AWS_REGION
-                )     
+      "password", random_password.password.result,
+      "engine", var.credentials.engine,
+      "host", module.db.this_db_instance_endpoint,
+      "port", var.credentials.port,
+      "dbname", var.credentials.dbname,
+      "dbInstanceIdentifier", var.credentials.dbInstanceIdentifier,
+      "region", var.AWS_REGION
+    )
   }
 
   depends_on = [aws_s3_bucket_object.s3-lambda-content-bucket-object]
-  
+
   vpc_config {
     subnet_ids         = module.vpc.public_subnets
     security_group_ids = [aws_security_group.lambda-sg.id]
   }
-  
+
   tags = {
     Name = "${local.default_name}-function"
   }
-   
+
   #depends_on = [aws_efs_mount_target.alpha]
 }
 #----------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ EOF
 resource "aws_iam_policy_attachment" "lambda-role-policy-attach" {
   name       = "${local.default_name}-role-policy-attachment"
   users      = []
-  roles      = [ aws_iam_role.lambda_exec.name ]
+  roles      = [aws_iam_role.lambda_exec.name]
   groups     = []
   policy_arn = aws_iam_policy.lambda-role-policy.arn
 }

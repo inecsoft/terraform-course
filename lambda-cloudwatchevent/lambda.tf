@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function" {
-  function_name = var.FUNCTION_NAME 
+  function_name = var.FUNCTION_NAME
 
   # The bucket name as created earlier with "aws s3api create-bucket"
   s3_bucket = aws_s3_bucket.inecsoft-serverless.id

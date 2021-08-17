@@ -1,8 +1,8 @@
 #----------------------------------------------------------------------------------------
-data archive_file lambda {
-  type        = "zip"
+data "archive_file" "lambda" {
+  type = "zip"
   #source_file = "code/app.py"
-  source_dir = "code" 
+  source_dir  = "code"
   output_path = "code.zip"
 }
 
@@ -27,7 +27,7 @@ resource "aws_s3_bucket" "s3-bucket" {
 }
 #-----------------------------------------------------------------------
 output "bucket-name" {
-   value =  aws_s3_bucket.s3-bucket.id
+  value = aws_s3_bucket.s3-bucket.id
 }
 #-----------------------------------------------------------------------
 #echo 'formatdate("YYYYMMDDHHmmss", timestamp())'| terraform console
@@ -38,9 +38,9 @@ resource "aws_s3_bucket_object" "s3-lambda-content-bucket-object" {
   bucket = aws_s3_bucket.s3-bucket.id
   #content    = "web/index.html"
   #source = "web/index.html"
-  source  = data.archive_file.lambda.output_path
+  source       = data.archive_file.lambda.output_path
   content_type = "application/zip"
- 
+
 
   #Encrypting with KMS Key
   #kms_key_id = aws_kms_key.key.arn

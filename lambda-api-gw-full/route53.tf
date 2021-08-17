@@ -3,9 +3,9 @@ resource "aws_acm_certificate" "cert" {
   domain_name               = "*.api.api-inecsoft.co.uk"
   subject_alternative_names = ["prod.api.api-inecsoft.co.uk", "dev.api.api-inecsoft.co.uk"]
   validation_method         = "DNS"
- 
+
   lifecycle {
-         create_before_destroy = true
+    create_before_destroy = true
   }
 }
 #---------------------------------------------------------------------------------------------------
@@ -14,8 +14,8 @@ resource "aws_route53_zone" "zone" {
   name = "api.api-inecsoft.co.uk"
 }
 data "aws_route53_zone" "zone" {
-  name = "api.api-inecsoft.co.uk."
-  depends_on = [aws_route53_zone.zone]
+  name         = "api.api-inecsoft.co.uk."
+  depends_on   = [aws_route53_zone.zone]
   private_zone = false
 }
 

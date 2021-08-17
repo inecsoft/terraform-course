@@ -9,7 +9,7 @@ module "aurora-mysql" {
   instance_type         = "db.t3.small"
   instance_type_replica = "db.t3.small"
 
-  vpc_id                = module.vpc.vpc_id
+  vpc_id = module.vpc.vpc_id
   #db_subnet_group_name  = 
   subnets               = module.vpc.private_subnets
   create_security_group = true
@@ -19,14 +19,14 @@ module "aurora-mysql" {
 
   #iam_database_authentication_enabled = true
   #Name for an automatically created database on cluster creation
-  database_name                       = "${local.default_name}-aurora-mysql"
-  username                            = "${local.default_name}-aurora-mysql"
-  password                            = random_password.master.result
-  create_random_password              = false
- 
+  database_name          = "${local.default_name}-aurora-mysql"
+  username               = "${local.default_name}-aurora-mysql"
+  password               = random_password.master.result
+  create_random_password = false
+
   #	A List of ARNs for the IAM roles to associate to the RDS Cluster
-  iam_roles                           = [ aws_iam_role.iam-role-rds-to-lambda.arn ]
-  
+  iam_roles = [aws_iam_role.iam-role-rds-to-lambda.arn]
+
   #The ARN for the KMS encryption key
   #kms_key_id =
 
@@ -56,7 +56,7 @@ module "aurora-mysql" {
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.rds-cluster-parameter-group.id
   enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
-  tags        = {
+  tags = {
     Name = "${local.default_name}-aurora-mysql"
   }
 }
@@ -67,28 +67,28 @@ resource "aws_iam_role" "iam-role-rds-to-lambda" {
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
   assume_role_policy = jsonencode(
-{
-  "Version": "2012-10-17",
-  "Statement": [
     {
-      "Sid": "",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "rds.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-})
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Sid" : "",
+          "Effect" : "Allow",
+          "Principal" : {
+            "Service" : "rds.amazonaws.com"
+          },
+          "Action" : "sts:AssumeRole"
+        }
+      ]
+  })
 
   tags = {
-    Name  = "${local.default_name}-iam-role-rds-to-lambda"
+    Name = "${local.default_name}-iam-role-rds-to-lambda"
   }
 }
 #------------------------------------------------------------------------------------------
 data "aws_iam_policy_document" "iam-policy-doc-rds-to-lambda" {
   statement {
-    sid = "iamRoleRdsToLambda"
+    sid    = "iamRoleRdsToLambda"
     effect = "Allow"
     actions = [
       "lambda:InvokeFunction"
@@ -116,7 +116,7 @@ resource "aws_db_parameter_group" "db-parameter-group" {
   family      = "aurora-mysql5.7"
   description = "${local.default_name}-aurora-db-57-parameter-group"
 
-  tags        = {
+  tags = {
     Name = "${local.default_name}-db-parameter-group"
   }
 }
@@ -125,7 +125,7 @@ resource "aws_db_parameter_group" "db-parameter-group" {
 #   name        = "${local.default_name}-aurora-57-cluster-parameter-group"
 #   family      = "aurora-mysql5.7"
 #   description = "${local.default_name}-aurora-57-cluster-parameter-group"
-  
+
 #   tags        = {
 #     Name = "${local.default_name}-rds-cluster-parameter-group"
 #   }
@@ -138,13 +138,13 @@ resource "aws_rds_cluster_parameter_group" "rds-cluster-parameter-group" {
   name        = "${local.default_name}-aurora-57-cluster-parameter-group"
   family      = "aurora-mysql5.7"
   description = "${local.default_name}-aurora-57-cluster-parameter-group"
-  
+
   parameter {
     name  = "aws_default_lambda_role"
     value = aws_iam_role.iam-role-rds-to-lambda.arn
   }
 
-  tags        = {
+  tags = {
     Name = "${local.default_name}-rds-cluster-parameter-group"
   }
 }

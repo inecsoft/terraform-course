@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "inecsoft"))}"
+  default_name = join("-", list(terraform.workspace, "inecsoft"))
 }
 #-------------------------------------------------------------------
 variable "location" {
   description = "The location where resources are created"
- # default     = "East US"
-  default     = "East US 2"
+  # default     = "East US"
+  default = "East US 2"
 }
 #-------------------------------------------------------------------
 variable "resource_group_name" {
@@ -15,13 +15,13 @@ variable "resource_group_name" {
 }
 #-------------------------------------------------------------------
 variable "application_port" {
-    description = "The port that you want to expose to the external load balancer"
-    default     = 80
+  description = "The port that you want to expose to the external load balancer"
+  default     = 80
 }
 #-------------------------------------------------------------------
 variable "admin_password" {
-    description = "Default password for admin"
-    default = "Passwwoord11223344"
+  description = "Default password for admin"
+  default     = "Passwwoord11223344"
 }
 #-------------------------------------------------------------------
 

@@ -47,24 +47,24 @@ locals {
 }
 #---------------------------------------------------------
 variable "phone_number" {
-  type = string
+  type    = string
   default = "+447518527690"
-} 
+}
 #---------------------------------------------------------
 variable "api_name" {
-  type = string
+  type    = string
   default = "ACME-Shoes-rest-api"
-} 
+}
 #---------------------------------------------------------
 variable "enable_alarms" {
-  type = string
+  type    = string
   default = "1"
-} 
+}
 #---------------------------------------------------------
 data "aws_caller_identity" "current" {}
 #---------------------------------------------------------
 variable "stage_name" {
-  type = string
+  type    = string
   default = "dev"
-} 
+}
 #---------------------------------------------------------

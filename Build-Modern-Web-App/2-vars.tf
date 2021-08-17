@@ -12,7 +12,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "modern-web-app"))}"
+  default_name = join("-", list(terraform.workspace, "modern-web-app"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 

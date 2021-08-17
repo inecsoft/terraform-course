@@ -8,7 +8,7 @@ data "template_file" "bastion-init" {
 
 data "template_file" "bastion-users" {
   template = file("scripts/users.cfg")
-    vars = {
+  vars = {
     REGION = var.AWS_REGION
   }
 

@@ -25,8 +25,8 @@ resource "aws_kms_key" "kms-key" {
   description = "kms key for demo artifacts"
   policy      = data.aws_iam_policy_document.kms-key-policy.json
 
-  tags  = {
-    Name =  "${local.default_name}-kms-key"
+  tags = {
+    Name = "${local.default_name}-kms-key"
   }
 }
 #----------------------------------------------------------------------------------------------------

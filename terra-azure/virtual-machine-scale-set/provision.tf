@@ -10,13 +10,13 @@
 resource "azurerm_resource_group" "image" {
   name     = "${local.default_name}-ResourceGroup"
   location = var.location
-  
+
   provisioner "local-exec" {
     command = "image build ubuntu.json"
   }
 
   tags = {
-     environment = "codelab"
+    environment = "codelab"
   }
 }
 #----------------------------------------------------------------------------------

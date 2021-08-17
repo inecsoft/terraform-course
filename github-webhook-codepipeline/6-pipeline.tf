@@ -6,7 +6,7 @@ resource "aws_codepipeline" "codepipeline" {
   role_arn = aws_iam_role.iam-role-codepipeline.arn
 
   artifact_store {
-    location = aws_s3_bucket.s3-bucket-codepipeline.bucket 
+    location = aws_s3_bucket.s3-bucket-codepipeline.bucket
     type     = "S3"
 
     encryption_key {
@@ -76,16 +76,16 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Manual-Approval"
 
     action {
-      name             = "Manual-Approval"
-      category         = "Approval"
-      owner            = "AWS"
-      provider         = "Manual"
-      run_order        = 1
-      version          = "1"
+      name      = "Manual-Approval"
+      category  = "Approval"
+      owner     = "AWS"
+      provider  = "Manual"
+      run_order = 1
+      version   = "1"
 
       configuration = {
-        CustomData        = "Comments on the manual approval"
-        NotificationArn   =  aws_sns_topic.sns-topic-deploy.arn
+        CustomData      = "Comments on the manual approval"
+        NotificationArn = aws_sns_topic.sns-topic-deploy.arn
       }
     }
   }
@@ -94,20 +94,20 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Deploy"
 
     action {
-      name             = "Deploy"
-      category         = "Deploy"
-      owner            = "AWS"
-      provider         = "CodeDeploy"
-      input_artifacts  = ["source_output"]
+      name            = "Deploy"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "CodeDeploy"
+      input_artifacts = ["source_output"]
       #input_artifacts = ["build_output"]
-      version          = "1"
-      region           = var.AWS_REGION
+      version = "1"
+      region  = var.AWS_REGION
 
       configuration = {
         # ActionMode     = "REPLACE_ON_FAILURE"
         # Capabilities   = "CAPABILITY_AUTO_EXPAND,CAPABILITY_IAM"
-        ApplicationName                = aws_codedeploy_app.codedeploy-app-lambda.name
-        DeploymentGroupName            = aws_codedeploy_deployment_group.codedeploy-deployment-group.deployment_group_name
+        ApplicationName     = aws_codedeploy_app.codedeploy-app-lambda.name
+        DeploymentGroupName = aws_codedeploy_deployment_group.codedeploy-deployment-group.deployment_group_name
         # TaskDefinitionTemplateArtifact = "build_output"
         # AppSpecTemplateArtifact        = "build_output"
       }

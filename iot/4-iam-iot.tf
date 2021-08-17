@@ -4,7 +4,7 @@
 #"Resource": "arn:aws:iot:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/$aws/things/thingName/shadow/get""
 #--------------------------------------------------------------------------------------
 resource "aws_iot_policy" "iot-policy" {
-  name = "${local.default_name}-iot-policy"
+  name   = "${local.default_name}-iot-policy"
   policy = <<EOF
 {
   "Version": "2012-10-17",

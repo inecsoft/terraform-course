@@ -15,30 +15,30 @@ resource "aws_security_group" "suluq_vpc_sg-bastion" {
 
   ingress {
     #security_groups = ["${aws_security_group.suluq_vpc_sg-bastion.id}"]
-    from_port = 22 
-    to_port = 22
-    protocol = "TCP"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
     #security_groups = ["${aws_security_group.suluq_vpc_sg-bastion.id}"]
-    from_port = 80 
-    to_port = 80
-    protocol = "TCP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
     cidr_blocks = [local.workstation-external-cidr]
   }
 
   egress {
     #security_groups = ["${aws_security_group.suluq_inchora_vpc_sg-bastion.id}"]
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-   }
+  }
 
   tags = {
-    Name =  "${local.default_name}_vpc_sg-bastion"
+    Name = "${local.default_name}_vpc_sg-bastion"
 
   }
 

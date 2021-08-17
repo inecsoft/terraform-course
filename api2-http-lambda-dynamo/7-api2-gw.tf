@@ -2,14 +2,14 @@
 #Step 1 Create an API + integration(can be multiple integrations) with lambda
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_api" "apigatewayv2-api" {
-  name                       = "${local.default_name}-websocket-api"
-  description                = "Web socket api2 project"
+  name          = "${local.default_name}-websocket-api"
+  description   = "Web socket api2 project"
   protocol_type = "HTTP"
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_apigatewayv2_integration" "apigatewayv2-integration" {
-  api_id                    = aws_apigatewayv2_api.apigatewayv2-api.id
-  integration_type          = "AWS_PROXY"
+  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
+  integration_type = "AWS_PROXY"
 
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
@@ -17,7 +17,7 @@ resource "aws_apigatewayv2_integration" "apigatewayv2-integration" {
   integration_method        = "POST"
   integration_uri           = aws_lambda_function.lambda-function.invoke_arn
   #integration_uri           = aws_lambda_function.lambda-function.invoke_arn
-  passthrough_behavior      = "WHEN_NO_MATCH"
+  passthrough_behavior = "WHEN_NO_MATCH"
 }
 #-------------------------------------------------------------------------------------------------------------------
 #There are two types of Lambda authorizers:
@@ -29,25 +29,25 @@ resource "aws_apigatewayv2_integration" "apigatewayv2-integration" {
 # For WebSocket APIs, only request parameter-based authorizers are supported.
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_authorizer" "apigatewayv2-authorizer" {
-  name             = "${local.default_name}-auth"
-  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
-  authorizer_type  = "REQUEST"
+  name            = "${local.default_name}-auth"
+  api_id          = aws_apigatewayv2_api.apigatewayv2-api.id
+  authorizer_type = "REQUEST"
   #authorizer_uri   = aws_lambda_function.lambda-function-auth.invoke_arn
   #authorizer_uri   = aws_lambda_function.lambda-function-auth.invoke_arn
   identity_sources = ["route.request.header.Auth"]
 
   #identity_sources = ["method.request.header.Authorization"]
-  
+
 }
 #-------------------------------------------------------------------
 #[for i in toset([ 1,2,3 ]) : format("$%s",i)]
 resource "aws_apigatewayv2_route" "apigatewayv2-route" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "$default"
+  api_id    = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key = "$default"
 
-  authorization_type  = "NONE"
+  authorization_type = "NONE"
   #authorizer_id       = aws_apigatewayv2_authorizer.apigatewayv2-authorizer.id
-  target              = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration.id}"
+  target = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration.id}"
 }
 #-------------------------------------------------------------------
 # resource "aws_apigatewayv2_route" "apigatewayv2-route-auth" {
@@ -60,12 +60,12 @@ resource "aws_apigatewayv2_route" "apigatewayv2-route" {
 # }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
-  api_id = aws_apigatewayv2_api.apigatewayv2-api.id
+  api_id      = aws_apigatewayv2_api.apigatewayv2-api.id
   description = "stage for production"
-  name   = "prod"
+  name        = "prod"
 
   tags = {
-    Name =  "${local.default_name}-prod-stage"
+    Name = "${local.default_name}-prod-stage"
   }
 }
 #-------------------------------------------------------------------
@@ -81,6 +81,6 @@ resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
 #-------------------------------------------------------------------
 output "api-endpoint" {
   description = "The URI of the API"
-  value       = aws_apigatewayv2_api.apigatewayv2-api.api_endpoint 
+  value       = aws_apigatewayv2_api.apigatewayv2-api.api_endpoint
 }
 #-------------------------------------------------------------------

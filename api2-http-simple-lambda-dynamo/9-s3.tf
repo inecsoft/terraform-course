@@ -2,10 +2,10 @@
 resource "aws_s3_bucket" "s3-lambda-content-bucket" {
   bucket = "${local.default_name}-lambda-content-bucket"
   acl    = "private"
-  
+
   #force destroy for not prouction env
   force_destroy = true
-  
+
   versioning {
     enabled = true
   }
@@ -27,9 +27,9 @@ resource "aws_s3_bucket_object" "s3-lambda-content-bucket-object" {
   bucket = aws_s3_bucket.s3-lambda-content-bucket.id
   #content    = "web/index.html"
   #source = "web/index.html"
-  source  = data.archive_file.lambda.output_path
+  source       = data.archive_file.lambda.output_path
   content_type = "application/zip"
- 
+
   #Encrypting with KMS Key
   #kms_key_id = aws_kms_key.key.arn
 
@@ -44,6 +44,6 @@ resource "aws_s3_bucket_object" "s3-lambda-content-bucket-object" {
 #--------------------------------------------------------------------
 output "bucket-name" {
   description = "backet names for the api websocket lambdas"
-  value = aws_s3_bucket.s3-lambda-content-bucket.id
+  value       = aws_s3_bucket.s3-lambda-content-bucket.id
 }
 #-----------------------------------------------------------------------

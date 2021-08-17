@@ -1,9 +1,9 @@
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_domain_name" "apigatewayv2-domain-name" {
   domain_name = var.zone
-  
-  depends_on = [ aws_acm_certificate.acm-certificate ]
-  
+
+  depends_on = [aws_acm_certificate.acm-certificate]
+
   domain_name_configuration {
     certificate_arn = aws_acm_certificate.acm-certificate.arn
     endpoint_type   = "REGIONAL"

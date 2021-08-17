@@ -37,7 +37,7 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
       sampled_requests_enabled   = true
     }
   }
-  
+
   rule {
     name     = "${local.default_name}-rule-wafv2-web-acl-ipgroup-GB"
     priority = 1
@@ -67,7 +67,7 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
 
 
   tags = {
-    Name  = "${local.default_name}-managed-rule-wafv2-web-acl"
+    Name        = "${local.default_name}-managed-rule-wafv2-web-acl"
     Environment = terraform.workspace
   }
 
@@ -81,7 +81,7 @@ resource "aws_wafv2_ip_set" "wafv2-ip-set" {
   addresses          = ["1.2.3.4/32", "5.6.7.8/32"]
 
   tags = {
-    Name = "${local.default_name}-wafv2IpSet-for-wafv2-web-acl"
+    Name        = "${local.default_name}-wafv2IpSet-for-wafv2-web-acl"
     Environment = terraform.workspace
   }
 }

@@ -1,6 +1,6 @@
 resource "aws_ecs_service" "my_ecs_service" {
   name            = "my-ecs-service"
-  iam_role        = "${aws_iam_role.ecs_service_role.name}"
+  iam_role        = aws_iam_role.ecs_service_role.name
   cluster         = aws_ecs_cluster.my_ecs_cluster.id
   task_definition = aws_ecs_task_definition.mywebsite.arn
   desired_count   = 3

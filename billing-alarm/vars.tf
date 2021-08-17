@@ -1,7 +1,7 @@
 #declare variables
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "us-east-1"
+  default = "us-east-1"
 }
 #-------------------------------------------------------------------
 data "aws_availability_zones" "azs" {}
@@ -11,19 +11,19 @@ variable "vpc_cidr" {
 }
 #---------------------------------------------------------------------
 variable "subnet_cidr_public" {
-  type = list
-  default = ["10.0.1.0/24","10.0.2.0/24","10.0.3.0/24"]
+  type    = list(any)
+  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 
 }
 #--------------------------------------------------------------------
 variable "subnet_cidr_private" {
-  type = list
-  default = ["10.0.101.0/24","10.0.102.0/24","10.0.103.0/24"]
+  type    = list(any)
+  default = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "billing-alert"))}"
+  default_name = join("-", list(terraform.workspace, "billing-alert"))
 }
 #-------------------------------------------------------------------
 variable "currency" {

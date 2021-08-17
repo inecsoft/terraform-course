@@ -1,12 +1,12 @@
 #------------------------------------------------------------------------------------------------------------
-resource  "aws_api_gateway_account"  "api-gateway-account"  {    
-  cloudwatch_role_arn  = aws_iam_role.iam-role-api-gw-cw.arn
+resource "aws_api_gateway_account" "api-gateway-account" {
+  cloudwatch_role_arn = aws_iam_role.iam-role-api-gw-cw.arn
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_rest_api" "rest-api-acme-shoes" {
   name        = "${local.default_name}-${var.api_name}"
   description = "Terraform Serverless Application Example ${local.default_name}-${var.api_name}"
-  
+
   endpoint_configuration {
     types = ["REGIONAL"]
   }
@@ -20,7 +20,7 @@ resource "aws_api_gateway_domain_name" "api-gateway-domain-name" {
   domain_name              = "${local.default_name}.transport-for-greater-manchester.com"
   regional_certificate_arn = aws_acm_certificate_validation.acm-certificate-validation.certificate_arn
   #TLS_1_0 and TLS_1_2
-  security_policy          = "TLS_1_2"
+  security_policy = "TLS_1_2"
 
   #EDGE or REGIONAL
   endpoint_configuration {
@@ -37,10 +37,10 @@ data "aws_route53_zone" "route53-zone-selected" {
 }
 # #------------------------------------------------------------------------------------------------------------
 resource "aws_route53_record" "route53-record" {
-  allow_overwrite   = true
-  name              = aws_api_gateway_domain_name.api-gateway-domain-name.domain_name
-  type              = "A"
-  zone_id           = data.aws_route53_zone.route53-zone-selected.zone_id
+  allow_overwrite = true
+  name            = aws_api_gateway_domain_name.api-gateway-domain-name.domain_name
+  type            = "A"
+  zone_id         = data.aws_route53_zone.route53-zone-selected.zone_id
 
   alias {
     evaluate_target_health = true
@@ -84,7 +84,7 @@ resource "aws_api_gateway_deployment" "api-gateway-deployment" {
     api-resource-ping  = filebase64sha256("8-api-resource-ping.tf")
     api-resource-shoes = filebase64sha256("8-api-resource-shoes.tf")
   }
-  
+
   lifecycle {
     create_before_destroy = true
   }
@@ -94,19 +94,19 @@ resource "aws_api_gateway_stage" "api-gateway-stage-dev" {
   deployment_id = aws_api_gateway_deployment.api-gateway-deployment.id
   rest_api_id   = aws_api_gateway_rest_api.rest-api-acme-shoes.id
 
-  stage_name    = var.stage_name
+  stage_name = var.stage_name
 
-  description   = "${local.default_name}-ACME-Shoes-rest-api stage dev"
+  description = "${local.default_name}-ACME-Shoes-rest-api stage dev"
 
   cache_cluster_enabled = false
   #Allowed values include 0.5, 1.6, 6.1, 13.5, 28.4, 58.2, 118 and 237
-  cache_cluster_size    = 0.5
+  cache_cluster_size = 0.5
 
-  depends_on = [ aws_cloudwatch_log_group.cw-log-gp-api-gw ]
+  depends_on = [aws_cloudwatch_log_group.cw-log-gp-api-gw]
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.cw-log-gp-api-gw.arn
     #destination_arn = "arn:aws:logs:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:log-group:API-Gateway-Access-Logs/${aws_api_gateway_rest_api.rest-api-acme-shoes.name}"
-    format          = "$context.identity.sourceIp,$context.identity.caller,$context.identity.user,$context.identity.apiKeyId,$context.identity.userAgent,$context.requestTime,$context.httpMethod,$context.resourcePath,$context.protocol,$context.status,$context.wafResponseCode,$context.responseLength,$context.requestId,$context.extendedRequestId"
+    format = "$context.identity.sourceIp,$context.identity.caller,$context.identity.user,$context.identity.apiKeyId,$context.identity.userAgent,$context.requestTime,$context.httpMethod,$context.resourcePath,$context.protocol,$context.status,$context.wafResponseCode,$context.responseLength,$context.requestId,$context.extendedRequestId"
   }
   tags = {
     Name = "${local.default_name}-api-gateway-stage-dev"

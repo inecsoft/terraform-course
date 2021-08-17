@@ -1,8 +1,8 @@
 #-----------------------------------------------------------------------------------------------
 resource "aws_iam_role" "ec2-spot-fleet-tagging-role" {
-    name               = "${local.default_name}-ec2-spot-fleet"
-    path               = "/"
-    assume_role_policy = <<POLICY
+  name               = "${local.default_name}-ec2-spot-fleet"
+  path               = "/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -33,7 +33,7 @@ resource "aws_iam_policy_attachment" "ec2-spot-fleet-tagging-role-policy-attachm
   policy_arn = aws_iam_policy.ec2-spot-fleet-tagging-role-policy.arn
   groups     = []
   users      = []
-  roles      = [ aws_iam_role.ec2-spot-fleet-tagging-role.name ]   
+  roles      = [aws_iam_role.ec2-spot-fleet-tagging-role.name]
 }
 #-----------------------------------------------------------------------------------------------
 resource "aws_iam_policy" "ec2-spot-fleet-tagging-role-policy" {

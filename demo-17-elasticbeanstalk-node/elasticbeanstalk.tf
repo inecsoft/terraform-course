@@ -12,8 +12,8 @@ resource "aws_elastic_beanstalk_application" "app" {
 #----------------------------------------------------------------------------------------
 resource "aws_elastic_beanstalk_environment" "app-prod" {
   name                = "app-prod"
-  application         = "${aws_elastic_beanstalk_application.app.name}"
-  solution_stack_name = "64bit Amazon Linux 2018.03 v4.10.2 running Node.js"   
+  application         = aws_elastic_beanstalk_application.app.name
+  solution_stack_name = "64bit Amazon Linux 2018.03 v4.10.2 running Node.js"
 
   setting {
     namespace = "aws:ec2:vpc"
@@ -109,22 +109,22 @@ resource "aws_elastic_beanstalk_environment" "app-prod" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RDS_USERNAME"
-    value     = "${aws_db_instance.mariadb.username}"
+    value     = aws_db_instance.mariadb.username
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RDS_PASSWORD"
-    value     = "${aws_db_instance.mariadb.password}"
+    value     = aws_db_instance.mariadb.password
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RDS_DATABASE"
-    value     = "${aws_db_instance.mariadb.name}"
+    value     = aws_db_instance.mariadb.name
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RDS_HOSTNAME"
-    value     = "${aws_db_instance.mariadb.endpoint}"
+    value     = aws_db_instance.mariadb.endpoint
   }
 }
 

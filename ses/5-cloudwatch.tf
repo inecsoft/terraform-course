@@ -1,19 +1,19 @@
 #-------------------------------------------------------------------------------------------------------------------------
 resource "aws_cloudwatch_metric_alarm" "cwm-alarm" {
-    alarm_name          = "${local.default_name}-High daily Email Deliveries"
-    comparison_operator = "GreaterThanOrEqualToThreshold"
-    evaluation_periods  = "1"
-    metric_name         = "High daily Email Delivery"
-    namespace           = "AWS/SES"
-    period              = "86400"
-    statistic           = "Sum"
-    threshold           = "100.0"
-    alarm_description   = "Sum total of email delivery for a day"
-    alarm_actions       = [aws_sns_topic.sns-topic-ses-notification.arn]
+  alarm_name          = "${local.default_name}-High daily Email Deliveries"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "High daily Email Delivery"
+  namespace           = "AWS/SES"
+  period              = "86400"
+  statistic           = "Sum"
+  threshold           = "100.0"
+  alarm_description   = "Sum total of email delivery for a day"
+  alarm_actions       = [aws_sns_topic.sns-topic-ses-notification.arn]
 
-    tags = {
-        Name = "${local.default_name}-High daily Email Deliveries"
-    }
+  tags = {
+    Name = "${local.default_name}-High daily Email Deliveries"
+  }
 }
 #-------------------------------------------------------------------------------------------------------------------------
 #it helps to include your limits and notes within this description field since this will appear in
@@ -21,20 +21,20 @@ resource "aws_cloudwatch_metric_alarm" "cwm-alarm" {
 # alerts set up. bounce rate below 10%
 #-------------------------------------------------------------------------------------------------------------------------
 resource "aws_cloudwatch_metric_alarm" "cwm-alarm-ses-bounce-rate" {
-    alarm_name          = "${local.default_name}-cwm-alarm-ses-bounce-rate"
-    comparison_operator = "GreaterThanOrEqualToThreshold"
-    evaluation_periods  = "1"
-    metric_name         = "Reputation.BounceRate"
-    namespace           = "AWS/SES"
-    period              = "300"
-    statistic           = "Average"
-    threshold           = "0.02"
-    alarm_description   = "Bounce rate should be under 5%."
-    alarm_actions       = [aws_sns_topic.sns-topic-ses-notification.arn]
+  alarm_name          = "${local.default_name}-cwm-alarm-ses-bounce-rate"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "Reputation.BounceRate"
+  namespace           = "AWS/SES"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "0.02"
+  alarm_description   = "Bounce rate should be under 5%."
+  alarm_actions       = [aws_sns_topic.sns-topic-ses-notification.arn]
 
-    tags = {
-        Name = "${local.default_name}-ses-bounce-rate"
-    }
+  tags = {
+    Name = "${local.default_name}-ses-bounce-rate"
+  }
 }
 
 #-------------------------------------------------------------------------------------------------------------------------
@@ -43,20 +43,20 @@ resource "aws_cloudwatch_metric_alarm" "cwm-alarm-ses-bounce-rate" {
 #if we need to make adjustments to our message. complaint rate below 1/10th of a percent.
 #-------------------------------------------------------------------------------------------------------------------------
 resource "aws_cloudwatch_metric_alarm" "cwm-alarm-ses-complaint-rate" {
-    alarm_name          = "${local.default_name}-cwm-alarm-ses-complaint-rate"
-    comparison_operator = "GreaterThanOrEqualToThreshold"
-    evaluation_periods  = "1"
-    metric_name         = "Reputation.ComplaintRate"
-    namespace           = "AWS/SES"
-    period              = "300"
-    statistic           = "Average"
-    threshold           = "0.0005"
-    alarm_description   = "complaint rate should be under 0.1%."
-    alarm_actions       = [aws_sns_topic.sns-topic-ses-notification.arn]
+  alarm_name          = "${local.default_name}-cwm-alarm-ses-complaint-rate"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "Reputation.ComplaintRate"
+  namespace           = "AWS/SES"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "0.0005"
+  alarm_description   = "complaint rate should be under 0.1%."
+  alarm_actions       = [aws_sns_topic.sns-topic-ses-notification.arn]
 
-    tags = {
-        Name = "${local.default_name}-ses-complaint-rate"
-    }
+  tags = {
+    Name = "${local.default_name}-ses-complaint-rate"
+  }
 }
 #-------------------------------------------------------------------------------------------------------------------------
 # the cloud watch log have to be the same name of the lambda resouce

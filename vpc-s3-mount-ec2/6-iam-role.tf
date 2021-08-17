@@ -80,7 +80,7 @@ EOF
 resource "aws_iam_policy_attachment" "iam-ec2-role-policy-attach" {
   name       = "${local.default_name}-iam-ec2-role-policy-attach"
   users      = []
-  roles      = [ aws_iam_role.iam-ec2-role.name ]
+  roles      = [aws_iam_role.iam-ec2-role.name]
   groups     = []
   policy_arn = aws_iam_policy.iam-role-policy.arn
 }

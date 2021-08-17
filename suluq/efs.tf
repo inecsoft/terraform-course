@@ -10,36 +10,36 @@ resource "aws_efs_file_system" "suluq_vpc_efs" {
 
   #provisioned_throughput_in_mibps = 200
   #throughput_mode = "provisioned"
-  
+
   lifecycle_policy {
 
-    transition_to_ia  = "AFTER_90_DAYS" 
+    transition_to_ia = "AFTER_90_DAYS"
   }
-  
-  encrypted             = true
+
+  encrypted = true
 
   tags = {
-        Name = "${local.default_name}-vpc_EFS Shared Data"
+    Name = "${local.default_name}-vpc_EFS Shared Data"
   }
 }
 
 #-----------------------------------------------------------------------
 resource "aws_efs_mount_target" "suluq_inchora_vpc_efsmounttarget" {
-    count = 3
-    file_system_id  = "${aws_efs_file_system.suluq_vpc_efs.id}"
-    subnet_id       =  element(module.vpc.public_subnets, count.index)
-    security_groups = ["${aws_security_group.suluq_vpc_sg-efs.id}"]
+  count           = 3
+  file_system_id  = aws_efs_file_system.suluq_vpc_efs.id
+  subnet_id       = element(module.vpc.public_subnets, count.index)
+  security_groups = ["${aws_security_group.suluq_vpc_sg-efs.id}"]
 }
 
 #-----------------------------------------------------------------------
 data "template_file" "suluq_vpc_efsscript" {
-  template = "${file("scripts/efs.tpl")}"
-    vars = {
-        efs_id = "${aws_efs_file_system.suluq_vpc_efs.id}"
+  template = file("scripts/efs.tpl")
+  vars = {
+    efs_id = "${aws_efs_file_system.suluq_vpc_efs.id}"
   }
 }
 #-----------------------------------------------------------------------
 output "efs-id" {
-  value = "${aws_efs_file_system.suluq_vpc_efs.id}"
+  value = aws_efs_file_system.suluq_vpc_efs.id
 }
 #-----------------------------------------------------------------------

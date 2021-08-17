@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function" {
-  function_name = "${local.default_name}-${var.lambda_function_name}" 
+  function_name = "${local.default_name}-${var.lambda_function_name}"
 
   # The bucket name as created earlier with "aws s3api create-bucket"
   s3_bucket = aws_s3_bucket.s3-bucket.id
@@ -9,10 +9,10 @@ resource "aws_lambda_function" "lambda-function" {
   # "main" is the filename within the zip file (main.js) and "handler"
   # is the name of the property under which the handler function was
   # exported in that file.
-  handler          = "main.handler"
-  runtime          = "nodejs12.x"
-  memory_size      = 128
-  timeout          = 3
+  handler     = "main.handler"
+  runtime     = "nodejs12.x"
+  memory_size = 128
+  timeout     = 3
 
   role = aws_iam_role.lambda-exec.arn
 
@@ -31,20 +31,20 @@ resource "aws_lambda_function" "lambda-function" {
       "dbInstanceIdentifier", var.credentials.dbInstanceIdentifier,
       "region", var.AWS_REGION,
       "dynamodb", module.dynamodb_table.this_dynamodb_table_id
-    )     
+    )
   }
 
   depends_on = [aws_s3_bucket_object.s3-lambda-content-bucket-object]
-  
+
   vpc_config {
     subnet_ids         = module.vpc.public_subnets
     security_group_ids = [aws_security_group.lambda-sg.id]
   }
-  
+
   tags = {
     Name = "${local.default_name}-function"
   }
-   
+
   #depends_on = [aws_efs_mount_target.alpha]
 }
 #----------------------------------------------------------------------------------------
@@ -86,9 +86,9 @@ data "aws_iam_policy" "iam-role-policy-lambda-vpc" {
 resource "aws_iam_policy_attachment" "iam-role-policy-attach" {
   name       = "${local.default_name}-iam-role-policy-attach"
   users      = []
-  roles      = [aws_iam_role.lambda-exec.name ]
+  roles      = [aws_iam_role.lambda-exec.name]
   groups     = []
-  policy_arn =  aws_iam_policy.iam-lambda-custom-policy.arn 
+  policy_arn = aws_iam_policy.iam-lambda-custom-policy.arn
 }
 #----------------------------------------------------------------------------------------
 #DynamoDBCrudPolicy

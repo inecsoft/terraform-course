@@ -16,7 +16,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "codedeployasg"))}"
+  default_name = join("-", list(terraform.workspace, "codedeployasg"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
@@ -41,7 +41,7 @@ data "aws_caller_identity" "current" {}
 # The map here can come from other supported configurations
 # like locals, resource attribute, map() built-in, etc.
 #---------------------------------------------------------
-variable "instance_type"{
+variable "instance_type" {
   default = "t2.micro"
 }
 #------------------------------------------------------------------------

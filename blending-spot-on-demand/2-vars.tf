@@ -16,7 +16,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "spot-fleet"))}"
+  default_name = join("-", list(terraform.workspace, "spot-fleet"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 

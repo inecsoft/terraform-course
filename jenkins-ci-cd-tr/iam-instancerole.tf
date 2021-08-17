@@ -1,8 +1,8 @@
 #--------------------------------------------------------------------------------------------------
 resource "aws_iam_role" "InstanceRole" {
-    name               = "${local.default_name}-InstanceRole"
-    path               = "/"
-    assume_role_policy = <<POLICY
+  name               = "${local.default_name}-InstanceRole"
+  path               = "/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -19,9 +19,9 @@ POLICY
 }
 #--------------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy" "InstanceRole-policy" {
-    name   = "${local.default_name}-InstanceRole-policy"
-    role   = aws_iam_role.InstanceRole.name
-    policy = <<POLICY
+  name   = "${local.default_name}-InstanceRole-policy"
+  role   = aws_iam_role.InstanceRole.name
+  policy = <<POLICY
 {
   "Statement": [
     {
@@ -43,7 +43,7 @@ POLICY
 resource "aws_iam_instance_profile" "CodeDeployInstanceProfile" {
   name = "${local.default_name}-CodeDeployInstanceProfile"
   path = "/"
-  role = aws_iam_role.InstanceRole.name 
+  role = aws_iam_role.InstanceRole.name
 }
 #------------------------------------------------------------------------------
 

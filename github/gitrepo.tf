@@ -10,10 +10,10 @@ resource "github_repository_webhook" "webhook" {
 
 
   configuration {
-    url          = "http://google.com" 
+    url          = "http://google.com"
     content_type = "json"
     insecure_ssl = false
-#    secret       = local.webhook_secret
+    #    secret       = local.webhook_secret
   }
   active = false
   events = ["push"]

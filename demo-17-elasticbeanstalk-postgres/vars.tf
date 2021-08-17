@@ -24,14 +24,14 @@ variable "PATH_TO_PUBLIC_KEY" {
 }
 
 #-----------------------------------------
-variable "RDS_DATABASE_NAME"{
-  default  = "mydatabase"
+variable "RDS_DATABASE_NAME" {
+  default = "mydatabase"
 }
 variable "RDS_USERNAME" {
   default = "ivanpedro"
 }
 variable "RDS_PASSWORD" {
-  default  = "*cubasalsa123!!!"
+  default = "*cubasalsa123!!!"
 }
 #find out instance identifier
 

@@ -9,7 +9,7 @@ resource "azurerm_resource_group" "vmss" {
   name     = "${local.default_name}-${var.resource_group_name}"
   location = var.location
 
-  tags =  {
+  tags = {
     environment = "codelab"
   }
 }
@@ -20,7 +20,7 @@ resource "azurerm_virtual_network" "vmss" {
   location            = var.location
   resource_group_name = azurerm_resource_group.vmss.name
 
-  tags =  {
+  tags = {
     environment = "codelab"
   }
 }
@@ -33,13 +33,13 @@ resource "azurerm_subnet" "vmss" {
 }
 #---------------------------------------------------------------------------------
 resource "azurerm_public_ip" "vmss" {
-  name                         = "${local.default_name}-vmss-public-ip"
-  location                     = var.location
-  resource_group_name          = azurerm_resource_group.vmss.name
-  allocation_method            = "Static"
-  domain_name_label            = azurerm_resource_group.vmss.name
+  name                = "${local.default_name}-vmss-public-ip"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.vmss.name
+  allocation_method   = "Static"
+  domain_name_label   = azurerm_resource_group.vmss.name
 
-  tags =  {
+  tags = {
     environment = "codelab"
   }
 }
@@ -113,14 +113,14 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
 
   sku {
     #name     = "Standard_DS1_v2"
-    name     = "Standard_D2_v3"
-    tier     = "Standard"
+    name = "Standard_D2_v3"
+    tier = "Standard"
     #capacity = 2
     capacity = 1
   }
 
   storage_profile_image_reference {
-    id=data.azurerm_image.image.id
+    id = data.azurerm_image.image.id
   }
 
   storage_profile_os_disk {
@@ -131,10 +131,10 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
   }
 
   storage_profile_data_disk {
-    lun          = 0
-    caching        = "ReadWrite"
-    create_option  = "Empty"
-    disk_size_gb   = 10
+    lun           = 0
+    caching       = "ReadWrite"
+    create_option = "Empty"
+    disk_size_gb  = 10
   }
 
   os_profile {
@@ -160,10 +160,10 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
       name                                   = "${local.default_name}-IPConfiguration"
       subnet_id                              = azurerm_subnet.vmss.id
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bpepool.id]
-      primary = true
+      primary                                = true
     }
   }
-  
+
   tags = {
     environment = "codelab"
   }

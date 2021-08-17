@@ -33,11 +33,11 @@
 # create an elastic load balancer
 #-------------------------------------------------------------------------------
 resource "aws_elb" "example" {
-  name            = "terraform-asg-example"
-#  subnets         = [aws_subnet.main-public-1.id, aws_subnet.main-public-2.id, aws_subnet.main-3.id]
+  name = "terraform-asg-example"
+  #  subnets         = [aws_subnet.main-public-1.id, aws_subnet.main-public-2.id, aws_subnet.main-3.id]
   subnets         = ["${aws_subnet.my_vpc_subnet_public[0].id}", "${aws_subnet.my_vpc_subnet_public[1].id}"]
   security_groups = [aws_security_group.elb.id]
- 
+
   listener {
     instance_port     = 80
     instance_protocol = "http"
@@ -59,7 +59,7 @@ resource "aws_elb" "example" {
   connection_draining         = true
   connection_draining_timeout = 400
 
-   tags = {
+  tags = {
     Name = "my-elb"
   }
 }

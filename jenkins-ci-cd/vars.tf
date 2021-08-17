@@ -40,7 +40,7 @@ variable "user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "cmrs"))}"
+  default_name = join("-", list(terraform.workspace, "cmrs"))
 }
 #-------------------------------------------------------------------
 variable "ses_bucket" {

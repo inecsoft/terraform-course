@@ -3,16 +3,16 @@
 #--------------------------------------------------------------------------------------
 resource "aws_iot_thing" "iot-thing" {
   for_each = toset(var.iot-name)
-  name = "${local.default_name}-${each.key}"
+  name     = "${local.default_name}-${each.key}"
 }
 #--------------------------------------------------------------------------------------
 # Create iot topic rule that forwards all iot messages to sns
 #--------------------------------------------------------------------------------------
 resource "aws_iot_topic_rule" "iot-topic-rule" {
-  name = "${local.default_name}_iot_topic_rule"
-  enabled = true
-  sql_version =  "2016-03-23"
-  sql = "SELECT * FROM 'topic/beam'"
+  name        = "${local.default_name}_iot_topic_rule"
+  enabled     = true
+  sql_version = "2016-03-23"
+  sql         = "SELECT * FROM 'topic/beam'"
 
   sns {
     message_format = "RAW"

@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "s3-web-content-bucket" {
   # provisioner "local-exec" {
   #   command = "aws s3 cp web/index.html s3://${aws_s3_bucket.s3-web-content-bucket.id}/index.html "
   # }
-  
+
   # server_side_encryption_configuration {
   #   rule {
   #     apply_server_side_encryption_by_default {
@@ -58,7 +58,7 @@ resource "aws_s3_bucket_policy" "s3-web-content-bucket-policy" {
 POLICY
 }
 variable "metadata" {
-  type = map
+  type = map(any)
   default = {
     content-type = "text/html"
   }
@@ -72,9 +72,9 @@ resource "aws_s3_bucket_object" "s3-web-content-bucket-object" {
   key    = "index.html"
   bucket = aws_s3_bucket.s3-web-content-bucket.id
   #content    = "web/index.html"
-  source = "web/index.html"
+  source       = "web/index.html"
   content_type = "text/html"
- 
+
 
   #Encrypting with KMS Key
   #kms_key_id = aws_kms_key.key.arn

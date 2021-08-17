@@ -12,42 +12,42 @@ resource "aws_apigatewayv2_api" "apigatewayv2-api" {
 #-------------------------------------------------------------------------------------------------------------------
 #[for i in toset([ 1,2,3 ]) : format("$%s",i)]
 resource "aws_apigatewayv2_route" "apigatewayv2-route-connect" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "$connect"
-  authorization_type  = "NONE"
+  api_id             = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key          = "$connect"
+  authorization_type = "NONE"
   #authorizer_id       = aws_apigatewayv2_authorizer.apigatewayv2-authorizer.id
-  target              = aws_lambda_function.lambda-function-connect.function_name
+  target = aws_lambda_function.lambda-function-connect.function_name
 }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_route" "apigatewayv2-route-disconnect" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "$disconnect"
-  authorization_type  = "NONE"
+  api_id             = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key          = "$disconnect"
+  authorization_type = "NONE"
   #authorizer_id       = aws_apigatewayv2_authorizer.apigatewayv2-authorizer.id
-  target              = aws_lambda_function.lambda-function-disconnect.function_name
+  target = aws_lambda_function.lambda-function-disconnect.function_name
 }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_route" "apigatewayv2-route-default" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "$default"
-  authorization_type  = "NONE"
+  api_id             = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key          = "$default"
+  authorization_type = "NONE"
   #authorizer_id       = aws_apigatewayv2_authorizer.apigatewayv2-authorizer.id
-  target              = aws_lambda_function.lambda-function-default.function_name
+  target = aws_lambda_function.lambda-function-default.function_name
 }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_integration" "apigatewayv2-integration" {
-  api_id                    = aws_apigatewayv2_api.apigatewayv2-api.id
-  description               = "Lambda integration with api websocket"
-  integration_type          = "AWS_PROXY"
-  
+  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
+  description      = "Lambda integration with api websocket"
+  integration_type = "AWS_PROXY"
+
   #The type of the network connection to the integration endpoint.
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
-  
-  integration_method        = "POST"
+
+  integration_method = "POST"
   #The URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXY
-  integration_uri           = aws_lambda_function.lambda-function-connect.invoke_arn
-  passthrough_behavior      = "WHEN_NO_MATCH"
+  integration_uri      = aws_lambda_function.lambda-function-connect.invoke_arn
+  passthrough_behavior = "WHEN_NO_MATCH"
 }
 #-------------------------------------------------------------------------------------------------------------------
 #There are two types of Lambda authorizers:
@@ -66,7 +66,7 @@ resource "aws_apigatewayv2_authorizer" "apigatewayv2-authorizer" {
   identity_sources = ["route.request.header.Auth"]
 
   #identity_sources = ["method.request.header.Authorization"]
-  
+
 }
 #-------------------------------------------------------------------
 
@@ -80,12 +80,12 @@ resource "aws_apigatewayv2_authorizer" "apigatewayv2-authorizer" {
 # }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
-  api_id = aws_apigatewayv2_api.apigatewayv2-api.id
+  api_id      = aws_apigatewayv2_api.apigatewayv2-api.id
   description = "stage for production"
-  name   = "prod"
+  name        = "prod"
 
   tags = {
-    Name =  "${local.default_name}-prod-stage"
+    Name = "${local.default_name}-prod-stage"
   }
 }
 #-------------------------------------------------------------------
@@ -100,6 +100,6 @@ resource "aws_apigatewayv2_deployment" "apigatewayv2-deployment" {
 #-------------------------------------------------------------------
 output "api-endpoint" {
   description = "The URI of the API"
-  value       = aws_apigatewayv2_api.apigatewayv2-api.api_endpoint 
+  value       = aws_apigatewayv2_api.apigatewayv2-api.api_endpoint
 }
 #-------------------------------------------------------------------

@@ -16,7 +16,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "containers"))}"
+  default_name = join("-", list(terraform.workspace, "containers"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
@@ -41,7 +41,7 @@ data "aws_caller_identity" "current" {}
 # The map here can come from other supported configurations
 # like locals, resource attribute, map() built-in, etc.
 #---------------------------------------------------------
-variable "instance_type"{
+variable "instance_type" {
   default = "t2.nano"
 }
 #------------------------------------------------------------------------
@@ -51,16 +51,16 @@ variable "profile" {
 #------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "_%@\""
   #override_special = "%\"@_"
 }
 #echo random_password.password.result | terraform console
 #----------------------------------------------------------------------------
 resource "random_string" "random" {
-  length = 2
-  special = false 
+  length  = 2
+  special = false
 }
 #----------------------------------------------------------------------------
 locals {
@@ -68,7 +68,7 @@ locals {
 }
 #----------------------------------------------------------------------------
 resource "random_integer" "integer" {
-  min     = 4
-  max     = 6
+  min = 4
+  max = 6
 }
 #----------------------------------------------------------------------------

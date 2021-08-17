@@ -1,8 +1,8 @@
 #----------------------------------------------------------------------------------------------------------
 resource "aws_iam_role" "CodeDeployTrustRole" {
-    name               = "${local.default_name}-CodeDeployTrustRole"
-    path               = "/"
-    assume_role_policy = <<POLICY
+  name               = "${local.default_name}-CodeDeployTrustRole"
+  path               = "/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -20,9 +20,9 @@ POLICY
 }
 #----------------------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy" "CodeDeployTrustRole-Policy" {
-    name   = "${local.default_name}-CodeDeployPolicy"
-    role   = aws_iam_role.CodeDeployTrustRole.name 
-    policy = <<POLICY
+  name   = "${local.default_name}-CodeDeployPolicy"
+  role   = aws_iam_role.CodeDeployTrustRole.name
+  policy = <<POLICY
 {
   "Statement": [
     {

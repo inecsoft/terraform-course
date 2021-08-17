@@ -9,7 +9,7 @@ provider "github" {
   #token        = var.github_token
   token        = file(" ~/.ssh/webhooktoken")
   organization = var.github_organization
-  individual    =  false
+  individual   = false
 }
 
 #---------------------------------------------------------

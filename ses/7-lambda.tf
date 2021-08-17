@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function" {
-  function_name = "${local.default_name}-lambda-ses-bounce-handler" 
+  function_name = "${local.default_name}-lambda-ses-bounce-handler"
 
   # The bucket name as created earlier with "aws s3api create-bucket"
   s3_bucket = aws_s3_bucket.s3-bucket.id
@@ -31,16 +31,16 @@ resource "aws_lambda_function" "lambda-function" {
   # }
 
   depends_on = [aws_s3_bucket_object.s3-lambda-content-bucket-object]
-  
+
   # vpc_config {
   #   subnet_ids         = module.vpc.public_subnets
   #   security_group_ids = [aws_security_group.lambda-sg.id]
   # }
-  
+
   tags = {
     Name = "${local.default_name}-lambda-ses-bounce-handler"
   }
-   
+
   #depends_on = [aws_efs_mount_target.alpha]
 }
 #----------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ EOF
 resource "aws_iam_policy_attachment" "lambda-role-policy-attach-1" {
   name       = "${local.default_name}-role-policy-attachment-1"
   users      = []
-  roles      = [ aws_iam_role.lambda_exec.name ]
+  roles      = [aws_iam_role.lambda_exec.name]
   groups     = []
   policy_arn = aws_iam_policy.lambda-role-policy-basicexecution.arn
 }
@@ -79,7 +79,7 @@ resource "aws_iam_policy_attachment" "lambda-role-policy-attach-1" {
 resource "aws_iam_policy_attachment" "lambda-role-policy-attach-2" {
   name       = "${local.default_name}-role-policy-attachment-2"
   users      = []
-  roles      = [ aws_iam_role.lambda_exec.name ]
+  roles      = [aws_iam_role.lambda_exec.name]
   groups     = []
   policy_arn = aws_iam_policy.lambda-role-policy-SESExecution.arn
 }
@@ -181,7 +181,7 @@ POLICY
 resource "aws_iam_policy_attachment" "lambda-role-policy-attach-sns" {
   name       = "${local.default_name}-role-policy-attachment-sns"
   users      = []
-  roles      = [ aws_iam_role.lambda_exec.name ]
+  roles      = [aws_iam_role.lambda_exec.name]
   groups     = []
   policy_arn = aws_iam_policy.lambda-role-policy-snsExecution.arn
 }

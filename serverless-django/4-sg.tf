@@ -12,11 +12,11 @@ resource "aws_security_group" "proxy-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-    
+
   ingress {
-    from_port       = 5432 
-    to_port         = 5432
-    protocol        = "tcp"
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -46,15 +46,15 @@ resource "aws_security_group" "allow-db-access" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.host-bastion-sg.id, aws_security_group.proxy-sg.id] 
+    security_groups = [aws_security_group.host-bastion-sg.id, aws_security_group.proxy-sg.id]
     # allowing access from our example instance
   }
-  
+
   ingress {
-    from_port       = 5432 
+    from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
-    security_groups = [aws_security_group.host-bastion-sg.id, aws_security_group.proxy-sg.id] 
+    security_groups = [aws_security_group.host-bastion-sg.id, aws_security_group.proxy-sg.id]
     # allowing access from our example instance
   }
 
@@ -65,7 +65,7 @@ resource "aws_security_group" "allow-db-access" {
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
   }
-  
+
   tags = {
     Name = "${local.default_name}-allow-db-access"
   }

@@ -16,7 +16,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("_", list(terraform.workspace, "iot"))}"
+  default_name = join("_", list(terraform.workspace, "iot"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
@@ -47,9 +47,9 @@ data "aws_caller_identity" "current" {}
 # Please include country code: ex. +18885555555
 #---------------------------------------------------------
 variable "phone_number" {
-  type = string
+  type    = string
   default = "+447518527690"
-} 
+}
 #---------------------------------------------------------
 # A list of Iot names. For each name an aws iot thing will be created.
 #---------------------------------------------------------

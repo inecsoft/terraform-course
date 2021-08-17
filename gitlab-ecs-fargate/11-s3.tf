@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------
 resource "aws_s3_bucket" "state-bucket" {
-  bucket = "gitlab-state-bucket"
-  acl    = "private"
+  bucket        = "gitlab-state-bucket"
+  acl           = "private"
   force_destroy = true
 
   lifecycle {
@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "state-bucket" {
   }
 
   tags = {
-    Name  = "${local.default_name}-state-bucket"
+    Name = "${local.default_name}-state-bucket"
   }
 }
 #-----------------------------------------------------------------------

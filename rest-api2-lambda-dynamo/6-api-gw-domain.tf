@@ -3,9 +3,9 @@
 #-------------------------------------------------------------------
 # resource "aws_api_gateway_domain_name" "api-gateway-domain-name" {
 #   domain_name = var.zone
-  
+
 #   depends_on = [ aws_acm_certificate.acm-certificate ]
-  
+
 #   certificate_arn = aws_acm_certificate.acm-certificate.arn
 
 #   tags = {
@@ -21,10 +21,10 @@ output "api-gateway-cloudfront_domain_name" {
 #Regional (ACM Certificate)
 #-------------------------------------------------------------------
 resource "aws_api_gateway_domain_name" "api-gateway-domain-name" {
-  domain_name = var.zone
+  domain_name              = var.zone
   regional_certificate_arn = aws_acm_certificate_validation.acm-certificate-validation.certificate_arn
 
-  depends_on = [ aws_acm_certificate.acm-certificate ]
+  depends_on = [aws_acm_certificate.acm-certificate]
 
   endpoint_configuration {
     types = ["REGIONAL"]

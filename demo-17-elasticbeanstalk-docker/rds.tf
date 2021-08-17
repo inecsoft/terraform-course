@@ -12,10 +12,10 @@ resource "aws_db_parameter_group" "postgresdb-parameters" {
   family      = "postgres11"
   description = "postgresdb parameter group"
 
-#  parameter {
-#    name  = "max_allowed_packet"
-#    value = "16777216"
-#  }
+  #  parameter {
+  #    name  = "max_allowed_packet"
+  #    value = "16777216"
+  #  }
 }
 
 #---------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ resource "aws_db_instance" "postgresdb" {
   storage_type              = "gp2"
   backup_retention_period   = 30                                          # how long you’re going to keep your backups
   availability_zone         = aws_subnet.main-private-1.availability_zone # prefered AZ
-  final_snapshot_identifier = "postgresdb-final-snapshot"                    # final snapshot when executing terraform destroy
+  final_snapshot_identifier = "postgresdb-final-snapshot"                 # final snapshot when executing terraform destroy
   tags = {
     Name = "postgresdb-instance"
   }

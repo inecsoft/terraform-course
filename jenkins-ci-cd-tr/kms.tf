@@ -1,12 +1,12 @@
 #--------------------------------------------------------------------
 resource "aws_kms_key" "kms" {
-    description              = "Default master key that protects my S3 objects when no other key is defined"
-    deletion_window_in_days = 10
-    customer_master_key_spec = "SYMMETRIC_DEFAULT"
-    enable_key_rotation      = true
-    is_enabled               = true
-    key_usage                = "ENCRYPT_DECRYPT"
-    policy                   = <<POLICY
+  description              = "Default master key that protects my S3 objects when no other key is defined"
+  deletion_window_in_days  = 10
+  customer_master_key_spec = "SYMMETRIC_DEFAULT"
+  enable_key_rotation      = true
+  is_enabled               = true
+  key_usage                = "ENCRYPT_DECRYPT"
+  policy                   = <<POLICY
 {
     "Version": "2012-10-17",
     "Id": "auto-s3-2",
@@ -48,10 +48,10 @@ resource "aws_kms_key" "kms" {
     ]
 }
 POLICY
-   
-   tags     = {
-     Env = terraform.workspace
-   }
+
+  tags = {
+    Env = terraform.workspace
+  }
 }
 #------------------------------------------------------------------------------------
 #terraform import aws_kms_alias.kms-alias alias/aws/s3

@@ -29,14 +29,14 @@ resource "aws_launch_configuration" "example" {
 resource "aws_autoscaling_group" "example" {
   launch_configuration = aws_launch_configuration.example.id
   availability_zones   = data.aws_availability_zones.all.names
-  vpc_zone_identifier       = [aws_subnet.my_vpc_subnet_public[0].id, aws_subnet.my_vpc_subnet_public[1].id, aws_subnet.my_vpc_subnet_public[2].id]
+  vpc_zone_identifier  = [aws_subnet.my_vpc_subnet_public[0].id, aws_subnet.my_vpc_subnet_public[1].id, aws_subnet.my_vpc_subnet_public[2].id]
 
   min_size = 1
-  max_size = 2 
+  max_size = 2
 
   load_balancers    = [aws_elb.example.name]
   health_check_type = "ELB"
-  force_delete              = true
+  force_delete      = true
 
   tag {
     key                 = "Name"

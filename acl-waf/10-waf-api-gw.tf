@@ -40,7 +40,7 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
       sampled_requests_enabled   = true
     }
   }
-  
+
   rule {
     name     = "AWS-AWSManagedRulesCommonRuleSet"
     priority = 2
@@ -88,7 +88,7 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
       sampled_requests_enabled   = true
     }
   }
-    
+
   rule {
     name     = "AWS-AWSManagedRulesSQLiRuleSet"
     priority = 1
@@ -100,7 +100,7 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
 
     statement {
 
-    managed_rule_group_statement {
+      managed_rule_group_statement {
         name        = "AWSManagedRulesSQLiRuleSet"
         vendor_name = "AWS"
       }
@@ -112,7 +112,7 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
       sampled_requests_enabled   = true
     }
   }
-  
+
   visibility_config {
     cloudwatch_metrics_enabled = true
     metric_name                = "${local.default_name}-managed-rule-wafv2-web-acl"
@@ -121,7 +121,7 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
 
 
   tags = {
-    Name  = "${local.default_name}-managed-rule-wafv2-web-acl"
+    Name        = "${local.default_name}-managed-rule-wafv2-web-acl"
     Environment = terraform.workspace
   }
 

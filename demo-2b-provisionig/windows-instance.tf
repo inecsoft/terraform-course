@@ -1,15 +1,15 @@
 #-----------------------------------------------------------------------------------------------------------------
 resource "aws_instance" "win-example" {
-  ami = "${lookup(var.WIN_AMIS, var.AWS_REGION)}"
+  ami           = lookup(var.WIN_AMIS, var.AWS_REGION)
   instance_type = "t2.micro"
   # the VPC subnet$
-  subnet_id = "${aws_subnet.main-public-1.id}"
+  subnet_id = aws_subnet.main-public-1.id
 
   security_groups = ["${aws_security_group.sg_win.id}"]
- 
+
   #vpc_security_group_ids = ["${aws_security_group.my_security_group.id}"]
 
-  key_name = "${aws_key_pair.mykey.key_name}"
+  key_name = aws_key_pair.mykey.key_name
 
   user_data = <<EOF
 
@@ -33,26 +33,26 @@ net start winrm
 EOF
 
   provisioner "file" {
-    source = "test.txt"
+    source      = "test.txt"
     destination = "C:/test.txt"
   }
 
- # connection {
- #   host = coalesce(self.public_ip, self.private_ip)
- #   type = "winrm"
- #   timeout = "20m"
- #   user = "${var.INSTANCE_USERNAME}"
- #   password = "${var.INSTANCE_PASSWORD}"
- # }
+  # connection {
+  #   host = coalesce(self.public_ip, self.private_ip)
+  #   type = "winrm"
+  #   timeout = "20m"
+  #   user = "${var.INSTANCE_USERNAME}"
+  #   password = "${var.INSTANCE_PASSWORD}"
+  # }
 
- tags = {
-   Name = "Windown instance"
+  tags = {
+    Name = "Windown instance"
   }
 }
 #-----------------------------------------------------------------------------------------------------------------
 output "ipaddress" {
-  value = "${aws_instance.win-example.public_ip}"
-  
+  value = aws_instance.win-example.public_ip
+
 }
 #-----------------------------------------------------------------------------------------------------------------
 

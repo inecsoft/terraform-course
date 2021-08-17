@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------------
 resource "aws_sns_topic" "sns-topic" {
-  name            = "${local.default_name}-backup-vault-events"
-  display_name    = "${local.default_name}-backup-vault-events"
+  name         = "${local.default_name}-backup-vault-events"
+  display_name = "${local.default_name}-backup-vault-events"
 
   tags = {
     Name = "${local.default_name}-backup-vault-events"
@@ -38,13 +38,13 @@ resource "aws_sns_topic_policy" "sns-topic-policy" {
 #-------------------------------------------------------------------------------
 resource "aws_sns_topic_subscription" "sns-topic" {
   #provider  = "aws.sns"
-  topic_arn = aws_sns_topic.sns-topic.arn
+  topic_arn                       = aws_sns_topic.sns-topic.arn
   confirmation_timeout_in_minutes = 5
   #not supported
   #protocol  = "email"
-  protocol  = "sms"
-  endpoint  = "+447518527690"
-  raw_message_delivery = false 
+  protocol             = "sms"
+  endpoint             = "+447518527690"
+  raw_message_delivery = false
 }
 #-------------------------------------------------------------------------------
 output "sns-topic" {

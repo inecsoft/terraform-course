@@ -1,7 +1,7 @@
 #declare variables
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "eu-west-1"
+  default = "eu-west-1"
 
 }
 #-------------------------------------------------------------------
@@ -12,14 +12,14 @@ variable "vpc_cidr" {
 }
 #---------------------------------------------------------------------
 variable "subnet_cidr_public" {
-  type = "list"
-  default = ["10.0.1.0/24","10.0.2.0/24","10.0.3.0/24"]
+  type    = list(string)
+  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 
 }
 #--------------------------------------------------------------------
 variable "subnet_cidr_private" {
-  type = "list"
-  default = ["10.0.101.0/24","10.0.102.0/24","10.0.103.0/24"]
+  type    = list(string)
+  default = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
 }
 
@@ -46,7 +46,7 @@ variable "elb_port" {
   description = "The port the ELB will use for HTTP requests"
   type        = number
   default     = 80
-}#declare variables
+} #declare variables
 
 
 #-------------------------------------------------------------------

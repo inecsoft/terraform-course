@@ -4,14 +4,14 @@ data "aws_kms_alias" "secret-kms-alias" {
 }
 #------------------------------------------------------------------------------
 resource "aws_kms_key" "kms-key" {
-  description             = "custom master key that protects RDS database volumes, ec2, secrect,etc." 
+  description             = "custom master key that protects RDS database volumes, ec2, secrect,etc."
   deletion_window_in_days = 10
   key_usage               = "ENCRYPT_DECRYPT"
   is_enabled              = true
   enable_key_rotation     = true
 
-  policy =   data.aws_iam_policy_document.kms-policy-doc.json
-  
+  policy = data.aws_iam_policy_document.kms-policy-doc.json
+
 
   tags = {
     Name = "${local.default_name}-kms-key"
@@ -98,10 +98,10 @@ data "aws_iam_policy_document" "kms-policy-doc" {
     resources = [
       "*",
     ]
-	  condition {
+    condition {
       test     = "StringEquals"
       variable = "kms:CallerAccount"
-      values   = [ data.aws_caller_identity.current.account_id ]
+      values   = [data.aws_caller_identity.current.account_id]
     }
     condition {
       test     = "StringEquals"
@@ -110,7 +110,7 @@ data "aws_iam_policy_document" "kms-policy-doc" {
     }
   }
   statement {
-    sid = "Allow direct access to key metadata to the account"
+    sid    = "Allow direct access to key metadata to the account"
     effect = "Allow"
     principals {
       type        = "AWS"

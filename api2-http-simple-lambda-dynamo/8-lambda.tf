@@ -1,27 +1,27 @@
 #----------------------------------------------------------------------------------------
-data archive_file lambda {
-  type        = "zip"
+data "archive_file" "lambda" {
+  type = "zip"
   #source_file = "code/app.py"
-  source_dir = "code" 
+  source_dir  = "code"
   output_path = "code.zip"
 }
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function" {
   function_name = "${local.default_name}-lambda-api"
-    
-  s3_bucket     = aws_s3_bucket.s3-lambda-content-bucket.id
-  
-  s3_key        = "${local.app_version}/code.zip"
-  handler       =  "app.handler"
-  timeout       = 3 
-  runtime       = "python3.6"
 
-  role          = aws_iam_role.lambda-exec.arn
-  
+  s3_bucket = aws_s3_bucket.s3-lambda-content-bucket.id
+
+  s3_key  = "${local.app_version}/code.zip"
+  handler = "app.handler"
+  timeout = 3
+  runtime = "python3.6"
+
+  role = aws_iam_role.lambda-exec.arn
+
   environment {
     variables = {
       #dynamodb_table_id  = aws_dynamodb_table.dynamodb-table.id
-      dynamodb_table_id   = module.dynamodb_table.this_dynamodb_table_id
+      dynamodb_table_id = module.dynamodb_table.this_dynamodb_table_id
     }
   }
 
@@ -31,7 +31,7 @@ resource "aws_lambda_function" "lambda-function" {
 
   vpc_config {
     # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
-    subnet_ids         = module.vpc.public_subnets 
+    subnet_ids         = module.vpc.public_subnets
     security_group_ids = [aws_security_group.sg-lambda.id]
   }
 
@@ -76,9 +76,9 @@ data "aws_iam_policy" "iam-role-policy-lambda-vpc" {
 resource "aws_iam_policy_attachment" "iam-role-policy-attach" {
   name       = "${local.default_name}-iam-role-policy-attach"
   users      = []
-  roles      = [aws_iam_role.lambda-exec.name ]
+  roles      = [aws_iam_role.lambda-exec.name]
   groups     = []
-  policy_arn =  aws_iam_policy.iam-lambda-logging.arn 
+  policy_arn = aws_iam_policy.iam-lambda-logging.arn
 }
 #----------------------------------------------------------------------------------------
 #DynamoDBCrudPolicy

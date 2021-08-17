@@ -23,24 +23,24 @@ POLICY
 }
 #----------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "static_site" {
-  bucket = var.bucket_name
-  acl = "public-read"
+  bucket        = var.bucket_name
+  acl           = "public-read"
   force_destroy = true
-  
+
   website {
     index_document = "default.html"
   }
   tags = {
-   Env = terraform.workspace
+    Env = terraform.workspace
   }
 }
 #----------------------------------------------------------------------------------------
 resource "aws_s3_bucket_object" "index" {
-  bucket = aws_s3_bucket.static_site.bucket
+  bucket                 = aws_s3_bucket.static_site.bucket
   server_side_encryption = "AES256"
-  key = "default.html"
-  source = "src/default.html"
-  content_type = "text/html"
+  key                    = "default.html"
+  source                 = "src/default.html"
+  content_type           = "text/html"
   # The filemd5() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
   # etag = md5(file("path/to/file"))

@@ -37,22 +37,22 @@ data "aws_iam_policy" "iam-policy-vpc-getorderstatus" {
 #--------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------
 resource "aws_iam_policy" "iam-policy-role-lambda-getorderstatus-kms" {
-  name = "${local.default_name}-iam-policy-role-lambda-getorderstatus-kms"
-  path = "/"
+  name   = "${local.default_name}-iam-policy-role-lambda-getorderstatus-kms"
+  path   = "/"
   policy = data.aws_iam_policy_document.iam-policy-doc-role-getorderstatus-kms.json
 }
 #--------------------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "iam-role-policy-lambda-getorderstatus-kms" {
   name       = "${local.default_name}-iam-role-policy-lambda-getorderstatus-kms"
   users      = []
-  roles      = [ aws_iam_role.iam-role-lambda-getorderstatus.name ]
+  roles      = [aws_iam_role.iam-role-lambda-getorderstatus.name]
   groups     = []
   policy_arn = aws_iam_policy.iam-policy-role-lambda-getorderstatus-kms.arn
 }
 #--------------------------------------------------------------------------------------
 data "aws_iam_policy_document" "iam-policy-doc-role-getorderstatus-kms" {
   statement {
-    sid = "${var.stage_name}IamPolicyDocRolegetorderstatuskms"
+    sid    = "${var.stage_name}IamPolicyDocRolegetorderstatuskms"
     effect = "Allow"
     actions = [
       "kms:Decrypt"

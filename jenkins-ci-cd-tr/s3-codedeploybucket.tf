@@ -3,13 +3,13 @@
 #make sure if you change the name of the bucket change the police too.
 #--------------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "jenkins-codedeploybucket" {
-    bucket = "${local.default_name}-jenkins-codedeploybucket"
-    acl    = "private"
- 
-    versioning {
-      enabled = true
-    }
-    policy = <<POLICY
+  bucket = "${local.default_name}-jenkins-codedeploybucket"
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -31,9 +31,9 @@ resource "aws_s3_bucket" "jenkins-codedeploybucket" {
   ]
 }
 POLICY
-   tags = {
-    Env  = terraform.workspace 
-   }
+  tags = {
+    Env = terraform.workspace
+  }
 }
 #--------------------------------------------------------------------------------------------
 # aws_s3_bucket_policy.jenkins-codedeploybucket:

@@ -27,21 +27,21 @@ variable "RDS_DB_IDENTIFIER" {
 }
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length = 20 
+  length  = 20
   special = true
   #override_special = "_@\/ "
 }
 #----------------------------------------------------------------------------
 resource "random_string" "random" {
-  length = 3
-  special = false 
+  length  = 3
+  special = false
 }
 #----------------------------------------------------------------------------
 locals {
   default_name = join("-", list(terraform.workspace, "zappa"))
 }
 #-------------------------------------------------------------------
-data aws_availability_zones "available" {}
+data "aws_availability_zones" "available" {}
 #-------------------------------------------------------------------
 data "http" "workstation-external-ip" {
   url = "http://ipv4.icanhazip.com"

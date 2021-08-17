@@ -1,7 +1,7 @@
 #-------------------------------------------------------------
 resource "aws_iam_role" "rds-iam-login" {
-    name               = "rds-iam-login"
-    assume_role_policy = <<POLICY
+  name               = "rds-iam-login"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -15,9 +15,9 @@ resource "aws_iam_role" "rds-iam-login" {
   ]
 }
 POLICY
-tags = {
-  Name = "rds-iam-login" 
-  Description = "IAM Role to Use for RDS and EC2 Integration"
+  tags = {
+    Name        = "rds-iam-login"
+    Description = "IAM Role to Use for RDS and EC2 Integration"
   }
 }
 #------------------------------------------------------------------------------
@@ -49,11 +49,11 @@ EOF
 }
 #-------------------------------------------------------------
 resource "aws_iam_policy_attachment" "AWS-rds-iam-role-attachment" {
-    name       = "AWS-rds-iam-role-attachment"
-    policy_arn = "${aws_iam_policy.AWS-rds-iam-role-policy.arn}"
-    groups     = []
-    users      = []
-    roles      = ["rds-iam-login"]
+  name       = "AWS-rds-iam-role-attachment"
+  policy_arn = aws_iam_policy.AWS-rds-iam-role-policy.arn
+  groups     = []
+  users      = []
+  roles      = ["rds-iam-login"]
 }
 #-------------------------------------------------------------
 

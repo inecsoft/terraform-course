@@ -23,21 +23,21 @@ variable "AMIS" {
 }
 
 variable "RDS_IDENTIFIER" {
-   default = "auroraserverless"
+  default = "auroraserverless"
 }
 
 variable "RDS_USERNAME" {
-   default = "auroraserverless"
+  default = "auroraserverless"
 }
 
 variable "RDS_PASSWORD" {
-   default = "AuroraServerlessPasswor123d"
+  default = "AuroraServerlessPasswor123d"
 }
 variable "INSTANCE_USERNAME" {
-   default = "ubuntu"
+  default = "ubuntu"
 }
 variable "env" {
-   default = "prod"
+  default = "prod"
 }
 variable "vpc_state_config" {
   description = "A config for accessing the vpc state file"
@@ -47,7 +47,7 @@ variable "vpc_state_config" {
     #key    = "env:/development/my-vpc.tfstate"
     key    = "terraform/aurora-serverless.tfstate"
     region = "eu-west-1"
-  } 
+  }
 }
 #-------------------------------------------------------------------
 

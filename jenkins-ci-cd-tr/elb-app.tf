@@ -1,12 +1,12 @@
 #--------------------------------------------------------------------------------------------
 resource "aws_route53_record" "app-server-r53-r" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name = "form.mycmrs.com"
-  type = "A"
+  name    = "form.mycmrs.com"
+  type    = "A"
 
   alias {
-    name = aws_elb.elb-app.dns_name
-    zone_id = aws_elb.elb-app.zone_id
+    name                   = aws_elb.elb-app.dns_name
+    zone_id                = aws_elb.elb-app.zone_id
     evaluate_target_health = true
   }
 }
@@ -27,10 +27,10 @@ module "acm-app" {
 #-------------------------------------------------------------------------------
 resource "aws_elb" "elb-app" {
   name            = "${local.default_name}-elb-app"
-  subnets         = [ element(module.vpc.public_subnets,1) , element(module.vpc.public_subnets,2)]
+  subnets         = [element(module.vpc.public_subnets, 1), element(module.vpc.public_subnets, 2)]
   security_groups = [aws_security_group.sg-elb-app.id]
 
-  internal            = false
+  internal = false
 
   listener {
     instance_port     = 80
@@ -38,14 +38,14 @@ resource "aws_elb" "elb-app" {
     lb_port           = 80
     lb_protocol       = "http"
   }
-  
+
   listener {
-    instance_port     = 80 
+    instance_port     = 80
     instance_protocol = "http"
     lb_port           = 443
     lb_protocol       = "https"
-#    ssl_certificate_id = "arn:aws:iam::123456789012:server-certificate/certName"
-    ssl_certificate_id =  module.acm-app.this_acm_certificate_arn
+    #    ssl_certificate_id = "arn:aws:iam::123456789012:server-certificate/certName"
+    ssl_certificate_id = module.acm-app.this_acm_certificate_arn
   }
 
   health_check {
@@ -58,11 +58,11 @@ resource "aws_elb" "elb-app" {
 
   #instances = ["${aws_instance.example-instance.id}"]
   # optional you can also attach an ELB to an autoscaling group.
-  
+
   cross_zone_load_balancing   = true
   connection_draining         = false
-  connection_draining_timeout = 300 
- 
+  connection_draining_timeout = 300
+
   tags = {
     Name = "${local.default_name}-elb-app"
   }

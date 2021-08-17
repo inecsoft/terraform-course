@@ -1,7 +1,7 @@
 # #-----------------------------------------------------------------------------
 resource "aws_acm_certificate" "acm-certificate" {
-  domain_name       = "${local.default_name}.transport-for-greater-manchester.com"
-  validation_method = "DNS"
+  domain_name               = "${local.default_name}.transport-for-greater-manchester.com"
+  validation_method         = "DNS"
   subject_alternative_names = ["*.${local.default_name}.transport-for-greater-manchester.com"]
   lifecycle {
     create_before_destroy = true
@@ -13,7 +13,7 @@ resource "aws_acm_certificate" "acm-certificate" {
 }
 #-----------------------------------------------------------------------------
 output "acm-certificate-status" {
-   value = aws_acm_certificate.acm-certificate.status
+  value = aws_acm_certificate.acm-certificate.status
 }
 #-----------------------------------------------------------------------------
 resource "aws_route53_record" "route53-record-acm-certificate" {
@@ -35,6 +35,6 @@ resource "aws_route53_record" "route53-record-acm-certificate" {
 # #-----------------------------------------------------------------------------
 resource "aws_acm_certificate_validation" "acm-certificate-validation" {
   certificate_arn         = aws_acm_certificate.acm-certificate.arn
-  validation_record_fqdns = [ for record in aws_route53_record.route53-record-acm-certificate : record.fqdn ]
+  validation_record_fqdns = [for record in aws_route53_record.route53-record-acm-certificate : record.fqdn]
 }
 # #-----------------------------------------------------------------------------

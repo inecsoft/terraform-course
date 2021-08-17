@@ -9,7 +9,7 @@ data "template_file" "redhat-init" {
     this_rds_cluster_master_password = "${module.aurora.this_rds_cluster_master_password}"
     this_rds_cluster_port            = "${module.aurora.this_rds_cluster_port}"
 
-   }
+  }
 
 }
 

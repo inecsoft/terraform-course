@@ -48,10 +48,10 @@ EOF
 }
 #------------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "g-codedeploy-attach" {
-  name       = "g-codedeploy-attach"
-  groups     = [aws_iam_group.g-codedeploy.name]
+  name   = "g-codedeploy-attach"
+  groups = [aws_iam_group.g-codedeploy.name]
   #policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
-  policy_arn = "${aws_iam_policy.codedeploy-group-policy.arn}"
+  policy_arn = aws_iam_policy.codedeploy-group-policy.arn
 
 }
 #------------------------------------------------------------------------------

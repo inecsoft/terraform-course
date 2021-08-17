@@ -1,15 +1,15 @@
 #-----------------------------------------------------------------------------------------------
 module "dynamodb_table" {
-  source   = "terraform-aws-modules/dynamodb-table/aws"
+  source = "terraform-aws-modules/dynamodb-table/aws"
   #Table name
-  name     = "${local.default_name}-dynamodb"
- 
+  name = "${local.default_name}-dynamodb"
+
   #Primary key*	Partition key
-  hash_key       = "id"
+  hash_key = "id"
   #add sort key
-  range_key      = "title"
-  
-  billing_mode   = "PROVISIONED"
+  range_key = "title"
+
+  billing_mode = "PROVISIONED"
 
   #Provisioned capacity
   read_capacity  = 5
@@ -29,7 +29,7 @@ module "dynamodb_table" {
     scale_out_cooldown = 40
     max_capacity       = 4000
   }
-  
+
   #Secondary indexes
   autoscaling_indexes = {
     TitleIndex = {

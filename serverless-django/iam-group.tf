@@ -15,31 +15,31 @@ resource "aws_iam_group" "group-zappa" {
 }
 
 resource "aws_iam_user" "user_one" {
-  name = "${local.default_name}-zappa-user"
-  force_destroy  = true
+  name          = "${local.default_name}-zappa-user"
+  force_destroy = true
 
   tags = {
-    Name  = "${local.default_name}-zappa-user"
+    Name = "${local.default_name}-zappa-user"
   }
 }
 #--------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "group-policy-attach-zappa-1" {
-  name       = "${local.default_name}-role-policy-attachment-zappa"
-  users      = []
-  roles      = []
-  groups     = [aws_iam_group.group-zappa.name]
+  name   = "${local.default_name}-role-policy-attachment-zappa"
+  users  = []
+  roles  = []
+  groups = [aws_iam_group.group-zappa.name]
 
   policy_arn = aws_iam_policy.policy-s3.arn
 }
 #--------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "group-policy-attach-zappa" {
-  name       = "${local.default_name}-role-policy-attachment-zappa"
-  users      = []
-  roles      = []
-  groups     = [aws_iam_group.group-zappa.name]
+  name   = "${local.default_name}-role-policy-attachment-zappa"
+  users  = []
+  roles  = []
+  groups = [aws_iam_group.group-zappa.name]
 
-  policy_arn =  aws_iam_policy.role-policy-lambda.arn
-               
+  policy_arn = aws_iam_policy.role-policy-lambda.arn
+
 }
 #--------------------------------------------------------------------------
 resource "aws_iam_policy" "policy-s3" {
@@ -86,7 +86,7 @@ resource "aws_iam_policy" "role-policy-lambda" {
   path        = "/"
   description = "Group-Level Permissions Policy for Lambda Role and Zappa Related Events"
 
-  policy      = <<-EOF
+  policy = <<-EOF
 {
     "Version": "2012-10-17",
     "Statement": [

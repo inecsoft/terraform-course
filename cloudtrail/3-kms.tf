@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------------------------------------------------------------
 resource "aws_kms_key" "kms-key" {
-  description             = "kms key to use with cloudtrail"
-  enable_key_rotation     = true
-  policy                  = data.aws_iam_policy_document.iam-policy-doc-kms-key-cloudtrail.json
-  
+  description         = "kms key to use with cloudtrail"
+  enable_key_rotation = true
+  policy              = data.aws_iam_policy_document.iam-policy-doc-kms-key-cloudtrail.json
+
   tags = {
     Environment = var.environment
     Project     = var.project
@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "iam-policy-doc-kms-key-cloudtrail" {
     condition {
       test     = "StringEquals"
       variable = "kms:CallerAccount"
-      values   = [ data.aws_caller_identity.current.id ]
+      values   = [data.aws_caller_identity.current.id]
     }
 
     condition {
@@ -96,7 +96,7 @@ data "aws_iam_policy_document" "iam-policy-doc-kms-key-cloudtrail" {
     condition {
       test     = "StringEquals"
       variable = "kms:CallerAccount"
-      values   = [ data.aws_caller_identity.current.id ]
+      values   = [data.aws_caller_identity.current.id]
     }
 
     condition {

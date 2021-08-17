@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------
 resource "aws_s3_bucket" "codepipeline-eu-west-1-620136413607" {
-    bucket = "codepipeline-eu-west-1-620136413607"
-    acl    = "private"
-    force_destroy = true
-    policy = <<POLICY
+  bucket        = "codepipeline-eu-west-1-620136413607"
+  acl           = "private"
+  force_destroy = true
+  policy        = <<POLICY
 {
   "Version": "2012-10-17",
   "Id": "SSEAndSSLPolicy",
@@ -35,17 +35,17 @@ resource "aws_s3_bucket" "codepipeline-eu-west-1-620136413607" {
   ]
 }
 POLICY
-   tags = {
-            Name        = "codedeploybucket"
-        }
+  tags = {
+    Name = "codedeploybucket"
+  }
 
-         lifecycle {
-    
-             # Any Terraform plan that includes a destroy of this resource will
-             # result in an error message.
-             #
-             prevent_destroy = false
-         }
+  lifecycle {
+
+    # Any Terraform plan that includes a destroy of this resource will
+    # result in an error message.
+    #
+    prevent_destroy = false
+  }
 }
 #-----------------------------------------------------------------------
 ## aws_s3_bucket_policy.codepipeline-eu-west-1-620136413607:

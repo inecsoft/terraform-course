@@ -7,7 +7,7 @@ resource "aws_api_gateway_rest_api" "rest-api" {
 #In order to test the created API you will need to access its test URL
 #-----------------------------------------------------------------------------
 output "base_url" {
-  value = "${aws_api_gateway_deployment.api-deployment.invoke_url}"
+  value = aws_api_gateway_deployment.api-deployment.invoke_url
 }
 #-----------------------------------------------------------------------------
 

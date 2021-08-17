@@ -11,8 +11,8 @@ resource "aws_elastic_beanstalk_application" "app" {
 #----------------------------------------------------------------------------------------
 resource "aws_elastic_beanstalk_environment" "app-prod" {
   name                = "app-prod"
-  application         = "${aws_elastic_beanstalk_application.app.name}"
-  solution_stack_name = "64bit Amazon Linux 2018.03 v2.8.15 running PHP 7.2"   
+  application         = aws_elastic_beanstalk_application.app.name
+  solution_stack_name = "64bit Amazon Linux 2018.03 v2.8.15 running PHP 7.2"
 
   setting {
     namespace = "aws:ec2:vpc"
@@ -140,23 +140,23 @@ resource "aws_elastic_beanstalk_environment" "app-prod" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RDS_USERNAME"
-    value     = "${aws_db_instance.postgresdb.username}"
+    value     = aws_db_instance.postgresdb.username
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RDS_PASSWORD"
-    value     = "${aws_db_instance.postgresdb.password}"
+    value     = aws_db_instance.postgresdb.password
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RDS_DATABASE"
     #value     = "mydb"
-    value     = "${aws_db_instance.postgresdb.name}"
+    value = aws_db_instance.postgresdb.name
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "RDS_HOSTNAME"
-    value     = "${aws_db_instance.postgresdb.endpoint}"
+    value     = aws_db_instance.postgresdb.endpoint
   }
 }
 

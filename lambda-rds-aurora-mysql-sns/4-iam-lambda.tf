@@ -37,7 +37,7 @@ data "aws_iam_policy" "iam-policy-vpc" {
 #--------------------------------------------------------------------------------------
 data "aws_iam_policy_document" "iam-policy-doc-sns-topic" {
   statement {
-    sid = "lambdaToPublisOnsns"
+    sid    = "lambdaToPublisOnsns"
     effect = "Allow"
     actions = [
       "sns:Publish",

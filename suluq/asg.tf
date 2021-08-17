@@ -2,7 +2,7 @@
 resource "aws_iam_service_linked_role" "autoscaling" {
   aws_service_name = "autoscaling.amazonaws.com"
   description      = "A service linked role for autoscaling"
-  custom_suffix    = "${local.default_name}"
+  custom_suffix    = local.default_name
 
   # Sometimes good sleep is required to have some IAM resources created before they can be used
   provisioner "local-exec" {
@@ -14,7 +14,7 @@ resource "aws_iam_service_linked_role" "autoscaling" {
 module "asg" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "~> 3.0"
-  
+
   name = "${local.default_name}-frontend-asg"
 
   #--------------------------------------------------------------------------------
@@ -35,30 +35,30 @@ module "asg" {
   security_groups              = [aws_security_group.app_servers.id]
   associate_public_ip_address  = true
   recreate_asg_when_lc_changes = true
-  key_name                     = "${aws_key_pair.suluq.key_name}"
+  key_name                     = aws_key_pair.suluq.key_name
   iam_instance_profile         = aws_iam_instance_profile.iam_assumable_role_custom-ServeriRoleProfile.arn
   user_data                    = data.template_cloudinit_config.cloudinit-redhat.rendered
 
   ebs_block_device = [
     {
-      device_name           = "/dev/xvdz"
-      volume_type           = "gp2"  #"gp2", "io1"
+      device_name = "/dev/xvdz"
+      volume_type = "gp2" #"gp2", "io1"
       #iops                  = 300
       volume_size           = "50"
       delete_on_termination = true
       kms_key_arn           = "${aws_kms_key.suluq-kms-db.arn}"
-      encrypted             =  true
+      encrypted             = true
       #snapshot_id          = ""
     },
   ]
 
   root_block_device = [
     {
-      volume_size           = "30"
-      volume_type           = "gp2"   #"gp2", "io1"
+      volume_size = "30"
+      volume_type = "gp2" #"gp2", "io1"
       #iops                  = 300
-      kms_key_arn           = "${aws_kms_key.suluq-kms-db.arn}"
-      encrypted             =  true
+      kms_key_arn = "${aws_kms_key.suluq-kms-db.arn}"
+      encrypted   = true
     },
   ]
 
@@ -72,11 +72,11 @@ module "asg" {
   desired_capacity          = 1
   wait_for_capacity_timeout = 0
   service_linked_role_arn   = aws_iam_service_linked_role.autoscaling.arn
-  
+
   #target_group_arns    =   module.alb.target_group_arns
-  target_group_arns    =   [ "${aws_lb_target_group.front_end.arn}" ]
-  force_delete         =   false
-  termination_policies =   ["OldestInstance"]
+  target_group_arns    = ["${aws_lb_target_group.front_end.arn}"]
+  force_delete         = false
+  termination_policies = ["OldestInstance"]
 
 
   tags = [
@@ -90,13 +90,13 @@ module "asg" {
       value               = "${local.default_name}"
       propagate_at_launch = true
     },
-    
+
   ]
-   
+
   tags_as_map = {
     extra_tag1 = "${local.default_name}-frontend-asg"
   }
-  
+
 }
 
 

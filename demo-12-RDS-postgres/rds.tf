@@ -16,10 +16,10 @@ resource "aws_db_parameter_group" "postgresdb-parameters" {
   family      = "postgres11"
   description = "postgresDB parameter group"
 
-#  parameter {
-#    name  = "max_allowed_packet"
-#    value = "16777216"
-#  }
+  #  parameter {
+  #    name  = "max_allowed_packet"
+  #    value = "16777216"
+  #  }
 }
 
 #-----------------------------------------------------------------------------------------------
@@ -42,10 +42,10 @@ module "master" {
 
   identifier = var.RDS_DB_IDENTIFIER
 
-  engine            = "postgres"
-  engine_version    = "11.5"
-  instance_class    = "db.t2.micro"
-  allocated_storage = 5
+  engine                = "postgres"
+  engine_version        = "11.5"
+  instance_class        = "db.t2.micro"
+  allocated_storage     = 5
   max_allocated_storage = 100
   #iops             = 2000 
   storage_encrypted = false
@@ -54,7 +54,7 @@ module "master" {
 
   #kms_key_id        = "arm:aws:kms:<region>:<account id>:key/<kms key id>"
 
-  name =  var.RDS_DB_NAME
+  name = var.RDS_DB_NAME
 
   # NOTE: Do NOT use 'user' as the value for 'username' as it throws:
   # "Error creating DB Instance: InvalidParameterValue: MasterUsername
@@ -65,8 +65,8 @@ module "master" {
   port     = "5432"
 
   vpc_security_group_ids = [aws_security_group.allow-postgresdb.id]
-  
-  
+
+
   db_subnet_group_name = aws_db_subnet_group.postgresdb-subnet.name
   #parameter_group_name = "postgres11.5"
 
@@ -77,7 +77,7 @@ module "master" {
   # by yourself, in case you don't want to create it automatically
   monitoring_interval = "30"
   #monitoring_role_name = aws_iam_role.rds_enhanced_monitoring_db.name # not required 
-  monitoring_role_arn  = aws_iam_role.rds_enhanced_monitoring_db.arn
+  monitoring_role_arn = aws_iam_role.rds_enhanced_monitoring_db.arn
   #create_monitoring_role = true
 
   #Specifies whether Performance Insights are enabled 
@@ -113,7 +113,7 @@ module "master" {
   #Specifies whether or not to create this database from a snapshot.
   # This correlates to the snapshot ID you'd find in the RDS console, e.g: rds:production-2015-06-26-06-05.
   #snapshot_identifier       = "" #snapshot_identifier_id
- 
+
   # Database Deletion Protection
   deletion_protection = false
 }
@@ -123,16 +123,16 @@ module "master" {
 ############
 #-----------------------------------------------------------------------------------------------
 module "replica" {
-  source = "terraform-aws-modules/rds/aws" 
+  source = "terraform-aws-modules/rds/aws"
 
   identifier = var.RDS_DB_R_IDENTIFIER
   #Source database. For cross-region use this_db_instance_arn
   replicate_source_db = module.master.this_db_instance_id
 
-  engine            = "postgres"
-  engine_version    = "11.5"
-  instance_class    = "db.t2.micro"
-  allocated_storage = 5
+  engine                = "postgres"
+  engine_version        = "11.5"
+  instance_class        = "db.t2.micro"
+  allocated_storage     = 5
   max_allocated_storage = 100
   #iops             = 2000 
   storage_encrypted = false
@@ -142,7 +142,7 @@ module "replica" {
   # Username and password must not be set for replicas
   username = ""
   password = ""
-  port     = "5432" 
+  port     = "5432"
 
   vpc_security_group_ids = [aws_security_group.allow-postgresdb.id]
 

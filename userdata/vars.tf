@@ -3,10 +3,10 @@ variable "AWS_REGION" {
 }
 
 variable "AMIS" {
-  type = "map"
+  type = map(string)
   default = {
     eu-west-1 = "ami-0bbc25e23a7640b9b"
- }
+  }
 
 }
 

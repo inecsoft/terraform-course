@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------------------
 resource "aws_lambda_function" "lambda-function" {
-  function_name = var.FUNCTION_NAME 
-  
+  function_name = var.FUNCTION_NAME
+
   # The bucket name as created earlier with "aws s3api create-bucket"
   s3_bucket = aws_s3_bucket.inecsoft-serverless.id
   s3_key    = "${var.app_version}/code.zip"
@@ -14,8 +14,8 @@ resource "aws_lambda_function" "lambda-function" {
 
   role = aws_iam_role.iam-role-lambda-function.arn
 
-  tags  =   {
-    Name   = "${local.default_name}-lambda-function"
+  tags = {
+    Name = "${local.default_name}-lambda-function"
   }
 }
 

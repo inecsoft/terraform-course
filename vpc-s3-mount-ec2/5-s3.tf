@@ -1,9 +1,9 @@
 #-------------------------------------------------------------------
 resource "aws_s3_bucket" "s3-bucket-mount" {
-  bucket = "${local.default_name}-s3-bucket-mount"
-  acl    = "private"
+  bucket        = "${local.default_name}-s3-bucket-mount"
+  acl           = "private"
   force_destroy = true
-  
+
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -14,7 +14,7 @@ resource "aws_s3_bucket" "s3-bucket-mount" {
   }
 
   tags = {
-    Name   = "${local.default_name}-s3-bucket-mount"
+    Name = "${local.default_name}-s3-bucket-mount"
   }
 }
 #-------------------------------------------------------------------

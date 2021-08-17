@@ -9,6 +9,6 @@ resource "azurerm_resource_group" "test" {
 
 resource "azurerm_" "network" {
   name = "network"
-  
+
 }
 

@@ -21,7 +21,7 @@ variable "PATH_TO_PRIVATE_KEY" {
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-    default = "lambda.pub"
+  default = "lambda.pub"
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
@@ -29,7 +29,7 @@ resource "random_pet" "this" {
 }
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "eu-west-1"
+  default = "eu-west-1"
 
 }
 #-------------------------------------------------------------------
@@ -44,27 +44,27 @@ data "aws_caller_identity" "current" {}
 #---------------------------------------------------------
 variable "credentials" {
   default = {
-    username = "admin"
-    password = "admin123"
-    engine   = "mysql"
-    host     = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
-    port     = 3306
-    dbname   = "proxydb"
+    username             = "admin"
+    password             = "admin123"
+    engine               = "mysql"
+    host                 = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
+    port                 = 3306
+    dbname               = "proxydb"
     dbInstanceIdentifier = "dbproxy"
-    
+
   }
 
   type = map(string)
 }
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length = 20 
+  length  = 20
   special = true
   #override_special = "_@\/ "
 }
 #----------------------------------------------------------------------------
 resource "random_string" "random" {
-  length = 3
-  special = false 
+  length  = 3
+  special = false
 }
 #----------------------------------------------------------------------------

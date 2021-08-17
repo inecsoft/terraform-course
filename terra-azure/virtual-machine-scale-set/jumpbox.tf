@@ -7,13 +7,13 @@
 # * A virtual machine with this network interface
 #----------------------------------------------------------------------------------------------------
 resource "azurerm_public_ip" "jumpbox" {
-  name                         = "${local.default_name}-jumpbox-public-ip"
-  location                     = var.location
-  resource_group_name          = azurerm_resource_group.vmss.name
-  allocation_method            = "Static"
-  domain_name_label            = "${azurerm_resource_group.vmss.name}-ssh"
+  name                = "${local.default_name}-jumpbox-public-ip"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.vmss.name
+  allocation_method   = "Static"
+  domain_name_label   = "${azurerm_resource_group.vmss.name}-ssh"
 
-  tags =  {
+  tags = {
     environment = "codelab"
   }
 }
@@ -30,7 +30,7 @@ resource "azurerm_network_interface" "jumpbox" {
     public_ip_address_id          = azurerm_public_ip.jumpbox.id
   }
 
-  tags =  {
+  tags = {
     environment = "codelab"
   }
 }
@@ -71,7 +71,7 @@ resource "azurerm_virtual_machine" "jumpbox" {
     }
   }
 
-  tags =  {
+  tags = {
     environment = "codelab"
   }
 }

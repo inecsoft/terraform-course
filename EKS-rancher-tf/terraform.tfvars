@@ -12,7 +12,7 @@ prefix = "suluq-inchora"
 # openssl rand -base64 30
 admin_password = "zbYY08km79i8M1FXOhFbtHybFymqtWk83gr9lzJZ"
 # Name of custom cluster that will be created
-cluster_name  = "suluq-inchora"
+cluster_name = "suluq-inchora"
 # rancher/rancher image tag to use
 rancher_version = "latest"
 # Count of agent nodes with role all

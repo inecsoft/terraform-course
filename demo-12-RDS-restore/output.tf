@@ -12,7 +12,7 @@ output "instance" {
 #show the rds endpoint 
 #------------------------------------------------------
 output "rds-master-restore" {
-  value = "${aws_db_instance.db_prod_restored.endpoint}"
+  value = aws_db_instance.db_prod_restored.endpoint
 }
 #output "rds-replica" {
 #  value = module.replica.this_db_instance_endpoint

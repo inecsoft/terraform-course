@@ -49,12 +49,12 @@ data "aws_caller_identity" "current" {}
 #---------------------------------------------------------
 variable "credentials" {
   default = {
-    username = "admin"
-    password = "admin123"
-    engine   = "mysql"
-    host     = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
-    port     = 3306
-    dbname   = "proxydb"
+    username             = "admin"
+    password             = "admin123"
+    engine               = "mysql"
+    host                 = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
+    port                 = 3306
+    dbname               = "proxydb"
     dbInstanceIdentifier = "dbproxy"
   }
 
@@ -66,16 +66,16 @@ variable "app_versions" {
 }
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "_%@\""
   #override_special = "%\"@_"
 }
 #echo random_password.password.result | terraform console
 #----------------------------------------------------------------------------
 resource "random_string" "random" {
-  length = 2
-  special = false 
+  length  = 2
+  special = false
 }
 #----------------------------------------------------------------------------
 locals {
@@ -83,14 +83,14 @@ locals {
 }
 #----------------------------------------------------------------------------
 resource "random_integer" "integer" {
-  min     = 4
-  max     = 6
+  min = 4
+  max = 6
 }
 #----------------------------------------------------------------------------
 variable "zone" {
-  type = string
+  type        = string
   description = "describe sub-domain for api"
-  default = "api.inecsoft.co.uk"
+  default     = "api.inecsoft.co.uk"
 }
 #----------------------------------------------------------------------------
 variable "stage_name" {

@@ -16,7 +16,7 @@ provider "aws" {
 #a variable to allow the version number to be chosen dynamically
 #----------------------------------------------------------------------------------------
 variable "app_versions" {
-   default = "20200923163119"
+  default = "20200923163119"
 }
 #----------------------------------------------------------------------------------------
 variable "FUNCTION_NAME" {

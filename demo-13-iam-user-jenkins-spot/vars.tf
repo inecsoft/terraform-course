@@ -4,7 +4,7 @@ variable "AWS_REGION" {
 }
 #--------------------------------------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "kms"))}"
+  default_name = join("-", list(terraform.workspace, "kms"))
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {

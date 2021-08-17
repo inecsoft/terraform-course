@@ -2,7 +2,7 @@
 provider "aws" {
   #access_key = var.aws_access_key
   #secret_key = var.aws_secret_key
-  region     = var.region
+  region = var.region
 }
 
 #variable "aws_access_key" {
@@ -135,11 +135,11 @@ resource "aws_instance" "rancherserver" {
   key_name        = var.ssh_key_name
   security_groups = [aws_security_group.rancher_sg_allowall.name]
   user_data       = data.template_cloudinit_config.rancherserver-cloudinit.rendered
-  
+
   root_block_device {
-   volume_size = "30"
-   volume_type = "gp2"
-   delete_on_termination = true
+    volume_size           = "30"
+    volume_type           = "gp2"
+    delete_on_termination = true
 
   }
 
@@ -171,9 +171,9 @@ resource "aws_instance" "rancheragent-all" {
   user_data       = data.template_cloudinit_config.rancheragent-all-cloudinit[count.index].rendered
 
   root_block_device {
-   volume_size = var.volume_size
-   volume_type = "gp2"
-   delete_on_termination = true
+    volume_size           = var.volume_size
+    volume_type           = "gp2"
+    delete_on_termination = true
 
   }
 
@@ -203,11 +203,11 @@ resource "aws_instance" "rancheragent-etcd" {
   key_name        = var.ssh_key_name
   security_groups = [aws_security_group.rancher_sg_allowall.name]
   user_data       = data.template_cloudinit_config.rancheragent-etcd-cloudinit[count.index].rendered
-  
+
   root_block_device {
-   volume_size = var.volume_size
-   volume_type = "gp2"
-   delete_on_termination = true
+    volume_size           = var.volume_size
+    volume_type           = "gp2"
+    delete_on_termination = true
 
   }
 
@@ -237,11 +237,11 @@ resource "aws_instance" "rancheragent-controlplane" {
   key_name        = var.ssh_key_name
   security_groups = [aws_security_group.rancher_sg_allowall.name]
   user_data       = data.template_cloudinit_config.rancheragent-controlplane-cloudinit[count.index].rendered
-  
+
   root_block_device {
-   volume_size = var.volume_size
-   volume_type = "gp2"
-   delete_on_termination = true
+    volume_size           = var.volume_size
+    volume_type           = "gp2"
+    delete_on_termination = true
 
   }
 
@@ -273,9 +273,9 @@ resource "aws_instance" "rancheragent-worker" {
   user_data       = data.template_cloudinit_config.rancheragent-worker-cloudinit[count.index].rendered
 
   root_block_device {
-   volume_size = var.volume_size
-   volume_type = "gp2"
-   delete_on_termination = true
+    volume_size           = var.volume_size
+    volume_type           = "gp2"
+    delete_on_termination = true
 
   }
 

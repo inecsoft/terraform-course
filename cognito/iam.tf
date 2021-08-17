@@ -1,8 +1,8 @@
 #----------------------------------------------------------------------------------------------------------
 resource "aws_iam_role" "inecsoft-SMS-Role" {
-    name               = "inecsoft-SMS-Role"
-    path               = "/service-role/"
-    assume_role_policy = <<POLICY
+  name               = "inecsoft-SMS-Role"
+  path               = "/service-role/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -25,18 +25,18 @@ POLICY
 }
 #----------------------------------------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "cognito-policy-attachment" {
-    name       = "cognito-policy-attachment"
-    policy_arn = aws_iam_policy.cognito-policy.arn
-    groups     = []
-    users      = []
-    roles      = [aws_iam_role.inecsoft-SMS-Role.name]
+  name       = "cognito-policy-attachment"
+  policy_arn = aws_iam_policy.cognito-policy.arn
+  groups     = []
+  users      = []
+  roles      = [aws_iam_role.inecsoft-SMS-Role.name]
 }
 #----------------------------------------------------------------------------------------------------------
 resource "aws_iam_policy" "cognito-policy" {
-    name        = "cognito-policy"
-    path        = "/service-role/"
-    description = ""
-    policy      = <<POLICY
+  name        = "cognito-policy"
+  path        = "/service-role/"
+  description = ""
+  policy      = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [

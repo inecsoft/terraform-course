@@ -12,7 +12,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "ec2-systems-manager"))}"
+  default_name = join("-", list(terraform.workspace, "ec2-systems-manager"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
@@ -21,7 +21,7 @@ variable "PATH_TO_PRIVATE_KEY" {
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-    default = "ec2-systems-manager.pub"
+  default = "ec2-systems-manager.pub"
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
@@ -29,7 +29,7 @@ resource "random_pet" "this" {
 }
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "eu-west-1"
+  default = "eu-west-1"
 
 }
 #-------------------------------------------------------------------
@@ -44,7 +44,7 @@ data "aws_iam_account_alias" "current" {}
 
 #---------------------------------------------------------
 #-------------------------------------------------------------------
-variable "instance_type"{
+variable "instance_type" {
   default = "t2.micro"
 }
 #---------------------------------------------------------

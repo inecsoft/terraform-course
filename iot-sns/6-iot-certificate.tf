@@ -24,30 +24,30 @@ resource "aws_iot_thing_principal_attachment" "iot-principal-attach" {
 # Output certificate to /cert/{iot-name} folder
 #--------------------------------------------------------------------------------------
 resource "local_file" "iot-cert-pem" {
-  for_each    = toset(var.iot-name)
-  
-  file_permission      = "0744"
-  content     = aws_iot_certificate.iot-cert[each.key].certificate_pem
-  filename    = "${path.module}/certs/${each.key}/${substr(aws_iot_certificate.iot-cert[each.key].id,0,12)}.pem.crt"
+  for_each = toset(var.iot-name)
+
+  file_permission = "0744"
+  content         = aws_iot_certificate.iot-cert[each.key].certificate_pem
+  filename        = "${path.module}/certs/${each.key}/${substr(aws_iot_certificate.iot-cert[each.key].id, 0, 12)}.pem.crt"
 }
 #--------------------------------------------------------------------------------------
 # Output private key to /cert/{iot-name} folder
 #--------------------------------------------------------------------------------------
 resource "local_file" "iot-private-key" {
-  for_each    = toset(var.iot-name)
-  
-  file_permission      = "0744"
-  content     = aws_iot_certificate.iot-cert[each.key].private_key
-  filename    = "${path.module}/certs/${each.key}/${substr(aws_iot_certificate.iot-cert[each.key].id,0,12)}.private.key"
+  for_each = toset(var.iot-name)
+
+  file_permission = "0744"
+  content         = aws_iot_certificate.iot-cert[each.key].private_key
+  filename        = "${path.module}/certs/${each.key}/${substr(aws_iot_certificate.iot-cert[each.key].id, 0, 12)}.private.key"
 }
 #--------------------------------------------------------------------------------------
 # Output public key to /cert/{iot-name} folder
 #--------------------------------------------------------------------------------------
 resource "local_file" "iot-public-key" {
-  for_each    = toset(var.iot-name)
-  
-  file_permission      = "0644"
-  content     = aws_iot_certificate.iot-cert[each.key].public_key
-  filename    = "${path.module}/certs/${each.key}/${substr(aws_iot_certificate.iot-cert[each.key].id,0,12)}.public.key"
+  for_each = toset(var.iot-name)
+
+  file_permission = "0644"
+  content         = aws_iot_certificate.iot-cert[each.key].public_key
+  filename        = "${path.module}/certs/${each.key}/${substr(aws_iot_certificate.iot-cert[each.key].id, 0, 12)}.public.key"
 }
 #--------------------------------------------------------------------------------------

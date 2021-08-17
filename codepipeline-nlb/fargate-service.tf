@@ -10,19 +10,19 @@ resource "aws_ecs_task_definition" "codepipeline" {
   # With the host and awsvpc network modes, exposed container ports are mapped directly to the corresponding host port
   # (for the host network mode) or the attached elastic network interface port (for the awsvpc network mode),
   # so you cannot take advantage of dynamic host port mappings.
-  network_mode       = "awsvpc"
+  network_mode = "awsvpc"
   requires_compatibilities = [
     "FARGATE"
   ]
 
- #container_definitions = "${file("task-definitions/service.json")}"
+  #container_definitions = "${file("task-definitions/service.json")}"
 
-     #"environment": [
-     #   {
-     #     "name": "DATABASE_URL",
-     #     "value": "mariadb://db_admin:YOUR_DB_PASSWORD@YOUR_DB_HOST:3306/express_app?ssl=Amazon+RDS"
-     #   }
-     # ],
+  #"environment": [
+  #   {
+  #     "name": "DATABASE_URL",
+  #     "value": "mariadb://db_admin:YOUR_DB_PASSWORD@YOUR_DB_HOST:3306/express_app?ssl=Amazon+RDS"
+  #   }
+  # ],
 
   container_definitions = <<DEFINITION
 [
@@ -116,7 +116,7 @@ resource "aws_security_group" "ecs-codepipeline" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [ "0.0.0.0/0" ]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 #------------------------------------------------------------------------------------------------------

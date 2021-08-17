@@ -16,7 +16,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "ses"))}"
+  default_name = join("-", list(terraform.workspace, "ses"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
@@ -47,7 +47,7 @@ variable "domain" {
 #------------------------------------------------------------------------
 variable "profile" {
   description = "the profile for the aws credential for the project"
-  default = "default"
+  default     = "default"
 }
 #------------------------------------------------------------------------
 locals {
@@ -57,8 +57,8 @@ locals {
 resource "random_uuid" "uuid" {}
 #------------------------------------------------------------------------
 resource "random_integer" "interger" {
-  min     = 4
-  max     = 7
+  min = 4
+  max = 7
 }
 #------------------------------------------------------------------------
 variable "currency" {

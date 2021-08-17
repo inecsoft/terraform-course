@@ -67,8 +67,8 @@ data "aws_ami" "rhel8" {
 }
 
 #-------------------------------------------------------------------
-output "ami-redhat-8-id"{
-   value = data.aws_ami.rhel8.id
+output "ami-redhat-8-id" {
+  value = data.aws_ami.rhel8.id
 }
 #-------------------------------------------------------------------
 output "ami-amazon-id" {
@@ -88,6 +88,6 @@ output "ami-ubuntu-id" {
 #-------------------------------------------------------------------
 output "ami-ubuntu-name" {
   description = "description of ami ubuntu "
-  value       = data.aws_ami.ubuntu.name 
+  value       = data.aws_ami.ubuntu.name
 }
 #-------------------------------------------------------------------

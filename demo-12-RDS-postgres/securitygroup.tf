@@ -30,7 +30,7 @@ resource "aws_security_group" "allow-postgresdb" {
   name        = "allow-postgresdb"
   description = "allow-postgresdb"
   ingress {
-    from_port       = 5432 
+    from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
     security_groups = [aws_security_group.example-instance.id] # allowing access from our example instance

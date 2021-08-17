@@ -6,12 +6,12 @@ locals {
         {
           "name"  = "myparameter"
           "value" = "myvalue"
-          "type" = "String"
+          "type"  = "String"
         },
         {
           "name"  = "environment"
           "value" = "dev"
-          "type" = "String"
+          "type"  = "String"
         }
       ]
     },
@@ -21,7 +21,7 @@ locals {
         {
           "name"  = "environment"
           "value" = "prod"
-          "type" = "String"
+          "type"  = "String"
         }
       ]
     }

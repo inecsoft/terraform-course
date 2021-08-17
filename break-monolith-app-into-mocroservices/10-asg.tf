@@ -3,9 +3,9 @@ resource "aws_launch_configuration" "lc" {
   name     = "${local.default_name}-lc"
   image_id = data.aws_ami.amazon_linux.id
 
-  instance_type = "t2.nano"
-  security_groups = [ aws_security_group.sg-web.id ]
-  key_name = aws_key_pair.key-pair.id
+  instance_type   = "t2.nano"
+  security_groups = [aws_security_group.sg-web.id]
+  key_name        = aws_key_pair.key-pair.id
 
   #associate_public_ip_address = true
   iam_instance_profile = aws_iam_instance_profile.instance-RoleProfile.name
@@ -33,14 +33,14 @@ resource "aws_autoscaling_group" "asg" {
 
   #target_group_arns = [ aws_lb.alb.arn ]
 
-  force_delete       = true
-  min_size           = 1
-  max_size           = 3
-  desired_capacity   = 1 
+  force_delete     = true
+  min_size         = 1
+  max_size         = 3
+  desired_capacity = 1
 
   tag {
-    key = "Name"
-    value = "${local.default_name}-lc"
+    key                 = "Name"
+    value               = "${local.default_name}-lc"
     propagate_at_launch = true
   }
 
@@ -49,7 +49,7 @@ resource "aws_autoscaling_group" "asg" {
 resource "aws_autoscaling_notification" "example_notifications" {
   group_names = [
     aws_autoscaling_group.asg.name,
-    
+
   ]
 
   notifications = [
@@ -63,9 +63,9 @@ resource "aws_autoscaling_notification" "example_notifications" {
 }
 #----------------------------------------------------------------------------------------
 resource "aws_sns_topic" "sns-topic-asg-notification" {
-  name            = "${local.default_name}-asg-notification"
-  display_name    = "${local.default_name}-asg-notification"
-  policy          = <<POLICY
+  name         = "${local.default_name}-asg-notification"
+  display_name = "${local.default_name}-asg-notification"
+  policy       = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "__default_policy_ID",
@@ -106,10 +106,10 @@ POLICY
 #----------------------------------------------------------------------------------------
 resource "aws_sns_topic_subscription" "sns-topic-subscription-asg-sns" {
   #provider  = "aws.sns"
-  topic_arn = aws_sns_topic.sns-topic-asg-notification.arn
+  topic_arn                       = aws_sns_topic.sns-topic-asg-notification.arn
   confirmation_timeout_in_minutes = 5
-  protocol  = "sms"
-  endpoint  = "+447518527690"
-  raw_message_delivery = false 
+  protocol                        = "sms"
+  endpoint                        = "+447518527690"
+  raw_message_delivery            = false
 }
 #-------------------------------------------------------------------------------

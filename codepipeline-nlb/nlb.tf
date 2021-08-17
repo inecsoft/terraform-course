@@ -5,11 +5,11 @@ resource "aws_lb" "codepipeline" {
   load_balancer_type               = "network"
   enable_cross_zone_load_balancing = true
 
-  internal           = false
+  internal                   = false
   enable_deletion_protection = false
 
   access_logs = {
-    bucket = "${aws_s3_bucket.codepipeline-nlb-logs.id}"
+    bucket  = "${aws_s3_bucket.codepipeline-nlb-logs.id}"
     enabled = true
   }
 
@@ -41,9 +41,9 @@ resource "aws_lb_listener" "codepipeline" {
 }
 #-----------------------------------------------------------------------------------------------
 resource "aws_lb_target_group" "blue" {
-  name                 = "http-blue"
-  port                 = "3000"
-  protocol             = "TCP"
+  name     = "http-blue"
+  port     = "3000"
+  protocol = "TCP"
   #when you create any target groups for these services, you must choose ip as the target type, not instance. 
   #This is because tasks that use the awsvpc network mode are associated with an ENI, not with an Amazon EC2 instance.
   target_type          = "ip"
@@ -57,9 +57,9 @@ resource "aws_lb_target_group" "blue" {
     interval            = 30
   }
 
-  tags = {    
-    name =  "${local.default_name}-blue-tg"
-  } 
+  tags = {
+    name = "${local.default_name}-blue-tg"
+  }
 }
 #-----------------------------------------------------------------------------------------------
 resource "aws_lb_target_group" "green" {
@@ -76,9 +76,9 @@ resource "aws_lb_target_group" "green" {
     protocol            = "TCP"
     interval            = 30
   }
-   tags = {    
-    Name =  "${local.default_name}-green-tg"    
-  } 
+  tags = {
+    Name = "${local.default_name}-green-tg"
+  }
 }
 #-----------------------------------------------------------------------------------------------
 

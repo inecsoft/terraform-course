@@ -32,7 +32,7 @@ resource "aws_api_gateway_method" "api-gateway-method-order" {
   rest_api_id        = aws_api_gateway_rest_api.rest-api-acme-shoes.id
   resource_id        = aws_api_gateway_resource.api-gateway-resource-order.id
   api_key_required   = true
-  
+
   request_validator_id = aws_api_gateway_request_validator.api-gateway-request-validator-order-id.id
 
   # request_parameters = {
@@ -53,23 +53,23 @@ resource "aws_api_gateway_method" "api-gateway-method-order-id" {
   # request_parameters = {
   #   "method.request.querystring.orderId" = true
   # }
-  
+
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_method_settings" "api-gateway-method-settings-order" {
   rest_api_id = aws_api_gateway_rest_api.rest-api-acme-shoes.id
   stage_name  = aws_api_gateway_stage.api-gateway-stage-dev.stage_name
   method_path = "${aws_api_gateway_resource.api-gateway-resource-order.path_part}/${aws_api_gateway_method.api-gateway-method-order.http_method}"
-  
+
   settings {
-    cache_data_encrypted                       = false
-    cache_ttl_in_seconds                       = 300
-    caching_enabled                            = true
-    data_trace_enabled                         = false 
+    cache_data_encrypted = false
+    cache_ttl_in_seconds = 300
+    caching_enabled      = true
+    data_trace_enabled   = false
     #OFF, ERROR, and INFO.
     logging_level                              = "INFO"
     metrics_enabled                            = true
-    require_authorization_for_cache_control    = true 
+    require_authorization_for_cache_control    = true
     throttling_burst_limit                     = 500
     throttling_rate_limit                      = 1000
     unauthorized_cache_control_header_strategy = "SUCCEED_WITH_RESPONSE_HEADER"
@@ -77,33 +77,33 @@ resource "aws_api_gateway_method_settings" "api-gateway-method-settings-order" {
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_integration" "api-gateway-integration-order" {
-  rest_api_id              = aws_api_gateway_rest_api.rest-api-acme-shoes.id
-  resource_id              = aws_api_gateway_resource.api-gateway-resource-order.id
-  http_method              = aws_api_gateway_method.api-gateway-method-order.http_method
-  integration_http_method  = "POST"
-  type                     = "AWS"
-  content_handling         = "CONVERT_TO_TEXT" 
-  passthrough_behavior     = "WHEN_NO_MATCH"
-  cache_key_parameters     = [] 
-  request_parameters       = {}
-  request_templates        = {}
-  uri                      = aws_lambda_function.lambda-function-getorderstatus.invoke_arn
+  rest_api_id             = aws_api_gateway_rest_api.rest-api-acme-shoes.id
+  resource_id             = aws_api_gateway_resource.api-gateway-resource-order.id
+  http_method             = aws_api_gateway_method.api-gateway-method-order.http_method
+  integration_http_method = "POST"
+  type                    = "AWS"
+  content_handling        = "CONVERT_TO_TEXT"
+  passthrough_behavior    = "WHEN_NO_MATCH"
+  cache_key_parameters    = []
+  request_parameters      = {}
+  request_templates       = {}
+  uri                     = aws_lambda_function.lambda-function-getorderstatus.invoke_arn
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_method_settings" "api-gateway-method-settings-order-id" {
   rest_api_id = aws_api_gateway_rest_api.rest-api-acme-shoes.id
   stage_name  = aws_api_gateway_stage.api-gateway-stage-dev.stage_name
   method_path = "${aws_api_gateway_resource.api-gateway-resource-order-id.path_part}/${aws_api_gateway_method.api-gateway-method-order-id.http_method}"
-  
+
   settings {
-    cache_data_encrypted                       = false
-    cache_ttl_in_seconds                       = 300
-    caching_enabled                            = true
-    data_trace_enabled                         = false 
+    cache_data_encrypted = false
+    cache_ttl_in_seconds = 300
+    caching_enabled      = true
+    data_trace_enabled   = false
     #OFF, ERROR, and INFO.
     logging_level                              = "INFO"
     metrics_enabled                            = true
-    require_authorization_for_cache_control    = true 
+    require_authorization_for_cache_control    = true
     throttling_burst_limit                     = 500
     throttling_rate_limit                      = 1000
     unauthorized_cache_control_header_strategy = "SUCCEED_WITH_RESPONSE_HEADER"
@@ -111,16 +111,16 @@ resource "aws_api_gateway_method_settings" "api-gateway-method-settings-order-id
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_integration" "api-gateway-integration-order-id" {
-  rest_api_id              = aws_api_gateway_rest_api.rest-api-acme-shoes.id
-  resource_id              = aws_api_gateway_resource.api-gateway-resource-order-id.id
-  http_method              = aws_api_gateway_method.api-gateway-method-order-id.http_method
-  integration_http_method  = "POST"
-  type                     = "AWS"
-  uri                      = aws_lambda_function.lambda-function-getorderstatus.invoke_arn
-  cache_key_parameters    = [] 
+  rest_api_id             = aws_api_gateway_rest_api.rest-api-acme-shoes.id
+  resource_id             = aws_api_gateway_resource.api-gateway-resource-order-id.id
+  http_method             = aws_api_gateway_method.api-gateway-method-order-id.http_method
+  integration_http_method = "POST"
+  type                    = "AWS"
+  uri                     = aws_lambda_function.lambda-function-getorderstatus.invoke_arn
+  cache_key_parameters    = []
   content_handling        = "CONVERT_TO_TEXT"
   passthrough_behavior    = "WHEN_NO_MATCH"
-  request_parameters      = {} 
+  request_parameters      = {}
   request_templates = {
     # "application/json"  = "{ 'orderId': $input.params('id')}"
   }
@@ -155,7 +155,7 @@ resource "aws_api_gateway_method_response" "api-gateway-method-response-200-orde
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = false,
     "method.response.header.Access-Control-Allow-Methods" = false,
-    "method.response.header.Access-Control-Allow-Origin" = false
+    "method.response.header.Access-Control-Allow-Origin"  = false
   }
 
   rest_api_id = aws_api_gateway_rest_api.rest-api-acme-shoes.id
@@ -170,21 +170,21 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
   #   "method.response.header.Access-Control-Allow-Methods" = "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
   #   "method.response.header.Access-Control-Allow-Origin"  = "'*'"
   # }
-  
+
   response_parameters = {
     # "method.response.header.X-Some-Header" = "'method.response.header.X-Some-Other-Header'",
   }
 
   response_templates = {
     "application/json" = ""
-#     "application/xml" = <<EOF
-# #set($inputRoot = $input.path('$'))
-# <?xml version="1.0" encoding="UTF-8"?>
-# <message>
-#     $inputRoot.body
-# </message>
-# EOF
-}
+    #     "application/xml" = <<EOF
+    # #set($inputRoot = $input.path('$'))
+    # <?xml version="1.0" encoding="UTF-8"?>
+    # <message>
+    #     $inputRoot.body
+    # </message>
+    # EOF
+  }
 
   rest_api_id = aws_api_gateway_rest_api.rest-api-acme-shoes.id
   resource_id = aws_api_gateway_resource.api-gateway-resource-order.id
@@ -204,7 +204,7 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
     # "method.response.header.Access-Control-Allow-Methods" = "'GET,POST'",
     # "method.response.header.Access-Control-Allow-Origin"  = "'*'"
   }
-  response_templates  = {
+  response_templates = {
     "application/json" = ""
   }
 

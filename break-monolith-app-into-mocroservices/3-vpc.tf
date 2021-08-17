@@ -17,7 +17,7 @@ module "vpc" {
   one_nat_gateway_per_az = false
 
   enable_dhcp_options      = true
-  dhcp_options_domain_name = "${local.default_name}"
+  dhcp_options_domain_name = local.default_name
   #dhcp_options_domain_name_servers = ["127.0.0.1", "10.0.1.100"]
 
   # VPC endpoint for S3 (successful)
@@ -28,7 +28,7 @@ module "vpc" {
   #  create_flow_log_cloudwatch_log_group = true
   #  create_flow_log_cloudwatch_iam_role  = true
 
- tags = {
+  tags = {
     "Name" = "${local.default_name}-vpc"
   }
 

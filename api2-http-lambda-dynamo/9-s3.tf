@@ -1,12 +1,12 @@
 #-----------------------------------------------------------------
 resource "aws_s3_bucket" "s3-lambda-content-bucket" {
   for_each = toset(var.lambda-name)
-  bucket = "${local.default_name}-lambda-content-bucket-${each.key}"
-  acl    = "private"
-  
+  bucket   = "${local.default_name}-lambda-content-bucket-${each.key}"
+  acl      = "private"
+
   #force destroy for not prouction env
   force_destroy = true
-  
+
   versioning {
     enabled = true
   }
@@ -25,13 +25,13 @@ resource "aws_s3_bucket" "s3-lambda-content-bucket" {
 #formatdate("YYYYMMDDHHmmss", timestamp())
 resource "aws_s3_bucket_object" "s3-lambda-content-bucket-object" {
   for_each = toset(var.lambda-name)
-  key    = "${local.app_version}/${each.key}.zip"
-  bucket = aws_s3_bucket.s3-lambda-content-bucket[each.key].id
+  key      = "${local.app_version}/${each.key}.zip"
+  bucket   = aws_s3_bucket.s3-lambda-content-bucket[each.key].id
   #content    = "web/index.html"
   #source = "web/index.html"
-  source  = data.archive_file.lambda[each.key].output_path
+  source       = data.archive_file.lambda[each.key].output_path
   content_type = "application/zip"
- 
+
   #Encrypting with KMS Key
   #kms_key_id = aws_kms_key.key.arn
 
@@ -46,8 +46,8 @@ resource "aws_s3_bucket_object" "s3-lambda-content-bucket-object" {
 #--------------------------------------------------------------------
 output "bucket-name" {
   description = "backet names for the api websocket lambdas"
-  value =  {
-    for instance in aws_s3_bucket.s3-lambda-content-bucket:
+  value = {
+    for instance in aws_s3_bucket.s3-lambda-content-bucket :
     instance.id => instance.id
   }
 }

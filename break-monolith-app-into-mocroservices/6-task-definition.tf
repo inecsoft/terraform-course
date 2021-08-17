@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 resource "aws_ecs_task_definition" "task-definition" {
-  family                = "service"
+  family = "service"
   #container_definitions = file("task-definitions/service.json")
   container_definitions = <<EOF
 [

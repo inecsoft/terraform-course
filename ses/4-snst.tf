@@ -1,9 +1,9 @@
 
 #----------------------------------------------------------------------------------------
 resource "aws_sns_topic" "sns-topic-ses-notification" {
-  name            = "${local.default_name}-ses-notification"
-  display_name    = "${local.default_name}-ses-notification"
-  policy          = <<POLICY
+  name         = "${local.default_name}-ses-notification"
+  display_name = "${local.default_name}-ses-notification"
+  policy       = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "__default_policy_ID",
@@ -44,20 +44,20 @@ POLICY
 #----------------------------------------------------------------------------------------
 resource "aws_sns_topic_subscription" "sns-topic-subscription-ses-sns" {
   #provider  = "aws.sns"
-  topic_arn = aws_sns_topic.sns-topic-ses-notification.arn
+  topic_arn                       = aws_sns_topic.sns-topic-ses-notification.arn
   confirmation_timeout_in_minutes = 5
-  protocol  = "sms"
-  endpoint  = "+447518527690"
-  raw_message_delivery = false 
+  protocol                        = "sms"
+  endpoint                        = "+447518527690"
+  raw_message_delivery            = false
 }
 #-------------------------------------------------------------------------------
 resource "aws_sns_topic_subscription" "sns-topic-subscription-ses-lambda" {
   #provider  = "aws.sns"
-  topic_arn = aws_sns_topic.sns-topic-ses-notification.arn
+  topic_arn                       = aws_sns_topic.sns-topic-ses-notification.arn
   confirmation_timeout_in_minutes = 5
-  protocol  = "lambda"
-  endpoint  = aws_lambda_function.lambda-function.arn
-  raw_message_delivery = false 
+  protocol                        = "lambda"
+  endpoint                        = aws_lambda_function.lambda-function.arn
+  raw_message_delivery            = false
 }
 #-------------------------------------------------------------------------------
 #emil protocol is not supported by sns subscription only [application http https lambda sms sqs]

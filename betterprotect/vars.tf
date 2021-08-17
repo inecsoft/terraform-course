@@ -20,7 +20,7 @@ variable "ECS_AMIS" {
     eu-west-3 = "ami-03490ca40775a62f0"
     eu-west-2 = "ami-0393b5f363fbd613a"
     eu-west-1 = "ami-0bf45a5f4ab05b949"
-    
+
   }
 }
 

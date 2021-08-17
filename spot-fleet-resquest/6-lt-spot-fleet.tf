@@ -2,34 +2,34 @@
 # aws_launch_template.lt:
 #---------------------------------------------------------------------------------------
 resource "aws_launch_template" "lt" {
-    name                    = "${local.default_name}-lt"
-    default_version         = 1
-    description             = "${local.default_name}-lt"
-    disable_api_termination = false
-    image_id                = data.aws_ami.amazon_linux.id
-    instance_type           = var.instance_type
-    key_name                = aws_key_pair.codecommit-key.key_name
-    
-    vpc_security_group_ids  = [aws_security_group.ssh_security_group.id, aws_security_group.http_security_group.id]
-    
-    user_data               = filebase64("script.tpl")
+  name                    = "${local.default_name}-lt"
+  default_version         = 1
+  description             = "${local.default_name}-lt"
+  disable_api_termination = false
+  image_id                = data.aws_ami.amazon_linux.id
+  instance_type           = var.instance_type
+  key_name                = aws_key_pair.codecommit-key.key_name
 
-    iam_instance_profile {
-        name = aws_iam_instance_profile.EC2InstanceRoleProfile.name
+  vpc_security_group_ids = [aws_security_group.ssh_security_group.id, aws_security_group.http_security_group.id]
+
+  user_data = filebase64("script.tpl")
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.EC2InstanceRoleProfile.name
+  }
+
+  instance_market_options {
+    market_type = "spot"
+
+    spot_options {
+      block_duration_minutes = 0
+      spot_instance_type     = "one-time"
     }
+  }
 
-    instance_market_options {
-        market_type = "spot"
-
-        spot_options {
-            block_duration_minutes = 0
-            spot_instance_type     = "one-time"
-        }
-    }
-
-    tags  = {
-        Name  = "${local.default_name}-lt"
-    }
+  tags = {
+    Name = "${local.default_name}-lt"
+  }
 }
 #---------------------------------------------------------------------------------------
 resource "aws_spot_fleet_request" "spot-fleet-resquest" {
@@ -39,12 +39,12 @@ resource "aws_spot_fleet_request" "spot-fleet-resquest" {
   valid_until     = "2020-11-04T20:44:20Z"
 
 
-  allocation_strategy                 = "lowestPrice"
-  excess_capacity_termination_policy  = "Default"
-  fleet_type                          = "maintain"
-  wait_for_fulfillment                = false
-  instance_interruption_behaviour     = "terminate"
-  instance_pools_to_use_count         = 1
+  allocation_strategy                = "lowestPrice"
+  excess_capacity_termination_policy = "Default"
+  fleet_type                         = "maintain"
+  wait_for_fulfillment               = false
+  instance_interruption_behaviour    = "terminate"
+  instance_pools_to_use_count        = 1
   #spot_price                          = "0.005"
 
   #load_balancers     =
@@ -59,10 +59,10 @@ resource "aws_spot_fleet_request" "spot-fleet-resquest" {
 
   depends_on = [
     aws_iam_policy_attachment.ec2-spot-fleet-tagging-role-policy-attachment-1,
-    aws_iam_policy_attachment.ec2-spot-fleet-ec2read-role-policy-attachment-2]
-  
+  aws_iam_policy_attachment.ec2-spot-fleet-ec2read-role-policy-attachment-2]
+
   tags = {
-      Name = "${local.default_name}-spot-fleet-resquest"
+    Name = "${local.default_name}-spot-fleet-resquest"
   }
 }
 #---------------------------------------------------------------------------------------

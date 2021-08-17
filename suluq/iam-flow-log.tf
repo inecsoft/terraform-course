@@ -21,7 +21,7 @@ EOF
 #-----------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy" "suluq_vpc_flowlogPolicy" {
   name = "${local.default_name}-vpc_flowlogPolicy"
-  role = "${aws_iam_role.suluq_vpc_flowlogRole.id}"
+  role = aws_iam_role.suluq_vpc_flowlogRole.id
 
   policy = <<EOF
 {

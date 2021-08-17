@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "eu-west-2"
+  default = "eu-west-2"
 }
 #-------------------------------------------------------------------
 data "http" "workstation-external-ip" {
@@ -16,7 +16,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "eb-docker-flask"))}"
+  default_name = join("-", list(terraform.workspace, "eb-docker-flask"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f vpc-endpoint
@@ -25,7 +25,7 @@ variable "PATH_TO_PRIVATE_KEY" {
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-    default = "eb-docker-flask.pub"
+  default = "eb-docker-flask.pub"
 }
 #-------------------------------------------------------------------
 locals {

@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------------
 resource "aws_globalaccelerator_accelerator" "g-accelerator" {
-  name            = "${local.default_name}"
+  name            = local.default_name
   ip_address_type = "IPV4"
   enabled         = true
 
@@ -11,12 +11,12 @@ resource "aws_globalaccelerator_accelerator" "g-accelerator" {
   }
 }
 
-output "Dns name of global accelerator"{
+output "Dns name of global accelerator" {
   value = aws_globalaccelerator_accelerator.g-accelerator.dns_name
 }
 #-----------------------------------------------------------------------
 resource "aws_globalaccelerator_listener" "g-accelerator-l" {
-  accelerator_arn = "${aws_globalaccelerator_accelerator.g-accelerator.id}"
+  accelerator_arn = aws_globalaccelerator_accelerator.g-accelerator.id
   client_affinity = "SOURCE_IP"
   protocol        = "TCP"
 
@@ -31,10 +31,10 @@ resource "aws_globalaccelerator_listener" "g-accelerator-l" {
 }
 #-----------------------------------------------------------------------
 resource "aws_globalaccelerator_endpoint_group" "g-aceleratior-g" {
-  listener_arn = "${aws_globalaccelerator_listener.g-accelerator-l.id}"
+  listener_arn = aws_globalaccelerator_listener.g-accelerator-l.id
 
   endpoint_configuration {
-    endpoint_id = "${aws_lb.alb.arn}"
+    endpoint_id = aws_lb.alb.arn
     weight      = 100
   }
 }
@@ -46,28 +46,28 @@ resource "aws_s3_bucket" "g-accelerator-bucket" {
   policy        = data.aws_iam_policy_document.g-accelerator-bucket-logs.json
   force_destroy = true
 
-#------------------------------------------------------------------------------
-#enable life cycle policy
-#on the config folder
-#------------------------------------------------------------------------------
+  #------------------------------------------------------------------------------
+  #enable life cycle policy
+  #on the config folder
+  #------------------------------------------------------------------------------
   lifecycle_rule {
-      prefix  = "AWSLogs/"
-          enabled = true
+    prefix  = "AWSLogs/"
+    enabled = true
 
-      noncurrent_version_transition {
-            days          = 30
-          storage_class = "STANDARD_IA"
-      }
-
-      noncurrent_version_transition {
-        days          = 60
-        storage_class = "GLACIER"
-      }
-
-      noncurrent_version_expiration {
-            days = 90
-      }
+    noncurrent_version_transition {
+      days          = 30
+      storage_class = "STANDARD_IA"
     }
+
+    noncurrent_version_transition {
+      days          = 60
+      storage_class = "GLACIER"
+    }
+
+    noncurrent_version_expiration {
+      days = 90
+    }
+  }
 }
 #------------------------------------------------------------------------------------------------------
 data "aws_caller_identity" "current" {}

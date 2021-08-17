@@ -4,7 +4,7 @@
 #}
 #--------------------------------------------------------
 output "efs-id" {
-    value = "${aws_efs_file_system.project_vpc_efs.id}"
+  value = aws_efs_file_system.project_vpc_efs.id
 }
 #--------------------------------------------------------
 # Subnets

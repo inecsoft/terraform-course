@@ -1,45 +1,45 @@
 #------------------------------------------------------------
 resource "aws_dynamodb_table" "dynamodb-table" {
-    name = "${local.default_name}-dynamodb-table"
-    billing_mode   = "PROVISIONED"
-    read_capacity = 1
-    write_capacity = 1
-    stream_enabled = false
-    
-    hash_key = "connectionId"
+  name           = "${local.default_name}-dynamodb-table"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 1
+  write_capacity = 1
+  stream_enabled = false
 
-    attribute {
-        name = "connectionId"
-        type = "S"
-    }
-    
-    point_in_time_recovery {
-        enabled = false
-    }
+  hash_key = "connectionId"
 
-    timeouts {}
+  attribute {
+    name = "connectionId"
+    type = "S"
+  }
 
-    # ttl {
-    #     attribute_name = "TimeToExist"
-    #     enabled = false
-    # }
+  point_in_time_recovery {
+    enabled = false
+  }
 
-    # replica {
-    #     region_name = "eu-west-1"
-    # }
+  timeouts {}
 
-    # replica {
-    #     region_name = "eu-west-2"
-    # }
+  # ttl {
+  #     attribute_name = "TimeToExist"
+  #     enabled = false
+  # }
 
-    # server_side_encryption {
-    #     enabled      = true
-    #     kms_key_arn  = 
-    # }
+  # replica {
+  #     region_name = "eu-west-1"
+  # }
 
-    tags = {
-       Name = "${local.default_name}-dynamodb-table"
-    }
+  # replica {
+  #     region_name = "eu-west-2"
+  # }
+
+  # server_side_encryption {
+  #     enabled      = true
+  #     kms_key_arn  = 
+  # }
+
+  tags = {
+    Name = "${local.default_name}-dynamodb-table"
+  }
 }
 #------------------------------------------------------------
 output "dynamodb-table-id" {

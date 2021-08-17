@@ -1,8 +1,8 @@
 #--------------------------------------------------------------------------------------
 resource "aws_iam_role" "ApplicationHostInstanceRole" {
-    name               = "${terraform.workspace}-ApplicationHostInstanceRole"
-    path               = "/"
-    assume_role_policy = <<POLICY
+  name               = "${terraform.workspace}-ApplicationHostInstanceRole"
+  path               = "/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -25,17 +25,17 @@ resource "aws_iam_instance_profile" "ApplicationHostInstanceProfile" {
 }
 #--------------------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "AmazonEC2RoleforSSM-policy-attachment" {
-    name       = "${terraform.workspace}-AmazonEC2RoleforSSM-policy-attachment"
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
-    groups     = []
-    users      = []
-    roles      = [aws_iam_role.ApplicationHostInstanceRole.name]
+  name       = "${terraform.workspace}-AmazonEC2RoleforSSM-policy-attachment"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+  groups     = []
+  users      = []
+  roles      = [aws_iam_role.ApplicationHostInstanceRole.name]
 }
 #--------------------------------------------------------------------------------------
 resource "aws_iam_role" "SsmNotificationRole" {
-    name               = "${terraform.workspace}-SsmNotificationRole"
-    path               = "/"
-    assume_role_policy = <<POLICY
+  name               = "${terraform.workspace}-SsmNotificationRole"
+  path               = "/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -56,10 +56,10 @@ POLICY
 
 #--------------------------------------------------------------------------------------
 resource "aws_iam_role_policy" "SsmNotificationRole" {
-    name   = "${terraform.workspace}-cloudtrail-limited-actions"
-    role   = aws_iam_role.SsmNotificationRole.name
-   
-    policy = <<POLICY
+  name = "${terraform.workspace}-cloudtrail-limited-actions"
+  role = aws_iam_role.SsmNotificationRole.name
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [

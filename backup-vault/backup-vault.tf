@@ -2,9 +2,9 @@
 
 #----------------------------------------------------------------
 resource "aws_backup_vault" "backup-vault" {
-  name        = "${local.default_name}-backup-vault"
+  name = "${local.default_name}-backup-vault"
   #kms_key_arn = aws_kms_key.example.arn
-  
+
   tags = {
     Name = "${local.default_name}-backup-vault"
   }
@@ -17,8 +17,8 @@ resource "aws_backup_plan" "backup-plan" {
     rule_name         = "${local.default_name}-backup-vault-rule"
     target_vault_name = aws_backup_vault.backup-vault.name
     schedule          = "cron(0 12 * * ? *)"
-    start_window        = 60
-    completion_window   = 180
+    start_window      = 60
+    completion_window = 180
     lifecycle {
       delete_after = 60
     }
@@ -58,8 +58,8 @@ resource "aws_iam_role_policy_attachment" "backup-role-attach" {
 resource "aws_backup_selection" "backup-selection" {
   name         = "${local.default_name}-backup-selection"
   iam_role_arn = aws_iam_role.backup-role.arn
-  
-  plan_id      = aws_backup_plan.backup-plan.id
+
+  plan_id = aws_backup_plan.backup-plan.id
 
   #Selecting Backups By Resource
   resources = [

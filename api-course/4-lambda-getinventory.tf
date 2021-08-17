@@ -7,9 +7,9 @@ resource "aws_lambda_function" "lambda-function-getinventory" {
   s3_bucket = aws_s3_bucket.s3-lambda-content-bucket.id
   s3_key    = "${local.app_version}/getinventory.zip"
   #s3_key    = "${var.app_version}/code.zip"
-   
-  depends_on = [ aws_s3_bucket_object.s3-bucket-object-getinventory ]
-  
+
+  depends_on = [aws_s3_bucket_object.s3-bucket-object-getinventory]
+
   # "main" is the filename within the zip file (main.js) and "handler"
   # is the name of the property under which the handler function was
   # exported in that file.
@@ -17,7 +17,7 @@ resource "aws_lambda_function" "lambda-function-getinventory" {
   runtime     = "nodejs12.x"
   memory_size = 256
   timeout     = 3
-  
+
   # environment {
   #   variables = {
   #     env  = "dev"
@@ -29,7 +29,7 @@ resource "aws_lambda_function" "lambda-function-getinventory" {
   vpc_config {
     # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
     subnet_ids         = module.vpc.public_subnets
-    security_group_ids = [ aws_security_group.security-group-lambda-getinventory.id ]
+    security_group_ids = [aws_security_group.security-group-lambda-getinventory.id]
   }
 
   # depends_on = [

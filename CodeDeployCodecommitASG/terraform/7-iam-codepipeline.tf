@@ -1,8 +1,8 @@
 
 resource "aws_iam_role" "CodePipelineServiceRole" {
-    name               = "${local.default_name}-CodePipelineServiceRole"
-    path               = "/service-role/"
-    assume_role_policy = <<POLICY
+  name               = "${local.default_name}-CodePipelineServiceRole"
+  path               = "/service-role/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -17,7 +17,7 @@ resource "aws_iam_role" "CodePipelineServiceRole" {
 }
 POLICY
 
-  tags  = {
+  tags = {
     "Name"        = "${local.default_name}-CodePipelineServiceRole"
     "Description" = "CodePipelineServiceRole service role for tutorial"
   }
@@ -243,6 +243,6 @@ resource "aws_iam_policy" "CodePipelineServiceRole-policy" {
   ]
 }
 POLICY
-  
+
 }
 #------------------------------------------------------------------------------------------------------

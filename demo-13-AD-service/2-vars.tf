@@ -52,12 +52,12 @@ variable "instance_type" {
 variable "credentials" {
   default = {
     WEBHOOK_ACCESS_TOKEN = "65121e46519ae20a495d89889f7a821c73926860"
-    username = "admin"
-    password = "admin123"
-    engine   = "mysql"
-    host     = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
-    port     = 3306
-    dbname   = "proxydb"
+    username             = "admin"
+    password             = "admin123"
+    engine               = "mysql"
+    host                 = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
+    port                 = 3306
+    dbname               = "proxydb"
     dbInstanceIdentifier = "dbproxy"
   }
 
@@ -65,7 +65,7 @@ variable "credentials" {
 }
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length = 20 
+  length  = 20
   special = true
   #override_special = "_@\/ "
 }
@@ -86,7 +86,7 @@ variable "MYSQL_USER" {
 }
 #----------------------------------------------------------------------------
 variable "MYSQL_PASSWORD" {
-  default = "JO3a2NIXapLl0zG76AE41o2e4jdqB66oinmegVPL1y5bRvo=" 
+  default = "JO3a2NIXapLl0zG76AE41o2e4jdqB66oinmegVPL1y5bRvo="
 }
 #----------------------------------------------------------------------------
 variable "MYSQL_DATABASE" {

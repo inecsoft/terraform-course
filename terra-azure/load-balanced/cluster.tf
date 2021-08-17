@@ -99,12 +99,12 @@ resource "azurerm_network_interface_backend_address_pool_association" "pool-asso
 }
 #-----------------------------------------------------------------------------------
 resource "azurerm_linux_virtual_machine" "main" {
-  count                           = local.instance_count
-  name                            = "${local.default_name}-vm${count.index}"
-  resource_group_name             = azurerm_resource_group.main.name
-  location                        = azurerm_resource_group.main.location
-  size                            = "Standard_D2_v3"
-  admin_username                  = "adminuser"
+  count               = local.instance_count
+  name                = "${local.default_name}-vm${count.index}"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  size                = "Standard_D2_v3"
+  admin_username      = "adminuser"
 
   availability_set_id             = azurerm_availability_set.avset.id
   disable_password_authentication = true
@@ -113,7 +113,7 @@ resource "azurerm_linux_virtual_machine" "main" {
     azurerm_network_interface.main[count.index].id,
   ]
 
- admin_ssh_key {
+  admin_ssh_key {
     username   = "adminuser"
     public_key = file("autoscaler.pub")
   }

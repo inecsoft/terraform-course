@@ -19,7 +19,7 @@ resource "aws_api_gateway_method" "api-gateway-method-shoes" {
   rest_api_id        = aws_api_gateway_rest_api.rest-api-acme-shoes.id
   resource_id        = aws_api_gateway_resource.api-gateway-resource-shoes.id
   api_key_required   = false
-  
+
   request_validator_id = aws_api_gateway_request_validator.api-gateway-request-validator-shoes.id
 
   # request_parameters = {
@@ -31,16 +31,16 @@ resource "aws_api_gateway_method_settings" "api-gateway-method-settings-shoes" {
   rest_api_id = aws_api_gateway_rest_api.rest-api-acme-shoes.id
   stage_name  = aws_api_gateway_stage.api-gateway-stage-dev.stage_name
   method_path = "${aws_api_gateway_resource.api-gateway-resource-shoes.path_part}/${aws_api_gateway_method.api-gateway-method-shoes.http_method}"
-  
+
   settings {
-    cache_data_encrypted                       = false
-    cache_ttl_in_seconds                       = 300
-    caching_enabled                            = true
-    data_trace_enabled                         = true 
+    cache_data_encrypted = false
+    cache_ttl_in_seconds = 300
+    caching_enabled      = true
+    data_trace_enabled   = true
     #OFF, ERROR, and INFO.
     logging_level                              = "INFO"
     metrics_enabled                            = true
-    require_authorization_for_cache_control    = true 
+    require_authorization_for_cache_control    = true
     throttling_burst_limit                     = 500
     throttling_rate_limit                      = 1000
     unauthorized_cache_control_header_strategy = "SUCCEED_WITH_RESPONSE_HEADER"
@@ -48,19 +48,19 @@ resource "aws_api_gateway_method_settings" "api-gateway-method-settings-shoes" {
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_integration" "api-gateway-integration-shoes" {
-  rest_api_id              = aws_api_gateway_rest_api.rest-api-acme-shoes.id
-  resource_id              = aws_api_gateway_resource.api-gateway-resource-shoes.id
-  http_method              = aws_api_gateway_method.api-gateway-method-shoes.http_method
-  integration_http_method  = "POST"
-  timeout_milliseconds     = 29000
-  type                     = "AWS"
-  cache_key_parameters     = [] 
-  content_handling         = "CONVERT_TO_TEXT"
-  passthrough_behavior     = "WHEN_NO_MATCH"
+  rest_api_id             = aws_api_gateway_rest_api.rest-api-acme-shoes.id
+  resource_id             = aws_api_gateway_resource.api-gateway-resource-shoes.id
+  http_method             = aws_api_gateway_method.api-gateway-method-shoes.http_method
+  integration_http_method = "POST"
+  timeout_milliseconds    = 29000
+  type                    = "AWS"
+  cache_key_parameters    = []
+  content_handling        = "CONVERT_TO_TEXT"
+  passthrough_behavior    = "WHEN_NO_MATCH"
 
-  uri                      = aws_lambda_function.lambda-function-getinventory.invoke_arn
-  request_parameters       = {} 
-  request_templates        = {}
+  uri                = aws_lambda_function.lambda-function-getinventory.invoke_arn
+  request_parameters = {}
+  request_templates  = {}
 }
 #------------------------------------------------------------------------------------------------------------
 resource "aws_api_gateway_method_response" "api-gateway-method-response-200-shoes" {
@@ -96,7 +96,7 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
   status_code = aws_api_gateway_method_response.api-gateway-method-response-200-shoes.status_code
 
   #content_handling = "CONVERT_TO_TEXT"
-  
+
   response_parameters = {
     # "method.response.header.Cache-Control"               = "'no-cache, no-store, must-revalidate'"
     # "method.response.header.Pragma"                      = "'no-cache'"
@@ -109,7 +109,7 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
     # "method.response.header.Access-Control-Allow-Origin" = "'*'"
   }
 
-  response_templates  = {
+  response_templates = {
     "application/json" = ""
   }
 

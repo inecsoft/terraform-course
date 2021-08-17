@@ -35,28 +35,28 @@ resource "aws_s3_bucket" "codepipeline-nlb-logs" {
   policy        = data.aws_iam_policy_document.codepipeline-nlb-logs.json
   force_destroy = true
 
-#------------------------------------------------------------------------------
-#enable life cycle policy
-#on the config folder
-#------------------------------------------------------------------------------
+  #------------------------------------------------------------------------------
+  #enable life cycle policy
+  #on the config folder
+  #------------------------------------------------------------------------------
   lifecycle_rule {
-      prefix  = "AWSLogs/"
-          enabled = true
+    prefix  = "AWSLogs/"
+    enabled = true
 
-      noncurrent_version_transition {
-            days          = 30
-          storage_class = "STANDARD_IA"
-      }
-
-      noncurrent_version_transition {
-        days          = 60
-        storage_class = "GLACIER"
-      }
-
-      noncurrent_version_expiration {
-            days = 90
-      }
+    noncurrent_version_transition {
+      days          = 30
+      storage_class = "STANDARD_IA"
     }
+
+    noncurrent_version_transition {
+      days          = 60
+      storage_class = "GLACIER"
+    }
+
+    noncurrent_version_expiration {
+      days = 90
+    }
+  }
 }
 
 

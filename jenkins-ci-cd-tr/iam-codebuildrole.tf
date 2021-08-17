@@ -1,8 +1,8 @@
 #------------------------------------------------------------------------------------------------------
 resource "aws_iam_role" "CodeBuildRole" {
-    name               = "${local.default_name}-CodeBuildRole"
-    path               = "/"
-    assume_role_policy = <<POLICY
+  name               = "${local.default_name}-CodeBuildRole"
+  path               = "/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -19,9 +19,9 @@ POLICY
 }
 #------------------------------------------------------------------------------------------------------
 resource "aws_iam_role_policy" "CodeBuildRole-policy" {
-    name   = "${local.default_name}-CodeBuildRole-policy"
-    role   = aws_iam_role.CodeBuildRole.name 
-    policy = <<POLICY
+  name   = "${local.default_name}-CodeBuildRole-policy"
+  role   = aws_iam_role.CodeBuildRole.name
+  policy = <<POLICY
 {
   "Statement": [
     {

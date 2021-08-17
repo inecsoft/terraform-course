@@ -8,7 +8,7 @@ data "template_file" "s3_public_policy" {
 #----------------------------------------------------------------------------------------
 resource "aws_s3_bucket" "static_site" {
   bucket = var.bucket_name
-  acl = "public-read"
+  acl    = "public-read"
   policy = data.template_file.s3_public_policy.rendered
 
   website {
@@ -17,9 +17,9 @@ resource "aws_s3_bucket" "static_site" {
 }
 #----------------------------------------------------------------------------------------
 resource "aws_s3_bucket_object" "index" {
-  bucket = aws_s3_bucket.static_site.bucket
-  key = "index.html"
-  source = "src/index.html"
+  bucket       = aws_s3_bucket.static_site.bucket
+  key          = "index.html"
+  source       = "src/index.html"
   content_type = "text/html"
   # The filemd5() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:

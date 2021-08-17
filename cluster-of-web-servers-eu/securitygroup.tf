@@ -4,8 +4,8 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_security_group" "instance" {
-  name = "terraform-example-instance"
-  vpc_id      = aws_vpc.my_vpc.id
+  name   = "terraform-example-instance"
+  vpc_id = aws_vpc.my_vpc.id
 
   # Inbound HTTP from anywhere
   ingress {
@@ -22,8 +22,8 @@ resource "aws_security_group" "instance" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_security_group" "elb" {
-  name = "terraform-example-elb"
-  vpc_id      = aws_vpc.my_vpc.id
+  name   = "terraform-example-elb"
+  vpc_id = aws_vpc.my_vpc.id
 
   # Allow all outbound
   egress {

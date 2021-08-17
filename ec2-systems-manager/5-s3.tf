@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "s3-ssm-output-history" {
   acl    = "private"
 
   force_destroy = true
-  
+
   tags = {
     Name = "${local.default_name}-s3"
   }
@@ -62,6 +62,6 @@ POLICY
 }
 #-----------------------------------------------------------------------
 output "s3-ssm-output-history" {
-   value =  aws_s3_bucket.s3-ssm-output-history.id
+  value = aws_s3_bucket.s3-ssm-output-history.id
 }
 #-----------------------------------------------------------------------

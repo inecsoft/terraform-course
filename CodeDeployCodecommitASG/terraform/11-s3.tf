@@ -1,20 +1,20 @@
 #-----------------------------------------------------------------------
 resource "aws_s3_bucket" "codepipeline-bucket" {
-    bucket = "${local.default_name}-codepipeline-bucket"
-    acl    = "private"
-    force_destroy = true
+  bucket        = "${local.default_name}-codepipeline-bucket"
+  acl           = "private"
+  force_destroy = true
 
-    lifecycle {
+  lifecycle {
 
-        # Any Terraform plan that includes a destroy of this resource will
-        # result in an error message.
-        #
-        prevent_destroy = false
-    }
+    # Any Terraform plan that includes a destroy of this resource will
+    # result in an error message.
+    #
+    prevent_destroy = false
+  }
 
-    tags = {
-       Name  = "${local.default_name}-codepipeline-bucket"
-    }
+  tags = {
+    Name = "${local.default_name}-codepipeline-bucket"
+  }
 }
 #-----------------------------------------------------------------------
 resource "aws_s3_bucket_policy" "codepipeline-bucket-policy" {

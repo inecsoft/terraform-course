@@ -1,8 +1,8 @@
 module "inchora-eks-cluster" {
   source       = "terraform-aws-modules/eks/aws"
   cluster_name = "inchora-cluster"
-  subnets      = "${aws_subnet.eks_vpc_subnet_public.*.id}"
-  vpc_id       = "${aws_vpc.eks_vpc.id}"
+  subnets      = aws_subnet.eks_vpc_subnet_public.*.id
+  vpc_id       = aws_vpc.eks_vpc.id
 
   #Whether to let the module manage the cluster autoscaling iam policy
   manage_worker_autoscaling_policy = true

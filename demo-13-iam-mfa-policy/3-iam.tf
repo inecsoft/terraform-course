@@ -6,8 +6,8 @@ resource "aws_iam_group" "iam-group-admin" {
 #---------------------------------------------------------------------------------------
 data "aws_iam_policy_document" "iam-policy-doc" {
   statement {
-    sid     = "allowDeleteIfMfaIsAnabled"
-    effect  = "Allow"
+    sid    = "allowDeleteIfMfaIsAnabled"
+    effect = "Allow"
     actions = [
       "ec2:TerminateInstances",
     ]
@@ -35,9 +35,9 @@ resource "aws_iam_policy" "iam-policy" {
 }
 #---------------------------------------------------------------------------------------
 resource "aws_iam_policy_attachment" "iam-policy-attach" {
-  name = "${local.default_name}-iam-policy-attach"
-  roles = [ ]
-  groups = [ aws_iam_group.iam-group-admin.name ]
+  name       = "${local.default_name}-iam-policy-attach"
+  roles      = []
+  groups     = [aws_iam_group.iam-group-admin.name]
   policy_arn = aws_iam_policy.iam-policy.arn
 }
 #---------------------------------------------------------------------------------------

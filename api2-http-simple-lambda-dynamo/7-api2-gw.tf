@@ -2,30 +2,30 @@
 #Step 1 Create an API + integration(can be multiple integrations) with lambda
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_api" "apigatewayv2-api" {
-  name                       = "${local.default_name}-http-api"
-  description                = "http api2 project"
-  protocol_type              = "HTTP"
+  name                         = "${local.default_name}-http-api"
+  description                  = "http api2 project"
+  protocol_type                = "HTTP"
   api_key_selection_expression = "$request.header.x-api-key"
   route_selection_expression   = "$request.method $request.path"
-  
-  tags  = {
+
+  tags = {
     Name = "${local.default_name}-api-rest"
   }
 }
 
 #-------------------------------------------------------------------------------------------------------------------
 resource "aws_apigatewayv2_integration" "apigatewayv2-integration" {
-  api_id                    = aws_apigatewayv2_api.apigatewayv2-api.id
-  integration_type          = "AWS_PROXY"
+  api_id           = aws_apigatewayv2_api.apigatewayv2-api.id
+  integration_type = "AWS_PROXY"
 
-  connection_type           = "INTERNET"
- 
-  description               = "Lambda integration with api http"
-  integration_method        = "POST"
-  integration_uri           = aws_lambda_function.lambda-function.invoke_arn
+  connection_type = "INTERNET"
 
-  passthrough_behavior      = "WHEN_NO_MATCH"
-  timeout_milliseconds      = 29000
+  description        = "Lambda integration with api http"
+  integration_method = "POST"
+  integration_uri    = aws_lambda_function.lambda-function.invoke_arn
+
+  passthrough_behavior = "WHEN_NO_MATCH"
+  timeout_milliseconds = 29000
 }
 #-------------------------------------------------------------------------------------------------------------------
 #There are two types of Lambda authorizers:
@@ -45,17 +45,17 @@ resource "aws_apigatewayv2_integration" "apigatewayv2-integration" {
 #   identity_sources = ["route.request.header.Auth"]
 
 #   #identity_sources = ["method.request.header.Authorization"]
-  
+
 # }
 #-------------------------------------------------------------------
 #[for i in toset([ 1,2,3 ]) : format("$%s",i)]
 resource "aws_apigatewayv2_route" "apigatewayv2-route" {
-  api_id              = aws_apigatewayv2_api.apigatewayv2-api.id
-  route_key           = "GET /hello"
+  api_id    = aws_apigatewayv2_api.apigatewayv2-api.id
+  route_key = "GET /hello"
 
-  authorization_type  = "NONE"
+  authorization_type = "NONE"
   #authorizer_id       = aws_apigatewayv2_authorizer.apigatewayv2-authorizer.id
-  target              = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration.id}"
+  target = "integrations/${aws_apigatewayv2_integration.apigatewayv2-integration.id}"
 }
 #-------------------------------------------------------------------
 # resource "aws_apigatewayv2_route" "apigatewayv2-route-auth" {
@@ -68,15 +68,15 @@ resource "aws_apigatewayv2_route" "apigatewayv2-route" {
 # }
 #-------------------------------------------------------------------
 resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
-  name   = "prod"
+  name        = "prod"
   description = "stage for production"
-  
-  api_id = aws_apigatewayv2_api.apigatewayv2-api.id
-  auto_deploy  = true
+
+  api_id          = aws_apigatewayv2_api.apigatewayv2-api.id
+  auto_deploy     = true
   stage_variables = {}
 
   tags = {
-    Name =  "${local.default_name}-prod-stage"
+    Name = "${local.default_name}-prod-stage"
   }
 }
 #-------------------------------------------------------------------
@@ -91,6 +91,6 @@ resource "aws_apigatewayv2_deployment" "apigatewayv2-deployment" {
 #-------------------------------------------------------------------
 output "api-endpoint" {
   description = "The URI of the API"
-  value       = aws_apigatewayv2_api.apigatewayv2-api.api_endpoint 
+  value       = aws_apigatewayv2_api.apigatewayv2-api.api_endpoint
 }
 #-------------------------------------------------------------------

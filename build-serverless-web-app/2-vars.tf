@@ -42,7 +42,7 @@ data "aws_caller_identity" "current" {}
 # The map here can come from other supported configurations
 # like locals, resource attribute, map() built-in, etc.
 #---------------------------------------------------------
-variable "instance_type"{
+variable "instance_type" {
   default = "t2.nano"
 }
 #------------------------------------------------------------------------

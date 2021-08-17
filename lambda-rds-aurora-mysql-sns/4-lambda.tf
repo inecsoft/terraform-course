@@ -7,19 +7,19 @@ resource "aws_lambda_function" "lambda-function" {
   s3_bucket = aws_s3_bucket.s3-lambda-content-bucket.id
   s3_key    = "${local.app_version}/code.zip"
   #s3_key    = "${var.app_version}/code.zip"
-   
+
   depends_on = [aws_s3_bucket_object.s3-lambda-content-bucket-object]
-  
+
   # "main" is the filename within the zip file (main.js) and "handler"
   # is the name of the property under which the handler function was
   # exported in that file.
   handler     = "app.handler"
   runtime     = "nodejs10.x"
   memory_size = 256
-  
+
   environment {
     variables = {
-      snstopic  = aws_sns_topic.sns-topic.arn
+      snstopic = aws_sns_topic.sns-topic.arn
     }
   }
 

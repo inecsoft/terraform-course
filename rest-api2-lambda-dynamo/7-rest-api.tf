@@ -2,21 +2,21 @@
 resource "aws_api_gateway_rest_api" "api-gateway-rest-api" {
   name        = "${local.default_name}-RestApi"
   description = "Terraform Serverless REST Application"
-  
+
   # #AUTHORIZER or HEADER
   # api_key_source   = "HEADER"
   # minimum_compression_size = -1
-  
+
   #types "EDGE", "REGIONAL", "PRIVATE"
   endpoint_configuration {
     types = [
       "REGIONAL",
     ]
-  #VPCEndpoints can only be specified with PRIVATE apis.   
-  #vpc_endpoint_ids = [module.vpc.vpc_id]
+    #VPCEndpoints can only be specified with PRIVATE apis.   
+    #vpc_endpoint_ids = [module.vpc.vpc_id]
   }
 
-  tags   = {
+  tags = {
     Name = "${local.default_name}-restapi"
   }
 }
@@ -40,14 +40,14 @@ resource "aws_api_gateway_integration" "api-gateway-integration-lambda" {
   http_method             = aws_api_gateway_method.api-gateway-method.http_method
   connection_type         = "INTERNET"
   integration_http_method = "POST"
-  
-  passthrough_behavior    = "WHEN_NO_MATCH"
-  timeout_milliseconds    = 29000
-  request_parameters      = {}
-  request_templates       = {}
-  cache_key_parameters    = []
-  type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.lambda-function.invoke_arn
+
+  passthrough_behavior = "WHEN_NO_MATCH"
+  timeout_milliseconds = 29000
+  request_parameters   = {}
+  request_templates    = {}
+  cache_key_parameters = []
+  type                 = "AWS_PROXY"
+  uri                  = aws_lambda_function.lambda-function.invoke_arn
 }
 #----------------------------------------------------------------------------------------
 resource "aws_api_gateway_method_response" "api-gateway-method-response-200" {
@@ -55,8 +55,8 @@ resource "aws_api_gateway_method_response" "api-gateway-method-response-200" {
   resource_id = aws_api_gateway_resource.api-gateway-resource.id
   http_method = aws_api_gateway_method.api-gateway-method.http_method
   status_code = "200"
-  
-  
+
+
   #Response Headers for 200
   #response_parameters = { "method.response.header.X-Some-Header" = true }
 
@@ -75,7 +75,7 @@ resource "aws_api_gateway_integration_response" "api-gateway-integration-respons
   resource_id = aws_api_gateway_resource.api-gateway-resource.id
   http_method = aws_api_gateway_method.api-gateway-method.http_method
   status_code = aws_api_gateway_method_response.api-gateway-method-response-200.status_code
-  
+
   selection_pattern = "-"
 
 
@@ -98,15 +98,15 @@ resource "aws_api_gateway_stage" "api-gateway-stage" {
   stage_name    = "prod"
   rest_api_id   = aws_api_gateway_rest_api.api-gateway-rest-api.id
   deployment_id = aws_api_gateway_deployment.api-gateway-deployment.id
-  
+
   access_log_settings {
-    destination_arn  = aws_cloudwatch_log_group.cloudwatch-log-group-api.arn
+    destination_arn = aws_cloudwatch_log_group.cloudwatch-log-group-api.arn
     #$context.requestId or $context.extendedRequestId 
-    format           =  "$context.requestId"
+    format = "$context.requestId"
   }
 
   tags = {
-    Name  = "${local.default_name}-api-gateway-stage"
+    Name = "${local.default_name}-api-gateway-stage"
   }
 }
 #----------------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ resource "aws_api_gateway_base_path_mapping" "api-gateway-base-path-mapping" {
   api_id      = aws_api_gateway_rest_api.api-gateway-rest-api.id
   stage_name  = aws_api_gateway_deployment.api-gateway-deployment.stage_name
   domain_name = aws_api_gateway_domain_name.api-gateway-domain-name.domain_name
-  
+
   #Path segment that must be prepended to the path when accessing the API via this mapping.
   #If omitted, the API is exposed at the root of the given domain.
   #base_path = "/"

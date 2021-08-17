@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------------
 resource "aws_security_group" "manage-instance" {
-  vpc_id      =  module.vpc.vpc_id
+  vpc_id      = module.vpc.vpc_id
   name        = "allow-ssh"
   description = "security group that allows ssh and all egress traffic"
   egress {
@@ -25,12 +25,12 @@ resource "aws_security_group" "manage-instance" {
 #apply security_groups to allow access to RDS from other servers 
 #-------------------------------------------------------------------------------------
 resource "aws_security_group" "allow-postgresdb" {
-  vpc_id      =  module.vpc.vpc_id
+  vpc_id      = module.vpc.vpc_id
   name        = "allow-postgresdb"
   description = "allow-postgresdb"
 
   ingress {
-    from_port       = 5432 
+    from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
     security_groups = [aws_security_group.manage-instance.id] # allowing access from our example instance

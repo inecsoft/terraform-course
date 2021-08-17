@@ -21,7 +21,7 @@
 #   runtime = "nodejs10.x"
 
 #   role = aws_iam_role.lambda_exec.arn
-  
+
 #   depends_on = [aws_s3_bucket_object.s3-lambda-content-bucket-object]
 
 #   tags = {
@@ -55,7 +55,7 @@
 resource "aws_api_gateway_rest_api" "rest-api" {
   name        = "${local.default_name}-RestApi"
   description = "Terraform Serverless Application Example"
-  
+
   # #AUTHORIZER or HEADER
   # api_key_source   = "HEADER"
   # minimum_compression_size = -1
@@ -68,7 +68,7 @@ resource "aws_api_gateway_rest_api" "rest-api" {
   # #vpc_endpoint_ids = [module.vpc.vpc_id]
   # }
 
-  tags   = {
+  tags = {
     Name = "${local.default_name}-restapi"
   }
 }

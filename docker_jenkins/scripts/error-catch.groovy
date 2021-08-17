@@ -1,5 +1,6 @@
 
-#!/usr/local/groovy-3.0.8/bin/groovy
+#!/usr/bin/groovy
+set JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
 
 environment = [1, 2 ,3]
 

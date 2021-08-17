@@ -11,11 +11,11 @@ data "aws_vpc" "default" {
 }
 #------------------------------------------------------------------------
 data "aws_subnet_ids" "all" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
 }
 #------------------------------------------------------------------------
 data "aws_security_group" "default" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
   name   = "default"
 }
 #------------------------------------------------------------------------
@@ -35,7 +35,7 @@ module "db" {
   allocated_storage = 5
   storage_encrypted = false
 
-  
+
   # kms_key_id        = "arm:aws:kms:<region>:<accound id>:key/<kms key id>"
   name     = "demodb"
   username = "user"
@@ -54,16 +54,16 @@ module "db" {
     Owner       = "user"
     Environment = "dev"
   }
-#------------------------------------------------------------------------
+  #------------------------------------------------------------------------
   # DB subnet group
   subnet_ids = data.aws_subnet_ids.all.*.id
-#------------------------------------------------------------------------
+  #------------------------------------------------------------------------
   # DB parameter group
   family = "mysql5.7"
-#------------------------------------------------------------------------
- # DB option group
-   major_engine_version = "5.7"
-#------------------------------------------------------------------------
+  #------------------------------------------------------------------------
+  # DB option group
+  major_engine_version = "5.7"
+  #------------------------------------------------------------------------
 
   # Snapshot name upon DB deletion
   final_snapshot_identifier = "demodb"

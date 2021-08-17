@@ -30,9 +30,9 @@ data "aws_iam_policy_document" "rds_enhanced_monitoring" {
 #lambda vpc role and role policy
 #----------------------------------------------------------------------------
 resource "aws_iam_role" "lambda-vpc-role" {
-    name               = "${local.default_name}-lambda-vpc-role"
-    path               = "/"
-    assume_role_policy = <<POLICY
+  name               = "${local.default_name}-lambda-vpc-role"
+  path               = "/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -78,7 +78,7 @@ resource "aws_iam_role_policy" "lambda-vpc-role-policy" {
 data "aws_caller_identity" "current" {}
 #----------------------------------------------------------------------------
 output "account_id" {
-  value = "${data.aws_caller_identity.current.account_id}"
+  value = data.aws_caller_identity.current.account_id
 }
 #----------------------------------------------------------------------------
 resource "aws_iam_role" "rds-proxy-role" {

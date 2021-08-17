@@ -2,23 +2,23 @@
 #create security group to access the instance on ssh
 #-------------------------------------------------------------------------------
 resource "aws_security_group" "allow-ssh" {
-  vpc_id = "${aws_vpc.main.id}"
-  name = "allow-ssh"
+  vpc_id      = aws_vpc.main.id
+  name        = "allow-ssh"
   description = "security group that allows ssh and all egress traffic"
   egress {
-      from_port = 0
-      to_port = 0
-      protocol = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-      from_port = 22
-      to_port = 22
-      protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-  } 
-tags = {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
     Name = "allow-ssh"
   }
 }
@@ -32,24 +32,24 @@ tags = {
 #------------------------------------------------------------------------------------
 #// security.tf
 resource "aws_security_group" "ingress-efs" {
-   name = "ingress-efs-test-sg"
-   vpc_id = "${aws_vpc.main.id}"
+  name   = "ingress-efs-test-sg"
+  vpc_id = aws_vpc.main.id
 
-#         // NFS
-    ingress {
-      security_groups = [aws_security_group.allow-ssh.id]
-      from_port = 2049
-      to_port = 2049
-      protocol = "tcp"
-   }
+  #         // NFS
+  ingress {
+    security_groups = [aws_security_group.allow-ssh.id]
+    from_port       = 2049
+    to_port         = 2049
+    protocol        = "tcp"
+  }
 
-#      // Terraform removes the default rule
-   egress {
-     security_groups = [aws_security_group.allow-ssh.id]
-     from_port = 0
-     to_port = 0
-     protocol = "-1"
-        }
+  #      // Terraform removes the default rule
+  egress {
+    security_groups = [aws_security_group.allow-ssh.id]
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+  }
 }
 #------------------------------------------------------------------------------
 

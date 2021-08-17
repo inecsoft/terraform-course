@@ -20,12 +20,12 @@ resource "aws_elb" "my-elb" {
 
   #instances = ["${aws_instance.example-instance.id}"]
   # optional you can also attach an ELB to an autoscaling group.
-  
+
   cross_zone_load_balancing   = true
   connection_draining         = true
   connection_draining_timeout = 400
- 
-   tags = {
+
+  tags = {
     Name = "my-elb"
   }
 }

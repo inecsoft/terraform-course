@@ -16,12 +16,17 @@ docker exec -it docker_jenkins_jenkins_1 bash
 ### __Where jenkins stores the scripts__
  /usr/share/jenkins/ref/init.groovy.d/executors.groovy
  ***
+ 
+ ```
+sudo apt install groovy
+echo export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64 >> ~/.bashrc
+sudo update-alternatives --config java
 export groovy_version=3.0.8
 wget https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-sdk-${groovy_version}.zip
 unzip -d /usr/local/ apache-groovy-sdk-${groovy_version}.zip
 echo "export GROOVY_HOME=/usr/local/groovy-${groovy_version}" >>~/.bashrc
 echo "export PATH=$PATH:$GROOVY_HOME/bin" >>~/.bashrc
-
+```
 ***
 ### __Build the image__
 ```

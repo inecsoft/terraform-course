@@ -39,7 +39,7 @@ data "aws_ami" "ubuntu" {
 #-------------------------------------------------------------------
 data "aws_ami" "ecs-optimized" {
   most_recent = true
-  owners = ["591542846629"] # AWS
+  owners      = ["591542846629"] # AWS
 
   filter {
     name   = "name"
@@ -73,7 +73,7 @@ output "ami-ubuntu-id" {
 #-------------------------------------------------------------------
 output "ami-ubuntu-name" {
   description = "description of ami ubuntu "
-  value       = data.aws_ami.ubuntu.name 
+  value       = data.aws_ami.ubuntu.name
 }
 #-------------------------------------------------------------------
 

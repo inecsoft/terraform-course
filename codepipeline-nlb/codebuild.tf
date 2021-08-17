@@ -45,12 +45,12 @@ resource "aws_codebuild_project" "codepipeline" {
       name  = "MYSQL_HOST"
       value = aws_db_instance.mariadb.endpoint
     }
-	  
+
     environment_variable {
       name  = "MYSQL_USER"
       value = var.MYSQL_USER
     }
-    
+
     environment_variable {
       name  = "MYSQL_PASSWORD"
       value = var.MYSQL_PASSWORD

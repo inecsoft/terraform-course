@@ -7,17 +7,17 @@ resource "aws_security_group" "ApplicationHostSecurityGroup" {
   description = "Allow SSH from Management VPC"
 
   egress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 
@@ -33,21 +33,21 @@ resource "aws_security_group" "ApplicationNatSecurityGroup" {
   description = "Application NAT Security Group Allow outbound HTTPS traffic"
 
   ingress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     #security_groups = [aws_security_group.proxy-sg.id, aws_security_group.host-bastion-sg.id] # allowing access from our example instance
   }
 
   egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  
+
   tags = {
     Name = "${local.default_name}-allow-mysql"
   }

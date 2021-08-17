@@ -16,10 +16,10 @@ module "main-vpc" {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
-  enable_vpn_gateway = true
+  enable_vpn_gateway   = true
 
-  enable_nat_gateway = true
-  single_nat_gateway = true
+  enable_nat_gateway     = true
+  single_nat_gateway     = true
   one_nat_gateway_per_az = false
 
 
@@ -30,7 +30,7 @@ module "main-vpc" {
   enable_dynamodb_endpoint = true
 
   # VPC endpoint for  apigw
-  enable_apigw_endpoint            = true
+  enable_apigw_endpoint              = true
   apigw_endpoint_private_dns_enabled = true
   apigw_endpoint_security_group_ids  = [data.aws_security_group.default.id]
 

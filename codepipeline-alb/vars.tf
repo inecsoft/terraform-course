@@ -1,7 +1,7 @@
 
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "eu-west-1"
+  default = "eu-west-1"
 }
 #-------------------------------------------------------------------
 data "http" "workstation-external-ip" {
@@ -17,10 +17,10 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "code-pipeline"))}"
+  default_name = join("-", list(terraform.workspace, "code-pipeline"))
 }
 #-------------------------------------------------------------------
-variable  "domain" {
+variable "domain" {
   default = "codepipeline.inchoratech.com"
 }
 #-------------------------------------------------------------------
@@ -30,6 +30,6 @@ variable "PATH_TO_PRIVATE_KEY" {
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-    default = "codepipeline.pub"
+  default = "codepipeline.pub"
 }
 #-------------------------------------------------------------------

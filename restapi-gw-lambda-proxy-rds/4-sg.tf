@@ -40,10 +40,10 @@ resource "aws_security_group" "proxy-sg" {
   }
 
   ingress {
-    from_port   = var.credentials.port
-    to_port     = var.credentials.port
-    protocol    = "tcp"
-    security_groups = [ aws_security_group.lambda-sg.id, aws_security_group.host-bastion-sg.id ]
+    from_port       = var.credentials.port
+    to_port         = var.credentials.port
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lambda-sg.id, aws_security_group.host-bastion-sg.id]
     #cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -76,7 +76,7 @@ resource "aws_security_group" "allow-mysql" {
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
   }
-  
+
   tags = {
     Name = "${local.default_name}-allow-mysql"
   }

@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "iam-policy-doc-kms" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = [ data.aws_iam_user.iam-user-manager.arn ]
+      identifiers = [data.aws_iam_user.iam-user-manager.arn]
     }
     actions = [
       "kms:Create*",
@@ -114,12 +114,12 @@ data "aws_iam_policy_document" "iam-policy-doc-kms" {
       ]
     }
   }
-  
+
   statement {
     sid    = "Allow access to codebuild to kms key"
     effect = "Allow"
     principals {
-      type        = "AWS"
+      type = "AWS"
       identifiers = [
         aws_iam_role.iam-role-codedeploy.arn,
         aws_iam_role_policy.iam-role-policy-codepipeline.arn

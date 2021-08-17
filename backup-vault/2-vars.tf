@@ -15,7 +15,7 @@ variable "ubuntu-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "backup"))}"
+  default_name = join("-", list(terraform.workspace, "backup"))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 
@@ -32,7 +32,7 @@ resource "random_pet" "this" {
 }
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "eu-west-1"
+  default = "eu-west-1"
 }
 #-------------------------------------------------------------------
 data "aws_availability_zones" "azs" {}
@@ -45,12 +45,12 @@ data "aws_iam_account_alias" "current" {}
 #---------------------------------------------------------
 variable "credentials" {
   default = {
-    username = "admin"
-    password = "admin123"
-    engine   = "mysql"
-    host     = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
-    port     = 3306
-    dbname   = "proxydb"
+    username             = "admin"
+    password             = "admin123"
+    engine               = "mysql"
+    host                 = "dbproxy.cfc8w0uxq929.eu-west-1.rds.amazonaws.com"
+    port                 = 3306
+    dbname               = "proxydb"
     dbInstanceIdentifier = "dbproxy"
   }
 
@@ -67,8 +67,8 @@ variable "EXT_INSTANCE_DEVICE_NAME" {
 }
 #---------------------------------------------------------
 variable "zone" {
-  type = string
-  default = "gitlab.inecsoft.co.uk"
+  type        = string
+  default     = "gitlab.inecsoft.co.uk"
   description = "describe domain for gitlab"
 }
 #---------------------------------------------------------

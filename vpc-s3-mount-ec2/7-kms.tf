@@ -8,14 +8,14 @@ data "aws_iam_user" "iam-user-manager" {
 }
 #------------------------------------------------------------------------------
 resource "aws_kms_key" "kms-key" {
-  description             = "custom master key that protects RDS database volumes, ec2, secrect,etc." 
+  description             = "custom master key that protects RDS database volumes, ec2, secrect,etc."
   deletion_window_in_days = 10
   key_usage               = "ENCRYPT_DECRYPT"
   is_enabled              = true
   enable_key_rotation     = true
 
-  policy =   data.aws_iam_policy_document.kms-policy-doc.json
-  
+  policy = data.aws_iam_policy_document.kms-policy-doc.json
+
 
   tags = {
     Name = "${local.default_name}-kms-key"
@@ -30,7 +30,7 @@ resource "aws_kms_alias" "kms-key-alias" {
 output "kms-alias-master" {
   description = "kms arn of the alias key"
   value       = data.aws_kms_alias.secret-kms-alias.arn
-  
+
 }
 #-----------------------------------------------------------------------------------
 output "kms-custom-key-arn" {
@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "kms-policy-doc" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = [ data.aws_iam_user.iam-user-manager.arn ]
+      identifiers = [data.aws_iam_user.iam-user-manager.arn]
     }
     actions = [
       "kms:Create*",
@@ -88,7 +88,7 @@ data "aws_iam_policy_document" "kms-policy-doc" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = [ data.aws_iam_user.iam-user-manager.arn ]
+      identifiers = [data.aws_iam_user.iam-user-manager.arn]
     }
     actions = [
       "kms:Encrypt",
@@ -100,13 +100,13 @@ data "aws_iam_policy_document" "kms-policy-doc" {
     resources = [
       "*",
     ]
-  } 
+  }
   statement {
-    sid = "Allow attachment of persistent resources"
+    sid    = "Allow attachment of persistent resources"
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = [ data.aws_iam_user.iam-user-manager.arn ]
+      identifiers = [data.aws_iam_user.iam-user-manager.arn]
     }
     actions = [
       "kms:CreateGrant",

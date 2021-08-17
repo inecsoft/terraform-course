@@ -5,27 +5,27 @@ resource "aws_security_group" "sg-app" {
 
   ingress {
     security_groups = ["${aws_security_group.sg-bastion.id}"]
-    from_port = 22 
-    to_port   = 22
-    protocol = "TCP"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "TCP"
   }
 
   ingress {
     security_groups = ["${aws_security_group.sg-elb-app.id}"]
-    from_port = 80
-    to_port   = 80
-    protocol = "TCP"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "TCP"
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-   }
+  }
 
   tags = {
-    Name =  "${local.default_name}-sg-app"
+    Name = "${local.default_name}-sg-app"
   }
 }
 #----------------------------------------------------------------------------------------------

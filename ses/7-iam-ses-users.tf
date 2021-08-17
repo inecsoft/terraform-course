@@ -42,7 +42,7 @@ resource "aws_iam_policy_attachment" "ses-group-policy-attach" {
   name       = "${local.default_name}-ses-group-policy-attach"
   users      = []
   roles      = []
-  groups     = [ aws_iam_group.ses-group.name ]
+  groups     = [aws_iam_group.ses-group.name]
   policy_arn = aws_iam_policy.ses-group-policy.arn
 }
 #------------------------------------------------------------------------------------------

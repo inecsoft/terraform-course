@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------
 variable "AWS_REGION" {
- default = "eu-west-1"
+  default = "eu-west-1"
 }
 #-------------------------------------------------------------------
 data "http" "workstation-external-ip" {
@@ -16,10 +16,10 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = "${join("-", list(terraform.workspace, "proxy"))}"
+  default_name = join("-", list(terraform.workspace, "proxy"))
 }
 #-------------------------------------------------------------------
-variable  "domain" {
+variable "domain" {
   default = "proxy.inchoratech.com"
 }
 #-------------------------------------------------------------------
@@ -29,6 +29,6 @@ variable "PATH_TO_PRIVATE_KEY" {
 }
 
 variable "PATH_TO_PUBLIC_KEY" {
-    default = "proxy.pub"
+  default = "proxy.pub"
 }
 #-------------------------------------------------------------------
