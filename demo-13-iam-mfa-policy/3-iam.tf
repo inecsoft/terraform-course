@@ -1,3 +1,11 @@
+
+# aws ec2 describe-images \
+#     --owners 309956199498 \
+#     --query 'Images[*].[CreationDate,Name,ImageId]' \
+#     --filters "Name=name,Values=RHEL-7.?*GA*" \
+#     --region us-east-1 \
+#     --output table \
+#   | sort -r
 #---------------------------------------------------------------------------------------
 resource "aws_iam_group" "iam-group-admin" {
   name = "${local.default_name}-developers"
