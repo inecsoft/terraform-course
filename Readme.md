@@ -138,11 +138,17 @@ git branch -a
 git checkout \<branch name\>
 ```
 * #### _Get back to master branch_
+```
 git checkout master
+```
 * #### _Creates branh and select it (best practice)_
+```
 git checkout -b \<branch name\>
+```
 * #### _Delete branch when merged_
+```
 git branch -d \<branch name\>
+```
 * #### _Delete branch when branch is not merged with master_
 ```
 git branch -D \<branch name\>
@@ -185,11 +191,12 @@ git config --global --list
 git config --global -e
 ```
 ### __Colaboration__
+```
 git clone \<your fork url\>  
 git push origin \<branch name\>  
 git remote add upstream \<URL master git repo\>  
 git push upstream master  
-
+```
 ### __Configuration file to manage git repos using custom ssh key pair__
 ssh-keygen -t rsa -t 2048 -f github  
 vim ~/.ssh/config  
