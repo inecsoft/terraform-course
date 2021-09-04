@@ -1,0 +1,1 @@
+You can find the exercise files on my GitHub account: https://github.com/ned1313/Implementing-Terraform-on-AWS
