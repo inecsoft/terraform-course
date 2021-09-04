@@ -33,4 +33,4 @@ User[] users = [new Artist(firstName: 'Bob', lastName: 'Dylan'),
                 new Artist(firstName: 'George', lastName: 'Harrison'),
                 new Artist(firstName: 'Tom', lastName: 'Petty')]
 
-users.each { user -> println("UserName is ${ user.UserName() }")}
+users.each { user -> println("UserName is ${ user.UserName() }") }

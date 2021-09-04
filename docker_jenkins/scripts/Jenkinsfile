@@ -1,4 +1,4 @@
-#!/home/inecsoft/.sdkman/candidates/groovy/current/bin/groovy
+#!/usr/bin/groovy
 
 pipeline{
     agent any 
