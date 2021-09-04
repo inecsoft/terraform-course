@@ -225,3 +225,17 @@ pre-commit run -a
 ```
 
 ***
+### __Terraform exposes the TF_LOG environment variable for setting the level of logging verbosity, of which there are five:__
+
+ * TRACE: the most elaborate verbosity, shows every step taken by Terraform and produces enormous outputs with internal logs.
+ * DEBUG: describes what happens internally in a more concise way compared to TRACE.
+ * ERROR: shows errors that prevent Terraform from continuing.
+ * WARN: logs warnings, which may indicate misconfiguration or mistakes, but are not critical to execution.
+ * INFO: shows general, high-level messages about the execution process.
+
+```
+export AWS_PROFILE="dumy"
+export TF_LOG=DEBUG terraform init
+export TF_LOG=
+```
+***
