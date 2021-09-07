@@ -286,6 +286,6 @@ export TF_LOG=
 ***
 ### __Migrating Terraform State__
 
-terraform init –backend-config="profile=infra
+terraform init –backend-config="profile=infra"
 
 ***
