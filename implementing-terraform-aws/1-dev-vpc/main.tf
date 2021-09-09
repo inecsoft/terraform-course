@@ -31,7 +31,7 @@ variable "database_subnets" {
 provider "aws" {
   # version = "~> 3.0"
   region  = var.region
-  profile = "dumy"
+  # profile = "dumy"
 }
 
 #############################################################################
