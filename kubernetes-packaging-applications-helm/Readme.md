@@ -84,4 +84,8 @@ helm version --short
 kubectl config view
 
 ```
+```
+helm install demo-guestbook guestbook
+helm install demo-guestbook guestbook --dry-run --debug
+```
 ***
