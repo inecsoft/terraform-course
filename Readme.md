@@ -244,7 +244,7 @@ terraform apply -lock-timeout=120m
 ### __Precommit tool__
 ```
 curl https://pre-commit.com/install-local.py | python -
-echo 'export PATH=$PATH:~/bin' >>/.bashrc
+echo 'export PATH=$PATH:~/bin' >> ~/.bashrc
 source ~/.bashrc 
 pre-commit --version
 ```
