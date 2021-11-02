@@ -6,22 +6,22 @@ resource "aws_codebuild_project" "codebuild-project-dev" {
   service_role  = aws_iam_role.iam-role-codebuild.arn
 
   environment {
-    compute_type    = "BUILD_GENERAL1_SMALL"
-    image           = "aws/codebuild/docker:18.09.0"
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image        = "aws/codebuild/docker:18.09.0"
     #image          = "aws/codebuild/standard:4.0"
     type            = "LINUX_CONTAINER"
     privileged_mode = true
   }
 
   source {
-    type = "CODEPIPELINE"
+    type      = "CODEPIPELINE"
     buildspec = "buildspec.yml"
   }
 
   artifacts {
     type = "CODEPIPELINE"
   }
-  
+
   logs_config {
     cloudwatch_logs {
       group_name  = "log-group"
@@ -35,7 +35,7 @@ resource "aws_codebuild_project" "codebuild-project-dev" {
   }
 
   tags = {
-    Name  = "${local.default_name}-codebuild-project-dev"
+    Name = "${local.default_name}-codebuild-project-dev"
   }
 }
 #--------------------------------------------------------------------------------
@@ -46,22 +46,22 @@ resource "aws_codebuild_project" "codebuild-project-prod" {
   service_role  = aws_iam_role.iam-role-codebuild.arn
 
   environment {
-    compute_type    = "BUILD_GENERAL1_SMALL"
-    image           = "aws/codebuild/docker:18.09.0"
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image        = "aws/codebuild/docker:18.09.0"
     #image          = "aws/codebuild/standard:4.0"
     type            = "LINUX_CONTAINER"
     privileged_mode = true
   }
 
   source {
-    type = "CODEPIPELINE"
+    type      = "CODEPIPELINE"
     buildspec = "buildspec.yml"
   }
 
   artifacts {
     type = "CODEPIPELINE"
   }
-    
+
   logs_config {
     cloudwatch_logs {
       group_name  = "log-group"
@@ -75,7 +75,7 @@ resource "aws_codebuild_project" "codebuild-project-prod" {
   }
 
   tags = {
-    Name  = "${local.default_name}-codebuild-project-dev"
+    Name = "${local.default_name}-codebuild-project-dev"
   }
 }
 #--------------------------------------------------------------------------------

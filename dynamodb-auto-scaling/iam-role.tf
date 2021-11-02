@@ -1,9 +1,9 @@
 
 #----------------------------------------------------------------------------------------------
 resource "aws_iam_role" "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable" {
-    name               = "${local.default_name}-AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
-    path               = "/aws-service-role/dynamodb.application-autoscaling.amazonaws.com/"
-    assume_role_policy = <<POLICY
+  name               = "${local.default_name}-AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+  path               = "/aws-service-role/dynamodb.application-autoscaling.amazonaws.com/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [

@@ -20,8 +20,8 @@ data "aws_iam_policy_document" "s3-provider-assume" {
       type        = "Federated"
     }
   }
- }
- 
+}
+
 resource "aws_iam_policy" "s3-provider-policy" {
   name   = "${var.cluster_name}-s3-provider-policy"
   policy = data.aws_iam_policy_document.s3-provider-doc.json
@@ -30,8 +30,8 @@ resource "aws_iam_policy" "s3-provider-policy" {
 
 data "aws_iam_policy_document" "s3-provider-doc" {
   statement {
-    sid       = ""
-    effect    = "Allow"
+    sid    = ""
+    effect = "Allow"
     actions = [
       "s3:*",
     ]
@@ -119,14 +119,14 @@ resource "kubernetes_cluster_role_binding" "test-pod_rb" {
 #kubectl -n test-irsa create configmap s3-config --from-literal=S3_REGION=eu-west-1 --dry-run=server -o yaml |k2tf 
 resource "kubernetes_config_map" "config_map_s3" {
   metadata {
-    name = "s3-config"
+    name      = "s3-config"
     namespace = "test-irsa"
   }
 
   data = {
-    S3_REGION = "eu-west-1"
-    S3_BUCKET = "tfgms3fs"
-    AWS_KEY   = ""
+    S3_REGION      = "eu-west-1"
+    S3_BUCKET      = "tfgms3fs"
+    AWS_KEY        = ""
     AWS_SECRET_KEY = ""
   }
 }
@@ -195,15 +195,15 @@ resource "kubernetes_daemonset" "daemonset-s3-provider" {
           security_context {
             privileged = true
           }
-          
+
           resources {
             limits {
               memory = "50Mi"
-              cpu = "10m"
+              cpu    = "10m"
             }
             requests {
               memory = "10Mi"
-              cpu = "2m"
+              cpu    = "2m"
             }
           }
         }
@@ -267,16 +267,16 @@ resource "kubernetes_deployment" "test_pod" {
           resources {
             limits {
               memory = "50Mi"
-              cpu = "10m"
+              cpu    = "10m"
             }
             requests {
               memory = "50Mi"
-              cpu = "10m"
+              cpu    = "10m"
             }
           }
 
         }
-        
+
         automount_service_account_token = "true"
         service_account_name            = kubernetes_service_account.test-pod_sa.metadata.0.name
         node_selector                   = { "deployment_env" = "prod" }

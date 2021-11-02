@@ -1,19 +1,19 @@
 #----------------------------------------------------------------------------------------
 resource "aws_ec2_transit_gateway" "tgw" {
-  description         = "transit gateway custom route manual"
-  amazon_side_asn     = "65534"
-  
+  description     = "transit gateway custom route manual"
+  amazon_side_asn = "65534"
 
-  dns_support         = "enable"
-  vpn_ecmp_support    = "enable"
-  default_route_table_association  = "enable"
-  auto_accept_shared_attachments   = "enable"
 
-#  auto_accept_shared_attachments =  
-  
+  dns_support                     = "enable"
+  vpn_ecmp_support                = "enable"
+  default_route_table_association = "enable"
+  auto_accept_shared_attachments  = "enable"
+
+  #  auto_accept_shared_attachments =  
+
   tags = {
-    Name = "TGW-custom-route-manual" 
-   }
+    Name = "TGW-custom-route-manual"
+  }
 }
 #----------------------------------------------------------------------------------------
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-vpc-att1" {
@@ -21,12 +21,12 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-vpc-att1" {
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
   vpc_id             = module.vpc1.vpc_id
 
-  dns_support        = "enable"
-  ipv6_support       = "disable"
+  dns_support  = "enable"
+  ipv6_support = "disable"
 
-  transit_gateway_default_route_table_association  = false
-  transit_gateway_default_route_table_propagation   = false
-  
+  transit_gateway_default_route_table_association = false
+  transit_gateway_default_route_table_propagation = false
+
   tags = {
     Name = "tgw-vpc-att1"
   }
@@ -36,12 +36,12 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-vpc-att2" {
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
   vpc_id             = module.vpc2.vpc_id
 
-  dns_support        = "enable"
-  ipv6_support       = "disable"
+  dns_support  = "enable"
+  ipv6_support = "disable"
 
-  transit_gateway_default_route_table_association  = false
-  transit_gateway_default_route_table_propagation   = false
-  
+  transit_gateway_default_route_table_association = false
+  transit_gateway_default_route_table_propagation = false
+
   tags = {
     Name = "tgw-vpc-att2"
   }
@@ -50,11 +50,11 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-vpc-att2" {
 resource "aws_ec2_transit_gateway_route_table" "tgw-rt" {
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 
-#  default_association_route_table  = false
-#  default_propagation_route_table  = false
+  #  default_association_route_table  = false
+  #  default_propagation_route_table  = false
 
   tags = {
-   Name = "TGW-RT-manual"
+    Name = "TGW-RT-manual"
   }
 }
 #----------------------------------------------------------------------------------------

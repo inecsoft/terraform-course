@@ -118,7 +118,7 @@ resource "aws_codebuild_project" "build_project" {
     }
 
     environment_variable {
-      name = "TF_TABLE"
+      name  = "TF_TABLE"
       value = var.dynamodb_table_name
     }
 

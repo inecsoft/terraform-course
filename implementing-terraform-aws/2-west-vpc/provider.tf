@@ -3,17 +3,17 @@
 #############################################################################
 
 provider "aws" {
-#   version = "~> 2.0"
-  region  = var.region_1
-  alias = "east"
-#   profile = "dumy"
+  #   version = "~> 2.0"
+  region = var.region_1
+  alias  = "east"
+  #   profile = "dumy"
 }
 
 provider "aws" {
-#   version = "~> 2.0"
-  region  = var.region_2
-  alias = "west"
-#   profile = "dumy"
+  #   version = "~> 2.0"
+  region = var.region_2
+  alias  = "west"
+  #   profile = "dumy"
 }
 
 #############################################################################

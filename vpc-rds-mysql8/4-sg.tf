@@ -49,7 +49,7 @@ resource "aws_security_group" "allow-mysql" {
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
   }
-  
+
   tags = {
     Name = "${local.default_name}-allow-mysql"
   }

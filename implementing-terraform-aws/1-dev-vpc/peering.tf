@@ -20,7 +20,7 @@ provider "aws" {
   region  = var.region
   alias   = "peer"
   profile = "infra"
-  
+
   assume_role {
     role_arn = var.peer_role_arn
   }

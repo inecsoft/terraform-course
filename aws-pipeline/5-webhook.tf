@@ -23,7 +23,7 @@ resource "github_repository_webhook" "github-repository-webhook" {
     insecure_ssl = true
     # secret       = local.webhook_secret
     #secret       = data.aws_ssm_parameter.ssm-parameter-webhook-access-token.value
-    secret       = jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["WEBHOOK_ACCESS_TOKEN"]
+    secret = jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["WEBHOOK_ACCESS_TOKEN"]
   }
 
   events = ["push"]

@@ -3,14 +3,14 @@
 #############################################################################
 
 provider "aws" {
-#   version = "~> 2.0"
+  #   version = "~> 2.0"
   region  = var.region
   profile = "infra"
 }
 
 #############################################################################
 provider "github" {
-  token = var.credentials.WEBHOOK_ACCESS_TOKEN 
+  token = var.credentials.WEBHOOK_ACCESS_TOKEN
   owner = "inecsoft"
 }
 #############################################################################

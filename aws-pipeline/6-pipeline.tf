@@ -4,7 +4,7 @@ resource "aws_codepipeline" "codepipeline" {
   role_arn = aws_iam_role.iam-role-codepipeline.arn
 
   artifact_store {
-    location = aws_s3_bucket.s3-bucket-codepipeline.bucket 
+    location = aws_s3_bucket.s3-bucket-codepipeline.bucket
     type     = "S3"
 
     encryption_key {
@@ -44,9 +44,9 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        Owner  = "inecsoft"
-        Repo   = github_repository.git-devops-go.name
-        Branch = "master"
+        Owner      = "inecsoft"
+        Repo       = github_repository.git-devops-go.name
+        Branch     = "master"
         OAuthToken = var.credentials.WEBHOOK_ACCESS_TOKEN
       }
     }
@@ -74,17 +74,17 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Manual-Approval"
 
     action {
-      name             = "Manual-Approval"
-      category         = "Approval"
-      owner            = "AWS"
-      provider         = "Manual"
+      name     = "Manual-Approval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
       # input_artifacts  = ["source_output"]
       # output_artifacts = ["approv_output"]
-      version          = "1"
+      version = "1"
 
       configuration = {
-        CustomData        = "Comments on the manual approval"
-        NotificationArn   =  aws_sns_topic.sns-topic-deploy.arn
+        CustomData      = "Comments on the manual approval"
+        NotificationArn = aws_sns_topic.sns-topic-deploy.arn
       }
     }
   }

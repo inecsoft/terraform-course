@@ -127,9 +127,9 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        Owner  = "inecsoft"
-        Repo   = github_repository.git-devops-go.name
-        Branch = "master"
+        Owner      = "inecsoft"
+        Repo       = github_repository.git-devops-go.name
+        Branch     = "master"
         OAuthToken = var.credentials.WEBHOOK_ACCESS_TOKEN
       }
     }
@@ -215,7 +215,7 @@ resource "aws_codepipeline" "codepipeline" {
     }
   }
   ################### Uncomment after first deployment ###########################
-  
+
   stage {
     name = "UAT"
 

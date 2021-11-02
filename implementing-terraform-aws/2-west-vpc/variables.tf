@@ -23,7 +23,7 @@ variable "public_subnets_east" {
 }
 
 variable "database_subnets_east" {
-  type = list(string)
+  type    = list(string)
   default = ["10.10.8.0/24", "10.10.9.0/24"]
 }
 
@@ -38,7 +38,7 @@ variable "public_subnets_west" {
 }
 
 variable "database_subnets_west" {
-  type = list(string)
+  type    = list(string)
   default = ["10.11.8.0/24", "10.11.9.0/24"]
 }
 
@@ -47,11 +47,11 @@ variable "database_subnets_west" {
 #############################################################################
 
 data "aws_availability_zones" "azs_east" {
-    provider = aws.east
+  provider = aws.east
 }
 
 data "aws_availability_zones" "azs_west" {
-    provider = aws.west
+  provider = aws.west
 }
 
 #############################################################################

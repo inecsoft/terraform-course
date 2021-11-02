@@ -1,8 +1,8 @@
 #-------------------------------------------------------------
 resource "aws_iam_role" "jenkinsaccess" {
-    name               = "jenkinsaccess"
-    path               = "/"
-    assume_role_policy = <<POLICY
+  name               = "jenkinsaccess"
+  path               = "/"
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -16,18 +16,18 @@ resource "aws_iam_role" "jenkinsaccess" {
   ]
 }
 POLICY
-tags = {
-  Name = "jenkins" 
-  Description = "IAM Role to Use for Jenkins Integration"
+  tags = {
+    Name        = "jenkins"
+    Description = "IAM Role to Use for Jenkins Integration"
   }
 }
 #-------------------------------------------------------------
 resource "aws_iam_policy_attachment" "AWSCodePipelineCustomActionAccess-policy-attachment" {
-    name       = "AWSCodePipelineCustomActionAccess-policy-attachment"
-    policy_arn = "arn:aws:iam::aws:policy/AWSCodePipelineCustomActionAccess"
-    groups     = []
-    users      = []
-    roles      = ["jenkinsaccess"]
+  name       = "AWSCodePipelineCustomActionAccess-policy-attachment"
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodePipelineCustomActionAccess"
+  groups     = []
+  users      = []
+  roles      = ["jenkinsaccess"]
 }
 
 #-------------------------------------------------------------

@@ -76,9 +76,9 @@ resource "aws_s3_bucket" "lambda_functions" {
 # Put the Lambda function in the S3 bucket
 
 resource "aws_s3_bucket_object" "lambda_function" {
-  key        = "publishOrders.zip"
-  bucket     = aws_s3_bucket.lambda_functions.id
-  source     = "publishOrders.zip"
+  key    = "publishOrders.zip"
+  bucket = aws_s3_bucket.lambda_functions.id
+  source = "publishOrders.zip"
 }
 
 # Create a Security Group for Lambda
@@ -91,15 +91,15 @@ resource "aws_security_group" "lambda_sg" {
 
 # Deploy the template
 
-resource "aws_cloudformation_stack" "orders_stack" { 
-  name = "orders-stack"
+resource "aws_cloudformation_stack" "orders_stack" {
+  name         = "orders-stack"
   capabilities = ["CAPABILITY_IAM"]
 
   parameters = {
-      FunctionBucket = local.bucket_name
-      FunctionKey = "publishOrders.zip"
-      LambdaSecurityGroup = aws_security_group.lambda_sg.id
-      SubnetIds = join(",",data.terraform_remote_state.network.outputs.public_subnets)
+    FunctionBucket      = local.bucket_name
+    FunctionKey         = "publishOrders.zip"
+    LambdaSecurityGroup = aws_security_group.lambda_sg.id
+    SubnetIds           = join(",", data.terraform_remote_state.network.outputs.public_subnets)
   }
 
   template_body = file("${path.module}/lambda.template")

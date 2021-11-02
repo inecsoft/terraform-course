@@ -31,7 +31,7 @@ resource "azurerm_iothub" "iothub" {
 
   sku {
     # The name of the sku. Possible values are B1, B2, B3, F1, S1, S2, and S3
-    name     = "S1"
+    name = "S1"
     # The number of provisioned IoT Hub units
     capacity = "1"
   }
@@ -67,7 +67,7 @@ resource "azurerm_iothub" "iothub" {
     name           = "export2"
     source         = "DeviceMessages"
     condition      = "true"
-    endpoint_names = [ "${local.default_name}-ioteventhub" ]
+    endpoint_names = ["${local.default_name}-ioteventhub"]
     enabled        = true
   }
 

@@ -3,7 +3,7 @@
 #############################################################################  
 
 module "vpc_east" {
-  source  = "terraform-aws-modules/vpc/aws"
+  source = "terraform-aws-modules/vpc/aws"
   # version = "2.33.0"
 
   name = "prod-vpc-east"
@@ -13,7 +13,7 @@ module "vpc_east" {
   public_subnets = var.public_subnets_east
 
   # Database subnets
-  database_subnets  = var.database_subnets_east
+  database_subnets = var.database_subnets_east
   database_subnet_group_tags = {
     subnet_type = "database"
   }
@@ -31,7 +31,7 @@ module "vpc_east" {
 }
 #############################################################################
 module "vpc_west" {
-  source  = "terraform-aws-modules/vpc/aws"
+  source = "terraform-aws-modules/vpc/aws"
   # version = "2.33.0"
 
   name = "prod-vpc-west"
@@ -41,7 +41,7 @@ module "vpc_west" {
   public_subnets = var.public_subnets_west
 
   # Database subnets
-  database_subnets  = var.database_subnets_west
+  database_subnets = var.database_subnets_west
   database_subnet_group_tags = {
     subnet_type = "database"
   }
