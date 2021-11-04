@@ -24,6 +24,7 @@ terraform apply "code.tfplan"
 
 ```
 cd vpc-deploy
+cp ../7-code-commit-files/* .
 vim .git/config
 or git remote --set-url https://github.com/inecsoft/git-devops-go.git
 git clone "https://github.com/inecsoft/git-devops-go.git"
