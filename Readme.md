@@ -289,3 +289,24 @@ export TF_LOG=
 terraform init –backend-config="profile=infra"
 
 ***
+#### __Install tfenv__
+```
+git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+which tfenv
+```
+***
+### __Terraformer__
+```
+export PROVIDER={all,google,aws,kubernetes}
+curl -LO https://github.com/GoogleCloudPlatform/terraformer/releases/download/$(curl -s https://api.github.com/repos/GoogleCloudPlatform/terraformer/releases/latest | grep tag_name | cut -d '"' -f 4)/terraformer-${PROVIDER}-linux-amd64
+chmod +x terraformer-${PROVIDER}-linux-amd64
+sudo mv terraformer-${PROVIDER}-linux-amd64 /usr/local/bin/terraformer
+```
+
+
+```
+terraformer import aws --resources=vpc,subnet --filter=vpc=vpc_id1:vpc_id2:vpc_id3 --regions=eu-west-1 --profile=prod
+```
+***

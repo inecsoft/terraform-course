@@ -16,7 +16,7 @@ variable "redhat-user" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = join("-", list(terraform.workspace, "pipe"))
+  default_name = join("-", tolist([terraform.workspace, "pipe"]))
 }
 #-------------------------------------------------------------------
 #ssh-keygen -t ecdsa -b 384 -f lambda 

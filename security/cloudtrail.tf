@@ -10,9 +10,9 @@ resource "aws_cloudwatch_log_group" "cloudwatch-log-group-cloudtrail" {
 }
 #-----------------------------------------------------------------------------------------------------------------------------
 resource "aws_cloudtrail" "cloudtrail" {
-  name                          = "${local.default_name}-cloudtrail"
-  s3_bucket_name                = aws_s3_bucket.s3-bucket-cloudtrail.id
-#   s3_bucket_name                = module.aws_cloudtrail_s3_bucket.s3_bucket_id
+  name           = "${local.default_name}-cloudtrail"
+  s3_bucket_name = aws_s3_bucket.s3-bucket-cloudtrail.id
+  #   s3_bucket_name                = module.aws_cloudtrail_s3_bucket.s3_bucket_id
   #s3_key_prefix                 = "prefix"
   cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudwatch-log-group-cloudtrail.arn}:*"
   cloud_watch_logs_role_arn     = aws_iam_role.iam-role-cloudtrail.arn

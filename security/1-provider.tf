@@ -4,16 +4,20 @@ provider "aws" {
 }
 #-------------------------------------------------------------------
 terraform {
-  experiments      = [provider_sensitive_attrs]
+  # experiments      = [provider_sensitive_attrs]
   required_version = ">= 0.14"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.20.0"
+      version = "~> 3.64.0"
     }
     vault = {
       source  = "hashicorp/vault"
       version = "~> 2.16.0"
+    }
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.18.0"
     }
   }
   backend "s3" {
