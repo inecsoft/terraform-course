@@ -101,6 +101,59 @@ docker pull gauntlt/gauntlt
 ```
 docker run -t --rm=true -v $(pwd):/working -w /working gauntlt/gauntlt ./xss.attack
 ```
+```
+mkdir gauntlt && cd gauntlt
+cat << EOF > xss.attack
+@slow @final
+Feature: Look for cross site scripting (xss) using arachni against word-cloud-generator
+
+Scenario: The site is running on localhost:8080 and we are testing for xss
+  Given "arachni" is installed
+  And the following profile:
+     | name                | value                          |
+     | url                 | http://bodgeit:8080          |
+  When I launch an "arachni" attack with:
+  """
+  arachni --checks=xss --scope-directory-depth-limit=1 <url>
+  """
+  Then the output should contain "0 issues were detected."
+EOF
+echo "127.0.0.1 bodgeit"  | sudo tee -a /etc/hosts
+
+docker run -t --rm=true --name gauntlt -v $(pwd):/working -w /working gauntlt/gauntlt ./xss.attack
+```
+```
+cat << EOF > nmap.attack
+@slow
+Feature: simple nmap attack (sanity check)
+
+  Background:
+    Given "nmap" is installed
+    And the following profile:
+      | name     | value      |
+      | hostname | bodgeit |
+
+  Scenario: Verify server is available on standard web ports
+    When I launch an "nmap" attack with:
+      """
+      nmap -p 8080 <hostname>
+      """
+    Then the output should match /80.tcp\s+open/
+    And the output should not match:
+      """
+      443/tcp\s+open
+      """
+EOF
+
+docker run -t --rm=true --name gauntlt -v $(pwd):/working -w /working gauntlt/gauntlt nmap nmap.attack
+```
+
+#### __ZAP - Baseline Scan__
+```
+mkdir zap && cd zap
+docker run --name zap -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py \
+-t https://www.example.com -g gen.conf -r testreport.html
+```
 ***
 signalsciences.com
 ***
