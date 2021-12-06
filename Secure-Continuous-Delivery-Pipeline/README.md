@@ -103,6 +103,7 @@ docker pull gauntlt/gauntlt
 docker run --name bodgeit --rm -p 8080:8080 -it psiinon/bodgeit
 echo "127.0.0.1 bodgeit"  | sudo tee -a /etc/hosts
 ```
+```
 docker run -t --rm=true -v $(pwd):/working -w /working gauntlt/gauntlt ./xss.attack
 ```
 ```
@@ -166,6 +167,7 @@ SECURITY_DOCKER_IMAGE=owasp/zap2docker-stable
 mkdir -p $(pwd)/wrk && chmod -R 777 $(pwd)/wrk && cp security-levels.conf security-in-progress.json $(pwd)/wrk
 docker run --rm -u zap --name zap -v "$(pwd)/wrk":/zap/wrk/:rw -i $SECURITY_DOCKER_IMAGE zap-baseline.py -j -s -r security-scan.html -c security-levels.conf -p security-in-progress.json -z "-config globalexcludeurl.url_list.url.regex=$SCAN_URL/mockapi.*" -t $SCAN_URL
 ```
+
 ***
 signalsciences.com
 ***
