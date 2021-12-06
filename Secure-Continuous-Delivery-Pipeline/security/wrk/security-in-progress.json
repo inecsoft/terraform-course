@@ -1,0 +1,35 @@
+{
+  "site": "css-*.transport-for-greater-manchester.com",
+  "issues": [
+    {
+      "id": "10055",
+      "name": "CSP Scanner: style-src unsafe-inline",
+      "state": "inprogress",
+      "link": "https://tfgmdev.atlassian.net/browse/CDS-1525"
+    },
+    {
+      "id": "90022",
+      "name": "Application Error Disclosure",
+      "state": "inprogress",
+      "link": "https://tfgmdev.atlassian.net/browse/CDS-1522"
+    },
+    {
+      "id": "10015",
+      "name": "Incomplete or No Cache-control Header Set",
+      "state": "inprogress",
+      "link": "https://tfgmdev.atlassian.net/browse/CDS-1523"
+    },
+    {
+      "id": "10036",
+      "name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+      "state": "inprogress",
+      "link": "https://tfgmdev.atlassian.net/browse/CDS-1524"
+    },
+    {
+      "id": "10017",
+      "name": "Cross-Domain JavaScript Source File Inclusion",
+      "state": "inprogress",
+      "link": "https://tfgmdev.atlassian.net/browse/CDS-1526"
+    }
+  ]
+}

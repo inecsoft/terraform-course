@@ -1,0 +1,24 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_ACCESS_KEY_ID: "CODEPIPELINE"
+    AWS_SECRET_ACCESS_KEY: "CODEPIPELINE"
+    SCAN_URL: "CODEPIPELINE"
+    SECURITY_DOCKER_IMAGE: "CODEPIPELINE"
+
+phases:
+  install:
+    commands:
+      - 'echo Setting up Docker'
+      - 'nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&'
+      - 'timeout 15 sh -c "until docker info; do echo .; sleep 1; done"'
+      - 'wget https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.4.0/linux-amd64/docker-credential-ecr-login'
+      - 'mv ./docker-credential-ecr-login /usr/local/bin/docker-credential-ecr-login && chmod +x /usr/local/bin/docker-credential-ecr-login'
+      - 'mkdir ~/.docker && echo ''{ "credsStore": "ecr-login" }'' >> ~/.docker/config.json'
+  build:
+    commands:
+      - 'echo Creating reports directory...'
+      - 'mkdir -p $(pwd)/wrk && chmod -R 777 $(pwd)/wrk && cp security/security-levels.conf security/security-in-progress.json $(pwd)/wrk'
+      - 'echo Starting ZAProxy server...'
+      - 'docker run -u zap -v "$(pwd)/wrk":/zap/wrk/:rw -i $SECURITY_DOCKER_IMAGE zap-baseline.py -j -s -r security-scan.html -c security-levels.conf -p security-in-progress.json -z "-config globalexcludeurl.url_list.url.regex=$SCAN_URL/mockapi.*" -t $SCAN_URL'
