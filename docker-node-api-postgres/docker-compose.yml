@@ -1,20 +1,40 @@
-web:
-  build: .
-  command: node index-db.js
-  ports:
-    - "3000:3000"
-  links:
-    - db
-  environment:
-    POSTGRES_DATABASE: api
-    POSTGRES_USER: me
-    POSTGRES_PASSWORD: password
-    POSTGRES_HOST: db
-db:
-  image: postgresql
-  ports:
-    - "5432:5432"
-  environment:
-    POSTGRES_DATABASE: api
-    POSTGRES_USER: me
-    POSTGRES_PASSWORD: password
+
+services:
+  web:
+    hostname: web
+    container_name: web
+    build: .
+    command: node index-db.js
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    environment:
+      POSTGRES_DATABASE: api
+      POSTGRES_USER: me
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
+    
+    restart: always
+    mem_limit: 500
+    networks: 
+      - node-api
+  db:
+    hostname: db
+    container_name: db
+    image: postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DATABASE: api
+      POSTGRES_USER: me
+      POSTGRES_PASSWORD: password
+    
+    restart: always
+    mem_limit: 500
+    networks: 
+      - node-api
+  
+networks: 
+  node-api:
+
