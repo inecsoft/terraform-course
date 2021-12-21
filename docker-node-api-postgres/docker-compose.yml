@@ -16,22 +16,25 @@ services:
       POSTGRES_HOST: db
     
     restart: always
-    mem_limit: 500
+    mem_limit: 500m
     networks: 
       - node-api
   db:
     hostname: db
     container_name: db
-    image: postgresql
+    image: postgres
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DATABASE: api
-      POSTGRES_USER: me
-      POSTGRES_PASSWORD: password
+      - POSTGRES_DATABASE=api
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes: 
+      - ./data/db:/var/lib/postgresql/data
     
     restart: always
-    mem_limit: 500
+    mem_limit: 500m
     networks: 
       - node-api
   
