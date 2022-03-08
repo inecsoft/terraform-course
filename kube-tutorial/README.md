@@ -576,7 +576,7 @@ The differences between the two is that Replication Controller uses equlity-base
 
 |  Equality-based      |  Set-based                                                     |
 |----------------------|----------------------------------------------------------------|
-|  operators           |  opertors                                                      |
+|  operators           |  operators                                                      |
 |  =  ==  !=           |  in notin   exists                                             |
 |  selector:           |  selector:                                                     |
 |    env: prod         |    matchExpressions:                                           |
