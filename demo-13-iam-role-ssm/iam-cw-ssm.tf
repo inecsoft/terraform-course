@@ -28,7 +28,7 @@ resource "aws_iam_policy_attachment" "CW-SSM-Server-policy-attachment" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
   groups     = []
   users      = []
-  roles      = ["CW-SSM-Server"]
+  roles      = [aws_iam_role.RCW-SSM-Server.name]
 }
 #-------------------------------------------------------------
 resource "aws_iam_policy_attachment" "AmazonEC2RoleforSSM-policy-attachment" {
@@ -37,7 +37,7 @@ resource "aws_iam_policy_attachment" "AmazonEC2RoleforSSM-policy-attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
   groups     = []
   users      = []
-  roles      = ["CW-SSM-Server"]
+  roles      = [aws_iam_role.RCW-SSM-Server.name]
 }
 #-------------------------------------------------------------
 resource "aws_iam_instance_profile" "RCW-SSM-ServeriRoleProfile" {

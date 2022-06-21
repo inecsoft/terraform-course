@@ -10,11 +10,8 @@ variable "region_prod" {
   default     = "eu-west-1"
 }
 
-
-data "aws_caller_identity" "prod" {
-    provider = aws.tfgm
-}
-
-data "aws_caller_identity" "log-dev-beenetwork" {
-    provider = aws.log-dev-beenetwork
+variable "region" {
+  type        = string
+  description = "default region for the project"
+  default     = "eu-west-1"
 }
