@@ -1,14 +1,11 @@
 resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
   dashboard_name = "full-ec2-metrics-test"
   provider        = aws.tfgm
-  #for_each = toset( data.aws_instances.all-ec2-metrics-ids.ids )
-   #depends_on = [data.aws_instances.all-ec2-metrics-ids ]
+
    #echo "[ for id in data.aws_instances.all-ec2-metrics-ids.ids : id ]"| terraform console
-  
-  #count = length(data.aws_instances.all-ec2-metrics-ids.ids)
 
   dashboard_body = jsonencode(
-    {
+{
     "widgets": [
         {
             "height": 4,
@@ -261,10 +258,7 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
         }
     ]
 }
-  )
-/* dashboard_body = <<EOF */
-
-#EOF
+)
 }
 
 data "aws_instances" "all-ec2-metrics-ids" {
