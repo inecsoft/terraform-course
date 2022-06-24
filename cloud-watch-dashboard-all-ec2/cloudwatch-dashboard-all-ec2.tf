@@ -5,11 +5,10 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
    #depends_on = [data.aws_instances.all-ec2-metrics-ids ]
    #echo "[ for id in data.aws_instances.all-ec2-metrics-ids.ids : id ]"| terraform console
   
-  count = length(data.aws_instances.all-ec2-metrics-ids.ids)
+  #count = length(data.aws_instances.all-ec2-metrics-ids.ids)
 
   dashboard_body = jsonencode(
-
-{
+    {
     "widgets": [
         {
             "height": 4,
@@ -19,9 +18,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    #"${[ "AWS/EC2", "CPUUtilization", "InstanceId", each.key, { "period": 3600, "stat": "Average" } ]}",
-                   #for id in data.aws_instances.all-ec2-metrics-ids :  [ "AWS/EC2", "CPUUtilization", "InstanceId", tostring(id), { "period": 3600, "stat": "Average" } ],
-                   [ "AWS/EC2", "CPUUtilization", "InstanceId", data.aws_instances.all-ec2-metrics-ids.ids[count.index], { "period": 3600, "stat": "Average" } ]
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                   [ "AWS/EC2", "CPUUtilization", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
                 ],
                 "legend": {
                     "position": "right"
@@ -40,7 +38,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "DiskReadBytes", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Average" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "DiskReadBytes", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
 
                 ],
                 "legend": {
@@ -60,7 +59,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "DiskReadOps", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Average" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "DiskReadOps", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
                     
                 ],
                 "legend": {
@@ -80,7 +80,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "DiskWriteBytes", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Average" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "DiskWriteBytes", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
                 ],
                 "legend": {
                     "position": "right"
@@ -99,7 +100,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "DiskWriteOps", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Average" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "DiskWriteOps", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
                 ],
                 "legend": {
                     "position": "right"
@@ -118,7 +120,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "NetworkIn", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Average" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "NetworkIn", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
                     
                 ],
                 "legend": {
@@ -138,7 +141,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "NetworkOut", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Average" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "NetworkOut", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
                     
                 ],
                 "legend": {
@@ -158,7 +162,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "NetworkPacketsIn", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Average" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "NetworkPacketsIn", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
                     
                 ],
                 "legend": {
@@ -178,7 +183,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "NetworkPacketsOut", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Average" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "NetworkPacketsOut", "InstanceId", id, { "period": 3600, "stat": "Average" } ]
 
                 ],
                 "legend": {
@@ -198,7 +204,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "StatusCheckFailed", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Sum" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "StatusCheckFailed", "InstanceId", id, { "period": 3600, "stat": "Sum" } ]
                 
                 ],
                 "legend": {
@@ -218,7 +225,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "StatusCheckFailed_Instance", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Sum" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "StatusCheckFailed_Instance", "InstanceId", id, { "period": 3600, "stat": "Sum" } ]
                    
                 ],
                 "legend": {
@@ -238,7 +246,8 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "StatusCheckFailed_System", "InstanceId", "i-0bf7cf66ff131fb0b", { "period": 3600, "stat": "Sum" } ],
+                   for id in data.aws_instances.all-ec2-metrics-ids.ids :
+                    [ "AWS/EC2", "StatusCheckFailed_System", "InstanceId", id, { "period": 3600, "stat": "Sum" } ]
                    
                 ],
                 "legend": {
@@ -252,7 +261,10 @@ resource "aws_cloudwatch_dashboard" "cloudwatch-dashboard-all-ec2-metrics" {
         }
     ]
 }
-)
+  )
+/* dashboard_body = <<EOF */
+
+#EOF
 }
 
 data "aws_instances" "all-ec2-metrics-ids" {
