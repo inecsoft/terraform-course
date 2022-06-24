@@ -77,14 +77,14 @@ data "aws_iam_policy_document" "PermissionsForCWL_policy_doc" {
 }
 
 resource "aws_iam_policy_attachment" "cw_policy_attach" {
-  name       = "cloudwatch policy to role"
+  name       = "cloudwatch-policy-role-attach"
   roles      = [ aws_iam_role.role_cross_account_cw_to_es.name ]
   policy_arn = aws_iam_policy.PermissionsForCWL_policy.arn 
   provider   = aws.log-dev-beenetwork
 }
 
 resource "aws_iam_policy_attachment" "es_policy_attach" {
-  name       = "cloudwatch policy to role"
+  name       = "es-policy-role-attach"
   roles      = [ aws_iam_role.role_cross_account_cw_to_es.name ]
   policy_arn = data.aws_iam_policy.OpenSearchServiceFullAccess.arn 
   provider   = aws.log-dev-beenetwork
