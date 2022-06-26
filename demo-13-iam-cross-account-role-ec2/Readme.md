@@ -32,13 +32,14 @@ aws s3api list-buckets
 
 ### __To Verify that you assumed the IAM role by running__
 ```
-aws sts get-caller-identity
+aws sts get-caller-identity --profile cross-account
 ```
 ```
 [profile cross-account]
     role_arn = arn:aws:iam::123456789012:role/s3-list-role
-    source_profile = log-dev-beenetwork
+    credential_source = Ec2InstanceMetadata
 ```
+
 [cross-account]
 aws_access_key_id = ASIAQXK5GCB4WCEE6HVH
 aws_secret_access_key = QNyZT4SmaMRUSCV8EJBG7DwcOWZw1oldWq/oW++O
@@ -46,4 +47,5 @@ aws_session_token = IQoJb3JpZ2luX2VjEAIaCWV1LXdlc3QtMSJGMEQCIHYnlssBsPnuXFZJpo88
 ```
 aws s3 ls --profile cross-account
 ```
+
 ***
