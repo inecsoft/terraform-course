@@ -61,6 +61,11 @@ data "aws_iam_policy" "iam_policy_OpenSearchServiceFullAccess" {
   name     = "AmazonOpenSearchServiceFullAccess"
 }
 
+data "aws_iam_policy" "iam_policy_AWSLambdaVPCAccessExecutionRole" {
+  provider = aws.log-dev-beenetwork
+  name     = "AWSLambdaVPCAccessExecutionRole"
+}
+
 data "aws_iam_policy_document" "TrustPolicyForlambdatoelasticsearchL_policy_doc" {
   provider = aws.log-dev-beenetwork
   statement {
@@ -86,6 +91,13 @@ resource "aws_iam_policy_attachment" "es_policy_attach" {
   name       = "es-policy-role-attach"
   roles      = [ aws_iam_role.role_cross_account_lambda_to_es.name ]
   policy_arn = data.aws_iam_policy.iam_policy_OpenSearchServiceFullAccess.arn 
+  provider   = aws.log-dev-beenetwork
+}
+
+resource "aws_iam_policy_attachment" "lambda_policy_attach" {
+  name       = "lambda-policy-role-attach"
+  roles      = [ aws_iam_role.role_cross_account_lambda_to_es.name ]
+  policy_arn = data.aws_iam_policy.iam_policy_AWSLambdaVPCAccessExecutionRole.arn 
   provider   = aws.log-dev-beenetwork
 }
 
