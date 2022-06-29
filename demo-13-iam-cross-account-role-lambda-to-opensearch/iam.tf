@@ -82,6 +82,9 @@ resource "aws_iam_role" "role_cross_account_lambda_to_es" {
   name = "role_cross_account_lambda_to_es"
   provider = aws.log-dev-beenetwork
   assume_role_policy = data.aws_iam_policy_document.TrustPolicyForlambdatoelasticsearchL_policy_doc.json
+  tags                  = {
+    Name = "role_cross_account_lambda_to_es"
+  }
 }
 
 #Create the IAM role that will grant CloudWatch Logs the permission to put data into your Kinesis stream | Open search

@@ -1,13 +1,14 @@
-#terraform import aws_cloudwatch_log_subscription_filter.cw_log_lambdafunction_logfilter API-Gateway-Access-Logs/prod-departures|test_lambdafunction_logfilter
-resource "aws_cloudwatch_log_subscription_filter" "cw_log_lambdafunction_logfilter" {
+#terraform import aws_cloudwatch_log_subscription_filter.cw_log_lambdafunction_logfilter "<log-group-name>|<filter-name>""
+/* resource "aws_cloudwatch_log_subscription_filter" "cw_log_lambdafunction_logfilter" {
   name            = "cw_log_lambdafunction_logfilter"
   provider        = aws.tfgm
-  role_arn        = aws_iam_role.role_cross_account_lambda_to_es.arn
+  role_arn        = aws_iam_role.lambda-role-toinvoke-elastisearch.arn
   log_group_name  = "API-Gateway-Access-Logs/prod-departures"
-  filter_pattern  = "logtype test"
-  #destination_arn = aws_kinesis_stream.test_logstream.arn
+  filter_pattern  = "?ERROR ?4"
+  destination_arn = "arn:aws:lambda:eu-west-1:050124427385:function:LogsToElasticsearch_esbeenetwork_610776623993"
   #Valid values are "Random" for es only and "ByLogStream". 
-  distribution    = "Random"
-}
+  distribution    = "ByLogStream"
+} */
 
-#arn:aws:logs:eu-west-1:050124427385:log-group:API-Gateway-Access-Logs/prod-departures:*
+#PutSubscriptionFilter operation cannot work with destinationArn for vendor es
+#did not work even imported example
