@@ -82,6 +82,9 @@ resource "aws_iam_role" "role_cross_account_lambda_to_es" {
   name = "role_cross_account_lambda_to_es"
   provider = aws.log-dev-beenetwork
   assume_role_policy = data.aws_iam_policy_document.TrustPolicyForlambdatoelasticsearchL_policy_doc.json
+  tags                  = {
+    Name = "role_cross_account_lambda_to_es"
+  }
 }
 
 #Create the IAM role that will grant CloudWatch Logs the permission to put data into your Kinesis stream | Open search
@@ -100,18 +103,6 @@ resource "aws_iam_policy_attachment" "lambda_policy_attach" {
   policy_arn = data.aws_iam_policy.iam_policy_AWSLambdaVPCAccessExecutionRole.arn 
   provider   = aws.log-dev-beenetwork
 }
-
-/* resource "aws_cloudwatch_log_subscription_filter" "test_lambdafunction_logfilter" {
-  name            = "test_lambdafunction_logfilter"
-  provider        = aws.tfgm
-  role_arn        = aws_iam_role.role_cross_account_lambda_to_es.arn
-  log_group_name  = "/aws/lambda/example_lambda_name"
-  filter_pattern  = "logtype test"
-  destination_arn = aws_kinesis_stream.test_logstream.arn
-  #Valid values are "Random" for es only and "ByLogStream". 
-  distribution    = "Random"
-} */
-
 
 output "role_cross_account_lambda_to_es_arn" {
   value = aws_iam_role.role_cross_account_lambda_to_es.arn
