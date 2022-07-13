@@ -1,5 +1,8 @@
 resource "aws_cloudfront_distribution" "s3_distribution" {
-    aliases                        = []
+    aliases                        = [
+        "mygetmethere.tv",
+        "www.mygetmethere.tv",
+    ]
     
     enabled                        = true
 
@@ -62,9 +65,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     }
 
     viewer_certificate {
-        cloudfront_default_certificate = true
-        minimum_protocol_version       = "TLSv1"
-        #acm_certificate_arn            = 
+        acm_certificate_arn            = "arn:aws:acm:us-east-1:050124427385:certificate/16049186-d49f-4bde-b746-c4059a6d7422"
+        cloudfront_default_certificate = false
+        minimum_protocol_version       = "TLSv1.2_2021"
+        ssl_support_method             = "sni-only"
     }
 
     tags                           = {
