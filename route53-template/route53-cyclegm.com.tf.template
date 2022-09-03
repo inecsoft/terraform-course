@@ -1,0 +1,249 @@
+resource "aws_route53_zone" "cyclegm_com_zone" {
+  name = "cyclegm.com"
+
+  tags = {
+    "Name" = "cyclegm.com-zone"
+    "Environment" = "Prod"
+  }
+}
+
+
+resource "aws_route53_record" "cyclegm_com_txt" {
+  for_each        = var.route53_cyclegm_com_txt_records
+  allow_overwrite = true
+  name            = lookup(each.value, "name", "")
+  ttl             = lookup(each.value, "ttl", "")
+  type            = "TXT"
+
+  zone_id = aws_route53_zone.cyclegm_com_zone.zone_id
+  records = lookup(each.value, "value", "")
+}
+
+resource "aws_route53_record" "cyclegm_com_a" {
+  for_each        = var.route53_cyclegm_com_a_records
+  allow_overwrite = true
+  name            = lookup(each.value, "name", "")
+  ttl             = lookup(each.value, "ttl", "")
+  type            = "A"
+  zone_id         = aws_route53_zone.cyclegm_com_zone.zone_id
+
+  records = lookup(each.value, "value", "")
+}
+
+resource "aws_route53_record" "cyclegm_com_a_alias" {
+  for_each        = var.route53_cyclegm_com_a_alias_records
+  allow_overwrite = true
+  name            = lookup(each.value, "name", "")
+  type            = "A"
+  zone_id         = aws_route53_zone.cyclegm_com_zone.zone_id
+
+  alias {
+    evaluate_target_health = "false"
+    name                   = lookup(each.value, "value", "")
+    zone_id                = "Z2FDTNDATAQYW2"
+  }
+}
+
+resource "aws_route53_record" "cyclegm_com_cname" {
+  for_each        = var.route53_cyclegm_com_cname_records
+  allow_overwrite = true
+  name            = lookup(each.value, "name", "")
+  ttl             = lookup(each.value, "ttl", "")
+  type            = "CNAME"
+  zone_id         = aws_route53_zone.cyclegm_com_zone.zone_id
+
+  records = lookup(each.value, "value", "")
+}
+
+resource "aws_route53_record" "cyclegm_com_mx" {
+  for_each        = var.route53_cyclegm_com_mx_records
+  allow_overwrite = true
+  name            = lookup(each.value, "name", "")
+  ttl             = lookup(each.value, "ttl", "")
+  type            = "MX"
+  zone_id         = aws_route53_zone.cyclegm_com_zone.zone_id
+
+  records = lookup(each.value, "value", "")
+
+}
+
+resource "aws_route53_record" "cyclegm_com_srv" {
+  for_each        = var.route53_cyclegm_com_srv_records
+  allow_overwrite = true
+  name            = lookup(each.value, "name", "")
+  ttl             = lookup(each.value, "ttl", "")
+  type            = "SRV"
+  zone_id         = aws_route53_zone.cyclegm_com_zone.zone_id
+
+  records = lookup(each.value, "value", "")
+
+}
+
+#-----------------------------------------------------------------------------
+#echo aws_acm_certificate.acm-certificate_cyclegm_com.arn| terraform console 
+resource "aws_acm_certificate" "acm-certificate_cyclegm_com" {
+  provider                  = aws.cloudfront
+  domain_name               = "cyclegm.com" #var.domain
+  validation_method         = "DNS"
+  subject_alternative_names = [  
+    "cyclegm.com",
+    "www.cyclegm.com"
+  ] #var.aliases
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags = {
+    Name = "cyclegm.com" #var.tag
+  }
+}
+#-----------------------------------------------------------------------------
+output "acm-certificate_cyclegm_com-status" {
+  #provider = aws.cloudfront
+  value = aws_acm_certificate.acm-certificate_cyclegm_com.status
+}
+
+resource "aws_route53_record" "route53-record-acm-certificate_cyclegm_com" {
+  for_each = {
+    for dvo in aws_acm_certificate.acm-certificate_cyclegm_com.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  ttl             = 60
+  type            = each.value.type
+  zone_id         = aws_route53_zone.cyclegm_com_zone.zone_id
+}
+# #-----------------------------------------------------------------------------
+resource "aws_acm_certificate_validation" "acm-certificate_cyclegm_com-validation" {
+  provider = aws.cloudfront
+  certificate_arn         = aws_acm_certificate.acm-certificate_cyclegm_com.arn
+  validation_record_fqdns = [for record in aws_route53_record.route53-record-acm-certificate_cyclegm_com : record.fqdn]
+}
+# #-----------------------------------------------------------------------------
+#############################-cyclegm.com-#######################################
+variable "route53_cyclegm_com_txt_records" {
+  type = map(object({
+    name           = string
+    value          = list(string)
+    ttl            = string
+    routing_policy = string
+  }))
+  default = {}
+}
+
+variable "route53_cyclegm_com_a_records" {
+  type = map(object({
+    name           = string
+    value          = list(string)
+    ttl            = string
+    routing_policy = string
+  }))
+  default = {}
+}
+
+variable "route53_cyclegm_com_a_alias_records" {
+  type = map(object({
+    name  = string
+    value = string
+  }))
+  default = {}
+}
+
+variable "route53_cyclegm_com_cname_records" {
+  type = map(object({
+    name           = string
+    value          = list(string)
+    ttl            = string
+    routing_policy = string
+  }))
+  default = {}
+}
+
+variable "route53_cyclegm_com_mx_records" {
+  type = map(object({
+    name           = string
+    value          = list(string)
+    ttl            = string
+    routing_policy = string
+  }))
+  default = {}
+}
+
+variable "route53_cyclegm_com_srv_records" {
+  type = map(object({
+    name           = string
+    value          = list(string)
+    ttl            = string
+    routing_policy = string
+  }))
+  default = {}
+}
+
+######################-cyclegm.com-########################################
+route53_cyclegm_com_txt_records = {
+
+}
+
+route53_cyclegm_com_a_records = {
+
+
+}
+
+route53_cyclegm_com_a_alias_records = {
+
+
+}
+
+route53_cyclegm_com_cname_records = {
+  "www.cyclegm.com" = {
+    name           = "www.cyclegm.com."
+    value          = ["cyclegm.com."]
+    ttl            = "300"
+    routing_policy = "Simple"
+  },
+
+}
+
+route53_cyclegm_com_mx_records = {
+
+}
+
+route53_cyclegm_com_srv_records = {
+
+}
+
+cloudfront_records = {
+  "cyclegm_com" = {
+    aliases     = [
+      "cyclegm.com",
+      "www.cyclegm.com"
+    ]
+    domain      = "cyclegm.com"
+    origin_path = "" 
+    #echo "aws_acm_certificate.acm-certificate_cyclegm_com.arn" | terraform console
+    viewer_certificate = {
+      acm_certificate_arn  = "arn:aws:acm:us-east-1:050124427385:certificate/e323d731-0c0c-47dd-bca3-63938e284571"     
+      minimum_protocol_version = "TLSv1.2_2021"
+    }
+    
+    tag                      = "cyclegm.com"
+    
+  }
+
+}
+
+s3_records = {
+  "cyclegm.com" = {
+    bucket                    = "cyclegm.com"
+    acl                       = "public-read"
+    tag                       = "cyclegm.com"
+    host_name                 = "www.tfgm.com/cycling"
+    protocol                  = "https"
+  },
+}
