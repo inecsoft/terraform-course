@@ -1,0 +1,21 @@
+{
+    "DomainName": "betterbycycle.org.uk",
+    "Nameservers": [
+        {
+            "Name": "ns-1454.awsdns-53.org",
+            "GlueIps": []
+        },
+        {
+            "Name": "ns-142.awsdns-17.com",
+            "GlueIps": []
+        },
+        {
+            "Name": "ns-1820.awsdns-35.co.uk",
+            "GlueIps": []
+        },
+        {
+            "Name": "ns-777.awsdns-33.net",
+            "GlueIps": []
+        }
+    ]
+}
