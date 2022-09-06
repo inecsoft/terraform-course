@@ -116,6 +116,16 @@ git reset HEAD\~1
 
 git rebase -i HEAD\~6
 ```
+
+#### __How to revert to origin's master branch's version of file__
+```
+git restore --source origin/master filename
+```
+
+```
+git checkout {remoteName}/{branch} -- filename
+```
+
 #### Delete the line of the commit that you want to delete
 ```
 git push
@@ -217,22 +227,25 @@ git config -e
 [remote "origin"]
     url = git@your.hostname.com:username/reponame.git
 ```
-
+```
 git clone <repo URL>  
 git add .  
 git commit -am "message"  
 ssh-agent bash  
 ssh-add -k github  
 git push  
+```
 
 ***
 
 ### __Working with local version of the module__
-
+```
 module "staging_vpc" {  
     #tag to be uppded to 1.4.20 once prod migration is complete"  
     source = "../../terraform-modules/template"
-    #source                   = "github.com/inecsoft/terraform-modules.git//template?ref=branchname"
+    #source = "github.com/inecsoft/terraform-modules.git//template?ref=branchname"
+
+```
 
 ```
 terraform get --update
