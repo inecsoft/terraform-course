@@ -253,6 +253,15 @@ terraform init
 terraform plan
 terraform apply -lock-timeout=120m
 ```
+### __How to retrieve passwords for the windows instance__
+```
+aws ec2 get-password-data --instance-id i-03051e6ee9df4a949 --priv-launch-key bastion_proxy --profile log-dev-beenetwork
+```
+
+#### __How to retrieve sensitive data__
+```
+echo "nonsensitive(aws_ssm_parameter.elastic-search-master-user.value) | terraform console
+```
 ***
 ### __Precommit tool__
 ```
