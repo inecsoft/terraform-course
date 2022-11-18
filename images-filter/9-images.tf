@@ -1,3 +1,4 @@
+#aws ec2 describe-images --region eu-west-1 --image-ids ami-001c2751d5252c623
 #-------------------------------------------------------------------
 data "aws_ami" "amazon_linux" {
   most_recent = true
@@ -20,6 +21,27 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+
+data "aws_ami" "amazon_linux_kernel_5" {
+  most_recent = true
+  owners      = ["137112412989"] # Amazon
+
+  filter {
+    name = "name"
+
+    values = [
+      "amzn2-ami-kernel-*-x86_64-gp2",
+    ]
+  }
+
+  filter {
+    name = "owner-alias"
+
+    values = [
+      "amazon",
+    ]
+  }
+}
 #-------------------------------------------------------------------
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -62,7 +84,7 @@ data "aws_ami" "rhel8" {
 
   filter {
     name   = "name"
-    values = ["RHEL-8.0*"]
+    values = ["RHEL-8.4*"]
   }
 }
 
@@ -74,6 +96,10 @@ output "ami-redhat-8-id" {
 output "ami-amazon-id" {
   description = "Description of ami amazon"
   value       = data.aws_ami.amazon_linux.id
+}
+output "amazon_linux_kernel_5" {
+  description = "Description of ami amazon"
+  value       = data.aws_ami.amazon_linux_kernel_5.id
 }
 #-------------------------------------------------------------------
 output "ami-amazon-name" {

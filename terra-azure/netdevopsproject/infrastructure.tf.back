@@ -155,8 +155,8 @@ resource "azurerm_sql_firewall_rule" "fw-client" {
   name                = "${local.default_name}-AllowLocalClient-${count.index+1}"
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = element([azurerm_sql_server.sql-server-1.name, azurerm_sql_server.sql-server-2.name],count.index)
-  start_ip_address    = chomp(data.http.workstation-external-ip.body)
-  end_ip_address      = chomp(data.http.workstation-external-ip.body)
+  start_ip_address    = chomp(data.http.workstation-external-ip.response_body)
+  end_ip_address      = chomp(data.http.workstation-external-ip.response_body)
 }
 #--------------------------------------------------------------------------------------------
 #resource "null_resource" "ip-fw" {
