@@ -1601,6 +1601,37 @@ node03.inecsoft.co.uk openshift_node_group_name='node-config-infra'
 ```
 
 ***
+
+# __Install Minikube in Ubuntu__
+
+```
+sudo apt install libvirt qemu-kvm
+sudo apt install libvirt-clients
+virt-host-validate
+```
+# __Start Minikube__
+```
+minikube start --driver=qemu2
+minikube kubectl -- get po -A
+alias k="minikube kubectl --"
+```
+# __minikube service__
+
+```
+k create deploy hello-minikube --image=kicbase/echo-server:1.0
+k expose deployment hello-minikube --type=NodePort --port=8080
+k get services hello-minikube
+minikube service hello-minikube
+k port-forward service/hello-minikube 7080:8080
+```
+
+# __Minikube remove__
+
+```
+minikube delete
+```
+
+***
 # __Install Minikube to configure Single Node Cluster within a Virtual machine.__
 
 Because using VM, Install a Hypervisor which is supported by Minikube.
