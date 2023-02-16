@@ -1669,6 +1669,8 @@ minikube version
 ### __To start minikube__
 ```
 minikube start --vm-driver kvm2
+
+minikube start --memory 5120 --cpus 2 --vm-driver kvm2
 ```
 
 ### __show the status__
@@ -1681,6 +1683,15 @@ minikube service list
 ```
 ```
 minikube docker-env
+```
+```
+ minikube config set memory 6000
+```
+```
+kubectl get node minikube -o jsonpath='{.status.capacity}'
+```
+```
+minikube config view
 ```
 ```
 kubectl get nodes
@@ -1698,6 +1709,35 @@ hostname
 docker ps
 exit
 ```
+
+***
+### __Helm__
+```
+helm repo add hashicorp https://helm.releases.hashicorp.com
+helm search repo hashicorp/vault
+helm search repo hashicorp/vault -l
+helm install vault hashicorp/vault
+
+mkdir manifests
+helm template vault hashicorp/vault --version 0.39.0 > ./manifests/vault.yaml
+
+kubectl -n vault apply -f ./manifests/vault.yaml
+kubectl -n vault get po
+```
+
+***
+### __kompose to migrate docker-compose to kubernetes__
+
+
+```
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.28.0/kompose-linux-amd64 -o kompose
+chmod +x kompose
+sudo mv ./kompose /usr/local/bin/kompose
+kompose convert -f docker-compose.yaml
+
+kompose convert -f -o kompose-k8s.ymal
+```
+
 ### __Deploy Grafana for monitoring.__
 ```
 minikube addons enable haeapster
