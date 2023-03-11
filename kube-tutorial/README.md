@@ -893,7 +893,7 @@ kubectl describe svc/registry
 
 * ### __Get the port number programmatically:__
 ```
-NODEPORT=$(kubectl get svc/registry -o json| jq.spec.ports[0].nodePort)
+NODEPORT=$(kubectl get svc/registry -o json| jq .spec.ports[0].nodePort)
 export REGISTRY=127.0.0.1:$NODEPORT
 curl localhost:$NODEPORT
 ```
@@ -1088,7 +1088,8 @@ kubectl create -f nginx-nfs.yml
   ```
   #### __How to access the container__
   ```
-  kubectl -n elk get podkubectl -n elk exec -it elk-elasticsearch-data-0 -- sh
+  kubectl -n elk get pod
+  kubectl -n elk exec -it elk-elasticsearch-data-0 -- sh
   df -h
   ```
 ### __Running NFS service on Swarm Mode__
@@ -1623,6 +1624,7 @@ k expose deployment hello-minikube --type=NodePort --port=8080
 k get services hello-minikube
 minikube service hello-minikube
 k port-forward service/hello-minikube 7080:8080
+k port-forward pod/example-deploy-77695fcff9-wp984 :5000
 ```
 
 # __Minikube remove__
@@ -1685,7 +1687,13 @@ minikube service list
 minikube docker-env
 ```
 ```
- minikube config set memory 6000
+minikube config set memory 6000
+```
+```
+minikube profile list
+minikube start --cpus 2 --memory 3000 --nodes 3 --vm-driver vitualbox -p virtualbox
+minikube profile virtualbox
+minikube delete -p virtualbox
 ```
 ```
 kubectl get node minikube -o jsonpath='{.status.capacity}'
@@ -1696,6 +1704,7 @@ minikube config view
 ```
 kubectl get nodes
 ```
+
 ### __To see the VM that minikube is running.__
 ```
 virsh list
