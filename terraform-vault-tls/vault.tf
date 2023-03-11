@@ -27,6 +27,12 @@ resource "helm_release" "vault" {
 
 #helm search repo hashicorp/vault
 
+/* helm template vault hashicorp/vault \
+--namespace vault \
+--version 0.23.0 \
+-f overrides.yaml \
+> vault.yaml */
+
 # Check status
 # kubectl -n vault get po
 # kubectl exec -it vault-0 -- vault status
@@ -70,9 +76,3 @@ resource "helm_release" "vault" {
 
 ######
 
-
-/* helm template vault hashicorp/vault \
---namespece vault \
---version 0.23.0 \
--f overrides.yaml \
-> vault.yaml */
