@@ -1,0 +1,20 @@
+name: Deploy to production environments
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-to-production:
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      name: prod
+      region: eu-west-1
+    secrets:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
