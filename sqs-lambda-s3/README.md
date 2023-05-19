@@ -24,3 +24,19 @@ cd src
 sudo make build
 sudo chown -R iarteaga. ../bin/
 ```
+
+### **Test**
+
+```
+aws sqs send-message \
+--region eu-west-1 \
+--queue-url https://sqs.eu-west-1.amazonaws.com/911328334795/tfgm-iac-code-queue \
+--message-body "hello, ivan pedro"\
+--profile ivan-arteaga-dev
+```
+
+```
+aws s3 ls tfgm-iac-code-vaguely-strongly-closing-chicken/
+aws s3 cp s3://tfgm-iac-code-vaguely-strongly-closing-chicken/b617509b-c18e-4254-adf1-d0c8050072a3 .  --profile ivan-arteaga-dev
+cat ./b617509b-c18e-4254-adf1-d0c8050072a3
+```
