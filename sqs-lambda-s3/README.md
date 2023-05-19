@@ -1,5 +1,5 @@
  <div align="center">
-    <img src="images/sqs-lambada-s3.JPG" width="700" />
+    <img src="images/sqs-lambda-s3.jpg" width="700" />
 </div>
 
 # iac-intro
