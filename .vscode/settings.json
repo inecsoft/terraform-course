@@ -1,6 +1,23 @@
 {
-    "python.pythonPath": "/usr/bin/python",
-    "python.setInterpreter": "python",
-    "java.javaPath": "/usr/bin/java",
-    "java.setInterpreter": "java"
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#3399ff",
+    "activityBar.activeBorder": "#bf0060",
+    "activityBar.background": "#3399ff",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#bf0060",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "statusBar.background": "#007fff",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#3399ff",
+    "sash.hoverBorder": "#3399ff",
+    "statusBarItem.remoteBackground": "#007fff",
+    "statusBarItem.remoteForeground": "#e7e7e7"
+  },
+  "peacock.color": "#007fff",
+  "terminal.integrated.scrollback": 10000,
+  "python.pythonPath": "/usr/bin/python",
+  "python.setInterpreter": "python",
+  "java.javaPath": "/usr/bin/java",
+  "java.setInterpreter": "java"
 }
