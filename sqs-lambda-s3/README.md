@@ -1,7 +1,6 @@
  <div align="center">
     <img src="images/sqs-lambada-s3.JPG" width="700" />
 </div>
-<img align="center" src="./images/sqs-lambada-s3.JPG" alt="alt text" title="sqs-lambada-s3" />
 
 # iac-intro
 
