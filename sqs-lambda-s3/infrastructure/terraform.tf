@@ -15,4 +15,12 @@ terraform {
   }
 
   required_version = "~> 1.4"
+
+  #echo aws_s3_bucket.lambda_bucket.id | terraform console
+  /* backend "s3" {
+    bucket = aws_s3_bucket.lambda_bucket.id
+    key    = "terraform/terraform.state"
+    region = "eu-west-1"
+  } */
 }
+
