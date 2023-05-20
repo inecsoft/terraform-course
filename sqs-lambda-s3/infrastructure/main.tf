@@ -1,8 +1,3 @@
-provider "aws" {
-  region = var.aws_region
-  profile = "ivan-arteaga-dev"
-}
-
 data "aws_caller_identity" "current" {}
 
 #terraform state show random_pet.lambda_bucket_name
