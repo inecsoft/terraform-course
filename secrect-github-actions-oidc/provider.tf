@@ -28,9 +28,10 @@ terraform {
     }
   }
 
-  /* backend "s3" {
+  backend "s3" {
     bucket = "secrect-tfgm"
     key    = "secrect/terraform.tfstate"
     region = "eu-west-1"
-  } */
+    profile = "ivan-arteaga-dev"
+  }
 }
