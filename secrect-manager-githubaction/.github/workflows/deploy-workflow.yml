@@ -1,0 +1,43 @@
+name: Deploy to environment
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      region:
+        required: true
+        type: string
+    secrets:
+      aws-access-key-id:
+        required: true
+      aws-secret-access-key:
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    concurrency: deploy-${{ inputs.name }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.name }}
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          aws-access-key-id: ${{ secrets.aws-access-key-id }}
+          aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
+          aws-region: ${{ inputs.region }}
+      - name: Terraform Init
+        run: terraform init -backend-config="key=secrect/terraform.tfstate" -backend-config="bucket=secrect-tfgm"
+      - name: Terraform Plan
+        run: terraform plan
+      - name: Terraform Apply
+        run: terraform apply -input=false -auto-approve

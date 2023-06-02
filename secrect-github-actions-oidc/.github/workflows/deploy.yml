@@ -1,0 +1,19 @@
+name: Deploy to production environments
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-to-production:
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      name: prod
+      region: eu-west-1
+      role-to-assume: arn:aws:iam::xxxxxxxx:role/Role-github-action-ipd #change to reflect your IAM role’s ARN
+      role-session-name: GitHub_to_AWS_via_FederatedOIDC
