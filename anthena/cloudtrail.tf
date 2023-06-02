@@ -8,63 +8,27 @@ resource "aws_cloudtrail" "cloudtrail" {
 
 	is_multi_region_trail         = true
 
-    /* advanced_event_selector {
+    advanced_event_selector {
 		name = "Management events selector"
 
 		field_selector {
-			ends_with       = []
+			ends_with       = [500]
 			equals          = [
 				"Management",
 			]
 			field           = "eventCategory"
-			not_ends_with   = []
-			not_equals      = []
-			not_starts_with = []
-			starts_with     = []
+			not_ends_with   = [500]
+			not_equals      = [100]
+			not_starts_with = [100]
+			starts_with     = [500]
 		}
 
-    } */
+    }
 
 }
 
 resource "aws_s3_bucket" "s3_bucket_aws_cloudtrail_logs" {
     bucket = "s3-bucket-cloudtrail-logs-tfgm"
-	/* policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AWSCloudTrailAclCheck20150319",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "cloudtrail.amazonaws.com"
-      },
-      "Action": "s3:GetBucketAcl",
-      "Resource": "arn:aws:s3:::s3-bucket-cloudtrail-logs-tfgm",
-      "Condition": {
-        "StringEquals": {
-          "AWS:SourceArn": "arn:aws:cloudtrail:eu-west-1:${data.aws_caller_identity.current.id}:trail/management-events"
-        }
-      }
-    },
-    {
-      "Sid": "AWSCloudTrailWrite20150319",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "cloudtrail.amazonaws.com"
-      },
-      "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::s3-bucket-cloudtrail-logs-tfgm/AWSLogs/${data.aws_caller_identity.current.id}/*",
-      "Condition": {
-        "StringEquals": {
-          "AWS:SourceArn": "arn:aws:cloudtrail:eu-west-1:${data.aws_caller_identity.current.id}:trail/management-events",
-          "s3:x-amz-acl": "bucket-owner-full-control"
-        }
-      }
-    }
-  ]
-}
-POLICY */
 
 }
 
@@ -97,7 +61,7 @@ data "aws_iam_policy_document" "s3_bucket_aws_cloudtrail_logs_policy_doc" {
 			"s3:GetBucketAcl",
 		]
 
-		resources = [ "${aws_s3_bucket.s3_bucket_aws_cloudtrail_logs.arn}/AWSLogs/${data.aws_caller_identity.current.id}/*" ]
+		resources = [ aws_s3_bucket.s3_bucket_aws_cloudtrail_logs.arn ]
 
 		condition {
 			test     = "StringEquals"
@@ -116,7 +80,7 @@ data "aws_iam_policy_document" "s3_bucket_aws_cloudtrail_logs_policy_doc" {
 			"s3:PutObject",
 		]
 
-		resources = [ aws_s3_bucket.s3_bucket_aws_cloudtrail_logs.arn ]
+		resources = [  "${aws_s3_bucket.s3_bucket_aws_cloudtrail_logs.arn}/AWSLogs/${data.aws_caller_identity.current.id}/*" ]
 
 		condition {
 			test     = "StringEquals"
