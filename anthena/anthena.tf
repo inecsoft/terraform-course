@@ -110,7 +110,11 @@ resource "aws_athena_workgroup" "athena_workgroup" {
   name = "athena_workgroup"
 
   configuration {
+    enforce_workgroup_configuration    = true
+    publish_cloudwatch_metrics_enabled = true
     result_configuration {
+
+      output_location = "s3://${aws_s3_bucket.s3_bucket_anthena.bucket}/output/"
       encryption_configuration {
         encryption_option = "SSE_KMS"
         kms_key_arn       = aws_kms_key.kms_key.arn
@@ -132,6 +136,13 @@ resource "aws_athena_named_query" "athena_named_query_db_create" {
   query     = "CREATE DATABASE IF NOT EXISTS cloudtraildbtfgm COMMENT 'CLOUDTRAIL DATABASE' LOCATION 'S3://ca-anthena-cloudtrail-db-tfgm/cloudtrail' WITHDBPROPERTIES ('CREATOR'='IVANPEDRO', 'COMPANY'='TFGM', 'CREATED'='2023')"
 }
 
+/* resource "aws_athena_named_query" "athena_named_query_db_drop" {
+  name      = "cloudtraildbtfgm"
+  workgroup = aws_athena_workgroup.athena_workgroup.id
+  database  = aws_athena_database.athena_database.name
+  query     = "DROP DATABASE IF NOT EXISTS cloudtraildbtfgm"
+} */
+
 /* resource "aws_athena_named_query" "athena_named_query_db" {
   name      = "bar"
   workgroup = aws_athena_workgroup.athena_workgroup.id
@@ -139,3 +150,29 @@ resource "aws_athena_named_query" "athena_named_query_db_create" {
   query     = "SELECT * FROM ${aws_athena_database.athena_database.name} limit 10;"
 } */
 
+resource "aws_athena_named_query" "athena_named_query_table" {
+  name      = "cloudtraillogs"
+  workgroup = aws_athena_workgroup.athena_workgroup.id
+  database  = aws_athena_database.athena_database.name
+  query     = <<-EOF
+  "CREATE EXTERNAL TABLE IF NOT EXISTS cloudfront_logs (
+      Date,
+      Time STRING,
+      Location STRING,
+      Bytes INT,
+      RequestIP STRING,
+      Method STRING,
+      Host STRING,
+      Uri STRING,
+      Status INT,
+      Referrer STRING,
+      OS String,
+      Browser String,
+      BrowserVersion String)
+    ROW FORMAT SERDE "com.amazon.emr.hive.serde.CloudTrailSerde"
+    STORED AS INPUTFORMAT "com.amazon.emr.cloudtrail.CloudTrailInputFormat"
+    OUTPUTFORMAT "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+    LOCATION "s3://s3-bucket-cloudtrail-logs-tfgm/AWSLogs/";"
+EOF
+
+}

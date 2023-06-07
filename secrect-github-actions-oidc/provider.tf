@@ -29,9 +29,14 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "secrect-tfgm"
+    bucket = "secret-tfgm"
     key    = "secrect/terraform.tfstate"
     region = "eu-west-1"
     profile = "ivan-arteaga-dev"
   }
+}
+
+resource "aws_s3_bucket" "backend_s3" {
+  bucket = "secret-tfgm"
+  acl    = "private"
 }

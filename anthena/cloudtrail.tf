@@ -8,7 +8,12 @@ resource "aws_cloudtrail" "cloudtrail" {
 
 	is_multi_region_trail         = true
 
-    advanced_event_selector {
+	event_selector {
+		read_write_type           = "All"
+		include_management_events = true
+	}
+
+    /* advanced_event_selector {
 		name = "Management events selector"
 
 		field_selector {
@@ -23,12 +28,13 @@ resource "aws_cloudtrail" "cloudtrail" {
 			starts_with     = [500]
 		}
 
-    }
+    } */
 
 }
 
 resource "aws_s3_bucket" "s3_bucket_aws_cloudtrail_logs" {
     bucket = "s3-bucket-cloudtrail-logs-tfgm"
+	force_destroy = true
 
 }
 

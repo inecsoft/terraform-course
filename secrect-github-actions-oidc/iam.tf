@@ -1,6 +1,6 @@
-#aws iam create-open-id-connect-provider ‐‐url 
-#"https://token.actions.githubusercontent.com" ‐‐thumbprint-list 
-#"6938fd4d98bab03faadb97b34396831e3780aea1" ‐‐client-id-list 
+#aws iam create-open-id-connect-provider ‐‐url
+#"https://token.actions.githubusercontent.com" ‐‐thumbprint-list
+#"6938fd4d98bab03faadb97b34396831e3780aea1" ‐‐client-id-list
 #'sts.amazonaws.com'
 
 resource "aws_iam_openid_connect_provider" "iam_openid_connect_provider" {
@@ -28,8 +28,10 @@ resource "aws_iam_role" "iam_role_GitHubAction-AssumeRoleWithAction" {
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
-          "token.actions.githubusercontent.com:sub": "repo: TfGMEnterprise/ivan-secrets-management-practice:ref:refs/heads/*"
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+        },
+        "StringLike": {
+          "token.actions.githubusercontent.com:sub": "repo: TfGMEnterprise/*:ref:refs/heads/*"
         }
       }
     }
