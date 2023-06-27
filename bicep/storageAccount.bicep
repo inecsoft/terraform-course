@@ -1,11 +1,11 @@
-param storageAccountName string = 'mycloudacademystorage23894'
-param location string = 'westus'
-
+param env string = 'dev'
+var storagePrefix= 'stor${resourceGroup().id}${uniqueString(resourceGroup().id)}'
+​​​​​​​
 resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
-  name: storageAccountName
-  location: location
-  kind: 'StorageV2'
-  sku: {
-    name: 'Standard_LRS'
-  }
+ name: '${storagePrefix}${env}'
+ location: 'westus'
+ kind: 'StorageV2'
+ sku: {
+ name: 'Premium_LRS'
  }
+}
