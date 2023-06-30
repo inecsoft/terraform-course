@@ -1,7 +1,7 @@
 #!/bin/bash
 # set -x
 
-version=2.5.0
+version=3.2.0
 read -ep "Do you want to install regula version: ${version}`echo -e '\n' or Enter a new version to continue:'\n'` " versions
 echo $versions
 
