@@ -25,8 +25,9 @@ output "vault-uuid" {
   value = random_uuid.vault-uuid.result
 }
 #--------------------------------------------------------------------
-output "vault_password"
+output "vault_password" {
   value = "${azure_key_vault_secret.vm_secret.value}"
+}
 #--------------------------------------------------------------------
 data "azurerm_client_config" "current" {
 }
