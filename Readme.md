@@ -207,6 +207,23 @@ git push origin \<branch name\>
 git remote add upstream \<URL master git repo\>  
 git push upstream master  
 ```
+
+### __How can I verify that the public key I uploaded is the same key as my local key__
+
+```
+ssh-keygen -l -E md5 -f ~/.ssh/id_rsa.pub
+ssh -T git@ssh.dev.azure.com
+```
+
+vim ~/.ssh/config  
+
+```
+Host ssh.dev.azure.com vs-ssh.visualstudio.com
+  HostkeyAlgorithms +ssh-rsa
+  User ivan.arteaga
+  IdentityFile ~/.ssh/inecsoft
+```
+
 ### __Configuration file to manage git repos using custom ssh key pair__
 ssh-keygen -t rsa -t 2048 -f github  
 vim ~/.ssh/config  
