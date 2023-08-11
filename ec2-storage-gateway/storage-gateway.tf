@@ -1,27 +1,51 @@
 #terraform import  aws_storagegateway_gateway.storagegateway_gateway arn:aws:storagegateway:eu-west-1:911328334795:gateway/sgw-50629639
 resource "aws_storagegateway_gateway" "storagegateway_gateway" {
-  depends_on = [ aws_instance.webserver ]
-  gateway_ip_address = aws_instance.webserver.public_ip
+  depends_on = [ aws_instance.storage-gateway ]
+  gateway_ip_address = aws_instance.storage-gateway.public_ip
   gateway_name       = "${local.default_name}-storagegateway"
   gateway_timezone   = "GMT+1:00"
   gateway_type       = "FILE_S3"
+
+  maintenance_start_time {
+    day_of_week    = "6"
+    hour_of_day    = 2
+    minute_of_hour = 45
+  }
 
   lifecycle {
     ignore_changes = [ gateway_ip_address ]
   }
 }
 
-/* resource "aws_storagegateway_cache" "example" {
-  disk_id     = data.aws_storagegateway_local_disk.example.id
+/* data "aws_ebs_volume" "ebs_volume_cache" {
+  most_recent = true
+  depends_on = [ aws_instance.storage-gateway ]
+
+  filter {
+    name   = "volume-type"
+    values = ["gp3"]
+  }
+
+  filter {
+    name   = "tag:Name"
+    values = [ "${local.default_name}-storage-gateway-volume" ]
+  }
+}
+
+resource "aws_storagegateway_cache" "storagegateway_cache" {
+  depends_on = [ aws_storagegateway_gateway.storagegateway_gateway ]
+  #disk_id     = data.aws_storagegateway_local_disk.example.id
+  disk_id     = data.aws_ebs_volume.ebs_volume_cache.id
   gateway_arn = aws_storagegateway_gateway.storagegateway_gateway.arn
 } */
 
 resource "aws_storagegateway_nfs_file_share" "storagegateway_nfs_file_share" {
   file_share_name         = "${local.default_name}-storagegateway_nfs_file_share"
-  client_list  = ["0.0.0.0/0"]
-  gateway_arn  = aws_storagegateway_gateway.storagegateway_gateway.arn
-  location_arn = aws_s3_bucket.s3-bucket-mount.arn
-  role_arn     = aws_iam_role.StorageGatewayBucketAccessRole.arn
+  client_list             = ["0.0.0.0/0"]
+  gateway_arn             = aws_storagegateway_gateway.storagegateway_gateway.arn
+  location_arn            = aws_s3_bucket.s3-bucket-mount.arn
+  role_arn                = aws_iam_role.StorageGatewayBucketAccessRole.arn
+  default_storage_class   = "S3_STANDARD"
   kms_encrypted           = true
   kms_key_arn             = aws_kms_key.kms-key.arn
   object_acl              = "bucket-owner-full-control"

@@ -1,9 +1,18 @@
-
 #-------------------------------------------------------------------------
-resource "aws_instance" "storage-gateway" {
-  ami           = "ami-0ae0762915a933e4d"
-  #ami           = data.aws_ami.amazon_linux.id
-  instance_type = "m5.xlarge" #var.instance_type # recommended m5.xlarge
+data "template_file" "userdata" {
+  template = file("scripts/userdata.tpl")
+  vars = {
+    DEVICE_IP          = aws_instance.storage-gateway.private_ip
+    DEVICE_FS          = "${local.default_name}-s3-bucket-mount"
+    S3FS_BUCKET_NAME   = "${local.default_name}-s3-bucket-mount"
+    AWS_REGION         = var.AWS_REGION
+    S3FS_MOUNTING_ROLE = aws_iam_role.iam-ec2-role.name
+  }
+}
+#-------------------------------------------------------------------------
+resource "aws_instance" "webserver" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = var.instance_type # recommended m5.xlarge
   key_name      = aws_key_pair.key-pair.key_name
 
   # the VPC subnet
@@ -16,28 +25,19 @@ resource "aws_instance" "storage-gateway" {
 
   root_block_device {
     #device_name = "/dev/xvda"
-    volume_type = "gp3"
-    volume_size = 80
-    throughput  = 125
-    iops        =  3000
+    volume_type = "gp2"
+    volume_size = 20
+    #throughput  = 125
+    #iops        =  3000
     delete_on_termination = true
     encrypted             = true
     kms_key_id            = aws_kms_key.kms-key.id
   }
 
-  ebs_block_device {
-    delete_on_termination = true
-    device_name           = "/dev/sdb"
-    encrypted             = false
-    iops                  = 3000
-    throughput            = 125
-    volume_size           = 150
-    volume_type           = "gp3"
-    #kms_key_id            = aws_kms_key.kms-key.id
-  }
+
 
   # user data
-  #user_data = data.template_file.userdata.rendered
+  user_data = data.template_file.userdata.rendered
 
   #The IAM Instance Profile name to launch the instance with.
   iam_instance_profile = aws_iam_instance_profile.iam-instance-profile.name
@@ -45,11 +45,6 @@ resource "aws_instance" "storage-gateway" {
   capacity_reservation_specification {
     capacity_reservation_preference = "open"
   }
-
-  /* cpu_options {
-    core_count       = 2
-    threads_per_core = 2
-  } */
 
   maintenance_options {
     auto_recovery = "default"
@@ -80,22 +75,17 @@ resource "aws_instance" "storage-gateway" {
   }
 
   tags = {
-    Name = "${local.default_name}-storage-gateway"
+    Name = "${local.default_name}-webserver"
   }
 
   volume_tags = {
-    Name = "${local.default_name}-storage-gateway-volume"
+    Name = "${local.default_name}-webserver-volume"
   }
 }
 
 #-------------------------------------------------------------------------
-output "storage-gateway-public-ip" {
-  description = "storage-gateway-public ip"
-  value       = aws_instance.storage-gateway.public_ip
-}
-
-output "webserver-private-ip" {
-  description = "webserver-private ip"
-  value       = aws_instance.webserver.private_ip
+output "webserver-public-ip" {
+  description = "webserver-public ip"
+  value       = aws_instance.webserver.public_ip
 }
 #-------------------------------------------------------------------------
