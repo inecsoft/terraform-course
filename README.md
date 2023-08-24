@@ -1,3 +1,13 @@
+***
+
+<div align="center">
+    <h1>Deploy a React-based single-page application to Amazon S3 and CloudFront</h1>
+    <img src="images/React-based-spa.jpg" width="500"/>
+</div>
+
+***
+
+
 ![Continuous Integration](https://github.com/aws-samples/react-cors-spa/actions/workflows/ci.yml/badge.svg)
 
 # Getting Started with the React Cors Application
@@ -14,6 +24,14 @@ then start the application locally using the following command:
 
 In order to deploy to AWS, you have to take the following steps:
 1. Deploy the CloudFormation Template from the project (`react-cors-spa-stack.yaml`) using AWS CLI or AWS Console
+```
+aws cloudformation deploy --template-file react-cors-spa-stack.yaml --stack-name dev-react-cors-spa-stack --profile ivan-arteaga-dev
+```
+
+```
+aws cloudformation delete-stack --stack-name dev-react-cors-spa-stack --profile ivan-arteaga-dev
+```
+
 2. Once your stack is deployed, from the "Output" tab, identify the "APIEndpoint" URL as well as the S3 "Bucket" name
 3. Copy the API endpoint URL identified at step 2 and paste it in the App.js line 26
 4. Build the (using `yarn build`) app for distribution

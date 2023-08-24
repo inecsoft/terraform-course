@@ -1,0 +1,72 @@
+resource "aws_cloudfront_distribution" "cf_distribution" {
+  // CF Property(DistributionConfig) = {
+  //   Origins = [
+  //     {
+  //       DomainName = aws_s3_bucket.s3_bucket.region
+  //       Id = "myS3Origin"
+  //       S3OriginConfig = {
+  //         OriginAccessIdentity = ""
+  //       }
+  //       OriginAccessControlId = aws_cloudfront_origin_access_control.cloud_front_origin_access_control.id
+  //     },
+  //     {
+  //       DomainName = "${aws_api_gateway_rest_api.simple_api.arn}.execute-api.${data.aws_region.current.name}.amazonaws.com"
+  //       Id = "myAPIGTWOrigin"
+  //       CustomOriginConfig = {
+  //         OriginProtocolPolicy = "https-only"
+  //       }
+  //     }
+  //   ]
+  //   Enabled = "true"
+  //   DefaultRootObject = "index.html"
+  //   DefaultCacheBehavior = {
+  //     AllowedMethods = [
+  //       "GET",
+  //       "HEAD",
+  //       "OPTIONS"
+  //     ]
+  //     TargetOriginId = "myS3Origin"
+  //     CachePolicyId = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+  //     OriginRequestPolicyId = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf"
+  //     ResponseHeadersPolicyId = "67f7725c-6f97-4210-82d7-5512b31e9d03"
+  //     ViewerProtocolPolicy = "redirect-to-https"
+  //   }
+  //   CacheBehaviors = [
+  //     {
+  //       PathPattern = "v1/hello"
+  //       AllowedMethods = [
+  //         "GET",
+  //         "HEAD",
+  //         "OPTIONS"
+  //       ]
+  //       TargetOriginId = "myAPIGTWOrigin"
+  //       CachePolicyId = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+  //       OriginRequestPolicyId = "b689b0a8-53d0-40ab-baf2-68738e2966ac"
+  //       ResponseHeadersPolicyId = "67f7725c-6f97-4210-82d7-5512b31e9d03"
+  //       ViewerProtocolPolicy = "redirect-to-https"
+  //     }
+  //   ]
+  //   PriceClass = "PriceClass_All"
+  //   Logging = {
+  //     Bucket = aws_s3_bucket.logging_bucket.region
+  //     Prefix = "cloudfront-access-logs"
+  //   }
+  //   ViewerCertificate = {
+  //     CloudFrontDefaultCertificate = True
+  //     MinimumProtocolVersion = "TLSv1.2_2021"
+  //   }
+  // }
+}
+
+
+resource "aws_s3_object" "content" {
+  #for_each = fileset("${path.module}/src/", "**/*.*")
+
+  bucket       = aws_s3_bucket.s3_bucket_cdn.id
+  key          = each.key
+  source       = "${path.module}/src/${each.key}"
+  content_type = lookup(tomap(local.mime_types), element(split(".", each.key), length(split(".", each.key)) - 1))
+  etag         = filemd5("${path.module}/src/${each.key}")
+  server_side_encryption = "AES256"
+  storage_class          = "STANDARD"
+}
