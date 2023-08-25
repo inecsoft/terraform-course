@@ -6,6 +6,10 @@
 !.vscode/extensions.json
 *.code-workspace
 
+# terraform specific stuff
+.terraform
+.terraform/*
+
 # Node modules
 node_modules/
 

@@ -38,6 +38,7 @@ aws cloudformation delete-stack --stack-name dev-react-cors-spa-stack --profile 
 5. Upload the content of the `build` folder into the S3 bucket identified at step 2
 6. Access the application through the CloudFront distribution created at step 1
 
+### __Note:__ this project can be also deployed with terraform apply after the same steps
 ## Available Scripts
 
 In the project directory, you can run:

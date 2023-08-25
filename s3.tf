@@ -10,6 +10,7 @@ resource "aws_s3_bucket_ownership_controls" "logging_bucket_ownership_controls" 
   }
 }
 resource "aws_s3_bucket_acl" "logging_bucket_acl" {
+  depends_on = [ aws_s3_bucket.logging_bucket ]
   bucket = aws_s3_bucket.logging_bucket.id
   acl    = "private"
 }
@@ -58,15 +59,6 @@ resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block" {
   restrict_public_buckets = true
 }
 
-/* resource "aws_s3_bucket_acl" "s3_bucket_cdn_acl" {
-  depends_on = [
-    aws_s3_bucket.s3_bucket_cdn,
-    #aws_s3_bucket_public_access_block.s3_bucket_public_access_block
-  ]
-
-	bucket = aws_s3_bucket.s3_bucket_cdn.id
-	acl    = "private" # or can be "public-read"
-} */
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_server_side_encryption_configuration" {
   bucket =  aws_s3_bucket.s3_bucket_cdn.id
@@ -111,15 +103,13 @@ resource "aws_s3_bucket_policy" "s3_bucket_cdn_acl_policy" {
       "Resource": "${aws_s3_bucket.s3_bucket_cdn.arn}/*",
       "Condition": {
         "StringEquals": {
-          "AWS:SourceArn": "arn:aws:cloudfront::911328334795:distribution/E1UCL0QC2YEHUB"
+          "AWS:SourceArn" : "${aws_cloudfront_distribution.s3_distribution.arn}"
         }
       }
     }
   ]
 }
 POLICY
-
-              /* "AWS:SourceArn" = "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/${aws_cloudfront_distribution.cf_distribution.id}" */
 }
 
 /* data "aws_iam_policy_document" "iam_policy_document_s3" {
@@ -140,16 +130,9 @@ POLICY
   }
 } */
 
-/* resource "aws_s3_object" "s3_object" {
-  for_each = fileset("src/gallery/", "*")
-  bucket = aws_s3_bucket.s3_bucket_cdn.id
-  key = each.value
-  source = "src/gallery/${each.value}"
-  etag = filemd5("src/gallery/${each.value}")
-  server_side_encryption = "AES256"
-} */
 
-/* locals {
+
+locals {
   mime_types = {
     "css"  = "text/css"
     "html" = "text/html"
@@ -164,7 +147,19 @@ POLICY
     "DS_Store" = "text/plain"
     "gif" = "image/gif"
   }
-} */
+}
+
+resource "aws_s3_object" "content" {
+  for_each = fileset("${path.module}/build/", "**/*.*")
+
+  bucket       = aws_s3_bucket.s3_bucket_cdn.id
+  key          = each.key
+  source       = "${path.module}/build/${each.key}"
+  content_type = lookup(tomap(local.mime_types), element(split(".", each.key), length(split(".", each.key)) - 1))
+  etag         = filemd5("${path.module}/build/${each.key}")
+  server_side_encryption = "AES256"
+  storage_class          = "STANDARD"
+}
 
 output "bucket_name" {
   value = aws_s3_bucket.s3_bucket_cdn.id

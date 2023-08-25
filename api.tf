@@ -141,6 +141,7 @@ resource "aws_api_gateway_stage" "api-gateway-stage-dev" {
 }
 
 resource "aws_api_gateway_deployment" "api-gateway-deployment" {
+  depends_on = [ aws_s3_bucket.logging_bucket, aws_api_gateway_method.hello_apiget_method ]
   rest_api_id = aws_api_gateway_rest_api.simple_api.id
 
   # triggers = {
