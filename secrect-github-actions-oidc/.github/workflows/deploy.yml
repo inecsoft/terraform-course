@@ -17,3 +17,5 @@ jobs:
       region: eu-west-1
       role-to-assume: arn:aws:iam::xxxxxxxx:role/Role-github-action-ipd #change to reflect your IAM role’s ARN
       role-session-name: GitHub_to_AWS_via_FederatedOIDC
+      # role-to-assume: ${{ secrets.AWS_DEPLOYMENT_ROLE_ARN }}
+      # role-session-name: ${{ github.actor }}
