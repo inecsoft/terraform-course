@@ -1,0 +1,19 @@
+name: Deploy to production environments
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-to-production:
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      name: prod
+      region: eu-west-1
+    secrets:
+      aws-deployment-role-arn: ${{ secrets.AWS_DEPLOYMENT_ROLE_ARN }}
