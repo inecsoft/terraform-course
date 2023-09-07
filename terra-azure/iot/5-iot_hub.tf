@@ -76,7 +76,7 @@ resource "azurerm_iothub" "iothub" {
   }
 }
 #-------------------------------------------------------------------
-output "iothub-primary-key" {
+/* output "iothub-primary-key" {
   description = "The primary key."
   value       = azurerm_iothub.iothub.primary_key
 }
@@ -84,5 +84,5 @@ output "iothub-primary-key" {
 output "iothub-key-name" {
   description = "The primary key."
   value       = azurerm_iothub.iothub.key_name
-}
+} */
 #-------------------------------------------------------------------
