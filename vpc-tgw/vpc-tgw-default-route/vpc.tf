@@ -1,24 +1,7 @@
-##-----------------------------------------------------
-##create a vpc 
-##-----------------------------------------------------
-#resource "aws_vpc" "my_vpc" {
-#  count                = length(keys(var.vpc))
-#  cidr_block           = lookup(var.vpc, element(keys(var.vpc), count.index))
-#  instance_tenancy     = "default"
-#  enable_dns_support   = "true"
-#  enable_dns_hostnames = "true"
-#  enable_classiclink   =  "false"
-#  
-#  tags = { 
-#     Name =  "${element(keys(var.vpc), count.index)}"
-#      env =  "TG"
-#      num =  "${count.index}"
-#  }
-#}
 #------------------------------------------------------------------------------------------
 module "vpc1" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 2.0"
+  version = "~>5.1.2"
 
   name = element(keys(var.vpc), 1)
 
@@ -32,9 +15,9 @@ module "vpc1" {
   enable_nat_gateway = false
   enable_vpn_gateway = false
 
-  enable_ipv6                                    = true
-  private_subnet_assign_ipv6_address_on_creation = true
-  private_subnet_ipv6_prefixes                   = [0, 1, 2]
+  #enable_ipv6                                    = true
+  #private_subnet_assign_ipv6_address_on_creation = true
+  #private_subnet_ipv6_prefixes                   = [0, 1, 2]
 
   tags = {
     env = "TG"
@@ -43,7 +26,7 @@ module "vpc1" {
 #----------------------------------------------------------------------------------------------------
 module "vpc2" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 2.0"
+  version = "~>5.1.2"
 
   name = element(keys(var.vpc), 2)
 
@@ -56,9 +39,9 @@ module "vpc2" {
   enable_nat_gateway = false
   enable_vpn_gateway = false
 
-  enable_ipv6                                    = true
+  /* enable_ipv6                                    = true
   private_subnet_assign_ipv6_address_on_creation = true
-  private_subnet_ipv6_prefixes                   = [0, 1, 2]
+  private_subnet_ipv6_prefixes                   = [0, 1, 2] */
 
   tags = {
     env = "TG"
@@ -67,7 +50,7 @@ module "vpc2" {
 #----------------------------------------------------------------------------------------------------
 module "vpc3" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 2.0"
+  version = "~>5.1.2"
 
   name = element(keys(var.vpc), 3)
 
@@ -92,7 +75,7 @@ module "vpc3" {
 #----------------------------------------------------------------------------------------------------
 module "vpc4" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 2.0"
+  version = "~>5.1.2"
 
   name = element(keys(var.vpc), 4)
 

@@ -96,7 +96,7 @@ variable "cadev_subnet_cidr_private" {
 }
 #-------------------------------------------------------------------
 locals {
-  default_name = join("-", list(terraform.workspace, "inecsoft"))
+  default_name = join("-", tolist([terraform.workspace, "inecsoft"]))
 }
 #-------------------------------------------------------------------
-
+data "aws_caller_identity" "current" {}

@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------------------------
 module "tgw" {
   source  = "terraform-aws-modules/transit-gateway/aws"
-  version = "~> 1.0"
+  version = "~> 2.10.0"
 
   name            = "${local.default_name}-tgw-custom"
   description     = "TGW default route shared with several other AWS accounts"
@@ -31,7 +31,9 @@ module "tgw" {
     },
   }
 
+ # Indicates whether principals outside your organization can be associated with a resource share.
   ram_allow_external_principals = true
+  # A list of principals to share TGW with. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN
   ram_principals                = [307990089504]
 
   tags = {
