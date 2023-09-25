@@ -1,13 +1,15 @@
 ---
-
 # **Transit Gateway**
 
- <div align="center">
-    <img src="images/tansit-wateway.jpg" width="700"/>
+<div align="center">
+<img src="images/transit-gateway-attachement.jpg" width="700"/>
+</div>
+
+<div align="center">
+<img src="images/tansit-wateway.jpg" width="700"/>
 </div>
 
 The Transit gateway is used to connect multiple VPCs from on-premise to the same AWS region. In this diagram, the Region has multiple VPCs and it is connected to the transit gateway. The Direct Connect gateway is connected with the Transit gateway through transit gateway associations. The Direct Connect gateway is connected to the Direct Connect location using a transit virtual interface.
-
 ---
 
 ### **Default route table**
