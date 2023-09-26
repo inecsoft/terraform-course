@@ -1,9 +1,7 @@
 ---
-
- <div align="center">
-    <img src="images/devops.JPG" width="700" />
+<div align="center">
+<img src="images/devops.JPG" width="700" />
 </div>
-
 ---
 
 ### **Inicialize Repo**
