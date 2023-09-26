@@ -9,7 +9,7 @@ provider "aws" {
   default_tags {
     tags = {
       Owner       = "TFGM"
-      Project     = "cloud-front-cdn"
+      Project     = "hosting-and-delivering-serverless-react-app"
       Repo        = "terraform-course"
       tech        = "terraform"
     }

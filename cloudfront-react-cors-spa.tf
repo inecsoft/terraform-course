@@ -12,31 +12,31 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     depends_on = [ aws_s3_bucket.s3_bucket_cdn ]
 
     origin {
-        connection_attempts      = 3  
-        connection_timeout       = 10  
+        connection_attempts      = 3
+        connection_timeout       = 10
         domain_name = aws_s3_bucket.s3_bucket_cdn.bucket_regional_domain_name
         origin_id   = aws_s3_bucket.s3_bucket_cdn.bucket_regional_domain_name
         origin_access_control_id = aws_cloudfront_origin_access_control.cloudfront_origin_access_control.id
     }
 
     origin {
-        connection_attempts = 3  
-        connection_timeout  = 10  
-        domain_name         = "${aws_api_gateway_rest_api.simple_api.id}.execute-api.${data.aws_region.current.name}.amazonaws.com" 
-        origin_id           = local.api_origin_id  
+        connection_attempts = 3
+        connection_timeout  = 10
+        domain_name         = "${aws_api_gateway_rest_api.simple_api.id}.execute-api.${data.aws_region.current.name}.amazonaws.com"
+        origin_id           = local.api_origin_id
 
         custom_origin_config {
-            http_port                = 80  
-            https_port               = 443  
-            origin_keepalive_timeout = 5  
-            origin_protocol_policy   = "https-only"  
-            origin_read_timeout      = 30  
+            http_port                = 80
+            https_port               = 443
+            origin_keepalive_timeout = 5
+            origin_protocol_policy   = "https-only"
+            origin_read_timeout      = 30
             origin_ssl_protocols     = [
                 "SSLv3",
                 "TLSv1",
                 "TLSv1.1",
                 "TLSv1.2",
-            ]  
+            ]
         }
     }
 
@@ -116,10 +116,16 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
         }
     }
 
+    custom_error_response {
+      error_caching_min_ttl = 10
+      error_code            = 403
+      response_code         = 200
+      response_page_path    = "/index.html"
+    }
 
     viewer_certificate {
-        cloudfront_default_certificate = true
-        minimum_protocol_version       = "TLSv1"  #"TLSv1.2_2021"
+      cloudfront_default_certificate = true
+      minimum_protocol_version       = "TLSv1"  #"TLSv1.2_2021"
     }
 }
 
