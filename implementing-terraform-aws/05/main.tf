@@ -72,24 +72,24 @@ resource "aws_iam_group_policy" "full_access" {
 
   policy = <<EOF
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "s3:*",
-            "Resource": [
-                "arn:aws:s3:::${local.bucket_name}",
-                "arn:aws:s3:::${local.bucket_name}/*"
-            ]
-        },
-                {
-            "Effect": "Allow",
-            "Action": ["dynamodb:*"],
-            "Resource": [
-                "${aws_dynamodb_table.terraform_statelock.arn}"
-            ]
-        }
-   ]
+  "Version": "2012-10-17",
+  "Statement": [
+  {
+    "Effect": "Allow",
+    "Action": "s3:*",
+    "Resource": [
+      "arn:aws:s3:::${local.bucket_name}",
+      "arn:aws:s3:::${local.bucket_name}/*"
+    ]
+  },
+  {
+    "Effect": "Allow",
+    "Action": ["dynamodb:*"],
+    "Resource": [
+      "${aws_dynamodb_table.terraform_statelock.arn}"
+    ]
+  }
+  ]
 }
 EOF
 }

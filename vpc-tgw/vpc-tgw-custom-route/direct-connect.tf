@@ -48,6 +48,8 @@ resource "aws_dx_lag" "dx_lag" {
 
 }
 
+  #"TCSH" #london
+
 resource "aws_dx_connection_association" "dx_connection_association" {
   connection_id = aws_dx_connection.dx_connection.id
   lag_id = aws_dx_lag.dx_lag.id
