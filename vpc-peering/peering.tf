@@ -27,13 +27,6 @@ provider "aws" {
 
 } */
 
-#############################################################################
-# DATA SOURCES
-#############################################################################
-
-data "aws_caller_identity" "main" {
-  provider = aws.main
-}
 
 #############################################################################
 # RESOURCES
@@ -53,6 +46,22 @@ resource "aws_vpc_peering_connection" "main" {
 resource "aws_vpc_peering_connection_accepter" "main" {
   provider                  = aws.main
   vpc_peering_connection_id = aws_vpc_peering_connection.main.id
+  auto_accept               = true
+
+}
+#############################################################################
+resource "aws_vpc_peering_connection" "client" {
+  vpc_id        = module.vpc2.vpc_id
+  peer_vpc_id   = module.vpc1.vpc_id
+  peer_owner_id = data.aws_caller_identity.client.account_id
+  peer_region   = var.AWS_REGION
+  auto_accept   = false
+
+}
+
+resource "aws_vpc_peering_connection_accepter" "client" {
+  provider                  = aws.client
+  vpc_peering_connection_id = aws_vpc_peering_connection.client.id
   auto_accept               = true
 
 }

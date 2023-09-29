@@ -10,3 +10,8 @@ provider "aws" {
   alias  = "client"
   profile = "ivan-arteaga-dev"
 }
+
+provider "aws" {
+  region = var.AWS_REGION
+  profile = "ivan-arteaga-dev"
+}

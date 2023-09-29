@@ -99,4 +99,16 @@ locals {
   default_name = join("-", tolist([terraform.workspace, "inecsoft"]))
 }
 #-------------------------------------------------------------------
-data "aws_caller_identity" "current" {}
+#############################################################################
+# DATA SOURCES
+#############################################################################
+
+
+data "aws_caller_identity" "main" {
+  provider = aws.main
+}
+
+data "aws_caller_identity" "client" {
+  provider = aws.client
+}
+#-------------------------------------------------------------------
