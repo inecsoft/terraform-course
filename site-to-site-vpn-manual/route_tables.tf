@@ -2,6 +2,10 @@ resource "aws_route_table" "vpc_route_table_public_client" {
   provider = aws.client
   vpc_id = aws_vpc.vpc_client.id
 
+  propagating_vgws = [
+    aws_eip.eip.network_interface
+  ]
+
   route {
     cidr_block = "10.2.0.0/16"
     network_interface_id = aws_eip.eip.network_interface
@@ -39,6 +43,10 @@ resource "aws_route_table" "vpc_route_table_private_client" {
     nat_gateway_id = aws_nat_gateway.nat_gw_client.id
   }
 
+  propagating_vgws = [
+    aws_eip.eip.network_interface
+  ]
+
   tags = {
     Name = "vpc_route_table_nat_private_client"
   }
@@ -67,6 +75,14 @@ resource "aws_route_table" "vpc_route_table_public_main" {
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.vpc_gw_main.id
+  }
+
+  route {
+    cidr_block = "10.1.0.0/16"
+    #gateway_id = module.tgw.ec2_transit_gateway_id
+    #transit_gateway_id         = null
+    gateway_id = aws_vpn_gateway.vpn_gateway.id
+
   }
 
   tags = {

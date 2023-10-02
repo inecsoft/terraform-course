@@ -11,7 +11,7 @@ module "vpc1" {
 
   cidr = lookup(var.vpc, element(keys(var.vpc), 1))
 
-  azs             = data.aws_availability_zones.azs.names
+  azs             = data.aws_availability_zones.azs_client.names
   public_subnets  = lookup(var.public-subnets, element(keys(var.public-subnets), 1))
   private_subnets = lookup(var.private-subnets, element(keys(var.private-subnets), 1))
 
@@ -39,7 +39,7 @@ module "vpc2" {
 
   cidr = lookup(var.vpc, element(keys(var.vpc), 2))
 
-  azs             = data.aws_availability_zones.azs.names
+  azs             = data.aws_availability_zones.azs_main.names
   public_subnets  = lookup(var.public-subnets, element(keys(var.public-subnets), 2))
   private_subnets = lookup(var.private-subnets, element(keys(var.private-subnets), 2))
 

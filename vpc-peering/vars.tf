@@ -4,6 +4,14 @@
 variable "AWS_REGION" {
   default = "eu-west-1"
 }
+
+variable "AWS_REGION_client" {
+  default = "eu-west-1"
+}
+
+variable "AWS_REGION_main" {
+  default = "eu-west-2"
+}
 #-------------------------------------------------------------------
 variable "vpc" {
   type = map(any)
@@ -102,8 +110,6 @@ locals {
 #############################################################################
 # DATA SOURCES
 #############################################################################
-
-
 data "aws_caller_identity" "main" {
   provider = aws.main
 }
@@ -111,4 +117,13 @@ data "aws_caller_identity" "main" {
 data "aws_caller_identity" "client" {
   provider = aws.client
 }
+#-------------------------------------------------------------------
+data "aws_availability_zones" "azs_main" {
+  provider = aws.main
+}
+
+data "aws_availability_zones" "azs_client" {
+  provider = aws.client
+}
+
 #-------------------------------------------------------------------
