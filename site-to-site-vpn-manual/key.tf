@@ -1,6 +1,6 @@
 #---------------------------------------------------------
 resource "aws_key_pair" "key-pair_client" {
-  provider = aws.client
+  provider   = aws.client
   key_name   = "client-site-to-site-vpn-key"
   public_key = file(var.PATH_TO_PUBLIC_KEY)
 
@@ -11,7 +11,7 @@ resource "aws_key_pair" "key-pair_client" {
 #-----------------------------------------------------------
 #---------------------------------------------------------
 resource "aws_key_pair" "key-pair_main" {
-  provider = aws.main
+  provider   = aws.main
   key_name   = "main-site-to-site-vpn-key"
   public_key = file(var.PATH_TO_PUBLIC_KEY)
 

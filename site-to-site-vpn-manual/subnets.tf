@@ -2,7 +2,7 @@
 #creates 3 public subnets one per availability zone
 #----------------------------------------------------
 resource "aws_subnet" "vpc_subnet_public_client" {
-  provider = aws.client
+  provider                = aws.client
   count                   = length(var.subnet_cidr_public_client)
   vpc_id                  = aws_vpc.vpc_client.id
   cidr_block              = element(var.subnet_cidr_public_client, count.index)
@@ -17,7 +17,7 @@ resource "aws_subnet" "vpc_subnet_public_client" {
 #creates 3 private subnets one per availability zone
 #---------------------------------------------------
 resource "aws_subnet" "vpc_subnet_private_client" {
-  provider = aws.client
+  provider                = aws.client
   count                   = length(var.subnet_cidr_private_client)
   vpc_id                  = aws_vpc.vpc_client.id
   cidr_block              = element(var.subnet_cidr_private_client, count.index)
@@ -34,7 +34,7 @@ resource "aws_subnet" "vpc_subnet_private_client" {
 #creates 3 public subnets one per availability zone
 #----------------------------------------------------
 resource "aws_subnet" "vpc_subnet_public_main" {
-  provider = aws.main
+  provider                = aws.main
   count                   = length(var.subnet_cidr_public_main)
   vpc_id                  = aws_vpc.vpc_main.id
   cidr_block              = element(var.subnet_cidr_public_main, count.index)
@@ -49,7 +49,7 @@ resource "aws_subnet" "vpc_subnet_public_main" {
 #creates 3 private subnets one per availability zone
 #---------------------------------------------------
 resource "aws_subnet" "vpc_subnet_private_main" {
-  provider = aws.main
+  provider                = aws.main
   count                   = length(var.subnet_cidr_private_main)
   vpc_id                  = aws_vpc.vpc_main.id
   cidr_block              = element(var.subnet_cidr_private_main, count.index)

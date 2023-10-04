@@ -24,8 +24,8 @@ conn Tunnel1
 	authby=secret
 	auto=start
 	left=%defaultroute
-	leftid=52.208.126.164
-	right=34.240.182.242
+	leftid=54.78.219.34
+	right=34.240.184.250
 	type=tunnel
 	ikelifetime=8h
 	keylife=1h
@@ -45,8 +45,8 @@ conn Tunnel2
 	authby=secret
 	auto=start
 	left=%defaultroute
-	leftid=52.208.126.164
-	right=34.249.35.63
+	leftid=54.78.219.34
+	right=54.194.213.187
 	type=tunnel
 	ikelifetime=8h
 	keylife=1h
@@ -62,8 +62,8 @@ conn Tunnel2
 EOF
 
 cat << EOF > /etc/ipsec.d/aws.secrets
-52.208.126.164 34.240.182.242: PSK "pu8rk6rhwtgztWsbS3Hia1IRcbMu5Dvp"
-52.208.126.164 34.249.35.63: PSK "SC.Qlu8icNQzdpwE.OsmtTwkvyM8iSPa"
+54.78.219.34 34.240.184.250: PSK "_9B438hUIAS1EdNaHCxfv40rKUM1YkwO"
+54.78.219.34 54.194.213.187: PSK "NMuTZB23cLoxKk6S1HPZa1LWcx9nNjxH"
 EOF
 
 systemctl start ipsec

@@ -6,9 +6,9 @@ a VPN Connection. Each VPN Connection is assigned an identifier and is
 associated with two other identifiers, namely the
 Customer Gateway Identifier and Virtual Private Gateway Identifier.
 
-Your VPN Connection ID                  : vpn-0c09c7e2ec12351e4
-Your Virtual Private Gateway ID         : vgw-0ac42c7b35da344a2
-Your Customer Gateway ID                : cgw-0cd355b492fdf3565
+Your VPN Connection ID                  : vpn-068983afea61ff37d
+Your Virtual Private Gateway ID         : vgw-0f2ef616129a382c3
+Your Customer Gateway ID                : cgw-0e3316c9c033cb456
 
 
 This configuration consists of two tunnels. Both tunnels must be
@@ -41,8 +41,8 @@ conn Tunnel1
 	authby=secret
 	auto=start
 	left=%defaultroute
-	leftid=52.208.126.164
-	right=34.240.182.242
+	leftid=54.78.219.34
+	right=34.240.184.250
 	type=tunnel
 	ikelifetime=8h
 	keylife=1h
@@ -58,7 +58,7 @@ conn Tunnel1
 	dpdaction=restart_by_peer
 
 5) Create a new file at /etc/ipsec.d/aws.secrets if it doesn't already exist, and append this line to the file (be mindful of the spacing!):
-52.208.126.164 34.240.182.242: PSK "pu8rk6rhwtgztWsbS3Hia1IRcbMu5Dvp"
+54.78.219.34 34.240.184.250: PSK "_9B438hUIAS1EdNaHCxfv40rKUM1YkwO"
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -85,8 +85,8 @@ conn Tunnel2
 	authby=secret
 	auto=start
 	left=%defaultroute
-	leftid=52.208.126.164
-	right=34.249.35.63
+	leftid=54.78.219.34
+	right=54.194.213.187
 	type=tunnel
 	ikelifetime=8h
 	keylife=1h
@@ -102,7 +102,7 @@ conn Tunnel2
 	dpdaction=restart_by_peer
 
 5) Create a new file at /etc/ipsec.d/aws.secrets if it doesn't already exist, and append this line to the file (be mindful of the spacing!):
-52.208.126.164 34.249.35.63: PSK "SC.Qlu8icNQzdpwE.OsmtTwkvyM8iSPa"
+54.78.219.34 54.194.213.187: PSK "NMuTZB23cLoxKk6S1HPZa1LWcx9nNjxH"
 
 
 --------------------------------------------------------------------------------------------------------------------

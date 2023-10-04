@@ -12,10 +12,10 @@ resource "aws_eip" "nat_client" {
 #create  nat gw to provide internet access to the private subnets
 #--------------------------------
 resource "aws_nat_gateway" "nat_gw_client" {
-  provider = aws.client
+  provider      = aws.client
   allocation_id = aws_eip.nat_client.id
   subnet_id     = aws_subnet.vpc_subnet_public_client[0].id
-  depends_on    = [ aws_internet_gateway.vpc_gw_client ]
+  depends_on    = [aws_internet_gateway.vpc_gw_client]
 
   tags = {
     Name = "vpc_nat_gateway_client"
@@ -37,10 +37,10 @@ resource "aws_eip" "nat_main" {
 #create  nat gw to provide internet access to the private subnets
 #--------------------------------
 resource "aws_nat_gateway" "nat_gw_main" {
-  provider = aws.main
+  provider      = aws.main
   allocation_id = aws_eip.nat_main.id
   subnet_id     = aws_subnet.vpc_subnet_public_main[0].id
-  depends_on    = [ aws_internet_gateway.vpc_gw_main ]
+  depends_on    = [aws_internet_gateway.vpc_gw_main]
 
   tags = {
     Name = "vpc_nat_gateway_main"

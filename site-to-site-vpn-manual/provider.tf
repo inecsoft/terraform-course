@@ -17,8 +17,8 @@ provider "aws" {
 }
 
 provider "aws" {
-  region = var.AWS_REGION
-  alias  = "client"
+  region  = var.AWS_REGION
+  alias   = "client"
   profile = "ivan-arteaga-dev"
   default_tags {
     tags = {
@@ -34,7 +34,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  region = var.AWS_REGION
+  region  = var.AWS_REGION
   profile = "ivan-arteaga-dev"
   default_tags {
     tags = {

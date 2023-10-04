@@ -1,13 +1,9 @@
 resource "aws_route_table" "vpc_route_table_public_client" {
   provider = aws.client
-  vpc_id = aws_vpc.vpc_client.id
-
-  propagating_vgws = [
-    aws_eip.eip.network_interface
-  ]
+  vpc_id   = aws_vpc.vpc_client.id
 
   route {
-    cidr_block = "10.2.0.0/16"
+    cidr_block           = "10.2.0.0/16"
     network_interface_id = aws_eip.eip.network_interface
   }
 
@@ -24,7 +20,7 @@ resource "aws_route_table" "vpc_route_table_public_client" {
 #create the route table association for the igw on the vpc and the public subnets
 #-------------------------------------------------------------------------------
 resource "aws_route_table_association" "rt-association_client" {
-  provider = aws.client
+  provider       = aws.client
   count          = length(var.subnet_cidr_public_client)
   subnet_id      = element(aws_subnet.vpc_subnet_public_client.*.id, count.index)
   route_table_id = aws_route_table.vpc_route_table_public_client.id
@@ -36,16 +32,12 @@ resource "aws_route_table_association" "rt-association_client" {
 #---------------------------------------------------------------------------
 resource "aws_route_table" "vpc_route_table_private_client" {
   provider = aws.client
-  vpc_id = aws_vpc.vpc_client.id
+  vpc_id   = aws_vpc.vpc_client.id
 
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat_gw_client.id
   }
-
-  propagating_vgws = [
-    aws_eip.eip.network_interface
-  ]
 
   tags = {
     Name = "vpc_route_table_nat_private_client"
@@ -55,7 +47,7 @@ resource "aws_route_table" "vpc_route_table_private_client" {
 #create the route table association for the nat gw on the vpc and the private subnets
 #--------------------------------------------------------------------
 resource "aws_route_table_association" "rt_association_private_client" {
-  provider = aws.client
+  provider       = aws.client
   count          = length(var.subnet_cidr_private_client)
   subnet_id      = element(aws_subnet.vpc_subnet_private_client.*.id, count.index)
   route_table_id = aws_route_table.vpc_route_table_private_client.id
@@ -66,7 +58,7 @@ resource "aws_route_table_association" "rt_association_private_client" {
 ##################################################################
 resource "aws_route_table" "vpc_route_table_public_main" {
   provider = aws.main
-  vpc_id = aws_vpc.vpc_main.id
+  vpc_id   = aws_vpc.vpc_main.id
 
   propagating_vgws = [
     aws_vpn_gateway.vpn_gateway.id
@@ -93,7 +85,7 @@ resource "aws_route_table" "vpc_route_table_public_main" {
 #create the route table association for the igw on the vpc and the public subnets
 #-------------------------------------------------------------------------------
 resource "aws_route_table_association" "rt-association_main" {
-  provider = aws.main
+  provider       = aws.main
   count          = length(var.subnet_cidr_public_main)
   subnet_id      = element(aws_subnet.vpc_subnet_public_main.*.id, count.index)
   route_table_id = aws_route_table.vpc_route_table_public_main.id
@@ -105,7 +97,7 @@ resource "aws_route_table_association" "rt-association_main" {
 #---------------------------------------------------------------------------
 resource "aws_route_table" "vpc_route_table_private_main" {
   provider = aws.main
-  vpc_id = aws_vpc.vpc_main.id
+  vpc_id   = aws_vpc.vpc_main.id
 
   propagating_vgws = [
     aws_vpn_gateway.vpn_gateway.id
@@ -132,7 +124,7 @@ resource "aws_route_table" "vpc_route_table_private_main" {
 #create the route table association for the nat gw on the vpc and the private subnets
 #--------------------------------------------------------------------
 resource "aws_route_table_association" "rt_association_private_main" {
-  provider = aws.main
+  provider       = aws.main
   count          = length(var.subnet_cidr_private_main)
   subnet_id      = element(aws_subnet.vpc_subnet_private_main.*.id, count.index)
   route_table_id = aws_route_table.vpc_route_table_private_main.id

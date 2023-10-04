@@ -457,3 +457,11 @@ terraformer import aws --resources=vpc,subnet --filter=vpc=vpc_id1:vpc_id2:vpc_i
 ```
 
 ---
+
+```
+code tunnel service install
+
+code tunnel service log
+```
+
+---
