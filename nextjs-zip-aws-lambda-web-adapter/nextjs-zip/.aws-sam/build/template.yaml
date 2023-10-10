@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'serverless-nextjs-demo
+
+  Sample SAM Template for serverless-nextjs-demo
+
+  '
+Globals:
+  Function:
+    Timeout: 10
+Resources:
+  NextjsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: NextjsFunction
+      MemorySize: 512
+      Handler: run.sh
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+          AWS_LWA_ENABLE_COMPRESSION: true
+          RUST_LOG: info
+          PORT: 8000
+      Layers:
+      - Fn::Sub: arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:17
+      Events:
+        HttpEvent:
+          Type: HttpApi
+    Metadata:
+      BuildMethod: makefile
+      SamResourceId: NextjsFunction
+Outputs:
+  NextjsFunctionURL:
+    Description: API Gateway endpoint URL for Next.js
+    Value:
+      Fn::Sub: https://${ServerlessHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/
