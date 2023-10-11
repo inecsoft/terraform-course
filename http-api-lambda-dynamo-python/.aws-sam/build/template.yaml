@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  AwsLambdaFunctionLambdaFunction27A2D0F9:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: publish-book-review
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: BookReviews
+      Code: /home/iarteaga/terraform-course/http-api-lambda-dynamo-python/lambda_function_payload.zip
+      Handler: index.lambda_handler
+      PackageType: Zip
+      Runtime: python3.8
+      Layers: []
+      Timeout: 10
+      MemorySize: 512
+    Metadata:
+      SamResourceId: aws_lambda_function.lambda_function
+      SkipBuild: true
+Metadata:
+  AWS::SAM::Hook:
+    HookName: terraform
