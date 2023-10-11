@@ -37,6 +37,7 @@ To build and deploy your application for the first time, run the following in yo
 ```bash
 sam build
 sam deploy --guided --profile ivan-arteaga-dev
+sam delete --profile ivan-arteaga-dev
 ```
 
 The first command will build the source of your application. The second command will package and deploy your application to AWS, with a series of prompts:

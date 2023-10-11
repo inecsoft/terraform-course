@@ -5,7 +5,7 @@ variable "memory_size" {
 
 variable "NodeRuntime" {
   type    = string
-  default = "nodejs16.x"
+  default = "nodejs18.x"
 }
 
 variable "timeout" {

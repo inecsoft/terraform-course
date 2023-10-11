@@ -173,13 +173,19 @@ resource "aws_apigatewayv2_api" "apigatewayv2_api" {
   protocol_type = "HTTP"
 }
 
+variable "stage" {
+  type        = string
+  description = "default stage"
+  default     = "$default"
+}
+
 #identifier and stage name
 #terraform import aws_apigatewayv2_stage.apigatewayv2_api fohtwn32w5/$default
 resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
-  api_id = aws_apigatewayv2_api.apigatewayv2_api.id
-  name        = "$default"
+  api_id      = aws_apigatewayv2_api.apigatewayv2_api.id
+  name        = "$default" #var.stage
   auto_deploy = true
-  description     = "default api stage"
+  description = "default api stage"
 
   default_route_settings {
     data_trace_enabled       = false
@@ -205,29 +211,36 @@ resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
       }
     )
 
-   }
+  }
 }
 
 #terraform import aws_apigatewayv2_integration.apigatewayv2_integration fohtwn32w5/sfqciqj
+#"arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:911328334795:function:nextjs-zip-dev-NextjsFunction-61BBvXcb0Grv/invocations"
+#terraform state show  aws_apigatewayv2_integration.apigatewayv2_integration
 resource "aws_apigatewayv2_integration" "apigatewayv2_integration" {
-  api_id                 = aws_apigatewayv2_api.apigatewayv2_api.id
-  description            = "integration with lambda function"
-  /* connection_type        = "INTERNET" */
+  api_id      = aws_apigatewayv2_api.apigatewayv2_api.id
+  description = "integration with lambda function"
+
+  connection_type        = "INTERNET"
+  passthrough_behavior   = "WHEN_NO_MATCH"
+  integration_type       = "AWS_PROXY" #"HTTP_PROXY"
   integration_uri        = aws_lambda_function.nextjs.invoke_arn
-  integration_type       =  "AWS_PROXY" #"HTTP_PROXY"
   payload_format_version = "2.0"
   request_parameters     = {}
   request_templates      = {}
   integration_method     = "POST"
   timeout_milliseconds   = 30000
+
+
 }
 
+#terraform state rm aws_apigatewayv2_route.apigatewayv2_route
 #terraform import aws_apigatewayv2_route.apigatewayv2_route fohtwn32w5/sfqciqj
 resource "aws_apigatewayv2_route" "apigatewayv2_route" {
-	depends_on = [ aws_apigatewayv2_integration.apigatewayv2_integration ]
-  api_id = aws_apigatewayv2_api.apigatewayv2_api.id
+  depends_on = [aws_apigatewayv2_integration.apigatewayv2_integration]
+  api_id     = aws_apigatewayv2_api.apigatewayv2_api.id
 
-  route_key = "$default" #route_key = "POST /book-review"
+  route_key = "$default" #"POST /${var.stage}" #"$default" #route_key = "POST /book-review"
   target    = "integrations/${aws_apigatewayv2_integration.apigatewayv2_integration.id}"
 }
 
@@ -240,7 +253,7 @@ resource "aws_cloudwatch_log_group" "api_gw" {
 #terraform import aws_apigatewayv2_deployment.apigatewayv2_deployment fohtwn32w5/f4ufsq
 resource "aws_apigatewayv2_deployment" "apigatewayv2_deployment" {
   api_id      = aws_apigatewayv2_api.apigatewayv2_api.id
-  depends_on = [ aws_apigatewayv2_route.apigatewayv2_route ]
+  depends_on  = [aws_apigatewayv2_route.apigatewayv2_route]
   description = "Automatic deployment triggered by changes to the Api configuration"
 
   lifecycle {
@@ -258,13 +271,22 @@ resource "aws_lambda_permission" "api_gw" {
   source_arn = "${aws_apigatewayv2_api.apigatewayv2_api.execution_arn}/*/*"
 }
 
+#rants permissions for the $default stage and $default route of an HTTP API to invoke a Lambda function
+/* resource "aws_lambda_permission" "api_gw_default" {
+  statement_id  = "AllowExecutionFromAPIGatewayDefault"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.nextjs.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.apigatewayv2_api.execution_arn}/${var.stage}/${var.stage}/${var.stage}"
+} */
+
 resource "aws_lambda_function_url" "lambda_function_url" {
   function_name      = aws_lambda_function.nextjs.function_name
   authorization_type = "NONE"
 }
 
 output "lambda_function_url" {
-	value = aws_lambda_function_url.lambda_function_url.function_url
+  value = aws_lambda_function_url.lambda_function_url.function_url
 }
 
 output "aws_apigatewayv2_api_endpoint" {
