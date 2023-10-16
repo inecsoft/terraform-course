@@ -1,0 +1,11 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "nextxjs-zip-project"
+resolve_s3 = true
+s3_prefix = "nextxjs-zip-project"
+region = "eu-west-1"
+profile = "ivan-arteaga-dev"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+disable_rollback = true

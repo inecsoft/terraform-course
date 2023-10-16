@@ -1,0 +1,7 @@
+REGION               = ""
+DOMAIN_NAME          = ""
+CERTIFICATE_ARN      = ""
+HOSTED_ZONE_DOMAIN   = ""
+CDN_URL              = ""
+PORT                 = ""
+LAMBDA_FUNCTION_NAME = ""

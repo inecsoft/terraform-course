@@ -362,19 +362,27 @@ curl https://pre-commit.com/install-local.py | python -
 echo 'export PATH=$PATH:~/bin' >> ~/.bashrc
 source ~/.bashrc
 pre-commit --version
+curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+tar -xzf terraform-docs.tar.gz
+chmod +x terraform-docs
+mv terraform-docs /usr/bin
+curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
 ```
 
 ```
 vim ~/.pre-commit-config.yaml
 repos:
-- repo: git://github.com/antonbabenko/pre-commit-terraform
-  rev: v1.45.0
-  hooks:
-    - id: terraform_fmt
-    - id: terraform_validate
-    - id: terraform_tflint
-    #- id: terraform_tfsec
-    - id: terraform_docs
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.83.5
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      #- id: terraform_tflint
+      - id: terraform_tfsec
+      - id: terraform_docs
+      #- id: terraform_checkov
+
 ```
 
 ### **Install the git hook scripts**
