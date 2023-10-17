@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_domain_name" "api_gw_domain" {
-  domain_name = var.DOMAIN_NAME
+  domain_name = "api-${var.DOMAIN_NAME}"
 
   domain_name_configuration {
     certificate_arn = aws_acm_certificate.acm-certificate.arn
@@ -22,7 +22,7 @@ resource "aws_route53_record" "application_domain" {
 }
 
 resource "aws_route53_record" "cloudfront_domain" {
-  name    = var.CDN_URL
+  name    = var.DOMAIN_NAME
   type    = "A"
   zone_id = data.aws_route53_zone.main-zone.zone_id
 

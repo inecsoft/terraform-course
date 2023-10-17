@@ -62,7 +62,7 @@ variable "AWS_REGION" {
   default = "eu-west-1"
 }
 
-variable "AWS_REGION_client" {
+variable "AWS_REGION_cloudfront" {
   default = "eu-west-1"
 }
 
@@ -162,16 +162,16 @@ data "aws_caller_identity" "main" {
   provider = aws.main
 }
 
-data "aws_caller_identity" "client" {
-  provider = aws.client
+data "aws_caller_identity" "cloudfront" {
+  provider = aws.cloudfront
 }
 #-------------------------------------------------------------------
 data "aws_availability_zones" "azs_main" {
   provider = aws.main
 }
 
-data "aws_availability_zones" "azs_client" {
-  provider = aws.client
+data "aws_availability_zones" "azs_cloudfront" {
+  provider = aws.cloudfront
 }
 
 #-------------------------------------------------------------------

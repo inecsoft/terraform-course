@@ -7,8 +7,8 @@ provider "aws" {
 }
 
 provider "aws" {
-  region  = var.AWS_REGION_client
-  alias   = "client"
+  region  = "us-east-1"
+  alias   = "cloudfront"
   profile = "ivan-arteaga-dev"
 }
 
@@ -31,8 +31,8 @@ provider "aws" {
 terraform {
   /* backend "s3" {
     bucket         = "<tf-state-bucket-name>"
-    key            = "<key-val>"
-    region         = "<region>"
+    key            = "nextjs_app_backend/terraform.tfstate"
+    region         = "eu-west-1"
     dynamodb_table = "tf-state-lock"
     encrypt        = true
 

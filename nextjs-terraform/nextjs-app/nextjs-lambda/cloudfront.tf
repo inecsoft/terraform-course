@@ -28,16 +28,21 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = "nextjs-cdn"
+  comment             = "cloudfront-nextjs-cdn"
+  http_version        = "http2and3"
   price_class         = "PriceClass_All"
   wait_for_deployment = false
 
-  aliases = [var.CDN_URL]
+  #aliases = [var.CDN_URL]
 
+  /* web_acl_id =  */
+
+  depends_on = [aws_acm_certificate.acm-certificate-us]
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.acm-certificate.arn
+    acm_certificate_arn      = aws_acm_certificate.acm-certificate-us.arn
     minimum_protocol_version = "TLSv1.2_2021"
-    ssl_support_method       = "sni-only"
+    #cloudfront_default_certificate = true
+    ssl_support_method = "sni-only"
   }
 
   default_cache_behavior {
@@ -63,4 +68,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     bucket          = aws_s3_bucket.logging_bucket.bucket_domain_name
     prefix          = "cloudfront-access-logs"
   }
+}
+
+output "cloudfront_domain_name_url" {
+  description = "cloudfront_domain_name"
+  value       = aws_cloudfront_distribution.s3_distribution.domain_name
 }

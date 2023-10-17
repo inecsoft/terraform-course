@@ -1,14 +1,14 @@
 #-----------------------------------------------------------------------------
 resource "aws_wafv2_web_acl_association" "wafv2-web-acl-association" {
-  resource_arn = aws_api_gateway_stage.api-gateway-stage-dev.arn
+  resource_arn = aws_cloudfront_distribution.s3_distribution.arn
   web_acl_arn  = aws_wafv2_web_acl.wafv2-web-acl.arn
 }
 #-----------------------------------------------------------------------------
 #terraform import aws_wafv2_web_acl.wafv2-web-acl 4250059d-abb3-4e86-b073-8dd60bebdc0d/name-dev-web-acl-tfgm/REGIONAL
 #-----------------------------------------------------------------------------
 resource "aws_wafv2_web_acl" "wafv2-web-acl" {
-  name        = "${local.default_name}-managed-rule-wafv2-web-acl"
-  description = "${local.default_name}-managed-rule-wafv2-web-acl to protect api"
+  name        = "managed-rule-wafv2-web-acl"
+  description = "managed-rule-wafv2-web-acl to protect api"
   scope       = "REGIONAL"
 
 
@@ -115,14 +115,13 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
 
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "${local.default_name}-managed-rule-wafv2-web-acl"
+    metric_name                = "managed-rule-wafv2-web-acl"
     sampled_requests_enabled   = true
   }
 
 
   tags = {
-    Name        = "${local.default_name}-managed-rule-wafv2-web-acl"
-    Environment = terraform.workspace
+    Name        = "managed-rule-wafv2-web-acl"
   }
 
 }

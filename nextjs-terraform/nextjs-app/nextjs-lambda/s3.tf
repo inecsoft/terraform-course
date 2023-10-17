@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
 
 #########################-logging-#############################
 resource "aws_s3_bucket" "logging_bucket" {
-  bucket = "${var.CDN_URL}-s3-logging"
+  bucket        = "${var.CDN_URL}-s3-logging"
   force_destroy = true
 }
 
@@ -68,11 +68,7 @@ resource "aws_s3_bucket_ownership_controls" "logging_bucket_ownership_controls" 
     object_ownership = "BucketOwnerPreferred"
   }
 }
-resource "aws_s3_bucket_acl" "logging_bucket_acl" {
-  depends_on = [ aws_s3_bucket.logging_bucket ]
-  bucket = aws_s3_bucket.logging_bucket.id
-  acl    = "private"
-}
+
 
 resource "aws_s3_bucket_versioning" "logging_bucket_versioning" {
   bucket = aws_s3_bucket.logging_bucket.id
@@ -82,7 +78,7 @@ resource "aws_s3_bucket_versioning" "logging_bucket_versioning" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "logging_bucket_server_side_encryption_configuration" {
-  bucket =  aws_s3_bucket.logging_bucket.id
+  bucket = aws_s3_bucket.logging_bucket.id
   depends_on = [
     aws_s3_bucket.logging_bucket,
   ]
@@ -95,9 +91,14 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "logging_bucket_se
 }
 
 resource "aws_s3_bucket_logging" "s3_bucket_cdn_logging" {
-  depends_on = [ aws_s3_bucket.logging_bucket ]
-  bucket = aws_s3_bucket.cdn_bucket.id
+  depends_on = [aws_s3_bucket.logging_bucket]
+  bucket     = aws_s3_bucket.cdn_bucket.id
 
   target_bucket = aws_s3_bucket.logging_bucket.id
   target_prefix = "s3-access-logs/"
+}
+
+output "URL_CDN_bucket_domain_name" {
+  description = "url_cdn_bucket_domain_name"
+  value       = aws_s3_bucket.cdn_bucket.bucket_domain_name
 }
