@@ -6,6 +6,7 @@ resource "aws_apigatewayv2_api" "httpAPI" {
   name          = var.DOMAIN_NAME
   protocol_type = "HTTP"
   target        = aws_lambda_function.nextjs.arn
+  description   = "http api gateway"
 }
 
 resource "aws_lambda_permission" "apigw" {

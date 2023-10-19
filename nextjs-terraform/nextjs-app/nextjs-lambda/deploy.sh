@@ -4,6 +4,7 @@ set -ex # stop execution if anything fails
 
 # Add cdn domain address
 CDN_DOMAIN="<CDN_DOMAIN>"
+CDN_DOMAIN=nextjsapptfgm
 LAMBDA_FUNCTION_NAME="<LAMBDA_FUNCTION_NAME>"
 LAMBDA_FUNCTION_NAME=`echo var.LAMBDA_FUNCTION_NAME | terraform console`
 
@@ -94,6 +95,6 @@ echo "syncing static files to S3"
 cd ../
 
 # sync static files to S3 + Cloudfront
-CDN_DOMAIN=`echo aws_s3_bucket.cdn_bucket.name | terraform console`
-aws s3 cp .next/static/ s3://$CDN_DOMAIN/_next/static/ --recursive
-aws s3 cp public/ s3://$CDN_DOMAIN/static/ --recursive
+echo $CDN_DOMAIN
+aws s3 cp .next/static/ s3://$CDN_DOMAIN/_next/static/ --recursive --profile ivan-arteaga-dev
+aws s3 cp public/ s3://$CDN_DOMAIN/static/ --recursive --profile ivan-arteaga-dev

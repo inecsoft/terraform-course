@@ -1,15 +1,11 @@
-#-----------------------------------------------------------------------------
-resource "aws_wafv2_web_acl_association" "wafv2-web-acl-association" {
-  resource_arn = aws_cloudfront_distribution.s3_distribution.arn
-  web_acl_arn  = aws_wafv2_web_acl.wafv2-web-acl.arn
-}
-#-----------------------------------------------------------------------------
-#terraform import aws_wafv2_web_acl.wafv2-web-acl 4250059d-abb3-4e86-b073-8dd60bebdc0d/name-dev-web-acl-tfgm/REGIONAL
-#-----------------------------------------------------------------------------
-resource "aws_wafv2_web_acl" "wafv2-web-acl" {
-  name        = "managed-rule-wafv2-web-acl"
-  description = "managed-rule-wafv2-web-acl to protect api"
-  scope       = "REGIONAL"
+
+#terraform import aws_wafv2_web_acl.wafv2webacl 4250059dabb34e86b0738dd60bebdc0d/namedevwebacltfgm/CLOUDFRONT
+#
+resource "aws_wafv2_web_acl" "wafv2webacl" {
+  name        = "managedrulewafv2webacl"
+  description = "managedrulewafv2webacl to protect api"
+  scope       = "CLOUDFRONT"
+  provider                = aws.cloudfront
 
 
   default_action {
@@ -18,8 +14,8 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
   }
 
   rule {
-    name     = "AWS-AWSManagedRulesBotControlRuleSet"
-    priority = 0
+    name     = "AWSAWSManagedRulesBotControlRuleSet"
+    priority = 4
 
     override_action {
 
@@ -36,14 +32,36 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesBotControlRuleSet"
+      metric_name                = "AWSAWSManagedRulesBotControlRuleSet"
       sampled_requests_enabled   = true
     }
   }
 
   rule {
-    name     = "AWS-AWSManagedRulesCommonRuleSet"
-    priority = 2
+    name     = "AWSAWSManagedRulesAmazonIpReputationList"
+    priority = 0
+
+    override_action {
+        none {}
+      }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesAmazonIpReputationList"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWSAWSManagedRulesAmazonIpReputationList"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWSAWSManagedRulesCommonRuleSet"
+    priority = 1
 
     override_action {
 
@@ -60,14 +78,14 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesCommonRuleSet"
+      metric_name                = "AWSAWSManagedRulesCommonRuleSet"
       sampled_requests_enabled   = true
     }
   }
 
   rule {
-    name     = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
-    priority = 3
+    name     = "AWSAWSManagedRulesKnownBadInputsRuleSet"
+    priority = 2
 
     override_action {
 
@@ -84,14 +102,14 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
+      metric_name                = "AWSAWSManagedRulesKnownBadInputsRuleSet"
       sampled_requests_enabled   = true
     }
   }
 
   rule {
-    name     = "AWS-AWSManagedRulesSQLiRuleSet"
-    priority = 1
+    name     = "AWSAWSManagedRulesSQLiRuleSet"
+    priority = 5
 
     override_action {
 
@@ -108,21 +126,21 @@ resource "aws_wafv2_web_acl" "wafv2-web-acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AWS-AWSManagedRulesSQLiRuleSet"
+      metric_name                = "AWSAWSManagedRulesSQLiRuleSet"
       sampled_requests_enabled   = true
     }
   }
 
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "managed-rule-wafv2-web-acl"
+    metric_name                = "managedrulewafv2webacl"
     sampled_requests_enabled   = true
   }
 
 
   tags = {
-    Name        = "managed-rule-wafv2-web-acl"
+    Name        = "managedrulewafv2webacl"
   }
 
 }
-#-----------------------------------------------------------------------------
+#

@@ -46,6 +46,7 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
 
     resources = [
       "${aws_s3_bucket.cdn_bucket.arn}/*",
+       "${aws_s3_bucket.cdn_bucket.arn}",
     ]
 
     condition {
@@ -101,4 +102,9 @@ resource "aws_s3_bucket_logging" "s3_bucket_cdn_logging" {
 output "URL_CDN_bucket_domain_name" {
   description = "url_cdn_bucket_domain_name"
   value       = aws_s3_bucket.cdn_bucket.bucket_domain_name
+}
+
+output "URL_CDN_bucket_id" {
+  description = "url_cdn_bucket_id"
+  value       = aws_s3_bucket.cdn_bucket.id
 }

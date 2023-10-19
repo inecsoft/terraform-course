@@ -30,9 +30,9 @@ data "aws_route53_zone" "main-zone" {
 # #-----------------------------------------------------------------------------
 resource "aws_acm_certificate" "acm-certificate" {
   #provider = aws.cloudfront
-  domain_name               = "dumy.transport-for-greater-manchester.com"
+  domain_name               = "api-${var.DOMAIN_NAME}"
   validation_method         = "DNS"
-  subject_alternative_names = ["*.dumy.transport-for-greater-manchester.com"]
+  subject_alternative_names = ["*.api-${var.DOMAIN_NAME}"]
 
   lifecycle {
     create_before_destroy = true
@@ -76,16 +76,19 @@ output "ssl_certificate" {
 ####################################################################################################################
 resource "aws_acm_certificate" "acm-certificate-us" {
   provider                  = aws.cloudfront
-  domain_name               = "dumy.transport-for-greater-manchester.com"
+  domain_name               = var.DOMAIN_NAME
   validation_method         = "DNS"
-  subject_alternative_names = ["*.dumy.transport-for-greater-manchester.com"]
+  subject_alternative_names = [
+    "*.${var.DOMAIN_NAME}",
+    "api-${var.DOMAIN_NAME}"
+  ]
 
   lifecycle {
     create_before_destroy = true
   }
 
   tags = {
-    Name = "acm-certificate"
+    Name = "acm-certificate-cloudfront"
   }
 }
 #-----------------------------------------------------------------------------
@@ -95,7 +98,7 @@ output "acm-certificate-status-us" {
 #-----------------------------------------------------------------------------
 resource "aws_route53_record" "route53-record-acm-certificate-us" {
   for_each = {
-    for dvo in aws_acm_certificate.acm-certificate.domain_validation_options : dvo.domain_name => {
+    for dvo in aws_acm_certificate.acm-certificate-us.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type

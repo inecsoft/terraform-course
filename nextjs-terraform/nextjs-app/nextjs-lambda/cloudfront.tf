@@ -33,9 +33,13 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   price_class         = "PriceClass_All"
   wait_for_deployment = false
 
-  #aliases = [var.CDN_URL]
+  aliases = [
+    var.DOMAIN_NAME,
+    "api-${var.DOMAIN_NAME}",
+    "www.${var.DOMAIN_NAME}"
+  ]
 
-  /* web_acl_id =  */
+   web_acl_id = aws_wafv2_web_acl.wafv2webacl.arn
 
   depends_on = [aws_acm_certificate.acm-certificate-us]
   viewer_certificate {
