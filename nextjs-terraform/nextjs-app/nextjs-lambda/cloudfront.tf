@@ -26,6 +26,29 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_id                = var.CDN_URL
   }
 
+  #aws_apigatewayv2_domain_name.api_gw_domain.domain_name_configuration[0].target_domain_name
+
+  /* origin {
+    connection_attempts = 3
+    connection_timeout  = 10
+    domain_name         = "${aws_apigatewayv2_api.httpAPI.id}.execute-api.${data.aws_region.main.name}.amazonaws.com"
+    origin_id           = local.api_origin_id
+
+    custom_origin_config {
+        http_port                = 80
+        https_port               = 443
+        origin_keepalive_timeout = 5
+        origin_protocol_policy   = "https-only"
+        origin_read_timeout      = 30
+        origin_ssl_protocols     = [
+            "SSLv3",
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2",
+        ]
+    }
+  } */
+
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "cloudfront-nextjs-cdn"

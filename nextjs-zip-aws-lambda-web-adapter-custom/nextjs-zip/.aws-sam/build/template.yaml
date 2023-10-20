@@ -40,3 +40,8 @@ Resources:
     Metadata:
       BuildMethod: makefile
       SamResourceId: NextjsFunction
+Outputs:
+  NextjsFunctionURL:
+    Description: API Gateway endpoint URL for Next.js
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/

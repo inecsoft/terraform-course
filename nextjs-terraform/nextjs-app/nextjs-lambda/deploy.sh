@@ -74,7 +74,7 @@ elif [ "$1" = "sync" ]; then
 
     echo "This might take a while..."
 
-    aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --zip-file fileb://lambda_function_payload.zip 1> /dev/null
+    aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --zip-file fileb://lambda_function_payload.zip --profile ivan-arteaga-dev 1> /dev/null
 
     if [ $? -eq 0 ]
     then
