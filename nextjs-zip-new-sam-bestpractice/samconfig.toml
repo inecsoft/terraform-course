@@ -1,0 +1,12 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "sam-app-nextjs-tfgm"
+resolve_s3 = true
+s3_prefix = "sam-app-nextjs-tfgm"
+region = "eu-west-1"
+profile = "ivan-arteaga-dev"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "NextBucketName=\"sam-app-nextjs-tfgm\""
+image_repositories = []
+disable_rollback = true
