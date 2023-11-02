@@ -1,0 +1,220 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: sam-app
+Transform:
+- AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+Parameters:
+  NextBucketName:
+    Type: String
+    Description: Bucket name for Next.js static resources
+Resources:
+  NextjsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: NextjsFunction
+      Handler: run.sh
+      Runtime: nodejs18.x
+      MemorySize: 512
+      Architectures:
+      - x86_64
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+          RUST_LOG: info
+          PORT: 8080
+      Layers:
+      - Fn::Sub: arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:17
+      Events:
+        RootPath:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+        AnyPath:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+    Metadata:
+      BuildMethod: makefile
+      SamResourceId: NextjsFunction
+  NextBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Ref: NextBucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LoggingConfiguration:
+        DestinationBucketName:
+          Ref: NextLoggingBucket
+        LogFilePrefix: s3-access-logs
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: BucketOwnerPreferred
+  NextBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: NextBucket
+      PolicyDocument:
+        Id: NextBucketPolicy
+        Version: '2012-10-17'
+        Statement:
+        - Action:
+          - s3:GetObject
+          Effect: Allow
+          Principal:
+            CanonicalUser:
+              Fn::GetAtt:
+              - NextOriginAccessIdentity
+              - S3CanonicalUserId
+          Resource:
+            Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - Ref: NextBucket
+              - /*
+  NextLoggingBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Fn::Sub: ${NextBucketName}-logs
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: BucketOwnerPreferred
+    DeletionPolicy: Delete
+  NextOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: OAI for Next static resources in S3 bucket
+  NextDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+        - Id: nextS3Origin
+          DomainName:
+            Fn::GetAtt:
+            - NextBucket
+            - RegionalDomainName
+          S3OriginConfig:
+            OriginAccessIdentity:
+              Fn::Sub: origin-access-identity/cloudfront/${NextOriginAccessIdentity}
+        - Id: nextAPIGatewayOrigin
+          DomainName:
+            Fn::Sub: ${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com
+          OriginPath: /Prod
+          CustomOriginConfig:
+            HTTPSPort: '443'
+            OriginProtocolPolicy: https-only
+        Enabled: 'true'
+        Comment: Next.js Distribution
+        HttpVersion: http2
+        DefaultRootObject: ''
+        DefaultCacheBehavior:
+          TargetOriginId: nextAPIGatewayOrigin
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+          ForwardedValues:
+            QueryString: 'true'
+            Cookies:
+              Forward: all
+          Compress: 'true'
+          AllowedMethods:
+          - DELETE
+          - GET
+          - HEAD
+          - OPTIONS
+          - PATCH
+          - POST
+          - PUT
+          ViewerProtocolPolicy: redirect-to-https
+          MaxTTL: '31536000'
+        CacheBehaviors:
+        - PathPattern: /_next/static/*
+          TargetOriginId: nextS3Origin
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          AllowedMethods:
+          - GET
+          - HEAD
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: none
+          Compress: 'true'
+          ViewerProtocolPolicy: https-only
+        - PathPattern: /static/*
+          TargetOriginId: nextS3Origin
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          AllowedMethods:
+          - GET
+          - HEAD
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: none
+          Compress: 'true'
+          ViewerProtocolPolicy: https-only
+        PriceClass: PriceClass_100
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: 'true'
+        Logging:
+          Bucket:
+            Fn::GetAtt:
+            - NextLoggingBucket
+            - RegionalDomainName
+          Prefix: cloudfront-access-logs
+Outputs:
+  NextApi:
+    Description: API Gateway endpoint URL for Prod stage for Next function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+  NextjsFunction:
+    Description: Next Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - NextjsFunction
+      - Arn
+  NextjsFunctionIamRole:
+    Description: Implicit IAM Role created for Next function
+    Value:
+      Fn::GetAtt:
+      - NextjsFunctionRole
+      - Arn
+  NextBucket:
+    Description: S3 bucket for Next static resources
+    Value:
+      Fn::GetAtt:
+      - NextBucket
+      - Arn
+  NextDistribution:
+    Description: CloudFront distribution for Next.js
+    Value:
+      Fn::GetAtt:
+      - NextDistribution
+      - DomainName

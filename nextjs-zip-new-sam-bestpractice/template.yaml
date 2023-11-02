@@ -17,7 +17,7 @@ Globals:
     TracingEnabled: True
 
 Resources:
-  NextFunction:
+  NextjsFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: issue-tracker/
@@ -191,9 +191,9 @@ Outputs:
   NextApi:
     Description: 'API Gateway endpoint URL for Prod stage for Next function'
     Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/'
-  NextFunction:
+  NextjsFunction:
     Description: 'Next Lambda Function ARN'
-    Value: !GetAtt NextFunction.Arn
+    Value: !GetAtt NextjsFunction.Arn
   NextFunctionIamRole:
     Description: 'Implicit IAM Role created for Next function'
     Value: !GetAtt NextFunctionRole.Arn
