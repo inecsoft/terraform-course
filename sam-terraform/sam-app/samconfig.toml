@@ -17,12 +17,13 @@ lint = true
 capabilities = "CAPABILITY_IAM"
 confirm_changeset = true
 resolve_s3 = true
-s3_prefix = "sam-app"
+s3_prefix = "full-sam-app"
 region = "eu-west-1"
 profile = "ivan-arteaga-dev"
 image_repositories = []
 parameter_overrides = "NextBucketName=\"nextjsbuckettesttfgm\""
 disable_rollback = true
+stack_name = "full-sam-app"
 
 [default.package.parameters]
 resolve_s3 = true
