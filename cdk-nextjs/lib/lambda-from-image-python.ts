@@ -8,11 +8,14 @@ export class pythonLambdaCdkStack extends cdk.Stack {
     // aws lambda list-layers --profile ivan-arteaga-dev --region eu-west-1 | jq -r '.Layers[]'
 
     //define my dynamo table
-    const table = cdk.aws_dynamodb.Table.fromTableName(
-      this,
-      'MoviesTable',
-      'Movies'
-    );
+
+    const dynamodbtable = new cdk.aws_dynamodb.TableV2(this, 'Movies', {
+      partitionKey: { name: 'pk', type: cdk.aws_dynamodb.AttributeType.STRING },
+      contributorInsights: true,
+      tableClass: cdk.aws_dynamodb.TableClass.STANDARD_INFREQUENT_ACCESS,
+      pointInTimeRecovery: true,
+    });
+
     // defines an AWS Lambda resource
     const Lambda = new cdk.aws_lambda.DockerImageFunction(
       this,
@@ -28,7 +31,7 @@ export class pythonLambdaCdkStack extends cdk.Stack {
 
     // monitoring lambda
     if (Lambda.timeout) {
-      new cdk.aws_cloudwatch.Alarm(this, `MyAlarm`, {
+      new cdk.aws_cloudwatch.Alarm(this, `PythonLambdaTimeoutAlarm`, {
         metric: Lambda.metricDuration().with({
           statistic: 'Maximum',
         }),
@@ -36,18 +39,12 @@ export class pythonLambdaCdkStack extends cdk.Stack {
         datapointsToAlarm: 1,
         threshold: Lambda.timeout.toMilliseconds(),
         treatMissingData: cdk.aws_cloudwatch.TreatMissingData.IGNORE,
-        alarmName: 'Lambda Timeout',
+        alarmName: 'Python Lambda Timeout',
       });
     }
 
     // defines an API Gateway Http API resource backed by our "PredictiveLambda" function.
-    const api = new cdk.aws_apigateway.RestApi(this, 'Predictive Endpoint');
-    // const api = new cdk.aws_apigateway.RestApi(this, 'Predictive Endpoint', {
-    //   defaultIntegration: new cdk.aws_apigateway.LambdaIntegration(
-    //   handler: Lambda.I, {
-    //     proxy: false,
-    //   }),
-    // });
+    const api = new cdk.aws_apigateway.RestApi(this, 'ApiPredictiveEndpoint');
 
     new cdk.CfnOutput(this, 'HTTP API Url', {
       value: api.url ?? 'Something went wrong with the deploy',
@@ -80,11 +77,10 @@ export class pythonLambdaCdkStack extends cdk.Stack {
       'Distribution',
       {
         defaultBehavior: {
-          // origin: new cdk.aws_cloudfront_origins.RestApiOrigin(api),
-          origin: new cdk.aws_cloudfront_origins.HttpOrigin('httpApi'),
-          // viewerProtocolPolicy:
-          //   cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-          // cachePolicy: cdk.aws_cloudfront.CachePolicy.CACHING_DISABLED,
+          origin: new cdk.aws_cloudfront_origins.RestApiOrigin(api),
+          viewerProtocolPolicy:
+            cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: cdk.aws_cloudfront.CachePolicy.CACHING_DISABLED,
         },
         minimumProtocolVersion:
           cdk.aws_cloudfront.SecurityPolicyProtocol.TLS_V1_2_2018,
