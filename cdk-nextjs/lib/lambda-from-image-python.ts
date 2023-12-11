@@ -1,20 +1,18 @@
 import { Construct } from 'constructs';
-
 import * as cdk from 'aws-cdk-lib';
 
-const path = require('path')
-import * as aws_apigateway2 from '@aws-cdk/aws-apigatewayv2-alpha';
-
-// import { HttpUrlIntegration, HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
-// import aws_apigateway2 from @aws-cdk/aws-apigateway2;
-import * as aws_apigatewayv2_integrations from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
-// import aws_apigatewayv2_integrations from @aws-cdk/aws-apigatewayv2-integrations;
-
+const path = require('path');
 export class pythonLambdaCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     // aws lambda list-layers --profile ivan-arteaga-dev --region eu-west-1 | jq -r '.Layers[]'
 
+    //define my dynamo table
+    const table = cdk.aws_dynamodb.Table.fromTableName(
+      this,
+      'MoviesTable',
+      'Movies'
+    );
     // defines an AWS Lambda resource
     const Lambda = new cdk.aws_lambda.DockerImageFunction(
       this,
@@ -28,13 +26,28 @@ export class pythonLambdaCdkStack extends cdk.Stack {
       }
     );
 
-    // defines an API Gateway Http API resource backed by our "PredictiveLambda" function.
-    const api = new aws_apigateway2.HttpApi(this, 'Predictive Endpoint', {
-      defaultIntegration:
-        new aws_apigatewayv2_integrations.HttpLambdaIntegration({
-          handler: Lambda,
+    // monitoring lambda
+    if (Lambda.timeout) {
+      new cdk.aws_cloudwatch.Alarm(this, `MyAlarm`, {
+        metric: Lambda.metricDuration().with({
+          statistic: 'Maximum',
         }),
-    });
+        evaluationPeriods: 1,
+        datapointsToAlarm: 1,
+        threshold: Lambda.timeout.toMilliseconds(),
+        treatMissingData: cdk.aws_cloudwatch.TreatMissingData.IGNORE,
+        alarmName: 'Lambda Timeout',
+      });
+    }
+
+    // defines an API Gateway Http API resource backed by our "PredictiveLambda" function.
+    const api = new cdk.aws_apigateway.RestApi(this, 'Predictive Endpoint');
+    // const api = new cdk.aws_apigateway.RestApi(this, 'Predictive Endpoint', {
+    //   defaultIntegration: new cdk.aws_apigateway.LambdaIntegration(
+    //   handler: Lambda.I, {
+    //     proxy: false,
+    //   }),
+    // });
 
     new cdk.CfnOutput(this, 'HTTP API Url', {
       value: api.url ?? 'Something went wrong with the deploy',
@@ -51,7 +64,6 @@ export class pythonLambdaCdkStack extends cdk.Stack {
       }),
       anyMethod: true,
     });
-
     const nextLoggingBucket = new cdk.aws_s3.Bucket(
       this,
       'next-logging-bucket',
@@ -68,10 +80,11 @@ export class pythonLambdaCdkStack extends cdk.Stack {
       'Distribution',
       {
         defaultBehavior: {
-          origin: new cdk.aws_cloudfront_origins.RestApiOrigin(api),
-          viewerProtocolPolicy:
-            cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-          cachePolicy: cdk.aws_cloudfront.CachePolicy.CACHING_DISABLED,
+          // origin: new cdk.aws_cloudfront_origins.RestApiOrigin(api),
+          origin: new cdk.aws_cloudfront_origins.HttpOrigin('httpApi'),
+          // viewerProtocolPolicy:
+          //   cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          // cachePolicy: cdk.aws_cloudfront.CachePolicy.CACHING_DISABLED,
         },
         minimumProtocolVersion:
           cdk.aws_cloudfront.SecurityPolicyProtocol.TLS_V1_2_2018,

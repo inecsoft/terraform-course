@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
 import 'source-map-support/register';
-import { CdkServerlessApplicationStack } from '../lib/cdk-serverless-application-stack';
+import { pythonLambdaCdkStack } from '../lib/lambda-from-image-python';
 
 const app = new cdk.App();
-new CdkServerlessApplicationStack(app, 'CdkServerlessApplicationStack');
+new pythonLambdaCdkStack(app, 'CdkServerlessApplicationStack');

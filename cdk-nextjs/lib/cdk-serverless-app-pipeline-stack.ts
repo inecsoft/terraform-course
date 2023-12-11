@@ -13,8 +13,8 @@ export class PipelineStack extends cdk.Stack {
     super(scope, id, props);
 
     const sourcegithubpat = pipelines.CodePipelineSource.gitHub(
-      'inecsoft/cdk-serverless-application',
-      'oring-cdk-nextjs',
+      'inecsoft/terraform-course',
+      'main',
       {
         // This is optional
         authentication: cdk.SecretValue.secretsManager('dev/pat'),
@@ -22,8 +22,8 @@ export class PipelineStack extends cdk.Stack {
     );
 
     const sourcegithubconnection = pipelines.CodePipelineSource.connection(
-      'inecsoft/cdk-serverless-application',
-      'oring-cdk-nextjs',
+      'inecsoft/terraform-course',
+      'main',
       {
         connectionArn: 'REPLACE_WITH_CONNECTION_ARN',
       }
@@ -34,7 +34,7 @@ export class PipelineStack extends cdk.Stack {
         input: sourcegithubpat,
         commands: [
           'npm ci',
-          'cd app',
+          'cd cdk-nextjs',
           'yarn install',
           'yarn build',
           'cd ..',
