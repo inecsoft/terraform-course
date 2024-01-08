@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+       # cache production-only modules (for demo purposes only)
+      - test -d prod_node_modules || (npm install --production && cp -R node_modules/. prod_node_modules)
+      - npm install
+  build:
+    commands:
+      - npm run validate
+      - npm run build
+cache:
+  paths:
+    - 'node_modules/**/*'
+    - 'prod_node_modules/**/*'
+artifacts:
+  files:
+    - 'build/**/*'
+    - 'public/**/*'
+    - 'scripts/**/*'
+    - 'views/**/*'
+    - 'package.json'
+    - 'prod_node_modules/**/*'
+    - 'appspec.yml'
