@@ -6,16 +6,14 @@ resource "aws_cloudwatch_metric_alarm" "IAMPolicyEventCount_alarm_to_sns" {
   alarm_actions = [
     "${aws_sns_topic.sns_alert_topic.arn}",
   ]
-  alarm_description   = "Raises alarms if more than 3 console sign-in failures occur in 5 minutes"
+  alarm_description   = "Raises alarms if IAM policy changes occur more than 1 in 5 minutes"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   datapoints_to_alarm = 1
-  # dimensions = {
-  #   "Currency" = "${var.currency}"
-  # }
+
   evaluation_periods        = 1
   insufficient_data_actions = []
   metric_name               = "IAMPolicyEventCount"
-  namespace                 = "iamMetrics"
+  namespace                 = "CloudTrailMetrics"
   ok_actions                = []
   period                    = 300
   statistic                 = "Sum"
@@ -27,18 +25,19 @@ resource "aws_cloudwatch_metric_alarm" "IAMPolicyEventCount_alarm_to_sns" {
   }
 }
 #------------------------------------------------------------------------------------------------------------------------
-#  terraform import aws_cloudwatch_log_metric_filter.cloudwatch_log_metric_filter_for_iam /aws/apigateway/welcome:cloudwatch-IAMPolicyEventCount
-resource "aws_cloudwatch_log_metric_filter" "cloudwatch_log_metric_filter_for_iam" {
-  name            = "${local.default_name}-IAMPolicyEventCount-metric-filter-iam"
-  log_group_name = "/aws/iam/iam-log-group"
+#  terraform import aws_cloudwatch_log_metric_filter.cloudwatch_log_metric_filter_for_cloudtrail /aws/apigateway/welcome:cloudwatch-IAMPolicyChanges
+resource "aws_cloudwatch_log_metric_filter" "cloudwatch_log_metric_filter_for_cloudtrail" {
+  name            = "${local.default_name}-IAMPolicyChanges-metric-filter-cloudtrail"
+  log_group_name = "/aws/cloudtrail/cloudtrail-log-group"
 
-  pattern        = "{ ($.eventName = ConsoleLogin) && ($.errorMessage = \"Failed authentication\") }"
+  pattern        = "{($.eventName=DeleteGroupPolicy)||($.eventName=DeleteRolePolicy)||($.eventName=DeleteUserPolicy)||($.eventName=PutGroupPolicy)||($.eventName=PutRolePolicy)||($.eventName=PutUserPolicy)||($.eventName=CreatePolicy)||($.eventName=DeletePolicy)||($.eventName=CreatePolicyVersion)||($.eventName=DeletePolicyVersion)||($.eventName=AttachRolePolicy)||($.eventName=DetachRolePolicy)||($.eventName=AttachUserPolicy)||($.eventName=DetachUserPolicy)||($.eventName=AttachGroupPolicy)||($.eventName=DetachGroupPolicy)}"
+
 
   metric_transformation {
     dimensions = {}
     unit       = "None"
     name       = "IAMPolicyEventCount"
-    namespace  = "iamMetrics"
+    namespace  = "CloudTrailMetrics"
     value      = "1"
   }
 }
