@@ -1,0 +1,37 @@
+# Provides a Kinesis Stream resource. Amazon Kinesis is a managed
+# service that scales elastically for real-time processing of streaming big data.
+# resource "aws_kinesis_stream" "kinesis_stream" {
+#   name             = "kinesis_stream_PROVISIONED"
+#   shard_count      = 1
+#   retention_period = 48
+
+#   shard_level_metrics = [
+#     "IncomingBytes",
+#     "OutgoingBytes",
+#   ]
+
+#   stream_mode_details {
+#     stream_mode = "PROVISIONED"
+#   }
+
+#   tags = {
+#     Environment = "kinesis_stream"
+#   }
+# }
+
+resource "aws_kinesis_stream" "kinesis_stream" {
+	name                      = "kinesis_stream_ON_DEMAND"
+	shard_count               = 0
+	retention_period          = 48
+
+	encryption_type           = "KMS"
+    kms_key_id                = "alias/aws/kinesis"
+
+	stream_mode_details {
+		stream_mode = "ON_DEMAND"
+	}
+
+	tags = {
+		"Environment" = "kinesis_stream"
+	}
+}
