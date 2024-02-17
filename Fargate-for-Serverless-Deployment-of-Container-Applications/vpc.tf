@@ -59,6 +59,13 @@ resource "aws_security_group" "ecs_security_group" {
   }
 
   ingress {
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "TCP"
+    cidr_blocks = var.subnet_cidr
+  }
+
+  ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "TCP"

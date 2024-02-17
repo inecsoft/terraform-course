@@ -35,7 +35,7 @@ resource "aws_s3_object" "s3_bucket_web_kinesis_content" {
   for_each = fileset("${path.module}/fargate-lab/", "**/*.*")
 
   bucket       = aws_s3_bucket.s3_bucket_ecs_fargate.id
-  key          = each.key
+  key          = "/fargate-lab/${each.key}"
   source       = "${path.module}/fargate-lab/${each.key}"
   cache_control = trimprefix(".js", "${path.module}/fargate-lab/${each.key}") == ".js" || trimprefix(".css", "${path.module}/fargate-lab/${each.key}") == ".css" ? "max-age=31536000, public" : null
   content_type = lookup(tomap(local.mime_types), element(split(".", each.key), length(split(".", each.key)) - 1))

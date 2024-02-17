@@ -208,7 +208,7 @@ resource "aws_codebuild_project" "codebuild_project" {
 	build_timeout          = 60
 	badge_enabled          = false
 	queued_timeout         = 480
-	encryption_key         = "arn:aws:kms:${var.AWS_REGION}:${data .aws_caller_identity.current.id}:alias/aws/s3"
+	encryption_key         = "arn:aws:kms:${var.AWS_REGION}:${data.aws_caller_identity.current.id}:alias/aws/s3"
 	# service_role           = "arn:aws:iam::${data .aws_caller_identity.current.id}:role/service-role/ecs-fargate-serverless-test"
 	# concurrent_build_limit = 0
 	service_role  = aws_iam_role.iam_role_codebuild_project.arn
@@ -260,13 +260,42 @@ resource "aws_codebuild_project" "codebuild_project" {
 		}
 	}
 
-	source {
-		git_clone_depth     = 0
-		insecure_ssl        = false
-		location            = "bucketecsfargate/fargate-lab/fargatelab.zip"
-		report_build_status = false
-		type                = "S3"
-	}
+	# source {
+	# 	git_clone_depth     = 0
+	# 	insecure_ssl        = false
+  #   location            = "${aws_s3_bucket.s3_bucket_ecs_fargate.bucket}/fargate-lab/fargatelab.zip"
+	# 	#location            = "bucketecsfargate/fargate-lab/fargatelab.zip"
+	# 	report_build_status = false
+	# 	type                = "S3"
+	# }
+
+  source {
+    git_clone_depth     = 0
+    type                = "S3"
+    report_build_status = false
+    insecure_ssl        = false
+    location            = "${aws_s3_bucket.s3_bucket_ecs_fargate.bucket}/fargate-lab/fargatelab.zip"
+    buildspec           = <<-EOT
+          version: 0.2
+
+          phases:
+            pre_build:
+              commands:
+                - echo Logging in to Amazon ECR...
+                - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+            build:
+              commands:
+                - echo Build started on `date`
+                - echo Building the Docker image...
+                - docker build -t ${aws_ecr_repository.ecr_repository_fargate.name}:testblue .
+                - docker tag ${aws_ecr_repository.ecr_repository_fargate.name}:testblue $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${aws_ecr_repository.ecr_repository_fargate.name}:testblue
+            post_build:
+              commands:
+                - echo Build completed on `date`
+                - echo Pushing the Docker image...
+                - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${aws_ecr_repository.ecr_repository_fargate.name}:testblue
+    EOT
+  }
 
 	#   source_version = "master"
 
