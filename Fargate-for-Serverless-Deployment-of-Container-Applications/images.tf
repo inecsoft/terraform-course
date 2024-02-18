@@ -21,6 +21,28 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+	# amzn2-ami-ecs-hvm-2.0.20240207-x86_64-ebs
+data "aws_ami" "amazon_ecs" {
+  most_recent = true
+  owners      = ["591542846629"] # Amazon
+
+  filter {
+    name = "name"
+
+    values = [
+      "amzn2-ami-ecs-hvm-*-x86_64-*",
+    ]
+  }
+
+  filter {
+    name = "owner-alias"
+
+    values = [
+      "amazon",
+    ]
+  }
+}
+
 
 data "aws_ami" "amazon_linux_kernel_5" {
   most_recent = true
@@ -108,12 +130,17 @@ output "ami-amazon-name" {
 }
 #-------------------------------------------------------------------
 output "ami-ubuntu-id" {
-  description = "description of ami ubuntu "
+  description = "description of ami ubuntu"
   value       = data.aws_ami.ubuntu.id
 }
 #-------------------------------------------------------------------
 output "ami-ubuntu-name" {
-  description = "description of ami ubuntu "
+  description = "description of ami ubuntu"
   value       = data.aws_ami.ubuntu.name
+}
+#-------------------------------------------------------------------
+output "ami-amazon-ecs-id" {
+  description = "Description of ami amazon ecs"
+  value       = data.aws_ami.amazon_ecs.id
 }
 #-------------------------------------------------------------------

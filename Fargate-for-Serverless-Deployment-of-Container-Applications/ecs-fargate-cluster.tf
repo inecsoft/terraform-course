@@ -28,16 +28,14 @@ resource "aws_ecs_service" "ecs_service_fargate" {
   enable_ecs_managed_tags            = true
   # You cannot specify an IAM role for services that require a service linked role.
   # iam_role                           = aws_iam_role.ecs_service_role.name
-  iam_role                           = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+  # iam_role                           = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
   cluster                            = aws_ecs_cluster.ecs_cluster_fargate.id
   task_definition                    = "${aws_ecs_task_definition.ecs_task_definition.family}:${aws_ecs_task_definition.ecs_task_definition.revision}"
-  # task_definition = aws_ecs_task_definition.mywebsite.arn
 
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
   desired_count                      = 1
   health_check_grace_period_seconds  = 0
-  #iam_role        = aws_iam_role.ecs_service_role.arn
 
   deployment_circuit_breaker {
     enable   = true
@@ -116,13 +114,13 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   cpu                      = "256"
 
   execution_role_arn       = "${aws_iam_role.ecsTaskExecution_role.arn}"
-  # execution_role_arn       = "arn:aws:iam::911328334795:role/ecsTaskExecutionRole"
   family                   = "fargate-lab-task"
 
   memory                   = "512"
   network_mode             = "awsvpc"
   requires_compatibilities = [
     "FARGATE",
+
   ]
 
   tags                     = {}
