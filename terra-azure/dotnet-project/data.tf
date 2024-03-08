@@ -40,7 +40,7 @@ resource "azurerm_resource_group" "rg" {
 resource "azure_key_vault_secret" "vm_secret" {
   name      = "${local.default_name}-secrect"
   value     = "${random_string.vault_password}"
-  vault_uri = "${https://${local.default_name}-secret-keyvault.vault.azure.net/}"
+  vault_uri = "${https:\/\/${local.default_name}-secret-keyvault.vault.azure.net/}"
  # key_vault_id = azurerm_key_vault.example.id
 
   tags      = {
