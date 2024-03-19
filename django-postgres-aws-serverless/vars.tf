@@ -1,11 +1,29 @@
+data "http" "workstation-external-ip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
+locals {
+  workstation-external-cidr = "${chomp(data.http.workstation-external-ip.response_body)}/32"
+}
+
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length  = 20
+  length  = 35
   special = true
   #override_special = "_@\/ "
 }
+resource "random_password" "SECRET_KEY" {
+  length           = 64
+  special          = true
+  # override_special = "_%@\""
+  #override_special = "%\"@_"
+}
+#echo random_password.password.result | terraform console
 #--------------------------------------------------------------------------------------
-
+resource "random_string" "random" {
+  length  = 2
+  special = false
+}
 #-------------------------------------------------------------------
 #----------------------------------------------------------------------------
 locals {

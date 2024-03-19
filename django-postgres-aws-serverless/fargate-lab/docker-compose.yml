@@ -3,11 +3,62 @@ version: '3.4'
 
 services:
   web:
-    image: web
+    # build: .
+    # command: python /code/manage.py runserver 0.0.0.0:8000
+
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env.manual
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - SQL_ENGINE=${SQL_ENGINE}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+      - PYTHONUNBUFFERED=${PYTHONUNBUFFERED}
+      - PORT=${PORT}
+    volumes:
+      - .:/code
     ports:
-      - '8000:8000'
+      - 8000:8000
     depends_on:
       - db
+    networks:
+      - django-network
+  db:
+    image: postgres
+    # env_file:
+    #   - .env_manual
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - SQL_ENGINE=${SQL_ENGINE}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+      - 'POSTGRES_HOST_AUTH_METHOD=trust' #to allow all connections without a password. This is *not* recommended."POSTGRES_HOST_AUTH_METHOD=trust"
+    ports:
+      - 5432:5432
+    networks:
+      - django-network
+
+volumes:
+  postgres_data:
+
+networks:
+  django-network:
+    driver: bridge

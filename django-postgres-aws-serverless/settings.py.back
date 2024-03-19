@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&b*d&%hwcn@@=3-mqdj3+b-b*=qm=v6(4a-do62hahfuz=ky%_'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-&b*d&%hwcn@@=3-mqdj3+b-b*=qm=v6(4a-do62hahfuz=ky%_')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', default="False")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.environ.get("DJANGO_ALLOWED_HOSTS", default='127.0.0.1')]
 
 
 # Application definition
@@ -52,10 +53,17 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'django_neon.urls'
 
+
+SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
+# Find templates in the same folder as settings.py.
+TEMPLATE_DIRS = (
+    os.path.join(SETTINGS_PATH, 'templates'),
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,24 +79,36 @@ TEMPLATES = [
 WSGI_APPLICATION = 'django_neon.wsgi.application'
 
 
+# pip install django-environ
+# import environenv = environ.Env()
+# # reading .env file
+# environ.Env.read_env()
+
+# # Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
+# SECRET_KEY = env("SECRET_KEY")
+ENVIRONMENT = os.environ.get('ENVIRONMENT', default="prod")
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tododb',
-        'USER': 'wales149',
-        'PASSWORD': 'YOUR_PASSWORD',
-        'HOST': 'ep-purple-smoke-78175257.us-east-2.aws.neon.tech',
-        'PORT': '5432',
-        'OPTIONS': {'sslmode': 'require'},
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("POSTGRES_DB", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("POSTGRES_USER", "user"),
+        "PASSWORD": os.environ.get("DATABASE_PASSWORD", "password"),
+        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': env("DATABASE_NAME"),
+    #     'USER': env("DATABASE_USER"),
+    #     'PASSWORD': env("DATABASE_PASSWORD"),
+    #     'HOST': env("DATABASE_HOST"),
+    #     'PORT': env("DATABASE_PORT"),
+    # }}
 
 }
 

@@ -1,6 +1,34 @@
+resource "aws_security_group" "ecs_alb_security_group" {
+  name   = "ecs_alb_security_group"
+  vpc_id = aws_vpc.ecs_vpc.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+
 resource "aws_alb" "ecs_load_balancer" {
   name            = "ecs-fargate-load-balancer"
-  security_groups = [aws_security_group.ecs_security_group.id]
+  security_groups = [aws_security_group.ecs_alb_security_group.id]
   subnets         = aws_subnet.ecs_subnets_public.*.id
 
   tags = {
@@ -54,17 +82,22 @@ resource "aws_alb_target_group" "ecs_target_group" {
   }
 }
 
+# Listener (redirects traffic from the load balancer to the target group)
 resource "aws_alb_listener" "alb_listener" {
   load_balancer_arn = aws_alb.ecs_load_balancer.arn
   port              = "80"
   protocol          = "HTTP"
+
+  # port              = "443"
+  # protocol          = "HTTPS"
+  # ssl_policy        = "ELBSecurityPolicy-2016-08"
+  # certificate_arn   = var.certificate_arn
 
   default_action {
     target_group_arn = aws_alb_target_group.ecs_target_group.arn
     type             = "forward"
   }
 }
-
 
 output "ecs_load_balancer_dns_name" {
   value = aws_alb.ecs_load_balancer.dns_name

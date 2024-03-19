@@ -32,6 +32,7 @@ data "aws_iam_policy_document" "iam_policy_ecs_service_role" {
       "ec2:DeleteNetworkInterfacePermission",
       "ec2:Describe*",
       "ec2:DetachNetworkInterface",
+      "ec2:AuthorizeSecurityGroupIngress",
       "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
       "elasticloadbalancing:DeregisterTargets",
       "elasticloadbalancing:Describe*",
@@ -369,9 +370,17 @@ resource "aws_iam_role_policy" "ecs-task-execution-role-policy" {
         "logs:CreateLogStream",
         "logs:PutLogEvents",
         "ssm:GetParameters",
-        "ssm:GetParameter"
+        "ssm:GetParameter",
+        "secretsmanager:GetSecretValue"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": "${aws_secretsmanager_secret_version.secret_version.arn}"
     }
   ]
 }

@@ -106,7 +106,8 @@ resource "aws_security_group" "ecs_security_group" {
   ingress {
     from_port   = 22
     to_port     = 22
-    protocol    = "TCP"
+    protocol    = "TCP"#
+    description = "allows ssh access to the ecs container from the vpc"
     cidr_blocks = [var.vpc_cidr]
   }
 
@@ -118,10 +119,27 @@ resource "aws_security_group" "ecs_security_group" {
   }
 
   ingress {
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "TCP"
+    description = "allows http access from personal ip address to the container"
+    cidr_blocks = [ local.workstation-external-cidr ]
+  }
+
+  ingress {
     from_port   = 80
     to_port     = 80
+    description = "allows http access on port 80 to all addresses to the container"
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    description = "allows all access from alb to the container"
+    security_groups = [aws_security_group.ecs_alb_security_group.id]
   }
 
   egress {

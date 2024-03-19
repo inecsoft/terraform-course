@@ -24,13 +24,17 @@ locals {
     "png"      = "image/png"
     "svg"      = "image/svg+xml"
     "txt"      = "text/plain"
+    "env"      = "text/plain"
+    "yml"      = "text/plain"
     "jpeg"     = "image/jpeg"
     "DS_Store" = "text/plain"
     "gif"      = "image/gif"
     "zip"      = "application/x-zip-compressed"
     "py"       = "text/x-python"
+    "pyc"      = "text/x-python"
     "Dockerfile" =	"binary/octet-stream"
     "dockerignore" =	"binary/octet-stream"
+    "sqlite3"    = "binary/octet-stream"
   }
 }
 
