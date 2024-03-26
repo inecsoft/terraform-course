@@ -1,29 +1,11 @@
-data "http" "workstation-external-ip" {
-  url = "http://ipv4.icanhazip.com"
-}
-
-locals {
-  workstation-external-cidr = "${chomp(data.http.workstation-external-ip.response_body)}/32"
-}
-
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length  = 35
+  length  = 20
   special = true
   #override_special = "_@\/ "
 }
-resource "random_password" "SECRET_KEY" {
-  length           = 64
-  special          = true
-  # override_special = "_%@\""
-  #override_special = "%\"@_"
-}
-#echo random_password.password.result | terraform console
 #--------------------------------------------------------------------------------------
-resource "random_string" "random" {
-  length  = 2
-  special = false
-}
+
 #-------------------------------------------------------------------
 #----------------------------------------------------------------------------
 locals {
@@ -61,23 +43,6 @@ variable "desired_capacity" {
   default = 1
 }
 
-# ECS service auto scaling
-
-variable "autoscale_min" {
-  description = "Minimum autoscale (number of tasks)"
-  default     = "1"
-}
-
-variable "autoscale_max" {
-  description = "Maximum autoscale (number of tasks)"
-  default     = "10"
-}
-
-variable "autoscale_desired" {
-  description = "Desired number of tasks to run initially"
-  default     = "4"
-}
-
 variable "ami" {
   type = map(string)
   default = {
@@ -91,15 +56,77 @@ data "aws_availability_zones" "azs" {
 }
 
 variable "vpc_cidr" {
-  default = "10.0.0.0/16"
+  default = "10.100.0.0/16"
 }
 
-variable "subnet_cidr_public" {
+variable "subnet_cidr" {
   type    = list(string)
-  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  default = ["10.100.1.0/24", "10.100.2.0/24", "10.100.3.0/24"]
 }
 
-variable "subnet_cidr_private" {
-  type    = list(string)
-  default = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+# Map of string
+
+variable "map_string" {
+  type = map(string)
+  default = {
+    luke  = "jedi"
+    yoda  = "jedi"
+    darth = "sith"
+  }
+}
+
+# Map of object
+variable "map_object" {
+  type = map(object({
+    name = string
+    enemies_destroyed = number
+    badguy = bool
+  }))
+  default = {
+    key1 = {
+      name = "luke"
+      enemies_destroyed = 4252
+      badguy = false
+    }
+    key2 = {
+      name = "yoda"
+      enemies_destroyed = 900
+      badguy = false
+    }
+    key3 = {
+      name = "darth"
+      enemies_destroyed=  20000056894
+      badguy = true
+    }
+  }
+}
+
+# Map of lists
+variable "map_list" {
+  type = map(list(string))
+  default = {
+    luke = ["green", "blue"]
+    yoda = ["green"]
+    darth = ["red"]
+  }
+}
+
+# Map of number
+variable "map_number" {
+  type = map(number)
+  default = {
+    luke  = 4252
+    yoda  = 900
+    darth = 20000056894
+  }
+}
+
+locals {
+  characters = ["luke", "yoda", "darth"]
+  enemies_destroyed = [4252, 900, 20000056894]
+
+  map = {
+    for index, character in toset(local.characters) : # Convert character list to a set
+      character => local.enemies_destroyed  # [index]
+  }
 }

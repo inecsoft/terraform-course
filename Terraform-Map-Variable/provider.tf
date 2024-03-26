@@ -1,16 +1,47 @@
 #------------------------------------------------------------------
+
+locals {
+  # provider = trim( join(".", ["aws", "${terraform.workspace}"]), "\"")
+  provider = "${terraform.workspace}"
+}
+
 provider "aws" {
-  region  = var.AWS_REGION
+  alias  = "dev"
+  region = var.AWS_REGION
+  # profile = "AWS.DataTransfer.Test"
   profile = "ivan-arteaga-dev"
+
   default_tags {
     tags = {
       Owner         = "TFGM"
       ProductOwner  = "Ivan Pedro"
       BusinessOwner = "DCS"
-      Product       = "lambda-layer-nodejs"
-      Repo          = "lambda-layer-nodejs"
+      Product       = "GitHub OIDC associated IAM Deployment Roles"
+      Repo          = "tf_aws_github-oidc"
       Tech          = "terraform"
-      Environment   = "Prod"
+      Environment   = "dev"
+    }
+  }
+
+  # assume_role {
+  #   role_arn = "arn:aws:iam::<account>:role/deploy_gha_TfGM-Infrastructure_tf_aws_github-oidc"
+  # }
+}
+
+provider "aws" {
+  profile = "AWS.DataTransfer.Test"
+  region  = var.AWS_REGION
+  alias   = "prod"
+
+  default_tags {
+    tags = {
+      Owner         = "TFGM"
+      ProductOwner  = "Ivan Pedro"
+      BusinessOwner = "DCS"
+      Product       = "GitHub OIDC associated IAM Deployment Roles"
+      Repo          = "tf_aws_github-oidc"
+      Tech          = "terraform"
+      Environment   = "prod"
     }
   }
 }

@@ -194,11 +194,11 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         ],
 
         secrets =  [
-        {
-          "name": "DATABASE_PASSWORD",
-          "valueFrom":  aws_secretsmanager_secret_version.secret_version.arn
-        }
-      ]
+          {
+            "name": "DATABASE_PASSWORD",
+            "valueFrom":  aws_secretsmanager_secret_version.secret_version.arn
+          }
+        ]
 
         environmentFiles = []
         essential        = true
@@ -333,4 +333,33 @@ output "secretsmanager_secret_version_FULL_ENV" {
 output "ecr_repository_fargate_url" {
   description = "ecr_repository_fargate_url"
   value       = aws_ecr_repository.ecr_repository_fargate.repository_url
+}
+
+
+#############################################################
+# With this configuration, the ECS tasks will scale based on their average CPU utilization. When it reaches 75%, more tasks will be started.
+resource "aws_appautoscaling_target" "ecs_target" {
+  max_capacity       = var.autoscale_max
+  min_capacity       = var.autoscale_min
+  resource_id        = "service/${aws_ecs_cluster.ecs_cluster_fargate.name}/${aws_ecs_service.ecs_service_fargate.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+}
+
+resource "aws_appautoscaling_policy" "ecs_policy" {
+  name               = "ecs-auto-scaling-policy"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.ecs_target.resource_id
+  scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.ecs_target.service_namespace
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
+
+    target_value       = 75
+    scale_in_cooldown  = 300
+    scale_out_cooldown = 300
+  }
 }
