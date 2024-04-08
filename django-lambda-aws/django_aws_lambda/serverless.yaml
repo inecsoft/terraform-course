@@ -14,7 +14,7 @@ custom:
     dockerizePip: non-linux
     zip: true
     fileName: requirements.txt
-  stage: ${env:STAGE}
+  stage: dev
   wsgi:
     app: django_aws_lambda.wsgi.application
     packRequirements: false
@@ -33,11 +33,11 @@ functions:
 provider:
   name: aws
   # role: arn:aws:iam::<role_id>:role/<role_name>
-  profile: ivan-arteaga-dev # make sure that you configured aws profile using `aws configure --profile <your-profile-name>`
+  profile: 'ivan-arteaga-dev' # make sure that you configured aws profile using `aws configure --profile <your-profile-name>`
   region: eu-west-1
-  runtime: python3.12
+  runtime: python3.10
   versionFunctions: false
-  stage: ${env:STAGE}
+  stage: dev #${env:STAGE}
   timeout: 60
   # vpc:
   #   securityGroupIds:
@@ -50,11 +50,10 @@ provider:
   #   name: ${env:DEPLOYMENT_BUCKET}
   apiGateway:
     shouldStartNameWithService: true
-  lambdaHashingVersion: 20240407
 
 package:
   individually: true
-  exclude:
+  patterns:
     - .env
     - .git/**
     - .github/**
