@@ -1,0 +1,17 @@
+{
+  "name": "django_aws_lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-prune-plugin": "^2.0.2",
+    "serverless-python-requirements": "^6.1.0",
+    "serverless-wsgi": "^3.0.3"
+  }
+}

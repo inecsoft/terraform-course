@@ -188,7 +188,10 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
             "name": "PORT",
             "value": "5432"
           },
-
+          {
+            "name": "EFS_PATH",
+            "value": "/efs/staticfiles/"
+          },
         ],
 
         secrets =  [
@@ -202,7 +205,10 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         essential        = true
         # image            = "911328334795.dkr.ecr.eu-west-1.amazonaws.com/ca-container-registry:testblue"
         image            = "${aws_ecr_repository.ecr_repository_fargate.repository_url}:latest"
+        # Run migrations as the command
         # command = ["python", "manage.py", "migrate"]
+        # Run collectstatic as the command
+        # command = ["python", "manage.py", "collectstatic", "--no-input", "-v", "3"]
 
         # Add log configuration for CloudWatch
         logConfiguration = {

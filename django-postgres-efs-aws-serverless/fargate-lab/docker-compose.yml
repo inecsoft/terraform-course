@@ -11,7 +11,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     env_file:
-      - .env.manual
+      - .env
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - ENVIRONMENT=${ENVIRONMENT}
@@ -25,8 +25,11 @@ services:
       - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
       - PYTHONUNBUFFERED=${PYTHONUNBUFFERED}
       - PORT=${PORT}
+      - EFS_PATH=${EFS_PATH}
     volumes:
       - .:/code
+      - static_volume:/code/staticfiles
+      - media_volume:/code/mediafiles
     ports:
       - 8000:8000
     depends_on:
@@ -58,6 +61,8 @@ services:
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:
 
 networks:
   django-network:

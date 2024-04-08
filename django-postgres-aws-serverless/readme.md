@@ -19,6 +19,12 @@ python manage.py runserver
 pip freeze >>requirements.txt
 ```
 
+### How to install packages
+
+```
+ pip install -r  requirements.txt
+```
+
 ### How to build and test image
 
 ```

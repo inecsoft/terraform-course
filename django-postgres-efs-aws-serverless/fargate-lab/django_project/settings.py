@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "upload",
 ]
 
 MIDDLEWARE = [
@@ -140,7 +141,10 @@ USE_TZ = True
 
 # STATIC_URL = 'static/'
 STATIC_URL = '/staticfiles/'
-STATIC_ROOT = '/efs/staticfiles/'
+STATIC_ROOT = os.environ.get("EFS_PATH")
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

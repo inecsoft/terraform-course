@@ -11,6 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Mounts the application code to the image
 COPY . code
+RUN mkdir /code/staticfiles
 WORKDIR /code
 
 # set environment variables
@@ -27,6 +28,7 @@ ENV POSTGRES_PORT=${POSTGRES_PORT}
 ENV SQL_ENGINE=${SQL_ENGINE}
 ENV DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
 ENV PORT=${PORT}
+ENV EFS_PATH=${EFS_PATH}
 
 EXPOSE 8000
 

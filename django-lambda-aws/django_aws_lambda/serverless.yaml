@@ -1,0 +1,65 @@
+service: django-aws-lambda
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-prune-plugin
+  - serverless-python-requirements
+  - serverless-wsgi
+useDotenv: true
+
+custom:
+  dotenv:
+    logging: false
+  pythonRequirements:
+    dockerizePip: non-linux
+    zip: true
+    fileName: requirements.txt
+  stage: ${env:STAGE}
+  wsgi:
+    app: django_aws_lambda.wsgi.application
+    packRequirements: false
+  prune:
+    automatic: true
+    number: 3
+
+functions:
+  - app:
+      handler: wsgi_handler.handler
+      events:
+        - http: ANY /
+        - http: ANY /{proxy+}
+      timeout: 30
+
+provider:
+  name: aws
+  # role: arn:aws:iam::<role_id>:role/<role_name>
+  profile: ivan-arteaga-dev # make sure that you configured aws profile using `aws configure --profile <your-profile-name>`
+  region: eu-west-1
+  runtime: python3.12
+  versionFunctions: false
+  stage: ${env:STAGE}
+  timeout: 60
+  # vpc:
+  #   securityGroupIds:
+  #     - <your-security-group-id>
+  #     - <your-security-group-id>
+  #   subnetIds:
+  #     - <your-subnet-id>
+  #     - <your-subnet-id>
+  # deploymentBucket:
+  #   name: ${env:DEPLOYMENT_BUCKET}
+  apiGateway:
+    shouldStartNameWithService: true
+  lambdaHashingVersion: 20240407
+
+package:
+  individually: true
+  exclude:
+    - .env
+    - .git/**
+    - .github/**
+    - .serverless/**
+    - static/**
+    - .cache/**
+    - .pytest_cache/**
+    - node_modules/**
