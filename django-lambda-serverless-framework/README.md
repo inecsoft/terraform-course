@@ -71,7 +71,7 @@ docker-compose exec db psql --username=postgres --dbname=postgres
 ```
 
 ```
-docker exec -it fargate-lab_web_1 bash
+docker exec -it serverless_web_1 bash
 ```
 
 ### **Run Django project locally**
