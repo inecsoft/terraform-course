@@ -9,9 +9,9 @@ source env/bin/activate
 pip install django
 pip install psycopg2-binary serverless-wsgi
 
-django-admin startproject wordcount
-cd wordcount
-python manage.py startapp hello
+django-admin startproject serverless
+cd serverless
+python manage.py startapp main
 
 mkdir templates
 mkdir static
