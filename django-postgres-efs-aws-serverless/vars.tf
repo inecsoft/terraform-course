@@ -8,9 +8,9 @@ locals {
 
 #----------------------------------------------------------------------------
 resource "random_password" "password" {
-  length  = 35
+  length  = 37
   special = true
-  #override_special = "_@\/ "
+  override_special = "@\"" #Only printable ASCII characters besides '/', '@', '"', ' ' may be used.
 }
 resource "random_password" "SECRET_KEY" {
   length           = 64

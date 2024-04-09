@@ -11,7 +11,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Mounts the application code to the image
 COPY . code
-RUN mkdir /code/staticfiles
 WORKDIR /code
 
 # set environment variables

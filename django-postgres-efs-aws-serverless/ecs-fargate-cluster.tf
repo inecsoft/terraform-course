@@ -1,3 +1,57 @@
+resource "aws_security_group" "ecs_security_group" {
+  name   = "ecs_security_group"
+  vpc_id = aws_vpc.ecs_vpc.id
+
+  #  No SSH ingress rule since Fargate tasks are abstracted and not directly accessible via SSH
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"#
+    description = "allows ssh access to the ecs container from the vpc"
+    cidr_blocks = [var.vpc_cidr]
+  }
+
+  ingress {
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "TCP"
+    cidr_blocks = var.subnet_cidr_public
+  }
+
+  ingress {
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "TCP"
+    description = "allows http access from personal ip address to the container"
+    cidr_blocks = [ local.workstation-external-cidr ]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    description = "allows http access on port 80 to all addresses to the container"
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    description = "allows all access from alb to the container"
+    security_groups = [aws_security_group.ecs_alb_security_group.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+###################################################################################
+
 resource "aws_ecr_repository" "ecr_repository_fargate" {
   name                 = "ca-container-registry"
   image_tag_mutability = "MUTABLE"
@@ -146,7 +200,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
           },
           {
             "name": "DEBUG",
-            "value": "0"
+            "value": "1"
           },
           {
             "name": "SECRET_KEY",
@@ -206,7 +260,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         # image            = "911328334795.dkr.ecr.eu-west-1.amazonaws.com/ca-container-registry:testblue"
         image            = "${aws_ecr_repository.ecr_repository_fargate.repository_url}:latest"
         # Run migrations as the command
-        # command = ["python", "manage.py", "migrate"]
+        command = ["python", "manage.py", "migrate"]
         # Run collectstatic as the command
         # command = ["python", "manage.py", "collectstatic", "--no-input", "-v", "3"]
 
@@ -236,6 +290,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
 
         healthCheck = {
           command  =  [ "CMD-SHELL", "curl  http://localhost:8000/ping/ || exit 1" ],
+          #  command  =  [ "CMD-SHELL", "curl  http://${aws_alb.ecs_load_balancer.dns_name}:8000/ping/ || exit 1" ],
           interval =  30,
           retries  =  3,
           timeout  =  5
@@ -324,7 +379,7 @@ resource "aws_secretsmanager_secret_version" "secret_version" {
   #secret_string = "example-string-to-protect"
   #secret_string = "${jsonencode(var.secret)}"
   secret_string = jsonencode(tomap({
-    "DEBUG" = "0",
+    "DEBUG" = "1",
     "ENVIRONMENT" = "dev",
     "SQL_ENGINE" = "django.db.backends.postgresql",
     "SECRET_KEY" = "${random_password.SECRET_KEY.result}",

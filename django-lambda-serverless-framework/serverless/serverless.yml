@@ -1,0 +1,39 @@
+service: serverless-django
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: python3.10
+  stage: dev
+  region: eu-west-1
+  # role: arn:aws:iam::<role_id>:role/<role_name>
+  profile: 'ivan-arteaga-dev'
+  timeout: 60
+
+plugins:
+  - serverless-wsgi
+  - serverless-python-requirements
+functions:
+  app:
+    handler: wsgi_handler.handler
+    environment: ${self:custom.variables}
+    timeout: 30
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+custom:
+  wsgi:
+    app: serverless.wsgi.application
+    packRequirements: false
+  variables: ${file(./.env)}
+package:
+  individually: true
+  patterns:
+    - .env
+    - .git/**
+    - .github/**
+    - .serverless/**
+    - static/**
+    - .cache/**
+    - .pytest_cache/**
+    - node_modules/**

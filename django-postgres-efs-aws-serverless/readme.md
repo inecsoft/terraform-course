@@ -19,6 +19,62 @@ python manage.py runserver
 pip freeze >>requirements.txt
 ```
 
+### **Creating a new project**
+
+```
+
+django-admin startproject projectname
+
+```
+
+### **Add an app to a project**
+
+```
+
+python3 manage.py startapp appname
+
+```
+
+### **Starting the server**
+
+```
+
+python3 manage.py runserver
+
+```
+
+### **Creating migrations**
+
+```
+
+python3 manage.py makemigrations
+
+```
+
+### **Migrate the database**
+
+```
+
+python3 manage.py migrate
+
+```
+
+### **Creating a Super User for the admin panel**
+
+```
+
+python3 manage.py createsuperuser
+
+```
+
+### **Collecting static files into one folder**
+
+```
+
+python3 manage.py collectstatic
+
+```
+
 ### How to build and test image
 
 ```
@@ -61,4 +117,16 @@ docker volume rm fargate-lab_postgres_data
 
 ```
 docker-compose exec db psql --username=postgres --dbname=postgres
+```
+
+```
+docker exec -it fargate-lab_web_1 bash
+```
+
+### there is some issues with the connection to the database. with local db works ok
+
+```
+psql -h production.crap8olwzhmd.eu-west-1.rds.amazonaws.com -p 5432 -U postgres -P z1n5SO08z8heRAGBcbeutIi22K0OQ9nvN6t5W
+
+psql --host=$HOST_RDS --port=5432 --username=postgres --password --dbname=postgres
 ```

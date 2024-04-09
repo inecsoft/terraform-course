@@ -26,7 +26,7 @@ from upload.views import image_upload
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path("", image_upload, name="upload"),
+    path("image_upload/", image_upload, name="upload"),
 ]
 
 if bool(settings.DEBUG):
