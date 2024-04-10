@@ -162,7 +162,7 @@ serverless plugin install -n serverless-python-requirements
 ### **Deploy your Django project to AWS Lambda using Serverless**
 
 ```
-serverless deploy -v
+serverless deploy --verbose
 serverless deploy -s production
 ```
 

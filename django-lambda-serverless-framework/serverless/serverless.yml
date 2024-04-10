@@ -8,7 +8,6 @@ provider:
   region: eu-west-1
   # role: arn:aws:iam::<role_id>:role/<role_name>
   profile: 'ivan-arteaga-dev'
-  timeout: 60
 
 plugins:
   - serverless-wsgi
@@ -25,7 +24,7 @@ custom:
   wsgi:
     app: serverless.wsgi.application
     packRequirements: false
-  variables: ${file(./.env)}
+  variables: ${file(./env.yml)}
 package:
   individually: true
   patterns:
