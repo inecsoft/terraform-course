@@ -200,7 +200,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
           },
           {
             "name": "DEBUG",
-            "value": "1"
+            "value": "${jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["DEBUG"]}"
           },
           {
             "name": "SECRET_KEY",
@@ -228,7 +228,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
           },
           {
             "name": "SQL_ENGINE",
-            "value": "django.db.backends.postgresql"
+            "value": "${jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["SQL_ENGINE"]}"
           },
           {
             "name": "PYTHONUNBUFFERED",
@@ -251,7 +251,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         secrets =  [
           {
             "name": "DATABASE_PASSWORD",
-            "valueFrom":  aws_secretsmanager_secret_version.secret_version.arn
+            "valueFrom":  aws_secretsmanager_secret_version.secret_version_rds.arn
           }
         ]
 
@@ -260,7 +260,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         # image            = "911328334795.dkr.ecr.eu-west-1.amazonaws.com/ca-container-registry:testblue"
         image            = "${aws_ecr_repository.ecr_repository_fargate.repository_url}:latest"
         # Run migrations as the command
-        command = ["python", "manage.py", "migrate"]
+        # command = ["python", "manage.py", "migrate"]
         # Run collectstatic as the command
         # command = ["python", "manage.py", "collectstatic", "--no-input", "-v", "3"]
 
@@ -373,15 +373,16 @@ resource "aws_secretsmanager_secret" "rotation-secret" {
     Name = "rotation-secret-${random_string.random.result}"
   }
 }
+
 #--------------------------------------------------------------------------------
 resource "aws_secretsmanager_secret_version" "secret_version" {
   secret_id = aws_secretsmanager_secret.rotation-secret.id
   #secret_string = "example-string-to-protect"
   #secret_string = "${jsonencode(var.secret)}"
   secret_string = jsonencode(tomap({
-    "DEBUG" = "1",
+    "DEBUG" = "True",
     "ENVIRONMENT" = "dev",
-    "SQL_ENGINE" = "django.db.backends.postgresql",
+    "SQL_ENGINE" = "django.db.backends.postgresql_psycopg2",
     "SECRET_KEY" = "${random_password.SECRET_KEY.result}",
     "POSTGRES_DB" = "postgres",
     "POSTGRES_USER" = "postgres",
@@ -394,8 +395,29 @@ resource "aws_secretsmanager_secret_version" "secret_version" {
     "PORT" = "8000",}
     )
   )
-
 }
+#--------------------------------------------------------------------------------
+
+resource "aws_secretsmanager_secret" "rotation-secret-rds" {
+  name = "rotation-secret-rds-${random_string.random.result}"
+  #  rotation_lambda_arn = "${aws_lambda_function.example.arn}"
+
+  #  rotation_rules {
+  #   automatically_after_days = 7
+  #  }
+
+  kms_key_id = aws_kms_key.kms-key.key_id
+
+  tags = {
+    Name = "rotation-secret-rds-${random_string.random.result}"
+  }
+}
+
+resource "aws_secretsmanager_secret_version" "secret_version_rds" {
+  secret_id = aws_secretsmanager_secret.rotation-secret-rds.id
+  secret_string = "${random_password.password.result}"
+}
+# echo "nonsensitive(aws_secretsmanager_secret_version.secret_version_rds.secret_string)" | terraform console
 #--------------------------------------------------------------------------------
 output "secretsmanager_secret_version_DATABASE_PASSWORD" {
   # sensitive = false

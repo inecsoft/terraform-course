@@ -18,8 +18,6 @@ resource "aws_security_group" "rds" {
     cidr_blocks = var.subnet_cidr_public
   }
 
-
-
   ingress {
     protocol        = "tcp"
     from_port       = "5432"
@@ -43,12 +41,12 @@ resource "aws_db_subnet_group" "db_subnet_group_rds" {
 
 resource "aws_db_instance" "db_instance" {
   identifier              = "${jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["POSTGRES_DB"]}"
-  # db_name                 = "${jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["POSTGRES_DB"]}"
+  db_name                 = "${jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["POSTGRES_DB"]}"
   username                = "${jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["POSTGRES_USER"]}"
   password                = "${jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["DATABASE_PASSWORD"]}"
   port                    = "${jsondecode(aws_secretsmanager_secret_version.secret_version.secret_string)["POSTGRES_PORT"]}"
   engine                  = "postgres"
-  engine_version          = "15.4"
+  engine_version          = "16.2"
   instance_class          = var.rds_instance_class
   allocated_storage       = "20"
   storage_encrypted       = false

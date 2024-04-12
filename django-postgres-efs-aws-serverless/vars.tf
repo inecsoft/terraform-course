@@ -10,7 +10,8 @@ locals {
 resource "random_password" "password" {
   length  = 37
   special = true
-  override_special = "@\"" #Only printable ASCII characters besides '/', '@', '"', ' ' may be used.
+  override_special = "\\/@\"" #Only printable ASCII characters besides '/', '@', '"', ' ' may be used.
+  # override_special = "!#$%&*()-_=+[]{}<>:?" recommended
 }
 resource "random_password" "SECRET_KEY" {
   length           = 64
@@ -18,7 +19,7 @@ resource "random_password" "SECRET_KEY" {
   # override_special = "_%@\""
   #override_special = "%\"@_"
 }
-#echo random_password.password.result | terraform console
+#echo "nonsensitive(random_password.password.result)" | terraform console
 #--------------------------------------------------------------------------------------
 resource "random_string" "random" {
   length  = 2
