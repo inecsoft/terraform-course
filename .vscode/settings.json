@@ -19,5 +19,10 @@
   "python.pythonPath": "/usr/bin/python",
   "python.setInterpreter": "python",
   "java.javaPath": "/usr/bin/java",
-  "java.setInterpreter": "java"
+  "java.setInterpreter": "java",
+  "terminal.integrated.shellIntegration.history": 1000,
+  "files.watcherExclude": {
+    "**/.venv/**": true,
+    "**/env/**": true
+  }
 }
