@@ -39,14 +39,14 @@ from django_app.network_stack import NetworkStack
 from django_app.database_stack import DatabaseStack
 
 app = cdk.App()
-# net = NetworkStack(
-#     app,
-#     "NetworkStack",
-#     env=Environment(
-#         account=os.getenv('CDK_DEFAULT_ACCOUNT'),
-#         region=os.getenv('CDK_DEFAULT_REGION')
-#     ),
-# )
+net = NetworkStack(
+    app,
+    "NetworkStack",
+    env=Environment(
+        account=os.getenv('CDK_DEFAULT_ACCOUNT'),
+        region=os.getenv('CDK_DEFAULT_REGION')
+    ),
+)
 
 # Database = DatabaseStack(
 #     app,
@@ -60,18 +60,18 @@ app = cdk.App()
 
 # )
 
-DjangoAppPipelineStage = MyDjangoAppPipelineStack(
-    app,
-    "MyDjangoAppPipelineStage",
-    django_debug = "True",
-    domain_name = "dumy.transport-for-greater-manchester.com",
-    subdomain = "django-app",
-    django_settings_module = "app.settings.prod",
-    env=Environment(
-        account=os.getenv('CDK_DEFAULT_ACCOUNT'),
-        region=os.getenv('CDK_DEFAULT_REGION')
-    ),
-)
+# DjangoAppPipelineStage = MyDjangoAppPipelineStack(
+#     app,
+#     "MyDjangoAppPipelineStage",
+#     django_debug = "True",
+#     domain_name = "dumy.transport-for-greater-manchester.com",
+#     subdomain = "django-app",
+#     django_settings_module = "app.settings.prod",
+#     env=Environment(
+#         account=os.getenv('CDK_DEFAULT_ACCOUNT'),
+#         region=os.getenv('CDK_DEFAULT_REGION')
+#     ),
+# )
 
 
 # pipeline = MyDjangoAppPipelineStack(
