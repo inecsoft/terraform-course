@@ -1,1 +1,5 @@
- wing compile -t tf-aws main.w 
+```
+wing compile -t tf-aws main.w
+```
+
+### **Ref:** "gitignore.io"
