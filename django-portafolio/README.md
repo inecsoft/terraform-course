@@ -38,9 +38,9 @@ zip -r ./fargate-lab/fargatelab.zip fargate-lab
 ### How to build with docker compose
 
 ```
-docker-compose -f ./fargate-lab/docker-compose.yml up -d
-docker-compose -f ./fargate-lab/docker-compose.yml up --build
-docker-compose -f ./fargate-lab/docker-compose.yml down
+docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.yml up --build
+docker-compose -f docker-compose.yml down
 ```
 
 ### **How to test**
@@ -137,4 +137,5 @@ python3 manage.py collectstatic
 ```
 psql --host=mypostgresql.c6c8mwvfdgv0.us-west-2.rds.amazonaws.com --port=5432 --username=awsuser --password --dbname=mypgdb
 ```
-### __Ref:__  "gitignore.io"
+
+### **Ref:** "gitignore.io"
