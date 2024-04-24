@@ -1,0 +1,11 @@
+{
+  "availability-zones:account=911328334795:region=eu-west-1": [
+    "eu-west-1a",
+    "eu-west-1b",
+    "eu-west-1c"
+  ],
+  "hosted-zone:account=911328334795:domainName=dumy.transport-for-greater-manchester.com:region=eu-west-1": {
+    "Id": "/hostedzone/Z03444011M9IWCG7EXZS4",
+    "Name": "dumy.transport-for-greater-manchester.com."
+  }
+}
