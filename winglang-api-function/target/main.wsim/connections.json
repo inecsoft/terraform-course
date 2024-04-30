@@ -1,0 +1,50 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/Default/Api",
+      "target": "root/Default/Api/OnRequestHandler0",
+      "name": "post()"
+    },
+    {
+      "source": "root/Default/Api",
+      "target": "root/Default/Api/OnRequestHandler1",
+      "name": "get()"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler0",
+      "target": "root/Default/$Closure1_0",
+      "name": "handle()"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler0",
+      "target": "root/Default/Shortener",
+      "name": "create()"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler0",
+      "target": "root/Default/Shortener/Bucket",
+      "name": "put()"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "target": "root/Default/$Closure2_0",
+      "name": "handle()"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "target": "root/Default/Shortener",
+      "name": "get()"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "target": "root/Default/Shortener/Bucket",
+      "name": "exists()"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "target": "root/Default/Shortener/Bucket",
+      "name": "get()"
+    }
+  ]
+}

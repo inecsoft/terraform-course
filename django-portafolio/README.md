@@ -5,6 +5,10 @@ python -m venv env
 source env/bin/activate
 ```
 
+### **Command Palette**
+
+(Ctrl+Shift+P)). Then select the Python: Select Interpreter command:
+
 ```
 pip install django
 

@@ -1,0 +1,15 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/Default/Default/Function",
+      "target": "root/Default/Default/$Closure1_0",
+      "name": "handle()"
+    },
+    {
+      "source": "root/Default/Default/Function",
+      "target": "root/Default/Default/Bucket",
+      "name": "put()"
+    }
+  ]
+}

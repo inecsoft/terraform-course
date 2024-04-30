@@ -1,0 +1,45 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/env0/Api",
+      "target": "root/env0/Api/OnRequestHandler0",
+      "name": "get()"
+    },
+    {
+      "source": "root/env0/Api",
+      "target": "root/env0/Api/OnRequestHandler1",
+      "name": "get()"
+    },
+    {
+      "source": "root/env0/Function",
+      "target": "root/env0/$Closure1_0",
+      "name": "handle()"
+    },
+    {
+      "source": "root/env0/Function",
+      "target": "root/env0/Bucket",
+      "name": "put()"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler0",
+      "target": "root/env0/$Closure2_0",
+      "name": "handle()"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler0",
+      "target": "root/env0/Function",
+      "name": "invoke()"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler1",
+      "target": "root/env0/$Closure3_0",
+      "name": "handle()"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler1",
+      "target": "root/env0/Counter",
+      "name": "peek()"
+    }
+  ]
+}

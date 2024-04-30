@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'portafolio.middleware.HealthCheckMiddleware',
 ]
 
 ROOT_URLCONF = 'portafolio.urls'
@@ -87,7 +88,7 @@ WSGI_APPLICATION = 'portafolio.wsgi.application'
 # }
 
 
-if os.environ.get("DEBUG", default=False) == True:
+if os.environ.get("DEBUG", default=False) == False:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
