@@ -200,7 +200,7 @@ class $Root extends $stdlib.std.Resource {
     console.log("hello world");
     const s = new Shortener(this, "Shortener");
     const apishortener = this.node.root.new("@winglang/sdk.cloud.Api", cloud.Api, this, "Api");
-    (apishortener.post("/shorten/:alias", new $Closure1(this, "$Closure1")));
+    (apishortener.post("/short/:alias", new $Closure1(this, "$Closure1")));
     (apishortener.get("/short/:alias", new $Closure2(this, "$Closure2")));
     this.node.root.new("@winglang/sdk.std.Test", std.Test, this, "test:should get 404 when not alias found", new $Closure3(this, "$Closure3"));
     this.node.root.new("@winglang/sdk.std.Test", std.Test, this, "test:set alias and get it", new $Closure4(this, "$Closure4"));

@@ -83,7 +83,7 @@
                   "version": "0.0.0"
                 },
                 "display": {
-                  "title": "POST /shorten/:alias",
+                  "title": "POST /short/:alias",
                   "description": "A cloud function (FaaS)",
                   "hidden": true,
                   "sourceModule": "@winglang/sdk"

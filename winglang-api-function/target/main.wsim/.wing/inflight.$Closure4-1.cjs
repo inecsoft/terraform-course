@@ -8,9 +8,9 @@ module.exports = function({ $apishortener_url, $expect_Util, $http_RequestRedire
       return $obj;
     }
     async handle() {
-      (await $http_Util.post(String.raw({ raw: ["", "/short/a"] }, $apishortener_url), { body: "https://www.winglang.io" }));
-      const resp = (await $http_Util.get(String.raw({ raw: ["", "/short/a"] }, $apishortener_url), { redirect: $http_RequestRedirect.MANUAL }));
-      (await $expect_Util.equal(404, resp.status));
+      (await $http_Util.post(String.raw({ raw: ["", "/short/w"] }, $apishortener_url), { body: "https://www.winglang.io" }));
+      const resp = (await $http_Util.get(String.raw({ raw: ["", "/short/w"] }, $apishortener_url), { redirect: $http_RequestRedirect.MANUAL }));
+      (await $expect_Util.equal(307, resp.status));
       console.log(String.raw({ raw: ["", ""] }, ((json, opts) => { return JSON.stringify(json, null, opts?.indent) })(resp.headers)));
       (await $expect_Util.equal("https://www.winglang.io", ((obj, key) => { if (!(key in obj)) throw new Error(`Map does not contain key: "${key}"`); return obj[key]; })(resp.headers, "location")));
     }

@@ -158,9 +158,9 @@
       "props": {
         "openApiSpec": {
           "paths": {
-            "/shorten/{alias}": {
+            "/short/{alias}": {
               "post": {
-                "operationId": "post-shorten/:alias",
+                "operationId": "post-short/:alias",
                 "responses": {
                   "200": {
                     "description": "200 response",
@@ -177,9 +177,7 @@
                     }
                   }
                 ]
-              }
-            },
-            "/short/{alias}": {
+              },
               "get": {
                 "operationId": "get-short/:alias",
                 "responses": {
@@ -215,7 +213,7 @@
         "subscriptionProps": {
           "routes": [
             {
-              "pathPattern": "/shorten/:alias",
+              "pathPattern": "/short/:alias",
               "method": "POST"
             }
           ]
