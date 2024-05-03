@@ -1,0 +1,36 @@
+trigger:
+  - master
+
+pool:
+  name: Azure Pipelines
+  vmImage: ubuntu-latest
+steps:
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: 'terraform version'
+  inputs:
+    command: version
+
+- task: TerraformTaskV2@2
+  displayName: 'terraform init'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'TF-Azure-CDS-Devops'
+    backendAzureRmResourceGroupName: 'TF-Azure-CDS-DevOps'
+    backendAzureRmStorageAccountName: 'cdsdevopsbackend'
+    backendAzureRmContainerName: 'tstate'
+    backendAzureRmKey: 'terraform.tfstate'
+  
+- task: TerraformTaskV2@2
+  displayName: 'terraform plan'
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'TF-Azure-CDS-Devops'
+
+- task: TerraformTaskV2@2
+  displayName: 'terraform apply'
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'TF-Azure-CDS-Devops'
