@@ -30,7 +30,7 @@ DEBUG = os.environ.get("DEBUG", default=False)
 print(".env.DEBUG value is: {}".format(DEBUG))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default='127.0.0.1').split(' ')
-
+print(".env.ALLOWED_HOSTS value is: {}".format(ALLOWED_HOSTS))
 # Application definition
 
 INSTALLED_APPS = [
