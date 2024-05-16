@@ -80,6 +80,58 @@ git log ..ref
 git reflog
 ```
 
+### **Listing the existing tags in Git**
+
+```
+git tag -l
+```
+
+### **Creating tags annotated**
+
+```
+git tag -a "v1.0.0" -m "tag version v1.0.0"
+```
+
+### **How to see the tag data along with the commit that was tagged**
+
+```
+git show v1.0.0
+```
+
+### **Sharing Tags**
+
+```
+git push origin v1.0.0
+
+or
+
+git push origin --tags
+```
+
+### **Deleting Tags locally**
+
+```
+git tag -d v1.0.0
+```
+
+### **Deleting Tags remotly**
+
+```
+git push origin --delete <tagname>
+```
+
+### **Checking out Tags**
+
+```
+git checkout v1.0.0
+```
+
+### **How to create a new branch version out of the tag**
+
+```
+git checkout -b version2 v1.0.0
+```
+
 ### **To remove file from remote repo**
 
 ```
@@ -470,6 +522,12 @@ terraformer import aws --resources=vpc,subnet --filter=vpc=vpc_id1:vpc_id2:vpc_i
 code tunnel service install
 
 code tunnel service log
+```
+
+### **How to delete files in a folder with find**
+
+```
+ find ./module -name "provider.tf" -type f -print0 | xargs -0 rm -rf
 ```
 
 ---
