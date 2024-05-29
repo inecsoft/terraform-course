@@ -552,8 +552,8 @@ kubectl -n kube-system logs kubernetes-dashboard-77fd78f978-n7zvd
 kubeadm join 192.168.1.99:6443 --token TOKEN --discovery-token-ca-cert-hash DISCOVERY_TOKEN
 ```
 
-Where TOKEN and DISCOVERY*TOKEN are the tokens displayed after the initialization command completes.
-***Note:**\_ Make sure that you deployed the dashboard before joining the nodes so the dashboard is hosted on the master.
+Where TOKEN and DISCOVERY\*TOKEN are the tokens displayed after the initialization command completes.
+**\*Note:**\_ Make sure that you deployed the dashboard before joining the nodes so the dashboard is hosted on the master.
 If you do it after the dashboard gets hosted on the nodes.
 
 # **Checking your nodes**
@@ -1948,6 +1948,10 @@ minikube version
 
 ```
 minikube start --vm-driver kvm2
+
+or
+
+minikube start --driver=qemu2
 
 minikube start --memory 5120 --cpus 2 --vm-driver kvm2
 ```

@@ -1,0 +1,40 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/Default/origin",
+      "target": "root/Default/origin/oncreate",
+      "name": "onCreate()"
+    },
+    {
+      "source": "root/Default/origin/oncreate",
+      "target": "root/Default/origin/oncreate/OnMessage0",
+      "name": "onMessage()"
+    },
+    {
+      "source": "root/Default/origin/oncreate/OnMessage0",
+      "target": "root/Default/$Closure2_0",
+      "name": "handle()"
+    },
+    {
+      "source": "root/Default/origin/oncreate/OnMessage0",
+      "target": "root/Default/backup",
+      "name": "put()"
+    },
+    {
+      "source": "root/Default/origin/oncreate/OnMessage0",
+      "target": "root/Default/origin",
+      "name": "get()"
+    },
+    {
+      "source": "root/Default/Upload files",
+      "target": "root/Default/$Closure1_0",
+      "name": "handle()"
+    },
+    {
+      "source": "root/Default/Upload files",
+      "target": "root/Default/origin",
+      "name": "put()"
+    }
+  ]
+}

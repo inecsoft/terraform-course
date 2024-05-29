@@ -1,0 +1,184 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "root",
+    "path": "root",
+    "children": {
+      "cloud.TestRunner": {
+        "id": "cloud.TestRunner",
+        "path": "root/cloud.TestRunner",
+        "constructInfo": {
+          "fqn": "@winglang/sdk.std.TestRunner",
+          "version": "0.0.0"
+        },
+        "display": {
+          "title": "TestRunner",
+          "description": "A suite of APIs for running tests and collecting results.",
+          "hidden": true
+        }
+      },
+      "env0": {
+        "id": "env0",
+        "path": "root/env0",
+        "children": {
+          "origin": {
+            "id": "origin",
+            "path": "root/env0/origin",
+            "children": {
+              "Policy": {
+                "id": "Policy",
+                "path": "root/env0/origin/Policy",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.sim.Policy",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "Policy",
+                  "description": "A simulated resource policy",
+                  "hidden": true
+                }
+              },
+              "oncreate": {
+                "id": "oncreate",
+                "path": "root/env0/origin/oncreate",
+                "children": {
+                  "Policy": {
+                    "id": "Policy",
+                    "path": "root/env0/origin/oncreate/Policy",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.sim.Policy",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "title": "Policy",
+                      "description": "A simulated resource policy",
+                      "hidden": true
+                    }
+                  },
+                  "OnMessage0": {
+                    "id": "OnMessage0",
+                    "path": "root/env0/origin/oncreate/OnMessage0",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.cloud.Function",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "title": "onMessage()",
+                      "description": "A cloud function (FaaS)",
+                      "sourceModule": "@winglang/sdk"
+                    }
+                  },
+                  "TopicEventMapping0": {
+                    "id": "TopicEventMapping0",
+                    "path": "root/env0/origin/oncreate/TopicEventMapping0",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.std.Resource",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "hidden": true
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.cloud.Topic",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "Topic",
+                  "description": "A pub/sub notification topic"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@winglang/sdk.cloud.Bucket",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Bucket",
+              "description": "A cloud object store"
+            }
+          },
+          "backup": {
+            "id": "backup",
+            "path": "root/env0/backup",
+            "children": {
+              "Policy": {
+                "id": "Policy",
+                "path": "root/env0/backup/Policy",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.sim.Policy",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "Policy",
+                  "description": "A simulated resource policy",
+                  "hidden": true
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@winglang/sdk.cloud.Bucket",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Bucket",
+              "description": "A cloud object store"
+            }
+          },
+          "$Closure1_0": {
+            "id": "$Closure1_0",
+            "path": "root/env0/$Closure1_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          },
+          "Upload files": {
+            "id": "Upload files",
+            "path": "root/env0/Upload files",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.cloud.Function",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Function",
+              "description": "A cloud function (FaaS)"
+            }
+          },
+          "$Closure2_0": {
+            "id": "$Closure2_0",
+            "path": "root/env0/$Closure2_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "@winglang/sdk.std.Resource",
+          "version": "0.0.0"
+        },
+        "display": {}
+      },
+      "ParameterRegistrar": {
+        "id": "ParameterRegistrar",
+        "path": "root/ParameterRegistrar",
+        "constructInfo": {
+          "fqn": "@winglang/sdk.platform.ParameterRegistrar",
+          "version": "0.0.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "@winglang/sdk.core.App",
+      "version": "0.0.0"
+    }
+  }
+}

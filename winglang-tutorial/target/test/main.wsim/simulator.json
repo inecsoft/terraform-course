@@ -1,0 +1,206 @@
+{
+  "types": {
+    "@winglang/sdk.cloud.Api": {
+      "className": "Api",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/api.inflight.js"
+    },
+    "@winglang/sdk.cloud.Bucket": {
+      "className": "Bucket",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/bucket.inflight.js"
+    },
+    "@winglang/sdk.cloud.Domain": {
+      "className": "Domain",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/domain.inflight.js"
+    },
+    "@winglang/sdk.cloud.Endpoint": {
+      "className": "Endpoint",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/endpoint.inflight.js"
+    },
+    "@winglang/sdk.sim.EventMapping": {
+      "className": "EventMapping",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/event-mapping.inflight.js"
+    },
+    "@winglang/sdk.cloud.Function": {
+      "className": "Function",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/function.inflight.js"
+    },
+    "@winglang/sdk.cloud.OnDeploy": {
+      "className": "OnDeploy",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/on-deploy.inflight.js"
+    },
+    "@winglang/sdk.sim.Policy": {
+      "className": "Policy",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/policy.inflight.js"
+    },
+    "@winglang/sdk.cloud.Queue": {
+      "className": "Queue",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/queue.inflight.js"
+    },
+    "@winglang/sdk.ex.Redis": {
+      "className": "Redis",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/redis.inflight.js"
+    },
+    "@winglang/sdk.cloud.Schedule": {
+      "className": "Schedule",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/schedule.inflight.js"
+    },
+    "@winglang/sdk.cloud.Secret": {
+      "className": "Secret",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/secret.inflight.js"
+    },
+    "@winglang/sdk.cloud.Service": {
+      "className": "Service",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/service.inflight.js"
+    },
+    "@winglang/sdk.sim.State": {
+      "className": "State",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/state.inflight.js"
+    },
+    "@winglang/sdk.sim.Container": {
+      "className": "Container",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/container.inflight.js"
+    },
+    "@winglang/sdk.sim.Resource": {
+      "className": "Resource",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/resource.inflight.js"
+    },
+    "@winglang/sdk.ex.Table": {
+      "className": "Table",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/table.inflight.js"
+    },
+    "@winglang/sdk.std.TestRunner": {
+      "className": "TestRunner",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/test-runner.inflight.js"
+    },
+    "@winglang/sdk.cloud.Topic": {
+      "className": "Topic",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/topic.inflight.js"
+    },
+    "@winglang/sdk.cloud.Website": {
+      "className": "Website",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/website.inflight.js"
+    }
+  },
+  "resources": {
+    "root/cloud.TestRunner": {
+      "type": "@winglang/sdk.std.TestRunner",
+      "props": {
+        "tests": {}
+      },
+      "path": "root/cloud.TestRunner",
+      "addr": "c8647dd8d2adabe83cc081ebe0ccbefe4a068ef3bf"
+    },
+    "root/env0/Bucket: Last Message": {
+      "type": "@winglang/sdk.cloud.Bucket",
+      "props": {
+        "public": false,
+        "initialObjects": {},
+        "topics": {}
+      },
+      "path": "root/env0/Bucket: Last Message",
+      "addr": "c8632b97ae5fcc60ed6784226b5571aa8ad802e896"
+    },
+    "root/env0/Queue/Consumer0": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/consumer0_c8a0827b.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "BUCKET_HANDLE_d802e896": "${wsim#root/env0/Bucket: Last Message#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "put",
+          "resourceHandle": "${wsim#root/env0/Bucket: Last Message#attrs.handle}"
+        }
+      ],
+      "path": "root/env0/Queue/Consumer0",
+      "addr": "c8a0827b4ee974cab7b001d8b17a07d33c75fd7162",
+      "deps": [
+        "root/env0/Bucket: Last Message"
+      ]
+    },
+    "root/env0/Queue": {
+      "type": "@winglang/sdk.cloud.Queue",
+      "props": {
+        "timeout": 30,
+        "retentionPeriod": 3600
+      },
+      "path": "root/env0/Queue",
+      "addr": "c876064bbbccd5930f1711b6db9b73ad54d3f7cda4"
+    },
+    "root/env0/Queue/Policy": {
+      "type": "@winglang/sdk.sim.Policy",
+      "props": {
+        "principal": "${wsim#root/env0/Queue#attrs.handle}",
+        "statements": [
+          {
+            "resourceHandle": "${wsim#root/env0/Queue/Consumer0#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env0/Queue/Consumer0#attrs.handle}",
+            "operation": "hasAvailableWorkers"
+          }
+        ]
+      },
+      "path": "root/env0/Queue/Policy",
+      "addr": "c80f605859ea91e45c79cb1fb3f4e7349141589b75"
+    },
+    "root/env0/Queue/QueueEventMapping0": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env0/Queue/Consumer0#attrs.handle}",
+        "publisher": "${wsim#root/env0/Queue#attrs.handle}",
+        "subscriptionProps": {
+          "batchSize": 1
+        }
+      },
+      "path": "root/env0/Queue/QueueEventMapping0",
+      "addr": "c8569e5663111933228cfe4232dcd164b46c4520a7",
+      "deps": [
+        "root/env0/Queue/Consumer0",
+        "root/env0/Queue",
+        "root/env0/Queue/Policy"
+      ]
+    },
+    "root/env0/Bucket: Last Message/Policy": {
+      "type": "@winglang/sdk.sim.Policy",
+      "props": {
+        "principal": "${wsim#root/env0/Bucket: Last Message#attrs.handle}",
+        "statements": []
+      },
+      "path": "root/env0/Bucket: Last Message/Policy",
+      "addr": "c8649eccba787cac988daacb918dce7eb6fef70c74"
+    },
+    "root/env0/Function": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/function_c8ba1bd6.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "QUEUE_HANDLE_d3f7cda4": "${wsim#root/env0/Queue#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "push",
+          "resourceHandle": "${wsim#root/env0/Queue#attrs.handle}"
+        }
+      ],
+      "path": "root/env0/Function",
+      "addr": "c8ba1bd656a3496b3a16c92a9f96b207b8ea02c26a",
+      "deps": [
+        "root/env0/Queue"
+      ]
+    }
+  },
+  "sdkVersion": "0.73.52"
+}

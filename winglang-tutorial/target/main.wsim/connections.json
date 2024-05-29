@@ -1,0 +1,40 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/Default/Queue",
+      "sourceOp": "push",
+      "target": "root/Default/Queue/Consumer0",
+      "targetOp": "invoke",
+      "name": "setConsumer()"
+    },
+    {
+      "source": "root/Default/Queue/Consumer0",
+      "sourceOp": "invoke",
+      "target": "root/Default/Bucket: Last Message",
+      "targetOp": "put",
+      "name": "put"
+    },
+    {
+      "source": "root/Default/Queue/Consumer0",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Bucket: Last Message",
+      "targetOp": "put",
+      "name": "put"
+    },
+    {
+      "source": "root/Default/Function",
+      "sourceOp": "invoke",
+      "target": "root/Default/Queue",
+      "targetOp": "push",
+      "name": "push"
+    },
+    {
+      "source": "root/Default/Function",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Queue",
+      "targetOp": "push",
+      "name": "push"
+    }
+  ]
+}

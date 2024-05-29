@@ -1,0 +1,95 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "root",
+    "path": "root",
+    "children": {
+      "cloud.TestRunner": {
+        "id": "cloud.TestRunner",
+        "path": "root/cloud.TestRunner",
+        "constructInfo": {
+          "fqn": "@winglang/sdk.std.TestRunner",
+          "version": "0.0.0"
+        },
+        "display": {
+          "title": "TestRunner",
+          "description": "A suite of APIs for running tests and collecting results.",
+          "hidden": true
+        }
+      },
+      "env0": {
+        "id": "env0",
+        "path": "root/env0",
+        "children": {
+          "Queue": {
+            "id": "Queue",
+            "path": "root/env0/Queue",
+            "children": {
+              "Policy": {
+                "id": "Policy",
+                "path": "root/env0/Queue/Policy",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.sim.Policy",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "Policy",
+                  "description": "A simulated resource policy",
+                  "hidden": true
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@winglang/sdk.cloud.Queue",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Queue",
+              "description": "A distributed message queue"
+            }
+          },
+          "$Closure1_0": {
+            "id": "$Closure1_0",
+            "path": "root/env0/$Closure1_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          },
+          "Function": {
+            "id": "Function",
+            "path": "root/env0/Function",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.cloud.Function",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Function",
+              "description": "A cloud function (FaaS)"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "@winglang/sdk.std.Resource",
+          "version": "0.0.0"
+        },
+        "display": {}
+      },
+      "ParameterRegistrar": {
+        "id": "ParameterRegistrar",
+        "path": "root/ParameterRegistrar",
+        "constructInfo": {
+          "fqn": "@winglang/sdk.platform.ParameterRegistrar",
+          "version": "0.0.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "@winglang/sdk.core.App",
+      "version": "0.0.0"
+    }
+  }
+}

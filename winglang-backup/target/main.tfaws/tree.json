@@ -1,0 +1,336 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "root": {
+        "id": "root",
+        "path": "root",
+        "children": {
+          "Default": {
+            "id": "Default",
+            "path": "root/Default",
+            "children": {
+              "aws": {
+                "id": "aws",
+                "path": "root/Default/aws",
+                "constructInfo": {
+                  "fqn": "cdktf.TerraformProvider",
+                  "version": "0.20.3"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "root/Default/Default",
+                "children": {
+                  "origin": {
+                    "id": "origin",
+                    "path": "root/Default/Default/origin",
+                    "children": {
+                      "Default": {
+                        "id": "Default",
+                        "path": "root/Default/Default/origin/Default",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      },
+                      "oncreate": {
+                        "id": "oncreate",
+                        "path": "root/Default/Default/origin/oncreate",
+                        "children": {
+                          "Default": {
+                            "id": "Default",
+                            "path": "root/Default/Default/origin/oncreate/Default",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "PublishPermission-c8f13b3c2fda00605c9ded76ceaa69b0eaac1e5b01": {
+                            "id": "PublishPermission-c8f13b3c2fda00605c9ded76ceaa69b0eaac1e5b01",
+                            "path": "root/Default/Default/origin/oncreate/PublishPermission-c8f13b3c2fda00605c9ded76ceaa69b0eaac1e5b01",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "TopicSubscription0": {
+                            "id": "TopicSubscription0",
+                            "path": "root/Default/Default/origin/oncreate/TopicSubscription0",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@winglang/sdk.cloud.Topic",
+                          "version": "0.0.0"
+                        },
+                        "display": {
+                          "title": "Topic",
+                          "description": "A pub/sub notification topic"
+                        }
+                      },
+                      "oncreate-OnMessage0": {
+                        "id": "oncreate-OnMessage0",
+                        "path": "root/Default/Default/origin/oncreate-OnMessage0",
+                        "children": {
+                          "S3Object": {
+                            "id": "S3Object",
+                            "path": "root/Default/Default/origin/oncreate-OnMessage0/S3Object",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "IamRole": {
+                            "id": "IamRole",
+                            "path": "root/Default/Default/origin/oncreate-OnMessage0/IamRole",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "IamRolePolicy": {
+                            "id": "IamRolePolicy",
+                            "path": "root/Default/Default/origin/oncreate-OnMessage0/IamRolePolicy",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "IamRolePolicyAttachment": {
+                            "id": "IamRolePolicyAttachment",
+                            "path": "root/Default/Default/origin/oncreate-OnMessage0/IamRolePolicyAttachment",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "CloudwatchLogGroup": {
+                            "id": "CloudwatchLogGroup",
+                            "path": "root/Default/Default/origin/oncreate-OnMessage0/CloudwatchLogGroup",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "Default": {
+                            "id": "Default",
+                            "path": "root/Default/Default/origin/oncreate-OnMessage0/Default",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "InvokePermission-c81520ac8d7a23e8818ad270eb473d2bcf4af13cc2": {
+                            "id": "InvokePermission-c81520ac8d7a23e8818ad270eb473d2bcf4af13cc2",
+                            "path": "root/Default/Default/origin/oncreate-OnMessage0/InvokePermission-c81520ac8d7a23e8818ad270eb473d2bcf4af13cc2",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformResource",
+                              "version": "0.20.3"
+                            }
+                          },
+                          "Asset": {
+                            "id": "Asset",
+                            "path": "root/Default/Default/origin/oncreate-OnMessage0/Asset",
+                            "constructInfo": {
+                              "fqn": "cdktf.TerraformAsset",
+                              "version": "0.20.3"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@winglang/sdk.cloud.Function",
+                          "version": "0.0.0"
+                        },
+                        "display": {
+                          "title": "Function",
+                          "description": "A cloud function (FaaS)"
+                        }
+                      },
+                      "S3BucketNotification": {
+                        "id": "S3BucketNotification",
+                        "path": "root/Default/Default/origin/S3BucketNotification",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.cloud.Bucket",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "title": "Bucket",
+                      "description": "A cloud object store"
+                    }
+                  },
+                  "backup": {
+                    "id": "backup",
+                    "path": "root/Default/Default/backup",
+                    "children": {
+                      "Default": {
+                        "id": "Default",
+                        "path": "root/Default/Default/backup/Default",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.cloud.Bucket",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "title": "Bucket",
+                      "description": "A cloud object store"
+                    }
+                  },
+                  "$Closure1_0": {
+                    "id": "$Closure1_0",
+                    "path": "root/Default/Default/$Closure1_0",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.std.AutoIdResource",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "hidden": true
+                    }
+                  },
+                  "Upload files": {
+                    "id": "Upload files",
+                    "path": "root/Default/Default/Upload files",
+                    "children": {
+                      "S3Object": {
+                        "id": "S3Object",
+                        "path": "root/Default/Default/Upload files/S3Object",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      },
+                      "IamRole": {
+                        "id": "IamRole",
+                        "path": "root/Default/Default/Upload files/IamRole",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      },
+                      "IamRolePolicy": {
+                        "id": "IamRolePolicy",
+                        "path": "root/Default/Default/Upload files/IamRolePolicy",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      },
+                      "IamRolePolicyAttachment": {
+                        "id": "IamRolePolicyAttachment",
+                        "path": "root/Default/Default/Upload files/IamRolePolicyAttachment",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      },
+                      "CloudwatchLogGroup": {
+                        "id": "CloudwatchLogGroup",
+                        "path": "root/Default/Default/Upload files/CloudwatchLogGroup",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      },
+                      "Default": {
+                        "id": "Default",
+                        "path": "root/Default/Default/Upload files/Default",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformResource",
+                          "version": "0.20.3"
+                        }
+                      },
+                      "Asset": {
+                        "id": "Asset",
+                        "path": "root/Default/Default/Upload files/Asset",
+                        "constructInfo": {
+                          "fqn": "cdktf.TerraformAsset",
+                          "version": "0.20.3"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.cloud.Function",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "title": "Function",
+                      "description": "A cloud function (FaaS)"
+                    }
+                  },
+                  "$Closure2_0": {
+                    "id": "$Closure2_0",
+                    "path": "root/Default/Default/$Closure2_0",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.std.AutoIdResource",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "hidden": true
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.std.Resource",
+                  "version": "0.0.0"
+                },
+                "display": {}
+              },
+              "Code": {
+                "id": "Code",
+                "path": "root/Default/Code",
+                "constructInfo": {
+                  "fqn": "cdktf.TerraformResource",
+                  "version": "0.20.3"
+                }
+              },
+              "ParameterRegistrar": {
+                "id": "ParameterRegistrar",
+                "path": "root/Default/ParameterRegistrar",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.platform.ParameterRegistrar",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@winglang/sdk.core.App",
+              "version": "0.0.0"
+            }
+          },
+          "backend": {
+            "id": "backend",
+            "path": "root/backend",
+            "constructInfo": {
+              "fqn": "cdktf.LocalBackend",
+              "version": "0.20.3"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "cdktf.TerraformStack",
+          "version": "0.20.3"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "cdktf.App",
+      "version": "0.20.3"
+    }
+  }
+}

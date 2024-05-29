@@ -1,0 +1,19 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/Default/Function",
+      "sourceOp": "invoke",
+      "target": "root/Default/Queue",
+      "targetOp": "push",
+      "name": "push"
+    },
+    {
+      "source": "root/Default/Function",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Queue",
+      "targetOp": "push",
+      "name": "push"
+    }
+  ]
+}
