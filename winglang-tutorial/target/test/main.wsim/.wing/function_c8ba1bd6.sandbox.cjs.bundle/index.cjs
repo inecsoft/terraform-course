@@ -1177,7 +1177,7 @@ var require_misc = __commonJS({
     exports2.shell = shell;
     function isPath(s) {
       s = normalPath2(s);
-      return s.startsWith("./") || s.startsWith("/");
+      return s.startsWith("./") || s.startsWith("../") || s.startsWith("/");
     }
     __name(isPath, "isPath");
     exports2.isPath = isPath;
@@ -1190,7 +1190,7 @@ var require_inflight = __commonJS({
     "use strict";
     var _a;
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.inflight = exports2.lift = exports2.InflightClient = exports2.closureId = void 0;
+    exports2.importInflight = exports2.inflight = exports2.lift = exports2.InflightClient = exports2.closureId = void 0;
     var JSII_RTTI_SYMBOL_1 = Symbol.for("jsii.rtti");
     var path_1 = require("path");
     var lifting_1 = require_lifting();
@@ -1236,6 +1236,22 @@ var require_inflight = __commonJS({
     }
     __name(inflight, "inflight");
     exports2.inflight = inflight;
+    function importInflight(inflightText, lifts) {
+      const newLifts = {};
+      const newGrants = {};
+      for (const liftAnnotation of lifts ?? []) {
+        if (liftAnnotation.alias === void 0) {
+          throw new Error("The alias field is required for all lifts");
+        }
+        newLifts[liftAnnotation.alias] = liftAnnotation.obj;
+        if (liftAnnotation.ops) {
+          newGrants[liftAnnotation.alias] = liftAnnotation.ops;
+        }
+      }
+      return lift(newLifts).grant(newGrants).inflight(inflightText);
+    }
+    __name(importInflight, "importInflight");
+    exports2.importInflight = importInflight;
     var Lifter = class _Lifter {
       static {
         __name(this, "Lifter");
