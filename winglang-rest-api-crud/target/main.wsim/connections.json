@@ -1,0 +1,131 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler0",
+      "targetOp": "invoke",
+      "name": "get /tasks"
+    },
+    {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler1",
+      "targetOp": "invoke",
+      "name": "post /tasks"
+    },
+    {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler2",
+      "targetOp": "invoke",
+      "name": "put /tasks/:id"
+    },
+    {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler3",
+      "targetOp": "invoke",
+      "name": "delete /tasks/:id"
+    },
+    {
+      "source": "root/Default/Counter",
+      "sourceOp": "inc",
+      "target": "root/Default/Counter/Resource",
+      "targetOp": "call",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Counter",
+      "sourceOp": "dec",
+      "target": "root/Default/Counter/Resource",
+      "targetOp": "call",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Counter",
+      "sourceOp": "peek",
+      "target": "root/Default/Counter/Resource",
+      "targetOp": "call",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Counter",
+      "sourceOp": "set",
+      "target": "root/Default/Counter/Resource",
+      "targetOp": "call",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler0",
+      "sourceOp": "invoke",
+      "target": "root/Default/Table",
+      "targetOp": "list",
+      "name": "list"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler0",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Table",
+      "targetOp": "list",
+      "name": "list"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "sourceOp": "invoke",
+      "target": "root/Default/Counter",
+      "targetOp": "inc",
+      "name": "inc"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "sourceOp": "invoke",
+      "target": "root/Default/Table",
+      "targetOp": "insert",
+      "name": "insert"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Counter",
+      "targetOp": "inc",
+      "name": "inc"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Table",
+      "targetOp": "insert",
+      "name": "insert"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler2",
+      "sourceOp": "invoke",
+      "target": "root/Default/Table",
+      "targetOp": "update",
+      "name": "update"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler2",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Table",
+      "targetOp": "update",
+      "name": "update"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler3",
+      "sourceOp": "invoke",
+      "target": "root/Default/Table",
+      "targetOp": "delete",
+      "name": "delete"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler3",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Table",
+      "targetOp": "delete",
+      "name": "delete"
+    }
+  ]
+}

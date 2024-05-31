@@ -1,0 +1,36 @@
+<!-- <!DOCTYPE html>
+<html>
+  Hello Winglang!!!
+</html> -->
+
+import { TaskData } from "core/task"; export function formatTask(path: string,
+task: TaskData): string { return `
+<li class="list-group-item d-flex justify-content-between align-items-center">
+  <form
+    hx-put="${path}/${task.taskID}"
+    hx-headers='{"Accept": "text/plain"}'
+    id="${task.taskID}-form"
+  >
+    <span class="task-text">${task.title}</span>
+    <input
+      type="text"
+      name="title"
+      class="form-control edit-input"
+      style="display: none"
+      value="${task.title}"
+    />
+  </form>
+  <div class="btn-group">
+    <button
+      class="btn btn-danger btn-sm delete-btn"
+      hx-delete="${path}/${task.taskID}"
+      hx-target="closest li"
+      hx-swap="outerHTML"
+      hx-headers='{"Accept": "text/plain"}'
+    >
+      ✕
+    </button>
+    <button class="btn btn-primary btn-sm edit-btn">✎</button>
+  </div>
+</li>
+`; }
