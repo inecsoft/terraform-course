@@ -1,0 +1,234 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "root",
+    "path": "root",
+    "children": {
+      "cloud.TestRunner": {
+        "id": "cloud.TestRunner",
+        "path": "root/cloud.TestRunner",
+        "constructInfo": {
+          "fqn": "@winglang/sdk.std.TestRunner",
+          "version": "0.0.0"
+        },
+        "display": {
+          "title": "TestRunner",
+          "description": "A suite of APIs for running tests and collecting results.",
+          "hidden": true
+        }
+      },
+      "env0": {
+        "id": "env0",
+        "path": "root/env0",
+        "children": {
+          "App": {
+            "id": "App",
+            "path": "root/env0/App",
+            "children": {
+              "AppSim": {
+                "id": "AppSim",
+                "path": "root/env0/App/AppSim",
+                "children": {
+                  "State": {
+                    "id": "State",
+                    "path": "root/env0/App/AppSim/State",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.sim.State",
+                      "version": "0.0.0"
+                    },
+                    "display": {}
+                  },
+                  "$Closure1_0": {
+                    "id": "$Closure1_0",
+                    "path": "root/env0/App/AppSim/$Closure1_0",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.std.AutoIdResource",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "hidden": true
+                    }
+                  },
+                  "Service": {
+                    "id": "Service",
+                    "path": "root/env0/App/AppSim/Service",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.cloud.Service",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "title": "Service",
+                      "description": "A cloud service"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.std.Resource",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "hidden": true
+                }
+              },
+              "$Closure1_0": {
+                "id": "$Closure1_0",
+                "path": "root/env0/App/$Closure1_0",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.std.AutoIdResource",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "hidden": true
+                }
+              },
+              "Field": {
+                "id": "Field",
+                "path": "root/env0/App/Field",
+                "children": {
+                  "Handler": {
+                    "id": "Handler",
+                    "path": "root/env0/App/Field/Handler",
+                    "constructInfo": {
+                      "fqn": "@winglang/sdk.cloud.Function",
+                      "version": "0.0.0"
+                    },
+                    "display": {
+                      "title": "Function",
+                      "description": "A cloud function (FaaS)"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.ui.Field",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "hidden": true
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "root/env0/App/Endpoint",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.cloud.Endpoint",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "Endpoint",
+                  "description": "A cloud endpoint"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.Resource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "ui": [
+                {
+                  "kind": "field",
+                  "label": "url",
+                  "handler": "root/env0/App/Field/Handler",
+                  "link": true
+                }
+              ],
+              "color": "sky"
+            }
+          },
+          "Api": {
+            "id": "Api",
+            "path": "root/env0/Api",
+            "children": {
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "root/env0/Api/Endpoint",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.cloud.Endpoint",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "Endpoint",
+                  "description": "Api root/env0/Api",
+                  "hidden": true
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "root/env0/Api/Policy",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.sim.Policy",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "Policy",
+                  "description": "A simulated resource policy",
+                  "hidden": true
+                }
+              },
+              "OnRequestHandler0": {
+                "id": "OnRequestHandler0",
+                "path": "root/env0/Api/OnRequestHandler0",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.cloud.Function",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "GET /title",
+                  "description": "A cloud function (FaaS)",
+                  "sourceModule": "@winglang/sdk"
+                }
+              },
+              "ApiEventMapping0": {
+                "id": "ApiEventMapping0",
+                "path": "root/env0/Api/ApiEventMapping0",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.std.Resource",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "hidden": true
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@winglang/sdk.cloud.Api",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Api",
+              "description": "A REST API endpoint"
+            }
+          },
+          "$Closure1_0": {
+            "id": "$Closure1_0",
+            "path": "root/env0/$Closure1_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "@winglang/sdk.std.Resource",
+          "version": "0.0.0"
+        },
+        "display": {}
+      },
+      "ParameterRegistrar": {
+        "id": "ParameterRegistrar",
+        "path": "root/ParameterRegistrar",
+        "constructInfo": {
+          "fqn": "@winglang/sdk.platform.ParameterRegistrar",
+          "version": "0.0.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "@winglang/sdk.core.App",
+      "version": "0.0.0"
+    }
+  }
+}

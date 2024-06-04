@@ -1,0 +1,12 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler0",
+      "targetOp": "invoke",
+      "name": "get /title"
+    }
+  ]
+}
