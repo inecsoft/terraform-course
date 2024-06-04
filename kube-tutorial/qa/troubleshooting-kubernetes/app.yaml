@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: legacy
+spec:
+  containers:
+  - name: loop
+    image: alpine:3.7
+    command:
+    - /bin/sh 
+    - -ec
+    - while true; do echo hi >> /logs; sleep 2; done
