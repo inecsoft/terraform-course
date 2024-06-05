@@ -103,7 +103,8 @@
           "WING_TARGET": "sim",
           "HOME": "/home/iarteaga",
           "PATH": "/home/iarteaga/.vscode-server/extensions/ms-python.python-2024.7.11511013/python_files/deactivate/bash:/home/iarteaga/terraform-course/django-workcount/env/bin:/home/iarteaga/.tfenv/bin:/home/iarteaga/.krew/bin:/home/iarteaga/.vscode-server/extensions/ms-python.python-2024.7.11511013/python_files/deactivate/bash:/home/iarteaga/terraform-course/django-workcount/env/bin:/home/iarteaga/.vscode-server/cli/servers/Stable-dc96b837cf6bb4af9cd736aa3af08cf8279f7685/server/bin/remote-cli:/home/iarteaga/.local/bin:/home/iarteaga/.local/share/pnpm:/home/iarteaga/.tfenv/bin:/home/iarteaga/.krew/bin:/home/iarteaga/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/iarteaga/bin:/home/iarteaga/bin",
-          "STATE_HANDLE_10071f99": "${wsim#root/env0/App/AppSim/State#attrs.handle}"
+          "STATE_HANDLE_10071f99": "${wsim#root/env0/App/AppSim/State#attrs.handle}",
+          "WING_TOKEN_WSIM_ROOT_ENV0_API_ATTRS_URL": "${wsim#root/env0/Api#attrs.url}"
         },
         "sourceCodeFile": ".wing/service_c890aad5.cjs",
         "autoStart": true

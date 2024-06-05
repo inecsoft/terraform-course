@@ -1,0 +1,4 @@
+.DS_Store
+backend/target
+node_modules
+client/public/wing.js

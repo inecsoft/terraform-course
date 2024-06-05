@@ -47,9 +47,9 @@ class $Root extends $stdlib.std.Resource {
       }
     }
     const web = new react.App(this, "App", ({"projectPath": "./client", "localPort": 4000}));
-    (web.addEnvironment("key1", "value1"));
-    (web.addEnvironment("title", "Learn React with Wing"));
+    (web.addEnvironment("title", "Learn React with Wing power by TFGM"));
     const api = this.node.root.new("@winglang/sdk.cloud.Api", cloud.Api, this, "Api", { cors: true });
+    (web.addEnvironment("apiUrl", api.url));
     (api.get("/title", new $Closure1(this, "$Closure1")));
   }
 }

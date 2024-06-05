@@ -45,13 +45,14 @@ let web = new react.App({
 
 });
 
-web.addEnvironment("key1", "value1");
-web.addEnvironment("title", "Learn React with Wing");
+web.addEnvironment("title", "Learn React with Wing power by TFGM");
 
 // Enable cross-origin resource sharing (CORS)
 let api = new cloud.Api(
   cors: true
 );
+
+web.addEnvironment("apiUrl", api.url);
 
 api.get("/title", inflight () => {
   return {

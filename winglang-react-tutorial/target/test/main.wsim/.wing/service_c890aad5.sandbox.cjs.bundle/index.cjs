@@ -32713,7 +32713,7 @@ exports.start = async function() {
       $____parent_this_1_props_useBuildCommand_____null_: false,
       $__parent_this_1_buildCommand: "npm run build",
       $__parent_this_1_buildDir: "/home/iarteaga/terraform-course/winglang-react-tutorial/client/build",
-      $__parent_this_1_env: { "key1": "value1", "title": "Learn React with Wing" },
+      $__parent_this_1_env: { "title": "Learn React with Wing power by TFGM", "apiUrl": process.env["WING_TOKEN_WSIM_ROOT_ENV0_API_ATTRS_URL"] },
       $__parent_this_1_path: "/home/iarteaga/terraform-course/winglang-react-tutorial/client",
       $__parent_this_1_startCommand: "npm run start",
       $fs_Util: require_fs2().Util,
