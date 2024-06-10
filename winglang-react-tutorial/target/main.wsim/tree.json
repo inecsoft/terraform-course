@@ -196,6 +196,63 @@
             "display": {
               "hidden": true
             }
+          },
+          "FlatFileSystem": {
+            "id": "FlatFileSystem",
+            "path": "root/Default/FlatFileSystem",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.Resource",
+              "version": "0.0.0"
+            },
+            "display": {}
+          },
+          "$Closure2_0": {
+            "id": "$Closure2_0",
+            "path": "root/Default/$Closure2_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          },
+          "test:get and create folders": {
+            "id": "test:get and create folders",
+            "path": "root/Default/test:get and create folders",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.Test",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Test",
+              "description": "A cloud unit test.",
+              "hidden": true
+            }
+          },
+          "$Closure3_0": {
+            "id": "$Closure3_0",
+            "path": "root/Default/$Closure3_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          },
+          "test:get and create file": {
+            "id": "test:get and create file",
+            "path": "root/Default/test:get and create file",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.Test",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Test",
+              "description": "A cloud unit test.",
+              "hidden": true
+            }
           }
         },
         "constructInfo": {

@@ -7,6 +7,97 @@
       "target": "root/env0/Api/OnRequestHandler0",
       "targetOp": "invoke",
       "name": "get /title"
+    },
+    {
+      "source": "root/env1/Api",
+      "sourceOp": "request",
+      "target": "root/env1/Api/OnRequestHandler0",
+      "targetOp": "invoke",
+      "name": "get /title"
+    },
+    {
+      "source": "root/env0/test:get and create folders/Handler",
+      "sourceOp": "invoke",
+      "target": "root/env0/FlatFileSystem",
+      "targetOp": "listFolders",
+      "name": "listFolders"
+    },
+    {
+      "source": "root/env0/test:get and create folders/Handler",
+      "sourceOp": "invoke",
+      "target": "root/env0/FlatFileSystem",
+      "targetOp": "createFolder",
+      "name": "createFolder"
+    },
+    {
+      "source": "root/env0/test:get and create folders/Handler",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/FlatFileSystem",
+      "targetOp": "listFolders",
+      "name": "listFolders"
+    },
+    {
+      "source": "root/env0/test:get and create folders/Handler",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/FlatFileSystem",
+      "targetOp": "createFolder",
+      "name": "createFolder"
+    },
+    {
+      "source": "root/env1/test:get and create file/Handler",
+      "sourceOp": "invoke",
+      "target": "root/env1/FlatFileSystem",
+      "targetOp": "createFolder",
+      "name": "createFolder"
+    },
+    {
+      "source": "root/env1/test:get and create file/Handler",
+      "sourceOp": "invoke",
+      "target": "root/env1/FlatFileSystem",
+      "targetOp": "createFile",
+      "name": "createFile"
+    },
+    {
+      "source": "root/env1/test:get and create file/Handler",
+      "sourceOp": "invoke",
+      "target": "root/env1/FlatFileSystem",
+      "targetOp": "listFiles",
+      "name": "listFiles"
+    },
+    {
+      "source": "root/env1/test:get and create file/Handler",
+      "sourceOp": "invoke",
+      "target": "root/env1/FlatFileSystem",
+      "targetOp": "getFile",
+      "name": "getFile"
+    },
+    {
+      "source": "root/env1/test:get and create file/Handler",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/FlatFileSystem",
+      "targetOp": "createFolder",
+      "name": "createFolder"
+    },
+    {
+      "source": "root/env1/test:get and create file/Handler",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/FlatFileSystem",
+      "targetOp": "createFile",
+      "name": "createFile"
+    },
+    {
+      "source": "root/env1/test:get and create file/Handler",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/FlatFileSystem",
+      "targetOp": "listFiles",
+      "name": "listFiles"
+    },
+    {
+      "source": "root/env1/test:get and create file/Handler",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/FlatFileSystem",
+      "targetOp": "getFile",
+      "name": "getFile"
     }
   ]
 }

@@ -334,6 +334,12 @@ ssh-keygen -l -E md5 -f ~/.ssh/id_rsa.pub
 ssh -T git@ssh.dev.azure.com
 ```
 
+### **Calculate RSA key fingerprint**
+
+```
+ssh-keygen -lf ~/.ssh/inecsoft.pub
+```
+
 vim ~/.ssh/config
 
 ```

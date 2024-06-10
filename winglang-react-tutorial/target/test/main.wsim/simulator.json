@@ -82,13 +82,50 @@
     }
   },
   "resources": {
+    "root/env0/test:get and create folders/Handler": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/handler_c8b42866.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [],
+      "path": "root/env0/test:get and create folders/Handler",
+      "addr": "c8b42866bead95eaf775eb584106d07cd7bca146f9"
+    },
+    "root/env1/test:get and create file/Handler": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/handler_c8c65925.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [],
+      "path": "root/env1/test:get and create file/Handler",
+      "addr": "c8c659257a7a2befa81ecc956281977c08ac58f962"
+    },
     "root/cloud.TestRunner": {
       "type": "@winglang/sdk.std.TestRunner",
       "props": {
-        "tests": {}
+        "tests": {
+          "root/env0/test:get and create folders": "${wsim#root/env0/test:get and create folders/Handler#attrs.handle}",
+          "root/env1/test:get and create file": "${wsim#root/env1/test:get and create file/Handler#attrs.handle}"
+        }
       },
       "path": "root/cloud.TestRunner",
-      "addr": "c8647dd8d2adabe83cc081ebe0ccbefe4a068ef3bf"
+      "addr": "c8647dd8d2adabe83cc081ebe0ccbefe4a068ef3bf",
+      "deps": [
+        "root/env0/test:get and create folders/Handler",
+        "root/env1/test:get and create file/Handler"
+      ]
     },
     "root/env0/App/AppSim/State": {
       "type": "@winglang/sdk.sim.State",
@@ -263,6 +300,181 @@
       "deps": [
         "root/env0/Api/OnRequestHandler0",
         "root/env0/Api"
+      ]
+    },
+    "root/env1/App/AppSim/State": {
+      "type": "@winglang/sdk.sim.State",
+      "props": {},
+      "path": "root/env1/App/AppSim/State",
+      "addr": "c842b422a9d5b9bd798d44a4a23f7d21723b74e5eb"
+    },
+    "root/env1/App/AppSim/Service": {
+      "type": "@winglang/sdk.cloud.Service",
+      "props": {
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "HOME": "/home/iarteaga",
+          "PATH": "/home/iarteaga/.vscode-server/extensions/ms-python.python-2024.7.11511013/python_files/deactivate/bash:/home/iarteaga/terraform-course/django-workcount/env/bin:/home/iarteaga/.tfenv/bin:/home/iarteaga/.krew/bin:/home/iarteaga/.vscode-server/extensions/ms-python.python-2024.7.11511013/python_files/deactivate/bash:/home/iarteaga/terraform-course/django-workcount/env/bin:/home/iarteaga/.vscode-server/cli/servers/Stable-dc96b837cf6bb4af9cd736aa3af08cf8279f7685/server/bin/remote-cli:/home/iarteaga/.local/bin:/home/iarteaga/.local/share/pnpm:/home/iarteaga/.tfenv/bin:/home/iarteaga/.krew/bin:/home/iarteaga/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/iarteaga/bin:/home/iarteaga/bin",
+          "STATE_HANDLE_3b74e5eb": "${wsim#root/env1/App/AppSim/State#attrs.handle}",
+          "WING_TOKEN_WSIM_ROOT_ENV1_API_ATTRS_URL": "${wsim#root/env1/Api#attrs.url}"
+        },
+        "sourceCodeFile": ".wing/service_c80a5b12.cjs",
+        "autoStart": true
+      },
+      "policy": [
+        {
+          "operation": "set",
+          "resourceHandle": "${wsim#root/env1/App/AppSim/State#attrs.handle}"
+        }
+      ],
+      "path": "root/env1/App/AppSim/Service",
+      "addr": "c80a5b125665880673d46891194183c4e7921d6dbd",
+      "deps": [
+        "root/env1/App/AppSim/State"
+      ]
+    },
+    "root/env1/App/Field/Handler": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/handler_c8fba7de.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "WING_TOKEN_WSIM_ROOT_ENV1_APP_APPSIM_STATE_ATTRS_URL": "${wsim#root/env1/App/AppSim/State#attrs.url}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [],
+      "path": "root/env1/App/Field/Handler",
+      "addr": "c8fba7deb3aef93a48e4064ba150ab078422742b01"
+    },
+    "root/env1/App/Endpoint": {
+      "type": "@winglang/sdk.cloud.Endpoint",
+      "props": {
+        "inputUrl": "${wsim#root/env1/App/AppSim/State#attrs.url}",
+        "url": "${wsim#root/env1/App/AppSim/State#attrs.url}"
+      },
+      "path": "root/env1/App/Endpoint",
+      "addr": "c8f0f2ddd5fdf9d237eef8e2060f1615b68a1cbba8"
+    },
+    "root/env1/Api/Endpoint": {
+      "type": "@winglang/sdk.cloud.Endpoint",
+      "props": {
+        "inputUrl": "${wsim#root/env1/Api#attrs.url}",
+        "url": "${wsim#root/env1/Api#attrs.url}",
+        "label": "Api root/env1/Api"
+      },
+      "path": "root/env1/Api/Endpoint",
+      "addr": "c8dc498b91f42fdf35660328b30bcb9f07eaa0b11a"
+    },
+    "root/env1/Api/Policy": {
+      "type": "@winglang/sdk.sim.Policy",
+      "props": {
+        "principal": "${wsim#root/env1/Api#attrs.handle}",
+        "statements": [
+          {
+            "resourceHandle": "${wsim#root/env1/Api/OnRequestHandler0#attrs.handle}",
+            "operation": "invoke"
+          }
+        ]
+      },
+      "path": "root/env1/Api/Policy",
+      "addr": "c81266be4f2f8a6a669b0b356b94bb23d31ecdbbec"
+    },
+    "root/env1/Api/OnRequestHandler0": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler0_c8cef48d.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [],
+      "path": "root/env1/Api/OnRequestHandler0",
+      "addr": "c8cef48d3dba88b1f8f6bcb4cba3f161784123d4a9"
+    },
+    "root/env1/Api": {
+      "type": "@winglang/sdk.cloud.Api",
+      "props": {
+        "openApiSpec": {
+          "paths": {
+            "/title": {
+              "get": {
+                "operationId": "get-title",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {},
+                    "headers": {
+                      "Access-Control-Allow-Origin": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Allow-Methods": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Allow-Headers": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Max-Age": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "parameters": []
+              }
+            }
+          },
+          "openapi": "3.0.3"
+        },
+        "corsHeaders": {
+          "defaultResponse": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Expose-Headers": "",
+            "Access-Control-Allow-Credentials": "false"
+          },
+          "optionsResponse": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Content-Type,Authorization,X-Requested-With",
+            "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,HEAD,OPTIONS",
+            "Access-Control-Max-Age": "300"
+          }
+        }
+      },
+      "path": "root/env1/Api",
+      "addr": "c85a058a0d463956efcdd637b3528195f2500b03bd"
+    },
+    "root/env1/Api/ApiEventMapping0": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env1/Api/OnRequestHandler0#attrs.handle}",
+        "publisher": "${wsim#root/env1/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/title",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/env1/Api/ApiEventMapping0",
+      "addr": "c80d0a698075df582ab7ed9be47b9006f29926690a",
+      "deps": [
+        "root/env1/Api/OnRequestHandler0",
+        "root/env1/Api"
       ]
     }
   },
