@@ -1,0 +1,47 @@
+name: PR
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+# gh secret set SECRET_NAME < role_arn.txt
+# gh secret set SECRET_NAME < Pat_token.txt
+jobs:
+  pr-dev:
+    uses: ./.github/workflows/pr-workflow.yml
+    with:
+      name: dev
+      region: eu-west-1
+
+    secrets:
+      aws-deployment-role-arn: ${{ secrets.PROD_AWS_DEPLOYMENT_ROLE_ARN }}
+      git-credentials: ${{ secrets.GIT_CREDENTIALS }} #PAT-token
+
+  pr-staging:
+    uses: ./.github/workflows/pr-workflow.yml
+    with:
+      name: staging
+      region: eu-west-1
+
+    secrets:
+      aws-deployment-role-arn: ${{ secrets.PROD_AWS_DEPLOYMENT_ROLE_ARN }}
+      git-credentials: ${{ secrets.GIT_CREDENTIALS }}
+
+  pr-prod:
+    uses: ./.github/workflows/pr-workflow.yml
+    with:
+      name: prod
+      region: eu-west-1
+
+    secrets:
+      aws-deployment-role-arn: ${{ secrets.PROD_AWS_DEPLOYMENT_ROLE_ARN }}
+      git-credentials: ${{ secrets.GIT_CREDENTIALS }}

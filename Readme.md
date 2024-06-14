@@ -536,4 +536,28 @@ code tunnel service log
  find ./module -name "provider.tf" -type f -print0 | xargs -0 rm -rf
 ```
 
+### **How to set GitHub CLI OAuth scopes**
+
+```
+gh auth refresh -s admin:org
+```
+
+```
+ENV_VALUE=ghp_ ; gh secret set GIT_TOKEN --body "$ENV_VALUE"
+```
+
+### **To enable runner diagnostic logging**
+
+set the following secret or variable in the repository that contains the workflow:
+
+```
+ENV_VALUE=true; gh secret set ACTIONS_RUNNER_DEBUG --body "$ENV_VALUE"
+```
+
+### **To view the log for a specific job**
+
+```
+gh run view RUN_ID --log
+```
+
 ---

@@ -1,0 +1,49 @@
+name: Deploy to environment
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      region:
+        required: true
+        type: string
+    secrets:
+      aws-deployment-role-arn:
+        required: true
+      git-credentials:
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    concurrency: deploy-${{ inputs.name }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.name }}
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.3.8
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.aws-deployment-role-arn }}
+          role-session-name: ${{ github.actor }}-deploy
+          aws-region: ${{ inputs.region }}
+      - run: git config --global url."https://x-access-token:${{ secrets.git-credentials }}@github.com".insteadOf ssh://git@github.com
+      - name: Terraform Init
+        working-directory: ${{ inputs.name }}
+        run: terraform init
+      - name: Terraform Plan
+        working-directory: ${{ inputs.name }}
+        run: terraform plan
+      - name: Terraform Apply
+        working-directory: ${{ inputs.name }}
+        run: terraform apply -input=false -auto-approve

@@ -1,0 +1,36 @@
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-to-dev:
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      name: dev
+      region: eu-west-1
+    secrets:
+      aws-deployment-role-arn: ${{ secrets.PROD_AWS_DEPLOYMENT_ROLE_ARN }}
+      git-credentials: ${{ secrets.GIT_CREDENTIALS }}
+
+  deploy-to-staging:
+    needs: [deploy-to-dev]
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      name: staging
+      region: eu-west-1
+    secrets:
+      aws-deployment-role-arn: ${{ secrets.PROD_AWS_DEPLOYMENT_ROLE_ARN }}
+      git-credentials: ${{ secrets.GIT_CREDENTIALS }}
+
+  deploy-to-prod:
+    needs: [deploy-to-staging]
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      name: prod
+      region: eu-west-1
+    secrets:
+      aws-deployment-role-arn: ${{ secrets.PROD_AWS_DEPLOYMENT_ROLE_ARN }}
+      git-credentials: ${{ secrets.GIT_CREDENTIALS }}
+
+      # gh secret set SECRET_NAME < role_arn.txt
+      # gh secret set SECRET_NAME < Pat_token.txt
