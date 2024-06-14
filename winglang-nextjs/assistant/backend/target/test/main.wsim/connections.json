@@ -1,0 +1,19 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/env0/test:fn returns hello/Handler",
+      "sourceOp": "invoke",
+      "target": "root/env0/Function",
+      "targetOp": "invoke",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/test:fn returns hello/Handler",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/Function",
+      "targetOp": "invoke",
+      "name": "call"
+    }
+  ]
+}
