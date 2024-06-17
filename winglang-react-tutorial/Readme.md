@@ -4,10 +4,21 @@
 
 ![alt text](images/test-manual-post.png)
 
+### **how to retrieve the values with get method**
+
+![alt text](images/test-manual-get-all.png)
+
+### **how to update the values with put method**
+
+![alt text](images/test-manual-put-method.png)
+
+### **how to delete the values with put method**
+
+![alt text](images/test-manual-delete-method.png)
+
 ### **Start a wing project**
 
 ```
-npm i @winglibs/openai @winglibs/react
 wing new empty --language wing
 ```
 
@@ -15,10 +26,6 @@ wing compile - build your project
 wing it - simulate your app in the Wing Console
 wing test - run all tests
 wing docs
-
-```
-BROWSER=none wing run
-```
 
 Visit the docs for examples and tutorials: https://winglang.io/docs
 
