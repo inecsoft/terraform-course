@@ -6,6 +6,335 @@ var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 
+// ../../.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/util/equality.js
+var require_equality = __commonJS({
+  "../../.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/util/equality.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.deepStrictEqual = void 0;
+    var types_1 = require("util/types");
+    var kNoIterator = 0;
+    var kIsArray = 1;
+    var kIsSet = 2;
+    var kIsMap = 3;
+    function deepStrictEqual(val1, val2, memos) {
+      if (val1 === val2) {
+        if (val1 !== 0)
+          return true;
+        return Object.is(val1, val2);
+      }
+      if (typeof val1 !== "object") {
+        return typeof val1 === "number" && Number.isNaN(val1) && Number.isNaN(val2);
+      }
+      if (typeof val2 !== "object" || val1 === null || val2 === null) {
+        return false;
+      }
+      if (Object.getPrototypeOf(val1) !== Object.getPrototypeOf(val2)) {
+        return false;
+      }
+      const val1Tag = val1.toString();
+      const val2Tag = val2.toString();
+      if (val1Tag !== val2Tag) {
+        return false;
+      }
+      if (Array.isArray(val1)) {
+        if (!Array.isArray(val2) || val1.length !== val2.length) {
+          return false;
+        }
+        const keys1 = getOwnNonIndexProperties(val1);
+        const keys2 = getOwnNonIndexProperties(val2);
+        if (keys1.length !== keys2.length) {
+          return false;
+        }
+        return keyCheck(val1, val2, memos, kIsArray, keys1);
+      } else if (val1Tag === "[object Object]") {
+        return keyCheck(val1, val2, memos, kNoIterator);
+      } else if ((0, types_1.isDate)(val1)) {
+        if (!(0, types_1.isDate)(val2) || val1.getTime() !== val2.getTime()) {
+          return false;
+        }
+      } else if ((0, types_1.isRegExp)(val1)) {
+        if (!(0, types_1.isRegExp)(val2) || !areSimilarRegExps(val1, val2)) {
+          return false;
+        }
+      } else if ((0, types_1.isNativeError)(val1) || val1 instanceof Error) {
+        if (!(0, types_1.isNativeError)(val2) && !(val2 instanceof Error) || val1.message !== val2.message || val1.name !== val2.name) {
+          return false;
+        }
+      } else if ((0, types_1.isArrayBufferView)(val1)) {
+        if (!areSimilarTypedArrays(val1, val2)) {
+          return false;
+        }
+        if (!areSimilarTypedArrays(val1, val2) && !(0, types_1.isFloat32Array)(val1) && !(0, types_1.isFloat64Array)(val1)) {
+          return false;
+        }
+        const keys1 = getOwnNonIndexProperties(val1);
+        const keys2 = getOwnNonIndexProperties(val2);
+        if (keys1.length !== keys2.length) {
+          return false;
+        }
+        return keyCheck(val1, val2, memos, kNoIterator, keys1);
+      } else if ((0, types_1.isSet)(val1)) {
+        if (!(0, types_1.isSet)(val2) || val1.size !== val2.size) {
+          return false;
+        }
+        return keyCheck(val1, val2, memos, kIsSet);
+      } else if ((0, types_1.isMap)(val1)) {
+        if (!(0, types_1.isMap)(val2) || val1.size !== val2.size) {
+          return false;
+        }
+        return keyCheck(val1, val2, memos, kIsMap);
+      } else if ((0, types_1.isAnyArrayBuffer)(val1)) {
+        if (!(0, types_1.isAnyArrayBuffer)(val2) || !areEqualArrayBuffers(val1, val2)) {
+          return false;
+        }
+      } else if ((0, types_1.isBoxedPrimitive)(val1)) {
+        if (!isEqualBoxedPrimitive(val1, val2)) {
+          return false;
+        }
+      } else if (Array.isArray(val2) || (0, types_1.isArrayBufferView)(val2) || (0, types_1.isSet)(val2) || (0, types_1.isMap)(val2) || (0, types_1.isDate)(val2) || (0, types_1.isRegExp)(val2) || (0, types_1.isAnyArrayBuffer)(val2) || (0, types_1.isBoxedPrimitive)(val2) || (0, types_1.isNativeError)(val2) || val2 instanceof Error) {
+        return false;
+      }
+      return keyCheck(val1, val2, memos, kNoIterator);
+    }
+    __name(deepStrictEqual, "deepStrictEqual");
+    exports2.deepStrictEqual = deepStrictEqual;
+    function keyCheck(val1, val2, memos, iterationType, aKeys) {
+      if (arguments.length === 4) {
+        aKeys = Object.keys(val1);
+        const bKeys = Object.keys(val2);
+        if (aKeys.length !== bKeys.length) {
+          return false;
+        }
+      }
+      let i = 0;
+      for (; i < aKeys.length; i++) {
+        if (!val2.propertyIsEnumerable(aKeys[i])) {
+          return false;
+        }
+      }
+      if (arguments.length === 4) {
+        const symbolKeysA = Object.getOwnPropertySymbols(val1);
+        if (symbolKeysA.length !== 0) {
+          let count = 0;
+          for (i = 0; i < symbolKeysA.length; i++) {
+            const key = symbolKeysA[i];
+            if (val1.propertyIsEnumerable(key)) {
+              if (!val2.propertyIsEnumerable(val2, key)) {
+                return false;
+              }
+              aKeys.push(aKeys, key);
+              count++;
+            } else if (val2.propertyIsEnumerable(val2, key)) {
+              return false;
+            }
+          }
+          const symbolKeysB = Object.getOwnPropertySymbols(val2);
+          if (symbolKeysA.length !== symbolKeysB.length && getEnumerables(val2, symbolKeysB).length !== count) {
+            return false;
+          }
+        } else {
+          const symbolKeysB = Object.getOwnPropertySymbols(val2);
+          if (symbolKeysB.length !== 0 && getEnumerables(val2, symbolKeysB).length !== 0) {
+            return false;
+          }
+        }
+      }
+      if (aKeys.length === 0 && (iterationType === kNoIterator || iterationType === kIsArray && val1.length === 0 || val1.size === 0)) {
+        return true;
+      }
+      if (memos === void 0) {
+        memos = {
+          val1: /* @__PURE__ */ new Map(),
+          val2: /* @__PURE__ */ new Map(),
+          position: 0
+        };
+      } else {
+        const val2MemoA = memos.val1.get(val1);
+        if (val2MemoA !== void 0) {
+          const val2MemoB = memos.val2.get(val2);
+          if (val2MemoB !== void 0) {
+            return val2MemoA === val2MemoB;
+          }
+        }
+        memos.position++;
+      }
+      memos.val1.set(val1, memos.position);
+      memos.val2.set(val2, memos.position);
+      const areEq = objEquiv(val1, val2, aKeys, memos, iterationType);
+      memos.val1.delete(val1);
+      memos.val2.delete(val2);
+      return areEq;
+    }
+    __name(keyCheck, "keyCheck");
+    function objEquiv(a, b, keys, memos, iterationType) {
+      let i = 0;
+      if (iterationType === kIsSet) {
+        if (!setEquiv(a, b, memos)) {
+          return false;
+        }
+      } else if (iterationType === kIsMap) {
+        if (!mapEquiv(a, b, memos)) {
+          return false;
+        }
+      } else if (iterationType === kIsArray) {
+        for (; i < a.length; i++) {
+          if (a.hasOwnProperty(i)) {
+            if (!b.hasOwnProperty(i) || !deepStrictEqual(a[i], b[i], memos)) {
+              return false;
+            }
+          } else if (b.hasOwnProperty(i)) {
+            return false;
+          } else {
+            const keysA = Object.keys(a);
+            for (; i < keysA.length; i++) {
+              const key = keysA[i];
+              if (!b.hasOwnProperty(key) || !deepStrictEqual(a[key], b[key], memos)) {
+                return false;
+              }
+            }
+            if (keysA.length !== Object.keys(b).length) {
+              return false;
+            }
+            return true;
+          }
+        }
+      }
+      for (i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (!deepStrictEqual(a[key], b[key], memos)) {
+          return false;
+        }
+      }
+      return true;
+    }
+    __name(objEquiv, "objEquiv");
+    function setEquiv(a, b, memo) {
+      let set = null;
+      for (const val of a) {
+        if (typeof val === "object" && val !== null) {
+          if (set === null) {
+            set = /* @__PURE__ */ new Set();
+          }
+          set.add(val);
+        } else if (!b.has(val)) {
+          return false;
+        }
+      }
+      if (set !== null) {
+        for (const val of b) {
+          if (typeof val === "object" && val !== null) {
+            if (!setHasEqualElement(set, val, memo))
+              return false;
+          }
+        }
+        return set.size === 0;
+      }
+      return true;
+    }
+    __name(setEquiv, "setEquiv");
+    function setHasEqualElement(set, val1, memo) {
+      for (const val2 of set) {
+        if (deepStrictEqual(val1, val2, memo)) {
+          set.delete(val2);
+          return true;
+        }
+      }
+      return false;
+    }
+    __name(setHasEqualElement, "setHasEqualElement");
+    function mapEquiv(a, b, memo) {
+      let set = null;
+      for (const { 0: key, 1: item1 } of a) {
+        if (typeof key === "object" && key !== null) {
+          if (set === null) {
+            set = /* @__PURE__ */ new Set();
+          }
+          set.add(key);
+        } else {
+          const item2 = b.get(key);
+          if (item2 === void 0 && !b.has(key) || !deepStrictEqual(item1, item2, memo)) {
+            return false;
+          }
+        }
+      }
+      if (set !== null) {
+        for (const { 0: key, 1: item } of b) {
+          if (typeof key === "object" && key !== null) {
+            if (!mapHasEqualEntry(set, a, key, item, memo))
+              return false;
+          }
+        }
+        return set.size === 0;
+      }
+      return true;
+    }
+    __name(mapEquiv, "mapEquiv");
+    function mapHasEqualEntry(set, map, key1, item1, memo) {
+      for (const key2 of set) {
+        if (deepStrictEqual(key1, key2, memo) && deepStrictEqual(item1, map.get(key2), memo)) {
+          set.delete(key2);
+          return true;
+        }
+      }
+      return false;
+    }
+    __name(mapHasEqualEntry, "mapHasEqualEntry");
+    function isEqualBoxedPrimitive(val1, val2) {
+      if ((0, types_1.isNumberObject)(val1)) {
+        return (0, types_1.isNumberObject)(val2) && Object.is(val1.valueOf(), val2.valueOf());
+      }
+      if ((0, types_1.isStringObject)(val1)) {
+        return (0, types_1.isStringObject)(val2) && val1.valueOf() === val2.valueOf();
+      }
+      if ((0, types_1.isBooleanObject)(val1)) {
+        return (0, types_1.isBooleanObject)(val2) && val1.valueOf() === val2.valueOf();
+      }
+      if ((0, types_1.isSymbolObject)(val1)) {
+        return (0, types_1.isSymbolObject)(val2) && val1.valueOf() === val2.valueOf();
+      }
+      throw new Error(`Unknown boxed type ${val1}`);
+    }
+    __name(isEqualBoxedPrimitive, "isEqualBoxedPrimitive");
+    function areEqualArrayBuffers(buf1, buf2) {
+      return buf1.byteLength === buf2.byteLength && Buffer.compare(new Uint8Array(buf1), new Uint8Array(buf2)) === 0;
+    }
+    __name(areEqualArrayBuffers, "areEqualArrayBuffers");
+    function areSimilarTypedArrays(a, b) {
+      if (a.byteLength !== b.byteLength) {
+        return false;
+      }
+      return Buffer.compare(new Uint8Array(a.buffer, a.byteOffset, a.byteLength), new Uint8Array(b.buffer, b.byteOffset, b.byteLength)) === 0;
+    }
+    __name(areSimilarTypedArrays, "areSimilarTypedArrays");
+    function isNonIndex(key) {
+      if (key.length === 0 || key.length > 10)
+        return true;
+      for (var i = 0; i < key.length; i++) {
+        var code = key.charCodeAt(i);
+        if (code < 48 || code > 57)
+          return true;
+      }
+      return key.length === 10 && key >= Math.pow(2, 32);
+    }
+    __name(isNonIndex, "isNonIndex");
+    var getOwnNonIndexProperties = /* @__PURE__ */ __name((val1) => {
+      if (!val1?.getOwnPropertySymbols) {
+        return [];
+      }
+      return Object.keys(val1).filter(isNonIndex).concat(val1?.getOwnPropertySymbols(val1).filter(Object.prototype.propertyIsEnumerable.bind(val1))) ?? [];
+    }, "getOwnNonIndexProperties");
+    function getEnumerables(val, keys) {
+      return keys.filter((k) => val.propertyIsEnumerable(k));
+    }
+    __name(getEnumerables, "getEnumerables");
+    function areSimilarRegExps(a, b) {
+      return a.source === b.source && a.flags === b.flags && a.lastIndex === b.lastIndex;
+    }
+    __name(areSimilarRegExps, "areSimilarRegExps");
+  }
+});
+
 // ../../.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/helpers.js
 var require_helpers = __commonJS({
   "../../.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/helpers.js"(exports, module) {
@@ -46,10 +375,10 @@ var require_helpers = __commonJS({
     exports.resolveDirname = exports.createExternRequire = exports.assign = exports.lookup = exports.unwrap = exports.normalPath = exports.nodeof = exports.range = exports.assert = exports.neq = exports.eq = void 0;
     var node_assert_1 = require("node:assert");
     var path = __importStar(require("node:path"));
+    var equality_1 = require_equality();
     function eq(a, b) {
       try {
-        (0, node_assert_1.deepStrictEqual)(a, b);
-        return true;
+        return (0, equality_1.deepStrictEqual)(a, b);
       } catch {
         return false;
       }
@@ -1771,7 +2100,7 @@ var require_package = __commonJS({
         "@smithy/util-stream": "2.0.17",
         "@smithy/util-utf8": "2.0.0",
         "@types/aws-lambda": "^8.10.119",
-        "@winglang/wingtunnels": "0.74.28",
+        "@winglang/wingtunnels": "0.75.4",
         ajv: "^8.12.0",
         cdktf: "0.20.3",
         constructs: "^10.3",
@@ -1842,7 +2171,7 @@ var require_package = __commonJS({
       },
       main: "lib/index.js",
       license: "MIT",
-      version: "0.74.28",
+      version: "0.75.4",
       types: "lib/index.d.ts",
       stability: "experimental",
       jsii: {
@@ -21319,7 +21648,10 @@ var require_node = __commonJS({
        * metadata describing how one construct is related to another construct.
        */
       addConnection(props) {
-        this._connections.add(props);
+        this._connections.add({
+          source: props.source ?? this.construct,
+          ...props
+        });
       }
       // ---- constructs 10.x APIs ----
       // https://github.com/aws/constructs/blob/10.x/src/construct.ts
@@ -21916,7 +22248,7 @@ var require_resource = __commonJS({
                 sourceOp: baseOp ?? op,
                 target: dep,
                 targetOp: depOp,
-                name: depOp
+                name: "call"
               });
             }
           } else if (hasLiftMap(dep)) {
@@ -22984,7 +23316,7 @@ var require_bucket = __commonJS({
        * @returns the created topic
        */
       createTopic(actionType) {
-        const topic = new topic_1.Topic(this, actionType.toLowerCase());
+        const topic = new topic_1.Topic(this, actionType);
         this.node.addDependency(topic);
         return topic;
       }
@@ -23109,9 +23441,9 @@ var require_bucket = __commonJS({
     })(BucketSignedUrlAction || (exports2.BucketSignedUrlAction = BucketSignedUrlAction = {}));
     var BucketEventType;
     (function(BucketEventType2) {
-      BucketEventType2["CREATE"] = "onCreate";
-      BucketEventType2["DELETE"] = "onDelete";
-      BucketEventType2["UPDATE"] = "onUpdate";
+      BucketEventType2["CREATE"] = "OnCreate";
+      BucketEventType2["DELETE"] = "OnDelete";
+      BucketEventType2["UPDATE"] = "OnUpdate";
     })(BucketEventType || (exports2.BucketEventType = BucketEventType = {}));
     var BucketInflightMethods;
     (function(BucketInflightMethods2) {
@@ -25022,14 +25354,7 @@ var require_tree = __commonJS({
     }
     __name(synthesizeTree, "synthesizeTree");
     exports2.synthesizeTree = synthesizeTree;
-    function isIResource(construct2) {
-      return construct2 instanceof std_1.Resource;
-    }
-    __name(isIResource, "isIResource");
     function synthDisplay(construct2) {
-      if (!isIResource(construct2)) {
-        return;
-      }
       const display = std_1.Node.of(construct2);
       const ui = [];
       for (const child of construct2.node.children) {
@@ -25037,7 +25362,7 @@ var require_tree = __commonJS({
           ui.push(child._toUIComponent());
         }
       }
-      if (display.description || display.title || display.hidden || ui || display.color || display.icon) {
+      if (display.description || display.title || display.hidden || ui || display.color || display.icon || display.expanded) {
         return {
           title: display.title,
           description: display.description,
@@ -25045,7 +25370,8 @@ var require_tree = __commonJS({
           sourceModule: display.sourceModule,
           ui: ui.length > 0 ? ui : void 0,
           color: (0, colors_1.isOfTypeColors)(display.color) ? display.color : void 0,
-          icon: display.icon
+          icon: display.icon,
+          expanded: display.expanded
         };
       }
       return;

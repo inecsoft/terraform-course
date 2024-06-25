@@ -2,6 +2,7 @@ bring ex;
 bring cloud;
 bring expect;
 bring http;
+bring util;
 
 // Here we define a Winglang Table to keep TODO Tasks with only two columns:
 // task ID and title. To keep things simple, we implement task ID as an auto-incrementing number using the Winglang Counter resource. And finally,
@@ -14,6 +15,7 @@ let tasks = new ex.Table(
   },
   primaryKey: "id"
 );
+
 let counter = new cloud.Counter();
 let api = new cloud.Api();
 let path = "/tasks";
@@ -159,3 +161,84 @@ test "run simple crud scenario" {
 
 
 // let website = new cloud.Website(path: "./public");
+
+////////////////////////////////////////////////////////////////////////////
+// server side rendering sample
+class Utils {
+  extern "./utils.js" pub static inflight render(template: str, value: num): str;
+  extern "./utils.js" pub static inflight rendercrud(template: str, value: Array<Json>): str;
+  // This is a workaround for the pending fs module
+  // https://github.com/winglang/wing/issues/3096
+  extern "./utils.js" pub static readFile(filePath: str): str;
+}
+
+let templates = new cloud.Bucket();
+//test
+templates.addObject("index.html", Utils.readFile("./index.html"));
+
+api.get("/", inflight (req) => {
+  let count = counter.inc();
+  let rendered = Utils.render(templates.get("index.html"), count);
+
+  return {
+    status: 200,
+    headers: {
+      "Content-Type" => "text/html"
+    },
+    body: rendered
+  };
+});
+
+
+// be directly accessible in the test
+let apiUrl = api.url;
+
+let invokeAndAssert = inflight(url: str, expected: str) => {
+  let response = http.get(url);
+  expect.equal(response.status, 200);
+  assert(response.body?.contains(expected) == true);
+};
+
+test "renders the index page" {
+  invokeAndAssert(apiUrl, "Hello, Wing 0");
+  invokeAndAssert(apiUrl, "Hello, Wing 1");
+  invokeAndAssert(apiUrl, "Hello, Wing 2");
+}
+
+
+/////////////////////
+templates.addObject("public/index.html", Utils.readFile("./public/index.html"));
+api.get("/list",
+  inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+    let rows = tasks.list();
+    let var result = MutArray<Json>[];
+
+    let count = counter.inc();
+
+    for row in rows {
+      result.push(row);
+    }
+    log(Json.stringify(result));
+    log(result[0]);
+
+    //test
+    // let rendered = Utils.render(templates.get("index.html"), count);
+    // let rendered = Utils.rendercrud(templates.get("public/index.html"), result);
+
+    // return cloud.ApiResponse{
+    //   status: 200,
+    //   headers: {
+    //     "Content-Type" => "application/json"
+    //   },
+    //   body: Json.stringify(result)
+    // };
+
+    return cloud.ApiResponse{
+      status: 200,
+      headers: {
+        "Content-Type" => "text/html"
+      },
+      body: Json.stringify(result)
+    };
+  }
+);

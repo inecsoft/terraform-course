@@ -1,0 +1,27 @@
+"use strict";
+var $handler = undefined;
+exports.handler = async function(event) {
+  $handler = $handler ?? (
+          (await (async () => {
+            const $Closure1Client = 
+          require("/home/iarteaga/terraform-course/winglang-nextjs-bot/backend/target/main.wsim/.wing/inflight.$Closure1-5.cjs")({
+            $__parent_this_1_url: process.env["WING_TOKEN_WSIM_ROOT_DEFAULT_APP_APPSIM_STATE_ATTRS_URL"],
+          })
+        ;
+            const client = new $Closure1Client({
+            });
+            if (client.$inflight_init) { await client.$inflight_init(); }
+            return client;
+          })())
+        );
+  return await $handler.handle(event);
+};
+process.on("uncaughtException", (reason) => {
+  process.send({ type: "error", reason });
+});
+
+process.on("message", async (message) => {
+  const { fn, args } = message;
+  const value = await exports[fn](...args);
+  process.send({ type: "ok", value });
+});

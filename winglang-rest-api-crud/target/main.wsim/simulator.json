@@ -112,6 +112,14 @@
           {
             "resourceHandle": "${wsim#root/Default/Api/OnRequestHandler3#attrs.handle}",
             "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/Default/Api/OnRequestHandler4#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/Default/Api/OnRequestHandler5#attrs.handle}",
+            "operation": "invoke"
           }
         ]
       },
@@ -221,6 +229,30 @@
                     }
                   }
                 ]
+              }
+            },
+            "/": {
+              "get": {
+                "operationId": "get",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": []
+              }
+            },
+            "/list": {
+              "get": {
+                "operationId": "get-list",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": []
               }
             }
           },
@@ -409,7 +441,141 @@
         "root/Default/Api/OnRequestHandler3",
         "root/Default/Api"
       ]
+    },
+    "root/Default/Bucket": {
+      "type": "@winglang/sdk.cloud.Bucket",
+      "props": {
+        "public": false,
+        "initialObjects": {
+          "index.html": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Hello Wing {{ count }}</title>\n\n    <!-- Tailwind CSS Play CDN https://tailwindcss.com/docs/installation/play-cdn -->\n    <script src=\"https://cdn.tailwindcss.com\"></script>\n  </head>\n  <body class=\"flex items-center justify-center h-screen\">\n    <div class=\"text-center\">\n      <h1 class=\"text-2xl font-bold\">Hello, Wing {{count}}</h1>\n    </div>\n  </body>\n</html>\n",
+          "public/index.html": "<!-- <!DOCTYPE html>\n<html>\n  Hello Winglang!!!\n</html> -->\n\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Hello Wing {{ count }}</title>\n\n    <!-- Tailwind CSS Play CDN https://tailwindcss.com/docs/installation/play-cdn -->\n    <script src=\"https://cdn.tailwindcss.com\"></script>\n  </head>\n  <body class=\"flex items-center justify-center h-screen\">\n    <div class=\"text-center\">\n      <li\n        class=\"list-group-item d-flex justify-content-between align-items-center\"\n      >\n        <form\n          hx-put=\"${path}/${task.taskID}\"\n          hx-headers='{\"Accept\": \"text/plain\"}'\n          id=\"${task.taskID}-form\"\n        >\n          <span class=\"task-text\">${task.title}</span>\n          <input\n            type=\"text\"\n            name=\"title\"\n            class=\"form-control edit-input\"\n            style=\"display: none\"\n            value=\"${task.title}\"\n          />\n        </form>\n        <div class=\"btn-group\">\n          <button\n            class=\"btn btn-danger btn-sm delete-btn\"\n            hx-delete=\"${path}/${task.taskID}\"\n            hx-target=\"closest li\"\n            hx-swap=\"outerHTML\"\n            hx-headers='{\"Accept\": \"text/plain\"}'\n          >\n            ✕\n          </button>\n          <button class=\"btn btn-primary btn-sm edit-btn\">✎</button>\n        </div>\n      </li>\n    </div>\n  </body>\n</html>\n\n<!-- import { TaskData } from \"core/task\"; export function formatTask(path: string,\ntask: TaskData): string { return `\n<li class=\"list-group-item d-flex justify-content-between align-items-center\">\n  <form\n    hx-put=\"${path}/${task.taskID}\"\n    hx-headers='{\"Accept\": \"text/plain\"}'\n    id=\"${task.taskID}-form\"\n  >\n    <span class=\"task-text\">${task.title}</span>\n    <input\n      type=\"text\"\n      name=\"title\"\n      class=\"form-control edit-input\"\n      style=\"display: none\"\n      value=\"${task.title}\"\n    />\n  </form>\n  <div class=\"btn-group\">\n    <button\n      class=\"btn btn-danger btn-sm delete-btn\"\n      hx-delete=\"${path}/${task.taskID}\"\n      hx-target=\"closest li\"\n      hx-swap=\"outerHTML\"\n      hx-headers='{\"Accept\": \"text/plain\"}'\n    >\n      ✕\n    </button>\n    <button class=\"btn btn-primary btn-sm edit-btn\">✎</button>\n  </div>\n</li>\n`; } -->\n"
+        },
+        "topics": {}
+      },
+      "path": "root/Default/Bucket",
+      "addr": "c88a98e6164822cf5b48a8a0ba2b22220e112179e9"
+    },
+    "root/Default/Api/OnRequestHandler4": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler4_c81e1a64.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "COUNTER_HANDLE_7ced9640": "${wsim#root/Default/Counter/Resource#attrs.handle}",
+          "BUCKET_HANDLE_112179e9": "${wsim#root/Default/Bucket#attrs.handle}",
+          "RESOURCE_HANDLE_7ced9640": "${wsim#root/Default/Counter/Resource#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "inc",
+          "resourceHandle": "${wsim#root/Default/Counter/Resource#attrs.handle}"
+        },
+        {
+          "operation": "get",
+          "resourceHandle": "${wsim#root/Default/Bucket#attrs.handle}"
+        },
+        {
+          "operation": "call",
+          "resourceHandle": "${wsim#root/Default/Counter/Resource#attrs.handle}"
+        }
+      ],
+      "path": "root/Default/Api/OnRequestHandler4",
+      "addr": "c81e1a64c08970f128a46ca500c44164365eb61022",
+      "deps": [
+        "root/Default/Counter/Resource",
+        "root/Default/Bucket"
+      ]
+    },
+    "root/Default/Api/ApiEventMapping4": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/Default/Api/OnRequestHandler4#attrs.handle}",
+        "publisher": "${wsim#root/Default/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/Default/Api/ApiEventMapping4",
+      "addr": "c8e3f501bf0abc64a80e5cf4ba29ff621f67bc2d75",
+      "deps": [
+        "root/Default/Api/OnRequestHandler4",
+        "root/Default/Api"
+      ]
+    },
+    "root/Default/Api/OnRequestHandler5": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler5_c83d3708.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "COUNTER_HANDLE_7ced9640": "${wsim#root/Default/Counter/Resource#attrs.handle}",
+          "TABLE_HANDLE_3ff47b20": "${wsim#root/Default/Table#attrs.handle}",
+          "RESOURCE_HANDLE_7ced9640": "${wsim#root/Default/Counter/Resource#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "inc",
+          "resourceHandle": "${wsim#root/Default/Counter/Resource#attrs.handle}"
+        },
+        {
+          "operation": "list",
+          "resourceHandle": "${wsim#root/Default/Table#attrs.handle}"
+        },
+        {
+          "operation": "call",
+          "resourceHandle": "${wsim#root/Default/Counter/Resource#attrs.handle}"
+        }
+      ],
+      "path": "root/Default/Api/OnRequestHandler5",
+      "addr": "c83d3708a7061adec8bf986c0d329ab2fe7403f8f9",
+      "deps": [
+        "root/Default/Counter/Resource",
+        "root/Default/Table"
+      ]
+    },
+    "root/Default/Api/ApiEventMapping5": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/Default/Api/OnRequestHandler5#attrs.handle}",
+        "publisher": "${wsim#root/Default/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/list",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/Default/Api/ApiEventMapping5",
+      "addr": "c850edf144843ed72f8fd0005f058cc5d8f6521f1b",
+      "deps": [
+        "root/Default/Api/OnRequestHandler5",
+        "root/Default/Api"
+      ]
+    },
+    "root/Default/Bucket/Policy": {
+      "type": "@winglang/sdk.sim.Policy",
+      "props": {
+        "principal": "${wsim#root/Default/Bucket#attrs.handle}",
+        "statements": []
+      },
+      "path": "root/Default/Bucket/Policy",
+      "addr": "c8340f2e6f6fd272706c7f012cf84388f9c26d6382"
     }
   },
-  "sdkVersion": "0.74.28"
+  "sdkVersion": "0.75.4"
 }

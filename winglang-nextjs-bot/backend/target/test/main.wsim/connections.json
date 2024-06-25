@@ -1,0 +1,92 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/env0/Api",
+      "sourceOp": "request",
+      "target": "root/env0/Api/OnRequestHandler0",
+      "targetOp": "invoke",
+      "name": "get /"
+    },
+    {
+      "source": "root/env0/Api",
+      "sourceOp": "request",
+      "target": "root/env0/Api/OnRequestHandler1",
+      "targetOp": "invoke",
+      "name": "post /api"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler1",
+      "sourceOp": "invoke",
+      "target": "root/env0/OpenAI",
+      "targetOp": "createCompletion",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler1",
+      "sourceOp": "invoke",
+      "target": "root/env0/Secret",
+      "targetOp": "value",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler1",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/OpenAI",
+      "targetOp": "createCompletion",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler1",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/Secret",
+      "targetOp": "value",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/OpenAI",
+      "sourceOp": "$inflight_init",
+      "target": "root/env0/Secret",
+      "targetOp": "value",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/test:create completion test/Handler",
+      "sourceOp": "invoke",
+      "target": "root/env0/OpenAI",
+      "targetOp": "createCompletion",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/test:create completion test/Handler",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/OpenAI",
+      "targetOp": "createCompletion",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/Endpoint",
+      "target": "root/env0/Api",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/env0/App/AppSim/Service",
+      "target": "root/env0/Api",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/env0/App/Field/Handler",
+      "target": "root/env0/App/AppSim/State",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/env0/App/Endpoint",
+      "target": "root/env0/App/AppSim/State",
+      "targetOp": "url",
+      "name": "<ref>"
+    }
+  ]
+}

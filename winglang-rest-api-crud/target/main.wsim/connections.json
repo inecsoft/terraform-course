@@ -30,6 +30,20 @@
       "name": "delete /tasks/:id"
     },
     {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler4",
+      "targetOp": "invoke",
+      "name": "get /"
+    },
+    {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler5",
+      "targetOp": "invoke",
+      "name": "get /list"
+    },
+    {
       "source": "root/Default/Counter",
       "sourceOp": "inc",
       "target": "root/Default/Counter/Resource",
@@ -62,70 +76,132 @@
       "sourceOp": "invoke",
       "target": "root/Default/Table",
       "targetOp": "list",
-      "name": "list"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler0",
       "sourceOp": "invokeAsync",
       "target": "root/Default/Table",
       "targetOp": "list",
-      "name": "list"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler1",
       "sourceOp": "invoke",
       "target": "root/Default/Counter",
       "targetOp": "inc",
-      "name": "inc"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler1",
       "sourceOp": "invoke",
       "target": "root/Default/Table",
       "targetOp": "insert",
-      "name": "insert"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler1",
       "sourceOp": "invokeAsync",
       "target": "root/Default/Counter",
       "targetOp": "inc",
-      "name": "inc"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler1",
       "sourceOp": "invokeAsync",
       "target": "root/Default/Table",
       "targetOp": "insert",
-      "name": "insert"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler2",
       "sourceOp": "invoke",
       "target": "root/Default/Table",
       "targetOp": "update",
-      "name": "update"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler2",
       "sourceOp": "invokeAsync",
       "target": "root/Default/Table",
       "targetOp": "update",
-      "name": "update"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler3",
       "sourceOp": "invoke",
       "target": "root/Default/Table",
       "targetOp": "delete",
-      "name": "delete"
+      "name": "call"
     },
     {
       "source": "root/Default/Api/OnRequestHandler3",
       "sourceOp": "invokeAsync",
       "target": "root/Default/Table",
       "targetOp": "delete",
-      "name": "delete"
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler4",
+      "sourceOp": "invoke",
+      "target": "root/Default/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler4",
+      "sourceOp": "invoke",
+      "target": "root/Default/Bucket",
+      "targetOp": "get",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler4",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler4",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Bucket",
+      "targetOp": "get",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler5",
+      "sourceOp": "invoke",
+      "target": "root/Default/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler5",
+      "sourceOp": "invoke",
+      "target": "root/Default/Table",
+      "targetOp": "list",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler5",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler5",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Table",
+      "targetOp": "list",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/Endpoint",
+      "target": "root/Default/Api",
+      "targetOp": "url",
+      "name": "<ref>"
     }
   ]
 }

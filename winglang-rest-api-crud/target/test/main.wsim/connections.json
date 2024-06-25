@@ -30,6 +30,62 @@
       "name": "delete /tasks/:id"
     },
     {
+      "source": "root/env0/Api",
+      "sourceOp": "request",
+      "target": "root/env0/Api/OnRequestHandler4",
+      "targetOp": "invoke",
+      "name": "get /"
+    },
+    {
+      "source": "root/env0/Api",
+      "sourceOp": "request",
+      "target": "root/env0/Api/OnRequestHandler5",
+      "targetOp": "invoke",
+      "name": "get /list"
+    },
+    {
+      "source": "root/env1/Api",
+      "sourceOp": "request",
+      "target": "root/env1/Api/OnRequestHandler0",
+      "targetOp": "invoke",
+      "name": "get /tasks"
+    },
+    {
+      "source": "root/env1/Api",
+      "sourceOp": "request",
+      "target": "root/env1/Api/OnRequestHandler1",
+      "targetOp": "invoke",
+      "name": "post /tasks"
+    },
+    {
+      "source": "root/env1/Api",
+      "sourceOp": "request",
+      "target": "root/env1/Api/OnRequestHandler2",
+      "targetOp": "invoke",
+      "name": "put /tasks/:id"
+    },
+    {
+      "source": "root/env1/Api",
+      "sourceOp": "request",
+      "target": "root/env1/Api/OnRequestHandler3",
+      "targetOp": "invoke",
+      "name": "delete /tasks/:id"
+    },
+    {
+      "source": "root/env1/Api",
+      "sourceOp": "request",
+      "target": "root/env1/Api/OnRequestHandler4",
+      "targetOp": "invoke",
+      "name": "get /"
+    },
+    {
+      "source": "root/env1/Api",
+      "sourceOp": "request",
+      "target": "root/env1/Api/OnRequestHandler5",
+      "targetOp": "invoke",
+      "name": "get /list"
+    },
+    {
       "source": "root/env0/Counter",
       "sourceOp": "inc",
       "target": "root/env0/Counter/Resource",
@@ -62,70 +118,304 @@
       "sourceOp": "invoke",
       "target": "root/env0/Table",
       "targetOp": "list",
-      "name": "list"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler0",
       "sourceOp": "invokeAsync",
       "target": "root/env0/Table",
       "targetOp": "list",
-      "name": "list"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler1",
       "sourceOp": "invoke",
       "target": "root/env0/Counter",
       "targetOp": "inc",
-      "name": "inc"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler1",
       "sourceOp": "invoke",
       "target": "root/env0/Table",
       "targetOp": "insert",
-      "name": "insert"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler1",
       "sourceOp": "invokeAsync",
       "target": "root/env0/Counter",
       "targetOp": "inc",
-      "name": "inc"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler1",
       "sourceOp": "invokeAsync",
       "target": "root/env0/Table",
       "targetOp": "insert",
-      "name": "insert"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler2",
       "sourceOp": "invoke",
       "target": "root/env0/Table",
       "targetOp": "update",
-      "name": "update"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler2",
       "sourceOp": "invokeAsync",
       "target": "root/env0/Table",
       "targetOp": "update",
-      "name": "update"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler3",
       "sourceOp": "invoke",
       "target": "root/env0/Table",
       "targetOp": "delete",
-      "name": "delete"
+      "name": "call"
     },
     {
       "source": "root/env0/Api/OnRequestHandler3",
       "sourceOp": "invokeAsync",
       "target": "root/env0/Table",
       "targetOp": "delete",
-      "name": "delete"
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler4",
+      "sourceOp": "invoke",
+      "target": "root/env0/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler4",
+      "sourceOp": "invoke",
+      "target": "root/env0/Bucket",
+      "targetOp": "get",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler4",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler4",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/Bucket",
+      "targetOp": "get",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler5",
+      "sourceOp": "invoke",
+      "target": "root/env0/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler5",
+      "sourceOp": "invoke",
+      "target": "root/env0/Table",
+      "targetOp": "list",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler5",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/Api/OnRequestHandler5",
+      "sourceOp": "invokeAsync",
+      "target": "root/env0/Table",
+      "targetOp": "list",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Counter",
+      "sourceOp": "inc",
+      "target": "root/env1/Counter/Resource",
+      "targetOp": "call",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Counter",
+      "sourceOp": "dec",
+      "target": "root/env1/Counter/Resource",
+      "targetOp": "call",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Counter",
+      "sourceOp": "peek",
+      "target": "root/env1/Counter/Resource",
+      "targetOp": "call",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Counter",
+      "sourceOp": "set",
+      "target": "root/env1/Counter/Resource",
+      "targetOp": "call",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler0",
+      "sourceOp": "invoke",
+      "target": "root/env1/Table",
+      "targetOp": "list",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler0",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Table",
+      "targetOp": "list",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler1",
+      "sourceOp": "invoke",
+      "target": "root/env1/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler1",
+      "sourceOp": "invoke",
+      "target": "root/env1/Table",
+      "targetOp": "insert",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler1",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler1",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Table",
+      "targetOp": "insert",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler2",
+      "sourceOp": "invoke",
+      "target": "root/env1/Table",
+      "targetOp": "update",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler2",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Table",
+      "targetOp": "update",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler3",
+      "sourceOp": "invoke",
+      "target": "root/env1/Table",
+      "targetOp": "delete",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler3",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Table",
+      "targetOp": "delete",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler4",
+      "sourceOp": "invoke",
+      "target": "root/env1/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler4",
+      "sourceOp": "invoke",
+      "target": "root/env1/Bucket",
+      "targetOp": "get",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler4",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler4",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Bucket",
+      "targetOp": "get",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler5",
+      "sourceOp": "invoke",
+      "target": "root/env1/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler5",
+      "sourceOp": "invoke",
+      "target": "root/env1/Table",
+      "targetOp": "list",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler5",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Counter",
+      "targetOp": "inc",
+      "name": "call"
+    },
+    {
+      "source": "root/env1/Api/OnRequestHandler5",
+      "sourceOp": "invokeAsync",
+      "target": "root/env1/Table",
+      "targetOp": "list",
+      "name": "call"
+    },
+    {
+      "source": "root/env0/test:run simple crud scenario/Handler",
+      "target": "root/env0/Api",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/env1/test:renders the index page/Handler",
+      "target": "root/env1/Api",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/env0/Api/Endpoint",
+      "target": "root/env0/Api",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/env1/Api/Endpoint",
+      "target": "root/env1/Api",
+      "targetOp": "url",
+      "name": "<ref>"
     }
   ]
 }

@@ -784,7 +784,7 @@ var require_package = __commonJS({
         "@smithy/util-stream": "2.0.17",
         "@smithy/util-utf8": "2.0.0",
         "@types/aws-lambda": "^8.10.119",
-        "@winglang/wingtunnels": "0.74.28",
+        "@winglang/wingtunnels": "0.75.4",
         ajv: "^8.12.0",
         cdktf: "0.20.3",
         constructs: "^10.3",
@@ -855,7 +855,7 @@ var require_package = __commonJS({
       },
       main: "lib/index.js",
       license: "MIT",
-      version: "0.74.28",
+      version: "0.75.4",
       types: "lib/index.d.ts",
       stability: "experimental",
       jsii: {
@@ -21418,7 +21418,10 @@ var require_node = __commonJS({
        * metadata describing how one construct is related to another construct.
        */
       addConnection(props) {
-        this._connections.add(props);
+        this._connections.add({
+          source: props.source ?? this.construct,
+          ...props
+        });
       }
       // ---- constructs 10.x APIs ----
       // https://github.com/aws/constructs/blob/10.x/src/construct.ts
@@ -22015,7 +22018,7 @@ var require_resource = __commonJS({
                 sourceOp: baseOp ?? op,
                 target: dep,
                 targetOp: depOp,
-                name: depOp
+                name: "call"
               });
             }
           } else if (hasLiftMap(dep)) {
@@ -23083,7 +23086,7 @@ var require_bucket = __commonJS({
        * @returns the created topic
        */
       createTopic(actionType) {
-        const topic = new topic_1.Topic(this, actionType.toLowerCase());
+        const topic = new topic_1.Topic(this, actionType);
         this.node.addDependency(topic);
         return topic;
       }
@@ -23208,9 +23211,9 @@ var require_bucket = __commonJS({
     })(BucketSignedUrlAction || (exports2.BucketSignedUrlAction = BucketSignedUrlAction = {}));
     var BucketEventType;
     (function(BucketEventType2) {
-      BucketEventType2["CREATE"] = "onCreate";
-      BucketEventType2["DELETE"] = "onDelete";
-      BucketEventType2["UPDATE"] = "onUpdate";
+      BucketEventType2["CREATE"] = "OnCreate";
+      BucketEventType2["DELETE"] = "OnDelete";
+      BucketEventType2["UPDATE"] = "OnUpdate";
     })(BucketEventType || (exports2.BucketEventType = BucketEventType = {}));
     var BucketInflightMethods;
     (function(BucketInflightMethods2) {
@@ -25121,14 +25124,7 @@ var require_tree = __commonJS({
     }
     __name(synthesizeTree, "synthesizeTree");
     exports2.synthesizeTree = synthesizeTree;
-    function isIResource(construct) {
-      return construct instanceof std_1.Resource;
-    }
-    __name(isIResource, "isIResource");
     function synthDisplay(construct) {
-      if (!isIResource(construct)) {
-        return;
-      }
       const display = std_1.Node.of(construct);
       const ui = [];
       for (const child of construct.node.children) {
@@ -25136,7 +25132,7 @@ var require_tree = __commonJS({
           ui.push(child._toUIComponent());
         }
       }
-      if (display.description || display.title || display.hidden || ui || display.color || display.icon) {
+      if (display.description || display.title || display.hidden || ui || display.color || display.icon || display.expanded) {
         return {
           title: display.title,
           description: display.description,
@@ -25144,7 +25140,8 @@ var require_tree = __commonJS({
           sourceModule: display.sourceModule,
           ui: ui.length > 0 ? ui : void 0,
           color: (0, colors_1.isOfTypeColors)(display.color) ? display.color : void 0,
-          icon: display.icon
+          icon: display.icon,
+          expanded: display.expanded
         };
       }
       return;
@@ -25256,6 +25253,7 @@ var require_resource2 = __commonJS({
       /** @internal */
       _preSynthesize() {
         super._preSynthesize();
+        const onStopMethod = "onStop";
         const inflightClient = this.factory._toInflight();
         const code = `        "use strict";
         let $klass;
@@ -25265,14 +25263,14 @@ var require_resource2 = __commonJS({
           }
           const attrs = {};
           const ctx = {};
-          ctx.statedir = () => statedir;
-          ctx.resolveToken = (name, value) => attrs[name] = value;
-          ctx.log = (message, level) => {
+          ctx.statedir = async () => statedir;
+          ctx.resolveToken = async (name, value) => attrs[name] = value;
+          ctx.log = async (message, level) => {
             if (!level) level = 'info';
             console.log(level + ':' + message);
           };
           const client = ${inflightClient};
-          const noop = () => {};
+          const noop = { ${onStopMethod}: () => {} };
           const klass = (await client.handle(ctx)) ?? noop;
           ctx.resolveToken = () => {
             throw Error('cannot resolve attributes outside of onStop method');
@@ -25285,8 +25283,8 @@ var require_resource2 = __commonJS({
           if (!$klass) {
             throw Error('Resource is not running (it may have crashed or stopped)');
           }
-          if (propName === 'onStop') {
-            throw Error('Cannot call "onStop"');
+          if (propName === '${onStopMethod}') {
+            throw Error('Cannot call "${onStopMethod}"');
           }
           const prop = $klass[propName];
           if (!prop) {
@@ -25305,7 +25303,7 @@ var require_resource2 = __commonJS({
           if (!$klass) {
             throw Error('Resource is not running (it may have crashed or stopped)');
           }
-          await $klass.onStop();
+          await $klass.${onStopMethod}();
           $klass = undefined;
         };
         `;
@@ -25535,7 +25533,7 @@ var require_counter_inflight = __commonJS({
         this.values = (/* @__PURE__ */ new Map()).set("default", this.initial);
       }
       async onStart() {
-        const valuesFile = (0, path_1.join)(this.ctx.statedir(), VALUES_FILENAME);
+        const valuesFile = (0, path_1.join)(await this.ctx.statedir(), VALUES_FILENAME);
         const valueFilesExists = await (0, util_1.exists)(valuesFile);
         if (valueFilesExists) {
           const valuesContents = await fs.promises.readFile(valuesFile, "utf-8");
@@ -25544,7 +25542,7 @@ var require_counter_inflight = __commonJS({
         }
       }
       async onStop() {
-        fs.writeFileSync((0, path_1.join)(this.ctx.statedir(), VALUES_FILENAME), JSON.stringify(Array.from(this.values.entries())));
+        fs.writeFileSync((0, path_1.join)(await this.ctx.statedir(), VALUES_FILENAME), JSON.stringify(Array.from(this.values.entries())));
       }
       async inc(amount = 1, key = "default") {
         const prev = this.values.get(key) ?? this.initial;
@@ -25575,9 +25573,9 @@ exports.start = async function(statedir) {
   }
   const attrs = {};
   const ctx = {};
-  ctx.statedir = () => statedir;
-  ctx.resolveToken = (name, value) => attrs[name] = value;
-  ctx.log = (message, level) => {
+  ctx.statedir = async () => statedir;
+  ctx.resolveToken = async (name, value) => attrs[name] = value;
+  ctx.log = async (message, level) => {
     if (!level)
       level = "info";
     console.log(level + ":" + message);
@@ -25601,8 +25599,8 @@ exports.start = async function(statedir) {
     newFunction.handle = newFunction;
     return newFunction;
   })();
-  const noop = /* @__PURE__ */ __name(() => {
-  }, "noop");
+  const noop = { onStop: () => {
+  } };
   const klass = await client.handle(ctx) ?? noop;
   ctx.resolveToken = () => {
     throw Error("cannot resolve attributes outside of onStop method");

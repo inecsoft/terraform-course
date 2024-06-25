@@ -6,6 +6,9 @@
   "license": "MIT",
   "wing": true,
   "dependencies": {
+    "fs": "^0.0.1-security",
+    "handlebars": "^4.7.8",
+    "path": "^0.12.7",
     "winglang": "^0.74.28"
   }
 }

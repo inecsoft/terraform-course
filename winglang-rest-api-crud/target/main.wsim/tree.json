@@ -88,7 +88,6 @@
                 "display": {
                   "title": "GET /tasks",
                   "description": "A cloud function (FaaS)",
-                  "hidden": true,
                   "sourceModule": "@winglang/sdk"
                 }
               },
@@ -113,7 +112,6 @@
                 "display": {
                   "title": "POST /tasks",
                   "description": "A cloud function (FaaS)",
-                  "hidden": true,
                   "sourceModule": "@winglang/sdk"
                 }
               },
@@ -138,7 +136,6 @@
                 "display": {
                   "title": "PUT /tasks/:id",
                   "description": "A cloud function (FaaS)",
-                  "hidden": true,
                   "sourceModule": "@winglang/sdk"
                 }
               },
@@ -163,13 +160,60 @@
                 "display": {
                   "title": "DELETE /tasks/:id",
                   "description": "A cloud function (FaaS)",
-                  "hidden": true,
                   "sourceModule": "@winglang/sdk"
                 }
               },
               "ApiEventMapping3": {
                 "id": "ApiEventMapping3",
                 "path": "root/Default/Api/ApiEventMapping3",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.std.Resource",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "hidden": true
+                }
+              },
+              "OnRequestHandler4": {
+                "id": "OnRequestHandler4",
+                "path": "root/Default/Api/OnRequestHandler4",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.cloud.Function",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "GET /",
+                  "description": "A cloud function (FaaS)",
+                  "sourceModule": "@winglang/sdk"
+                }
+              },
+              "ApiEventMapping4": {
+                "id": "ApiEventMapping4",
+                "path": "root/Default/Api/ApiEventMapping4",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.std.Resource",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "hidden": true
+                }
+              },
+              "OnRequestHandler5": {
+                "id": "OnRequestHandler5",
+                "path": "root/Default/Api/OnRequestHandler5",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.cloud.Function",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "GET /list",
+                  "description": "A cloud function (FaaS)",
+                  "sourceModule": "@winglang/sdk"
+                }
+              },
+              "ApiEventMapping5": {
+                "id": "ApiEventMapping5",
+                "path": "root/Default/Api/ApiEventMapping5",
                 "constructInfo": {
                   "fqn": "@winglang/sdk.std.Resource",
                   "version": "0.0.0"
@@ -255,6 +299,90 @@
               "description": "A cloud unit test.",
               "hidden": true
             }
+          },
+          "Bucket": {
+            "id": "Bucket",
+            "path": "root/Default/Bucket",
+            "children": {
+              "Policy": {
+                "id": "Policy",
+                "path": "root/Default/Bucket/Policy",
+                "constructInfo": {
+                  "fqn": "@winglang/sdk.sim.Policy",
+                  "version": "0.0.0"
+                },
+                "display": {
+                  "title": "Policy",
+                  "description": "A simulated resource policy",
+                  "hidden": true
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@winglang/sdk.cloud.Bucket",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Bucket",
+              "description": "A cloud object store"
+            }
+          },
+          "$Closure6_0": {
+            "id": "$Closure6_0",
+            "path": "root/Default/$Closure6_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          },
+          "$Closure7_0": {
+            "id": "$Closure7_0",
+            "path": "root/Default/$Closure7_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          },
+          "$Closure8_0": {
+            "id": "$Closure8_0",
+            "path": "root/Default/$Closure8_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
+          },
+          "test:renders the index page": {
+            "id": "test:renders the index page",
+            "path": "root/Default/test:renders the index page",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.Test",
+              "version": "0.0.0"
+            },
+            "display": {
+              "title": "Test",
+              "description": "A cloud unit test.",
+              "hidden": true
+            }
+          },
+          "$Closure9_0": {
+            "id": "$Closure9_0",
+            "path": "root/Default/$Closure9_0",
+            "constructInfo": {
+              "fqn": "@winglang/sdk.std.AutoIdResource",
+              "version": "0.0.0"
+            },
+            "display": {
+              "hidden": true
+            }
           }
         },
         "constructInfo": {
@@ -269,12 +397,16 @@
         "constructInfo": {
           "fqn": "@winglang/sdk.platform.ParameterRegistrar",
           "version": "0.0.0"
+        },
+        "display": {
+          "hidden": true
         }
       }
     },
     "constructInfo": {
       "fqn": "@winglang/sdk.core.App",
       "version": "0.0.0"
-    }
+    },
+    "display": {}
   }
 }

@@ -1,0 +1,18 @@
+{
+  "name": "my-wing-app",
+  "version": "0.0.0",
+  "description": "A description of my Wing application",
+  "author": "Your Name",
+  "license": "MIT",
+  "wing": true,
+  "dependencies": {
+    "@langchain/community": "^0.2.11",
+    "@langchain/openai": "^0.1.3",
+    "@wingcloud/framework": "^0.75.3",
+    "@winglibs/openai": "^0.0.5",
+    "@winglibs/react": "^0.1.1",
+    "cheerio": "^1.0.0-rc.12",
+    "langchain": "^0.2.5",
+    "winglang": "^0.0.1"
+  }
+}

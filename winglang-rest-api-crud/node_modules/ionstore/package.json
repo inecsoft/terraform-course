@@ -1,0 +1,36 @@
+{
+  "name": "ionstore",
+  "repository": "github:fabiospampinato/ionstore",
+  "description": "A very simple isomorphic key-value store with a Map-like API for persisting session data.",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/node.js",
+  "types": "./dist/node.d.ts",
+  "exports": {
+    "node": "./dist/node.js",
+    "default": "./dist/browser.js"
+  },
+  "scripts": {
+    "clean": "tsex clean",
+    "compile": "tsex compile",
+    "compile:watch": "tsex compile --watch",
+    "test": "tsex test",
+    "test:watch": "tsex test --watch",
+    "prepublishOnly": "tsex prepare"
+  },
+  "keywords": [
+    "simple",
+    "isomorphic",
+    "session",
+    "temporary",
+    "temp",
+    "store",
+    "storage"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.4.6",
+    "fava": "^0.2.0",
+    "tsex": "^2.2.4",
+    "typescript": "^4.9.5"
+  }
+}

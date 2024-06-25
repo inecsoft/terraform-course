@@ -1,0 +1,78 @@
+{
+  "version": "connections-0.1",
+  "connections": [
+    {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler0",
+      "targetOp": "invoke",
+      "name": "get /"
+    },
+    {
+      "source": "root/Default/Api",
+      "sourceOp": "request",
+      "target": "root/Default/Api/OnRequestHandler1",
+      "targetOp": "invoke",
+      "name": "post /api"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "sourceOp": "invoke",
+      "target": "root/Default/OpenAI",
+      "targetOp": "createCompletion",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "sourceOp": "invoke",
+      "target": "root/Default/Secret",
+      "targetOp": "value",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/OpenAI",
+      "targetOp": "createCompletion",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/OnRequestHandler1",
+      "sourceOp": "invokeAsync",
+      "target": "root/Default/Secret",
+      "targetOp": "value",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/OpenAI",
+      "sourceOp": "$inflight_init",
+      "target": "root/Default/Secret",
+      "targetOp": "value",
+      "name": "call"
+    },
+    {
+      "source": "root/Default/Api/Endpoint",
+      "target": "root/Default/Api",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/Default/App/AppSim/Service",
+      "target": "root/Default/Api",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/Default/App/Field/Handler",
+      "target": "root/Default/App/AppSim/State",
+      "targetOp": "url",
+      "name": "<ref>"
+    },
+    {
+      "source": "root/Default/App/Endpoint",
+      "target": "root/Default/App/AppSim/State",
+      "targetOp": "url",
+      "name": "<ref>"
+    }
+  ]
+}

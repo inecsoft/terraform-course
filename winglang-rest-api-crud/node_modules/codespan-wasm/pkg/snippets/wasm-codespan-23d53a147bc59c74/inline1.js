@@ -1,0 +1,1 @@
+exports.debug = function(s) { require('debug')('codespan-wasm')(s) }

@@ -39,6 +39,12 @@ wing compile -t tf-aws main.w
 wing compile -t tf-aws --plugins=plugin.static-backend.js main.w
 ```
 
+### **debug it and expose a debug server.**
+
+```
+node --inspect $(which wing)
+```
+
 ```
 cd ./target/main.tfaws
 export AWS_REGION=eu-west-1 # or any other region
@@ -47,3 +53,5 @@ terraform init
 ```
 
 ### **Ref:** "gitignore.io"
+
+### **Doc:** https://www.winglang.io/blog/2024/03/12/crud-rest-api

@@ -1,0 +1,390 @@
+{
+  "types": {
+    "@winglang/sdk.cloud.Api": {
+      "className": "Api",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/api.inflight.js"
+    },
+    "@winglang/sdk.cloud.Bucket": {
+      "className": "Bucket",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/bucket.inflight.js"
+    },
+    "@winglang/sdk.cloud.Domain": {
+      "className": "Domain",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/domain.inflight.js"
+    },
+    "@winglang/sdk.cloud.Endpoint": {
+      "className": "Endpoint",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/endpoint.inflight.js"
+    },
+    "@winglang/sdk.sim.EventMapping": {
+      "className": "EventMapping",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/event-mapping.inflight.js"
+    },
+    "@winglang/sdk.cloud.Function": {
+      "className": "Function",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/function.inflight.js"
+    },
+    "@winglang/sdk.cloud.OnDeploy": {
+      "className": "OnDeploy",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/on-deploy.inflight.js"
+    },
+    "@winglang/sdk.sim.Policy": {
+      "className": "Policy",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/policy.inflight.js"
+    },
+    "@winglang/sdk.cloud.Queue": {
+      "className": "Queue",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/queue.inflight.js"
+    },
+    "@winglang/sdk.ex.Redis": {
+      "className": "Redis",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/redis.inflight.js"
+    },
+    "@winglang/sdk.cloud.Schedule": {
+      "className": "Schedule",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/schedule.inflight.js"
+    },
+    "@winglang/sdk.cloud.Secret": {
+      "className": "Secret",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/secret.inflight.js"
+    },
+    "@winglang/sdk.cloud.Service": {
+      "className": "Service",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/service.inflight.js"
+    },
+    "@winglang/sdk.sim.State": {
+      "className": "State",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/state.inflight.js"
+    },
+    "@winglang/sdk.sim.Container": {
+      "className": "Container",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/container.inflight.js"
+    },
+    "@winglang/sdk.sim.Resource": {
+      "className": "Resource",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/resource.inflight.js"
+    },
+    "@winglang/sdk.ex.Table": {
+      "className": "Table",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/table.inflight.js"
+    },
+    "@winglang/sdk.std.TestRunner": {
+      "className": "TestRunner",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/test-runner.inflight.js"
+    },
+    "@winglang/sdk.cloud.Topic": {
+      "className": "Topic",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/topic.inflight.js"
+    },
+    "@winglang/sdk.cloud.Website": {
+      "className": "Website",
+      "sourcePath": "/home/iarteaga/.nvm/versions/node/v20.11.0/lib/node_modules/winglang/node_modules/@winglang/sdk/lib/target-sim/website.inflight.js"
+    }
+  },
+  "resources": {
+    "root/env0/Secret": {
+      "type": "@winglang/sdk.cloud.Secret",
+      "props": {
+        "name": "open-ai-key"
+      },
+      "path": "root/env0/Secret",
+      "addr": "c8f220394ad8b355cdde90cea3ce66381c55a0a392"
+    },
+    "root/env0/test:create completion test/Handler": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/handler_c86bc571.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "SECRET_HANDLE_55a0a392": "${wsim#root/env0/Secret#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "value",
+          "resourceHandle": "${wsim#root/env0/Secret#attrs.handle}"
+        }
+      ],
+      "path": "root/env0/test:create completion test/Handler",
+      "addr": "c86bc57105881c295f15c4da3a249f15ceb7f3d199",
+      "deps": [
+        "root/env0/Secret"
+      ]
+    },
+    "root/cloud.TestRunner": {
+      "type": "@winglang/sdk.std.TestRunner",
+      "props": {
+        "tests": {
+          "root/env0/test:create completion test": "${wsim#root/env0/test:create completion test/Handler#attrs.handle}"
+        }
+      },
+      "path": "root/cloud.TestRunner",
+      "addr": "c8647dd8d2adabe83cc081ebe0ccbefe4a068ef3bf",
+      "deps": [
+        "root/env0/test:create completion test/Handler"
+      ]
+    },
+    "root/env0/Api/Endpoint": {
+      "type": "@winglang/sdk.cloud.Endpoint",
+      "props": {
+        "inputUrl": "${wsim#root/env0/Api#attrs.url}",
+        "url": "${wsim#root/env0/Api#attrs.url}",
+        "label": "Api root/env0/Api"
+      },
+      "path": "root/env0/Api/Endpoint",
+      "addr": "c80feff9edbc51eebf7744a8dc7604137ea5abf8de"
+    },
+    "root/env0/Api/Policy": {
+      "type": "@winglang/sdk.sim.Policy",
+      "props": {
+        "principal": "${wsim#root/env0/Api#attrs.handle}",
+        "statements": [
+          {
+            "resourceHandle": "${wsim#root/env0/Api/OnRequestHandler0#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env0/Api/OnRequestHandler1#attrs.handle}",
+            "operation": "invoke"
+          }
+        ]
+      },
+      "path": "root/env0/Api/Policy",
+      "addr": "c86f9f81bea435aa54bee3fbd670e279a093300b0b"
+    },
+    "root/env0/Api/OnRequestHandler0": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler0_c8ce9638.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [],
+      "path": "root/env0/Api/OnRequestHandler0",
+      "addr": "c8ce9638f50f516032826c3f23b015b11795677de0"
+    },
+    "root/env0/Api": {
+      "type": "@winglang/sdk.cloud.Api",
+      "props": {
+        "openApiSpec": {
+          "paths": {
+            "/": {
+              "get": {
+                "operationId": "get",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {},
+                    "headers": {
+                      "Access-Control-Allow-Origin": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Allow-Methods": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Allow-Headers": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Max-Age": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "parameters": []
+              }
+            },
+            "/api": {
+              "post": {
+                "operationId": "post-api",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {},
+                    "headers": {
+                      "Access-Control-Allow-Origin": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Allow-Methods": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Allow-Headers": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      },
+                      "Access-Control-Max-Age": {
+                        "schema": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "parameters": []
+              }
+            }
+          },
+          "openapi": "3.0.3"
+        },
+        "corsHeaders": {
+          "defaultResponse": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Expose-Headers": "",
+            "Access-Control-Allow-Credentials": "false"
+          },
+          "optionsResponse": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Content-Type,Authorization,X-Requested-With",
+            "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,HEAD,OPTIONS",
+            "Access-Control-Max-Age": "300"
+          }
+        }
+      },
+      "path": "root/env0/Api",
+      "addr": "c8ef77812d2029c5b241c0fc85b5c75bc644fd583d"
+    },
+    "root/env0/Api/ApiEventMapping0": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env0/Api/OnRequestHandler0#attrs.handle}",
+        "publisher": "${wsim#root/env0/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/env0/Api/ApiEventMapping0",
+      "addr": "c84faae6abb1e7104a9743caf2205d4748975a746f",
+      "deps": [
+        "root/env0/Api/OnRequestHandler0",
+        "root/env0/Api"
+      ]
+    },
+    "root/env0/Api/OnRequestHandler1": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler1_c8966d94.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "SECRET_HANDLE_55a0a392": "${wsim#root/env0/Secret#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "value",
+          "resourceHandle": "${wsim#root/env0/Secret#attrs.handle}"
+        }
+      ],
+      "path": "root/env0/Api/OnRequestHandler1",
+      "addr": "c8966d94c889ae1f593a9050ec31532fbec275863e",
+      "deps": [
+        "root/env0/Secret"
+      ]
+    },
+    "root/env0/Api/ApiEventMapping1": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env0/Api/OnRequestHandler1#attrs.handle}",
+        "publisher": "${wsim#root/env0/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/api",
+              "method": "POST"
+            }
+          ]
+        }
+      },
+      "path": "root/env0/Api/ApiEventMapping1",
+      "addr": "c829f5603282ed1da6b609356e7cedbcc1358e0c1b",
+      "deps": [
+        "root/env0/Api/OnRequestHandler1",
+        "root/env0/Api"
+      ]
+    },
+    "root/env0/App/AppSim/State": {
+      "type": "@winglang/sdk.sim.State",
+      "props": {},
+      "path": "root/env0/App/AppSim/State",
+      "addr": "c8ef4bacc79177662388292c212e78a94d10071f99"
+    },
+    "root/env0/App/AppSim/Service": {
+      "type": "@winglang/sdk.cloud.Service",
+      "props": {
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "HOME": "/home/iarteaga",
+          "PATH": "/home/iarteaga/.vscode-server/extensions/ms-python.python-2024.8.1/python_files/deactivate/bash:/home/iarteaga/terraform-course/django-workcount/env/bin:/home/iarteaga/.tfenv/bin:/home/iarteaga/.krew/bin:/home/iarteaga/.vscode-server/extensions/ms-python.python-2024.8.1/python_files/deactivate/bash:/home/iarteaga/terraform-course/django-workcount/env/bin:/home/iarteaga/.vscode-server/cli/servers/Stable-5437499feb04f7a586f677b155b039bc2b3669eb/server/bin/remote-cli:/home/iarteaga/.local/bin:/home/iarteaga/.local/share/pnpm:/home/iarteaga/.tfenv/bin:/home/iarteaga/.krew/bin:/home/iarteaga/.nvm/versions/node/v20.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/iarteaga/bin:/home/iarteaga/bin",
+          "STATE_HANDLE_10071f99": "${wsim#root/env0/App/AppSim/State#attrs.handle}",
+          "WING_TOKEN_WSIM_ROOT_ENV0_API_ATTRS_URL": "${wsim#root/env0/Api#attrs.url}"
+        },
+        "sourceCodeFile": ".wing/service_c890aad5.cjs",
+        "autoStart": true
+      },
+      "policy": [
+        {
+          "operation": "set",
+          "resourceHandle": "${wsim#root/env0/App/AppSim/State#attrs.handle}"
+        }
+      ],
+      "path": "root/env0/App/AppSim/Service",
+      "addr": "c890aad5f7dd5fd09600aee727fa10615aae6b8d47",
+      "deps": [
+        "root/env0/App/AppSim/State"
+      ]
+    },
+    "root/env0/App/Field/Handler": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/handler_c8e88ed0.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "WING_TOKEN_WSIM_ROOT_ENV0_APP_APPSIM_STATE_ATTRS_URL": "${wsim#root/env0/App/AppSim/State#attrs.url}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [],
+      "path": "root/env0/App/Field/Handler",
+      "addr": "c8e88ed07987c3a148feb1252fe596d53a6fc6a7e8"
+    },
+    "root/env0/App/Endpoint": {
+      "type": "@winglang/sdk.cloud.Endpoint",
+      "props": {
+        "inputUrl": "${wsim#root/env0/App/AppSim/State#attrs.url}",
+        "url": "${wsim#root/env0/App/AppSim/State#attrs.url}"
+      },
+      "path": "root/env0/App/Endpoint",
+      "addr": "c809da88f533f82de6ab912b8869e39153fb7aa3cc"
+    }
+  },
+  "sdkVersion": "0.75.4"
+}

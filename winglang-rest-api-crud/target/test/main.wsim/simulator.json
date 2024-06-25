@@ -98,17 +98,35 @@
       "path": "root/env0/test:run simple crud scenario/Handler",
       "addr": "c89e709bc7a35f72a05890452d8a56f4d5401655ad"
     },
+    "root/env1/test:renders the index page/Handler": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/handler_c870ad47.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "WING_TOKEN_WSIM_ROOT_ENV1_API_ATTRS_URL": "${wsim#root/env1/Api#attrs.url}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [],
+      "path": "root/env1/test:renders the index page/Handler",
+      "addr": "c870ad47299a15e3c32ec7dccc2733f0ed67c8d78b"
+    },
     "root/cloud.TestRunner": {
       "type": "@winglang/sdk.std.TestRunner",
       "props": {
         "tests": {
-          "root/env0/test:run simple crud scenario": "${wsim#root/env0/test:run simple crud scenario/Handler#attrs.handle}"
+          "root/env0/test:run simple crud scenario": "${wsim#root/env0/test:run simple crud scenario/Handler#attrs.handle}",
+          "root/env1/test:renders the index page": "${wsim#root/env1/test:renders the index page/Handler#attrs.handle}"
         }
       },
       "path": "root/cloud.TestRunner",
       "addr": "c8647dd8d2adabe83cc081ebe0ccbefe4a068ef3bf",
       "deps": [
-        "root/env0/test:run simple crud scenario/Handler"
+        "root/env0/test:run simple crud scenario/Handler",
+        "root/env1/test:renders the index page/Handler"
       ]
     },
     "root/env0/Api/Endpoint": {
@@ -140,6 +158,14 @@
           },
           {
             "resourceHandle": "${wsim#root/env0/Api/OnRequestHandler3#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env0/Api/OnRequestHandler4#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env0/Api/OnRequestHandler5#attrs.handle}",
             "operation": "invoke"
           }
         ]
@@ -250,6 +276,30 @@
                     }
                   }
                 ]
+              }
+            },
+            "/": {
+              "get": {
+                "operationId": "get",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": []
+              }
+            },
+            "/list": {
+              "get": {
+                "operationId": "get-list",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": []
               }
             }
           },
@@ -438,7 +488,635 @@
         "root/env0/Api/OnRequestHandler3",
         "root/env0/Api"
       ]
+    },
+    "root/env0/Bucket": {
+      "type": "@winglang/sdk.cloud.Bucket",
+      "props": {
+        "public": false,
+        "initialObjects": {
+          "index.html": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Hello Wing {{ count }}</title>\n\n    <!-- Tailwind CSS Play CDN https://tailwindcss.com/docs/installation/play-cdn -->\n    <script src=\"https://cdn.tailwindcss.com\"></script>\n  </head>\n  <body class=\"flex items-center justify-center h-screen\">\n    <div class=\"text-center\">\n      <h1 class=\"text-2xl font-bold\">Hello, Wing {{count}}</h1>\n    </div>\n  </body>\n</html>\n",
+          "public/index.html": "<!-- <!DOCTYPE html>\n<html>\n  Hello Winglang!!!\n</html> -->\n\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Hello Wing {{ count }}</title>\n\n    <!-- Tailwind CSS Play CDN https://tailwindcss.com/docs/installation/play-cdn -->\n    <script src=\"https://cdn.tailwindcss.com\"></script>\n  </head>\n  <body class=\"flex items-center justify-center h-screen\">\n    <div class=\"text-center\">\n      <li\n        class=\"list-group-item d-flex justify-content-between align-items-center\"\n      >\n        <form\n          hx-put=\"${path}/${task.taskID}\"\n          hx-headers='{\"Accept\": \"text/plain\"}'\n          id=\"${task.taskID}-form\"\n        >\n          <span class=\"task-text\">${task.title}</span>\n          <input\n            type=\"text\"\n            name=\"title\"\n            class=\"form-control edit-input\"\n            style=\"display: none\"\n            value=\"${task.title}\"\n          />\n        </form>\n        <div class=\"btn-group\">\n          <button\n            class=\"btn btn-danger btn-sm delete-btn\"\n            hx-delete=\"${path}/${task.taskID}\"\n            hx-target=\"closest li\"\n            hx-swap=\"outerHTML\"\n            hx-headers='{\"Accept\": \"text/plain\"}'\n          >\n            ✕\n          </button>\n          <button class=\"btn btn-primary btn-sm edit-btn\">✎</button>\n        </div>\n      </li>\n    </div>\n  </body>\n</html>\n\n<!-- import { TaskData } from \"core/task\"; export function formatTask(path: string,\ntask: TaskData): string { return `\n<li class=\"list-group-item d-flex justify-content-between align-items-center\">\n  <form\n    hx-put=\"${path}/${task.taskID}\"\n    hx-headers='{\"Accept\": \"text/plain\"}'\n    id=\"${task.taskID}-form\"\n  >\n    <span class=\"task-text\">${task.title}</span>\n    <input\n      type=\"text\"\n      name=\"title\"\n      class=\"form-control edit-input\"\n      style=\"display: none\"\n      value=\"${task.title}\"\n    />\n  </form>\n  <div class=\"btn-group\">\n    <button\n      class=\"btn btn-danger btn-sm delete-btn\"\n      hx-delete=\"${path}/${task.taskID}\"\n      hx-target=\"closest li\"\n      hx-swap=\"outerHTML\"\n      hx-headers='{\"Accept\": \"text/plain\"}'\n    >\n      ✕\n    </button>\n    <button class=\"btn btn-primary btn-sm edit-btn\">✎</button>\n  </div>\n</li>\n`; } -->\n"
+        },
+        "topics": {}
+      },
+      "path": "root/env0/Bucket",
+      "addr": "c83846b85ec9ea4c519c9f981ddc40c7f7a107cec5"
+    },
+    "root/env0/Api/OnRequestHandler4": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler4_c8510dab.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "COUNTER_HANDLE_f9685446": "${wsim#root/env0/Counter/Resource#attrs.handle}",
+          "BUCKET_HANDLE_a107cec5": "${wsim#root/env0/Bucket#attrs.handle}",
+          "RESOURCE_HANDLE_f9685446": "${wsim#root/env0/Counter/Resource#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "inc",
+          "resourceHandle": "${wsim#root/env0/Counter/Resource#attrs.handle}"
+        },
+        {
+          "operation": "get",
+          "resourceHandle": "${wsim#root/env0/Bucket#attrs.handle}"
+        },
+        {
+          "operation": "call",
+          "resourceHandle": "${wsim#root/env0/Counter/Resource#attrs.handle}"
+        }
+      ],
+      "path": "root/env0/Api/OnRequestHandler4",
+      "addr": "c8510dab221117f7390768d835c4f8d619b9597352",
+      "deps": [
+        "root/env0/Counter/Resource",
+        "root/env0/Bucket"
+      ]
+    },
+    "root/env0/Api/ApiEventMapping4": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env0/Api/OnRequestHandler4#attrs.handle}",
+        "publisher": "${wsim#root/env0/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/env0/Api/ApiEventMapping4",
+      "addr": "c8deae98b7d366165731d5e5610d3f314d70ef20f1",
+      "deps": [
+        "root/env0/Api/OnRequestHandler4",
+        "root/env0/Api"
+      ]
+    },
+    "root/env0/Api/OnRequestHandler5": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler5_c8185565.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "COUNTER_HANDLE_f9685446": "${wsim#root/env0/Counter/Resource#attrs.handle}",
+          "TABLE_HANDLE_1c7c637a": "${wsim#root/env0/Table#attrs.handle}",
+          "RESOURCE_HANDLE_f9685446": "${wsim#root/env0/Counter/Resource#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "inc",
+          "resourceHandle": "${wsim#root/env0/Counter/Resource#attrs.handle}"
+        },
+        {
+          "operation": "list",
+          "resourceHandle": "${wsim#root/env0/Table#attrs.handle}"
+        },
+        {
+          "operation": "call",
+          "resourceHandle": "${wsim#root/env0/Counter/Resource#attrs.handle}"
+        }
+      ],
+      "path": "root/env0/Api/OnRequestHandler5",
+      "addr": "c81855656e5fbaf4050b61e431b5187ed64fd4366a",
+      "deps": [
+        "root/env0/Counter/Resource",
+        "root/env0/Table"
+      ]
+    },
+    "root/env0/Api/ApiEventMapping5": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env0/Api/OnRequestHandler5#attrs.handle}",
+        "publisher": "${wsim#root/env0/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/list",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/env0/Api/ApiEventMapping5",
+      "addr": "c89c480f035c501ebe2c3349a30161041822811adf",
+      "deps": [
+        "root/env0/Api/OnRequestHandler5",
+        "root/env0/Api"
+      ]
+    },
+    "root/env0/Bucket/Policy": {
+      "type": "@winglang/sdk.sim.Policy",
+      "props": {
+        "principal": "${wsim#root/env0/Bucket#attrs.handle}",
+        "statements": []
+      },
+      "path": "root/env0/Bucket/Policy",
+      "addr": "c88723c91de0a9bec2856379c1e0fe616c0b0d0d23"
+    },
+    "root/env1/Api/Endpoint": {
+      "type": "@winglang/sdk.cloud.Endpoint",
+      "props": {
+        "inputUrl": "${wsim#root/env1/Api#attrs.url}",
+        "url": "${wsim#root/env1/Api#attrs.url}",
+        "label": "Api root/env1/Api"
+      },
+      "path": "root/env1/Api/Endpoint",
+      "addr": "c8dc498b91f42fdf35660328b30bcb9f07eaa0b11a"
+    },
+    "root/env1/Api/Policy": {
+      "type": "@winglang/sdk.sim.Policy",
+      "props": {
+        "principal": "${wsim#root/env1/Api#attrs.handle}",
+        "statements": [
+          {
+            "resourceHandle": "${wsim#root/env1/Api/OnRequestHandler0#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env1/Api/OnRequestHandler1#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env1/Api/OnRequestHandler2#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env1/Api/OnRequestHandler3#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env1/Api/OnRequestHandler4#attrs.handle}",
+            "operation": "invoke"
+          },
+          {
+            "resourceHandle": "${wsim#root/env1/Api/OnRequestHandler5#attrs.handle}",
+            "operation": "invoke"
+          }
+        ]
+      },
+      "path": "root/env1/Api/Policy",
+      "addr": "c81266be4f2f8a6a669b0b356b94bb23d31ecdbbec"
+    },
+    "root/env1/Table": {
+      "type": "@winglang/sdk.ex.Table",
+      "props": {
+        "name": "Tasks",
+        "columns": {
+          "id": 0,
+          "title": 0
+        },
+        "primaryKey": "id",
+        "initialRows": {}
+      },
+      "path": "root/env1/Table",
+      "addr": "c8fa710b867bdb258bce685f122135044b35c89193"
+    },
+    "root/env1/Api/OnRequestHandler0": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler0_c8cef48d.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "TABLE_HANDLE_35c89193": "${wsim#root/env1/Table#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "list",
+          "resourceHandle": "${wsim#root/env1/Table#attrs.handle}"
+        }
+      ],
+      "path": "root/env1/Api/OnRequestHandler0",
+      "addr": "c8cef48d3dba88b1f8f6bcb4cba3f161784123d4a9",
+      "deps": [
+        "root/env1/Table"
+      ]
+    },
+    "root/env1/Api": {
+      "type": "@winglang/sdk.cloud.Api",
+      "props": {
+        "openApiSpec": {
+          "paths": {
+            "/tasks": {
+              "get": {
+                "operationId": "get-tasks",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": []
+              },
+              "post": {
+                "operationId": "post-tasks",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": []
+              }
+            },
+            "/tasks/{id}": {
+              "put": {
+                "operationId": "put-tasks/:id",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              "delete": {
+                "operationId": "delete-tasks/:id",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            },
+            "/": {
+              "get": {
+                "operationId": "get",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": []
+              }
+            },
+            "/list": {
+              "get": {
+                "operationId": "get-list",
+                "responses": {
+                  "200": {
+                    "description": "200 response",
+                    "content": {}
+                  }
+                },
+                "parameters": []
+              }
+            }
+          },
+          "openapi": "3.0.3"
+        }
+      },
+      "path": "root/env1/Api",
+      "addr": "c85a058a0d463956efcdd637b3528195f2500b03bd"
+    },
+    "root/env1/Api/ApiEventMapping0": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env1/Api/OnRequestHandler0#attrs.handle}",
+        "publisher": "${wsim#root/env1/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/tasks",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/env1/Api/ApiEventMapping0",
+      "addr": "c80d0a698075df582ab7ed9be47b9006f29926690a",
+      "deps": [
+        "root/env1/Api/OnRequestHandler0",
+        "root/env1/Api"
+      ]
+    },
+    "root/env1/Counter/Resource": {
+      "type": "@winglang/sdk.sim.Resource",
+      "props": {
+        "environmentVariables": {
+          "WING_TARGET": "sim"
+        },
+        "sourceCodeFile": ".wing/resource_c8e3d914.cjs",
+        "sourceCodeLanguage": "javascript"
+      },
+      "policy": [],
+      "path": "root/env1/Counter/Resource",
+      "addr": "c8e3d914d3cc1223e0a6f6afcee7177fc945e060fd"
+    },
+    "root/env1/Api/OnRequestHandler1": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler1_c8dd0366.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "COUNTER_HANDLE_45e060fd": "${wsim#root/env1/Counter/Resource#attrs.handle}",
+          "TABLE_HANDLE_35c89193": "${wsim#root/env1/Table#attrs.handle}",
+          "RESOURCE_HANDLE_45e060fd": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "inc",
+          "resourceHandle": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        },
+        {
+          "operation": "insert",
+          "resourceHandle": "${wsim#root/env1/Table#attrs.handle}"
+        },
+        {
+          "operation": "call",
+          "resourceHandle": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        }
+      ],
+      "path": "root/env1/Api/OnRequestHandler1",
+      "addr": "c8dd0366e794d8161aea6dfd21b3d7f4ec47cad8f1",
+      "deps": [
+        "root/env1/Counter/Resource",
+        "root/env1/Table"
+      ]
+    },
+    "root/env1/Api/ApiEventMapping1": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env1/Api/OnRequestHandler1#attrs.handle}",
+        "publisher": "${wsim#root/env1/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/tasks",
+              "method": "POST"
+            }
+          ]
+        }
+      },
+      "path": "root/env1/Api/ApiEventMapping1",
+      "addr": "c8a35f49dc4170c678c7879f3430163372b2355464",
+      "deps": [
+        "root/env1/Api/OnRequestHandler1",
+        "root/env1/Api"
+      ]
+    },
+    "root/env1/Api/OnRequestHandler2": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler2_c8d712d3.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "TABLE_HANDLE_35c89193": "${wsim#root/env1/Table#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "update",
+          "resourceHandle": "${wsim#root/env1/Table#attrs.handle}"
+        }
+      ],
+      "path": "root/env1/Api/OnRequestHandler2",
+      "addr": "c8d712d394c2a333be697354ff0b4a4b3da58f8f40",
+      "deps": [
+        "root/env1/Table"
+      ]
+    },
+    "root/env1/Api/ApiEventMapping2": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env1/Api/OnRequestHandler2#attrs.handle}",
+        "publisher": "${wsim#root/env1/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/tasks/:id",
+              "method": "PUT"
+            }
+          ]
+        }
+      },
+      "path": "root/env1/Api/ApiEventMapping2",
+      "addr": "c807d35bd42ced8c1e4d83b520186d8dacbe9e9efd",
+      "deps": [
+        "root/env1/Api/OnRequestHandler2",
+        "root/env1/Api"
+      ]
+    },
+    "root/env1/Api/OnRequestHandler3": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler3_c8ad39d4.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "TABLE_HANDLE_35c89193": "${wsim#root/env1/Table#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "delete",
+          "resourceHandle": "${wsim#root/env1/Table#attrs.handle}"
+        }
+      ],
+      "path": "root/env1/Api/OnRequestHandler3",
+      "addr": "c8ad39d4c38c810fa603c09071e0250da89e1130a4",
+      "deps": [
+        "root/env1/Table"
+      ]
+    },
+    "root/env1/Api/ApiEventMapping3": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env1/Api/OnRequestHandler3#attrs.handle}",
+        "publisher": "${wsim#root/env1/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/tasks/:id",
+              "method": "DELETE"
+            }
+          ]
+        }
+      },
+      "path": "root/env1/Api/ApiEventMapping3",
+      "addr": "c8a2d79c616a623cf13fc0356ba3b81dff0d1e7a22",
+      "deps": [
+        "root/env1/Api/OnRequestHandler3",
+        "root/env1/Api"
+      ]
+    },
+    "root/env1/Bucket": {
+      "type": "@winglang/sdk.cloud.Bucket",
+      "props": {
+        "public": false,
+        "initialObjects": {
+          "index.html": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Hello Wing {{ count }}</title>\n\n    <!-- Tailwind CSS Play CDN https://tailwindcss.com/docs/installation/play-cdn -->\n    <script src=\"https://cdn.tailwindcss.com\"></script>\n  </head>\n  <body class=\"flex items-center justify-center h-screen\">\n    <div class=\"text-center\">\n      <h1 class=\"text-2xl font-bold\">Hello, Wing {{count}}</h1>\n    </div>\n  </body>\n</html>\n",
+          "public/index.html": "<!-- <!DOCTYPE html>\n<html>\n  Hello Winglang!!!\n</html> -->\n\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Hello Wing {{ count }}</title>\n\n    <!-- Tailwind CSS Play CDN https://tailwindcss.com/docs/installation/play-cdn -->\n    <script src=\"https://cdn.tailwindcss.com\"></script>\n  </head>\n  <body class=\"flex items-center justify-center h-screen\">\n    <div class=\"text-center\">\n      <li\n        class=\"list-group-item d-flex justify-content-between align-items-center\"\n      >\n        <form\n          hx-put=\"${path}/${task.taskID}\"\n          hx-headers='{\"Accept\": \"text/plain\"}'\n          id=\"${task.taskID}-form\"\n        >\n          <span class=\"task-text\">${task.title}</span>\n          <input\n            type=\"text\"\n            name=\"title\"\n            class=\"form-control edit-input\"\n            style=\"display: none\"\n            value=\"${task.title}\"\n          />\n        </form>\n        <div class=\"btn-group\">\n          <button\n            class=\"btn btn-danger btn-sm delete-btn\"\n            hx-delete=\"${path}/${task.taskID}\"\n            hx-target=\"closest li\"\n            hx-swap=\"outerHTML\"\n            hx-headers='{\"Accept\": \"text/plain\"}'\n          >\n            ✕\n          </button>\n          <button class=\"btn btn-primary btn-sm edit-btn\">✎</button>\n        </div>\n      </li>\n    </div>\n  </body>\n</html>\n\n<!-- import { TaskData } from \"core/task\"; export function formatTask(path: string,\ntask: TaskData): string { return `\n<li class=\"list-group-item d-flex justify-content-between align-items-center\">\n  <form\n    hx-put=\"${path}/${task.taskID}\"\n    hx-headers='{\"Accept\": \"text/plain\"}'\n    id=\"${task.taskID}-form\"\n  >\n    <span class=\"task-text\">${task.title}</span>\n    <input\n      type=\"text\"\n      name=\"title\"\n      class=\"form-control edit-input\"\n      style=\"display: none\"\n      value=\"${task.title}\"\n    />\n  </form>\n  <div class=\"btn-group\">\n    <button\n      class=\"btn btn-danger btn-sm delete-btn\"\n      hx-delete=\"${path}/${task.taskID}\"\n      hx-target=\"closest li\"\n      hx-swap=\"outerHTML\"\n      hx-headers='{\"Accept\": \"text/plain\"}'\n    >\n      ✕\n    </button>\n    <button class=\"btn btn-primary btn-sm edit-btn\">✎</button>\n  </div>\n</li>\n`; } -->\n"
+        },
+        "topics": {}
+      },
+      "path": "root/env1/Bucket",
+      "addr": "c82cc42ab655f6acdb4ae9af51fd08cb2cfc7a7ca7"
+    },
+    "root/env1/Api/OnRequestHandler4": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler4_c8630c87.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "COUNTER_HANDLE_45e060fd": "${wsim#root/env1/Counter/Resource#attrs.handle}",
+          "BUCKET_HANDLE_fc7a7ca7": "${wsim#root/env1/Bucket#attrs.handle}",
+          "RESOURCE_HANDLE_45e060fd": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "inc",
+          "resourceHandle": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        },
+        {
+          "operation": "get",
+          "resourceHandle": "${wsim#root/env1/Bucket#attrs.handle}"
+        },
+        {
+          "operation": "call",
+          "resourceHandle": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        }
+      ],
+      "path": "root/env1/Api/OnRequestHandler4",
+      "addr": "c8630c87660cd298d1379003e4f0a09067a0ee75f4",
+      "deps": [
+        "root/env1/Counter/Resource",
+        "root/env1/Bucket"
+      ]
+    },
+    "root/env1/Api/ApiEventMapping4": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env1/Api/OnRequestHandler4#attrs.handle}",
+        "publisher": "${wsim#root/env1/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/env1/Api/ApiEventMapping4",
+      "addr": "c898e78ddfd7e0a7070db009908b4ce50ea4cda917",
+      "deps": [
+        "root/env1/Api/OnRequestHandler4",
+        "root/env1/Api"
+      ]
+    },
+    "root/env1/Api/OnRequestHandler5": {
+      "type": "@winglang/sdk.cloud.Function",
+      "props": {
+        "sourceCodeFile": ".wing/onrequesthandler5_c875f9f0.cjs",
+        "sourceCodeLanguage": "javascript",
+        "environmentVariables": {
+          "WING_TARGET": "sim",
+          "COUNTER_HANDLE_45e060fd": "${wsim#root/env1/Counter/Resource#attrs.handle}",
+          "TABLE_HANDLE_35c89193": "${wsim#root/env1/Table#attrs.handle}",
+          "RESOURCE_HANDLE_45e060fd": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        },
+        "timeout": 60000,
+        "concurrency": 100
+      },
+      "policy": [
+        {
+          "operation": "inc",
+          "resourceHandle": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        },
+        {
+          "operation": "list",
+          "resourceHandle": "${wsim#root/env1/Table#attrs.handle}"
+        },
+        {
+          "operation": "call",
+          "resourceHandle": "${wsim#root/env1/Counter/Resource#attrs.handle}"
+        }
+      ],
+      "path": "root/env1/Api/OnRequestHandler5",
+      "addr": "c875f9f01add3a59e7ed59bcfb154c964eead46d5e",
+      "deps": [
+        "root/env1/Counter/Resource",
+        "root/env1/Table"
+      ]
+    },
+    "root/env1/Api/ApiEventMapping5": {
+      "type": "@winglang/sdk.sim.EventMapping",
+      "props": {
+        "subscriber": "${wsim#root/env1/Api/OnRequestHandler5#attrs.handle}",
+        "publisher": "${wsim#root/env1/Api#attrs.handle}",
+        "subscriptionProps": {
+          "routes": [
+            {
+              "pathPattern": "/list",
+              "method": "GET"
+            }
+          ]
+        }
+      },
+      "path": "root/env1/Api/ApiEventMapping5",
+      "addr": "c81fb3507c47ba499335dcb7fa3efd1616c5d0592d",
+      "deps": [
+        "root/env1/Api/OnRequestHandler5",
+        "root/env1/Api"
+      ]
+    },
+    "root/env1/Bucket/Policy": {
+      "type": "@winglang/sdk.sim.Policy",
+      "props": {
+        "principal": "${wsim#root/env1/Bucket#attrs.handle}",
+        "statements": []
+      },
+      "path": "root/env1/Bucket/Policy",
+      "addr": "c897c13f7512a2bff2cf21d56ad1c56a55fc49c7f4"
     }
   },
-  "sdkVersion": "0.74.28"
+  "sdkVersion": "0.75.4"
 }
