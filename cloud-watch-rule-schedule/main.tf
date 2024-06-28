@@ -4,7 +4,6 @@ resource "aws_cloudwatch_event_rule" "cloudwatch_event_rule_schedule" {
   schedule_expression = "rate(1 hour)"
 }
 
-
 resource "aws_cloudwatch_event_target" "cloudwatch_event_target_sns" {
   rule      = aws_cloudwatch_event_rule.cloudwatch_event_rule_schedule.name
   target_id = "SendToSNS"
