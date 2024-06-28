@@ -7,8 +7,8 @@ provider "aws" {
       Owner         = "TFGM"
       ProductOwner  = "Ivan Pedro"
       BusinessOwner = "DCS"
-      Product       = "aws-config"
-      Repo          = "winglang"
+      Product       = "capture-aws-sign-in"
+      Repo          = "capture-aws-sign-in"
       Tech          = "terraform"
       Environment   = "Prod"
     }
