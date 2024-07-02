@@ -4,7 +4,7 @@ variable "AWS_REGION" {
 }
 #--------------------------------------------------------------------------------------------------
 locals {
-  default_name = join("-", tolist([terraform.workspace, "aws-config"]))
+  default_name = join("-", tolist([terraform.workspace, "aws-auditmanager"]))
 }
 #-------------------------------------------------------------------
 resource "random_pet" "this" {
